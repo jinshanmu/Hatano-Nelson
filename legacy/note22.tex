@@ -1,0 +1,4978 @@
+\documentclass[11pt]{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{hyperref}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{hypothesis}[theorem]{Hypothesis}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\title{Topological Problems for the Clean Hatano--Nelson Family with Open Boundary Conditions}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+For \(n>1\), \(0<a<1\), consider the real nonnormal tridiagonal Toeplitz matrix
+\[
+\mathbf{A}_n(a)\coloneqq \operatorname{tridiag}(a,0,1)
+=
+\begin{bmatrix}
+0 & 1 \\
+a & 0 & \ddots \\
+& \ddots & \ddots & \ddots \\
+&& \ddots & 0 & 1 \\
+&&& a & 0
+\end{bmatrix}\in \mathbb{R}^{n\times n}.
+\]
+For \(\varepsilon>0\), its \(\varepsilon\)-pseudospectrum is
+\[
+\sigma_\varepsilon\bigl(\mathbf{A}_n(a)\bigr)
+\coloneqq
+\left\{
+z\in\mathbb C:\;
+\bigl\|(z\mathbf I_n-\mathbf A_n(a))^{-1}\bigr\|_2>\varepsilon^{-1}
+\right\},
+\]
+with the usual convention that the resolvent norm is \(+\infty\) on the spectrum. Equivalently,
+\[
+\sigma_\varepsilon\bigl(\mathbf A_n(a)\bigr)
+=
+\left\{
+z\in\mathbb C:\;
+s_{\min}\!\bigl(z\mathbf I_n-\mathbf A_n(a)\bigr)<\varepsilon
+\right\}.
+\]
+
+Throughout, for \(z=x+iy\) we write
+\[
+\Sigma_\varepsilon\coloneqq \sigma_\varepsilon\bigl(\mathbf A_n(a)\bigr),
+\qquad
+s(x,y)\coloneqq s_{\min}\!\bigl((x+iy)\mathbf I_n-\mathbf A_n(a)\bigr).
+\]
+Then
+\[
+\Sigma_\varepsilon=\{x+iy\in\mathbb C:\; s(x,y)<\varepsilon\}.
+\]
+
+The original simply-connectedness statement is reduced below to a vertical monotonicity problem. The topological implication is rigorous; the remaining monotonicity statement is formulated as a conjecture and then rewritten in several equivalent ways.
+
+\section{Topological reduction to vertical monotonicity}
+
+\begin{conjecture}[Vertical monotonicity]\label{conj:vertical-monotonicity}
+For every fixed \(x\in\mathbb R\), the function
+\[
+[0,\infty)\ni y\longmapsto s(x,y)
+\]
+is nondecreasing.
+\end{conjecture}
+
+\begin{theorem}\label{thm:components-simply-connected}
+Assume Conjecture~\ref{conj:vertical-monotonicity}. Then for every \(\varepsilon>0\), every connected component of \(\Sigma_\varepsilon\) is simply connected.
+\end{theorem}
+
+We first record several rigorous lemmas.
+
+\begin{lemma}\label{lem:real-spectrum}
+With
+\[
+\mathbf D=\operatorname{diag}\bigl(1,\sqrt a,a,\dots,a^{(n-1)/2}\bigr),
+\]
+one has
+\[
+\mathbf D^{-1}\mathbf A_n(a)\mathbf D
+=
+\sqrt a\,\operatorname{tridiag}(1,0,1).
+\]
+Hence the eigenvalues of \(\mathbf A_n(a)\) are real and simple, namely
+\[
+\lambda_k
+=
+2\sqrt a\cos\!\left(\frac{k\pi}{n+1}\right),
+\qquad
+k=1,\dots,n.
+\]
+\end{lemma}
+
+\begin{proof}
+A direct computation gives
+\[
+(\mathbf D^{-1}\mathbf A_n(a)\mathbf D)_{j,j+1}
+=
+a^{-(j-1)/2}a^{j/2}
+=
+\sqrt a,
+\]
+and
+\[
+(\mathbf D^{-1}\mathbf A_n(a)\mathbf D)_{j+1,j}
+=
+a^{-j/2}a\,a^{(j-1)/2}
+=
+\sqrt a.
+\]
+Thus \(\mathbf D^{-1}\mathbf A_n(a)\mathbf D\) is the symmetric tridiagonal Toeplitz matrix \(\sqrt a\,\operatorname{tridiag}(1,0,1)\). Its eigenvalues are the classical Dirichlet eigenvalues \(2\sqrt a\cos(k\pi/(n+1))\), and they are simple.
+\end{proof}
+
+\begin{lemma}\label{lem:real-axis}
+Every connected component of \(\Sigma_\varepsilon\) meets the real axis.
+\end{lemma}
+
+\begin{proof}
+Let \(\Omega\) be a connected component of \(\Sigma_\varepsilon\). Since
+\[
+s_{\min}\!\bigl(z\mathbf I_n-\mathbf A_n(a)\bigr)\ge |z|-\|\mathbf A_n(a)\|_2,
+\]
+the set \(\Sigma_\varepsilon\) is bounded; hence \(\Omega\) is bounded.
+
+Assume that \(\Omega\cap\sigma(\mathbf A_n(a))=\varnothing\). Define
+\[
+\varphi(z)\coloneqq \bigl\|(z\mathbf I_n-\mathbf A_n(a))^{-1}\bigr\|_2.
+\]
+Then \(\varphi\) is subharmonic on \(\Omega\) and continuous on \(\overline\Omega\). Moreover,
+\[
+\varphi(z)>\varepsilon^{-1}
+\qquad (z\in\Omega).
+\]
+
+We claim that \(\varphi(z)=\varepsilon^{-1}\) on \(\partial\Omega\). Indeed, \(\Omega\) is a connected component of the open set \(\Sigma_\varepsilon\), hence \(\partial\Omega\subset \partial\Sigma_\varepsilon\). Since \(s\) is continuous and
+\[
+\Sigma_\varepsilon=\{s<\varepsilon\},
+\]
+one has \(s=\varepsilon\) on \(\partial\Sigma_\varepsilon\), therefore on \(\partial\Omega\). Since \(\Omega\cap\sigma(\mathbf A_n(a))=\varnothing\), no point of \(\partial\Omega\) can belong to the spectrum: an eigenvalue would satisfy \(s=0<\varepsilon\) and hence would lie in \(\Sigma_\varepsilon\), whereas \(\partial\Omega\subset \mathbb C\setminus \Omega\). Thus
+\[
+\varphi(z)=\varepsilon^{-1}
+\qquad (z\in\partial\Omega).
+\]
+
+This contradicts the maximum principle for subharmonic functions on bounded domains. Therefore \(\Omega\) must contain an eigenvalue of \(\mathbf A_n(a)\). By Lemma~\ref{lem:real-spectrum}, every eigenvalue is real, so
+\[
+\Omega\cap\mathbb R\neq\varnothing.
+\]
+\end{proof}
+
+\begin{lemma}\label{lem:conjugation-symmetry}
+For every \(x,y\in\mathbb R\),
+\[
+s(x,-y)=s(x,y).
+\]
+Consequently \(\Sigma_\varepsilon\) is invariant under complex conjugation.
+\end{lemma}
+
+\begin{proof}
+Because \(\mathbf A_n(a)\) has real entries,
+\[
+\overline{(x+iy)\mathbf I_n-\mathbf A_n(a)}
+=
+(x-iy)\mathbf I_n-\mathbf A_n(a).
+\]
+Entrywise complex conjugation preserves singular values, hence
+\[
+s(x,-y)
+=
+s_{\min}\!\bigl((x-iy)\mathbf I_n-\mathbf A_n(a)\bigr)
+=
+s_{\min}\!\bigl((x+iy)\mathbf I_n-\mathbf A_n(a)\bigr)
+=
+s(x,y).
+\]
+\end{proof}
+
+\begin{lemma}\label{lem:vertical-sections}
+Assume Conjecture~\ref{conj:vertical-monotonicity}. For every \(x\in\mathbb R\), the vertical section
+\[
+V_x
+\coloneqq
+\{y\in\mathbb R:\; x+iy\in\Sigma_\varepsilon\}
+\]
+is either empty or an open interval symmetric about \(0\).
+\end{lemma}
+
+\begin{proof}
+By Lemma~\ref{lem:conjugation-symmetry}, \(V_x\) is symmetric under \(y\mapsto -y\). By Conjecture~\ref{conj:vertical-monotonicity}, the set
+\[
+\{y\ge 0:\; s(x,y)<\varepsilon\}
+\]
+is either empty or an interval of the form \([0,h_x)\) with \(h_x\in(0,\infty]\). Since \(\Sigma_\varepsilon\) is bounded, in fact \(h_x<\infty\). Therefore
+\[
+V_x=\varnothing
+\quad\text{or}\quad
+V_x=(-h_x,h_x).
+\]
+\end{proof}
+
+\begin{lemma}\label{lem:component-fibers}
+Assume Conjecture~\ref{conj:vertical-monotonicity}. Let \(\Omega\) be a connected component of \(\Sigma_\varepsilon\). Then there is an open interval \(I_\Omega\subset\mathbb R\) and a function
+\[
+h_\Omega:I_\Omega\to(0,\infty)
+\]
+such that
+\[
+\Omega
+=
+\{x+iy:\; x\in I_\Omega,\ |y|<h_\Omega(x)\}.
+\]
+\end{lemma}
+
+\begin{proof}
+Define
+\[
+I_\Omega
+\coloneqq
+\{x\in\mathbb R:\; (\{x\}+i\mathbb R)\cap\Omega\neq\varnothing\}.
+\]
+Since the projection map \(x+iy\mapsto x\) is continuous and \(\Omega\) is connected, \(I_\Omega\) is connected. Since \(\Omega\) is open, \(I_\Omega\) is open: if \(x_0\in I_\Omega\), then \(x_0+iy_0\in\Omega\) for some \(y_0\), and an open disk about \(x_0+iy_0\) contained in \(\Omega\) projects onto an open interval about \(x_0\). Hence \(I_\Omega\) is an open interval.
+
+By Lemma~\ref{lem:real-axis}, there exists \(x_0\in\Omega\cap\mathbb R\). Complex conjugation is a homeomorphism of \(\Sigma_\varepsilon\), so it sends \(\Omega\) onto another connected component of \(\Sigma_\varepsilon\). Because \(x_0\) is fixed by conjugation, the image component contains \(x_0\), hence must coincide with \(\Omega\). Therefore \(\Omega\) is invariant under complex conjugation.
+
+For each \(x\in I_\Omega\), let
+\[
+\Omega_x
+\coloneqq
+\{y\in\mathbb R:\; x+iy\in\Omega\}.
+\]
+Then \(\Omega_x\) is a nonempty open subset of \(V_x\), and it is symmetric under \(y\mapsto -y\).
+
+By Lemma~\ref{lem:vertical-sections}, \(V_x\) is either empty or a connected open interval. Moreover, \(V_x\) is partitioned by the disjoint open sets
+\[
+\Omega'_x\coloneqq \{y\in\mathbb R:\; x+iy\in\Omega'\},
+\]
+where \(\Omega'\) ranges over the connected components of \(\Sigma_\varepsilon\). Since \(V_x\) is connected, at most one component \(\Omega'\) can meet the vertical line \(\{x\}+i\mathbb R\). Because \(\Omega\) does meet that line, it follows that
+\[
+\Omega_x=V_x.
+\]
+
+Therefore, for each \(x\in I_\Omega\), the fiber \(\Omega_x\) is an interval symmetric about \(0\). Write
+\[
+\Omega_x=(-h_\Omega(x),h_\Omega(x)),
+\qquad h_\Omega(x)>0.
+\]
+Then
+\[
+\Omega
+=
+\{x+iy:\; x\in I_\Omega,\ |y|<h_\Omega(x)\}.
+\]
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:components-simply-connected}]
+Let \(\Omega\) be a connected component of \(\Sigma_\varepsilon\). By Lemma~\ref{lem:component-fibers},
+\[
+\Omega
+=
+\{x+iy:\; x\in I_\Omega,\ |y|<h_\Omega(x)\},
+\]
+where \(I_\Omega\subset\mathbb R\) is an open interval.
+
+Define
+\[
+H:[0,1]\times\Omega\longrightarrow\Omega,
+\qquad
+H(t,x+iy)=x+i(1-t)y.
+\]
+For fixed \(x\in I_\Omega\), the vertical fiber of \(\Omega\) above \(x\) is \((-h_\Omega(x),h_\Omega(x))\), so \(H(t,x+iy)\) stays in that same fiber for every \(t\in[0,1]\). Therefore \(H\) is a deformation retraction of \(\Omega\) onto
+\[
+\Omega\cap\mathbb R=I_\Omega.
+\]
+Hence \(\Omega\) is contractible. In particular, \(\Omega\) is simply connected.
+\end{proof}
+
+\section{Singular-vector identities on simple branches}
+
+Let
+\[
+\mathbf R\in\mathbb R^{n\times n},
+\qquad
+\mathbf R_{j,n+1-j}=1,
+\qquad
+\mathbf R_{jk}=0\ \text{otherwise},
+\]
+be the reversal matrix.
+
+\begin{lemma}\label{lem:persymmetry}
+One has
+\[
+\mathbf R\,\mathbf A_n(a)\,\mathbf R=\mathbf A_n(a)^{\mathsf T}.
+\]
+Suppose \(x\in\mathbb R\) is fixed and \(I\subset(0,\infty)\) is an interval on which
+\[
+s(x,y)=s_{\min}\!\bigl((x+iy)\mathbf I_n-\mathbf A_n(a)\bigr)
+\]
+is simple. Then the associated unit left and right singular vectors \(\mathbf u(y),\mathbf v(y)\) may be chosen differentiably on \(I\) so that
+\[
+\bigl((x+iy)\mathbf I_n-\mathbf A_n(a)\bigr)\mathbf v(y)=s(x,y)\,\mathbf u(y),
+\]
+\[
+\bigl((x+iy)\mathbf I_n-\mathbf A_n(a)\bigr)^*\mathbf u(y)=s(x,y)\,\mathbf v(y),
+\]
+and
+\[
+\mathbf u(y)=\mathbf R\,\overline{\mathbf v(y)}.
+\]
+\end{lemma}
+
+\begin{proof}
+The identity \(\mathbf R\,\mathbf A_n(a)\,\mathbf R=\mathbf A_n(a)^{\mathsf T}\) is immediate from the Toeplitz form of \(\mathbf A_n(a)\).
+
+On an interval of simplicity, one may choose differentiable unit eigenvectors of the Hermitian matrix
+\[
+\mathbf B_y^*\mathbf B_y,
+\qquad
+\mathbf B_y\coloneqq (x+iy)\mathbf I_n-\mathbf A_n(a),
+\]
+corresponding to the simple eigenvalue \(s(x,y)^2\); denote such a vector by \(\mathbf v(y)\). Since \(y>0\), Lemma~\ref{lem:real-spectrum} implies \(s(x,y)>0\), and we may define
+\[
+\mathbf u(y)\coloneqq s(x,y)^{-1}\mathbf B_y\mathbf v(y).
+\]
+Then \(\mathbf u(y)\) is differentiable, has unit norm, and satisfies
+\[
+\mathbf B_y\mathbf v=s\,\mathbf u,
+\qquad
+\mathbf B_y^*\mathbf u=s\,\mathbf v,
+\]
+with \(s=s(x,y)\).
+
+Since \(\mathbf R\mathbf B_y=\mathbf B_y^{\mathsf T}\mathbf R\), we get
+\[
+\mathbf B_y(\mathbf R\overline{\mathbf u})
+=
+\mathbf R\,\mathbf B_y^{\mathsf T}\overline{\mathbf u}
+=
+\mathbf R\,\overline{\mathbf B_y^*\mathbf u}
+=
+s\,\mathbf R\overline{\mathbf v},
+\]
+and similarly
+\[
+\mathbf B_y^*(\mathbf R\overline{\mathbf v})=s\,\mathbf R\overline{\mathbf u}.
+\]
+Thus \((\mathbf R\overline{\mathbf u},\mathbf R\overline{\mathbf v})\) is another singular pair for the same simple singular value \(s\). By simplicity, there is \(\alpha(y)\in\mathbb C\), \(|\alpha(y)|=1\), such that
+\[
+\mathbf R\overline{\mathbf u}=\alpha\,\mathbf v,
+\qquad
+\mathbf R\overline{\mathbf v}=\alpha\,\mathbf u.
+\]
+Choose a differentiable branch \(\beta(y)\) of a square root of \(\alpha(y)\), and replace \((\mathbf u,\mathbf v)\) by \((\beta\mathbf u,\beta\mathbf v)\). Then
+\[
+\mathbf R\overline{\beta\mathbf v}
+=
+\overline{\beta}\,\mathbf R\overline{\mathbf v}
+=
+\overline{\beta}\,\alpha\,\mathbf u
+=
+\beta\,\mathbf u.
+\]
+Hence, after this common phase normalization,
+\[
+\mathbf u=\mathbf R\,\overline{\mathbf v}.
+\]
+\end{proof}
+
+\begin{proposition}[Derivative formula and current identity]\label{prop:current-identity}
+Fix \(x\in\mathbb R\), let \(I\subset(0,\infty)\) be an interval on which \(s(x,y)\) is simple, and choose \(\mathbf u(y),\mathbf v(y)\) as in Lemma~\ref{lem:persymmetry}. Write
+\[
+\mathbf v(y)=
+\begin{bmatrix}
+v_1(y)\\
+\vdots\\
+v_n(y)
+\end{bmatrix},
+\]
+and define
+\[
+J_j(y)\coloneqq \Im\!\bigl(\overline{v_j(y)}\,v_{j+1}(y)\bigr),
+\qquad
+j=1,\dots,n-1,
+\]
+with \(J_0(y)=J_n(y)=0\). Then:
+\begin{enumerate}
+\item
+\[
+\frac{d}{dy}s(x,y)
+=
+-\Im\!\bigl(\mathbf u(y)^*\mathbf v(y)\bigr)
+=
+-\Im\!\bigl(\mathbf v(y)^{\mathsf T}\mathbf R\,\mathbf v(y)\bigr).
+\]
+\item For each \(j=1,\dots,n\),
+\[
+J_j-aJ_{j-1}
+=
+y|v_j|^2+s(x,y)\,\Im\!\bigl(v_jv_{n+1-j}\bigr).
+\]
+\item Summing over \(j\) gives
+\[
+(1-a)\sum_{j=1}^{n-1}J_j
+=
+y+s(x,y)\,\Im\!\bigl(\mathbf u(y)^*\mathbf v(y)\bigr).
+\]
+Consequently,
+\[
+\frac{d}{dy}\bigl(s(x,y)^2\bigr)
+=
+2y-2(1-a)\sum_{j=1}^{n-1}J_j.
+\]
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Let
+\[
+\mathbf B_y\coloneqq (x+iy)\mathbf I_n-\mathbf A_n(a).
+\]
+Since \(\mathbf B_y' = i\mathbf I_n\), the standard singular-value perturbation formula gives
+\[
+\frac{d}{dy}s(x,y)
+=
+\Re\!\bigl(\mathbf u^* \mathbf B_y' \mathbf v\bigr)
+=
+\Re\!\bigl(i\,\mathbf u^*\mathbf v\bigr)
+=
+-\Im\!\bigl(\mathbf u^*\mathbf v\bigr).
+\]
+By Lemma~\ref{lem:persymmetry}, \(\mathbf u=\mathbf R\overline{\mathbf v}\), so
+\[
+\mathbf u^*\mathbf v
+=
+\mathbf v^{\mathsf T}\mathbf R\,\mathbf v.
+\]
+This proves (1).
+
+For (2), the singular-vector equation \(\mathbf B_y\mathbf v=s\,\mathbf u\) reads componentwise
+\[
+(x+iy)v_j-a v_{j-1}-v_{j+1}
+=
+s\,\overline{v_{n+1-j}},
+\qquad
+j=1,\dots,n,
+\]
+with Dirichlet endpoints \(v_0=v_{n+1}=0\). Multiplying the \(j\)-th equation by \(\overline{v_j}\) and taking imaginary parts yields
+\[
+y|v_j|^2-a\,\Im(\overline{v_j}v_{j-1})-\Im(\overline{v_j}v_{j+1})
+=
+-s\,\Im(v_jv_{n+1-j}).
+\]
+Since
+\[
+\Im(\overline{v_j}v_{j-1})=-\Im(\overline{v_{j-1}}v_j)=-J_{j-1},
+\qquad
+\Im(\overline{v_j}v_{j+1})=J_j,
+\]
+we obtain
+\[
+J_j-aJ_{j-1}
+=
+y|v_j|^2+s\,\Im(v_jv_{n+1-j}).
+\]
+This proves (2).
+
+Summing (2) over \(j=1,\dots,n\) and using \(J_0=J_n=0\) and \(\|\mathbf v\|_2=1\), we get
+\[
+(1-a)\sum_{j=1}^{n-1}J_j
+=
+y+s\,\sum_{j=1}^n \Im(v_jv_{n+1-j}).
+\]
+But
+\[
+\sum_{j=1}^n v_jv_{n+1-j}
+=
+\mathbf v^{\mathsf T}\mathbf R\,\mathbf v
+=
+\mathbf u^*\mathbf v,
+\]
+hence
+\[
+(1-a)\sum_{j=1}^{n-1}J_j
+=
+y+s\,\Im(\mathbf u^*\mathbf v).
+\]
+Combining this with (1) gives
+\[
+\frac{d}{dy}s(x,y)
+=
+\frac{y-(1-a)\sum_{j=1}^{n-1}J_j}{s(x,y)},
+\]
+and therefore
+\[
+\frac{d}{dy}\bigl(s(x,y)^2\bigr)
+=
+2s(x,y)\frac{d}{dy}s(x,y)
+=
+2y-2(1-a)\sum_{j=1}^{n-1}J_j.
+\]
+\end{proof}
+
+\section{Exact reformulations of vertical monotonicity}
+
+Let \(\mathbf S\in\mathbb C^{n\times n}\) be the upper shift,
+\[
+\mathbf S_{j,j+1}=1,
+\qquad
+\mathbf S_{jk}=0\ \text{otherwise}.
+\]
+Then
+\[
+\mathbf A_n(a)=a\mathbf S^{\mathsf T}+\mathbf S.
+\]
+We also define
+\[
+\mathbf K\coloneqq \frac{1-a}{2i}\,(\mathbf S-\mathbf S^{\mathsf T}),
+\qquad
+\mathbf M_x\coloneqq (x\mathbf I_n-\mathbf A_n(a))^*(x\mathbf I_n-\mathbf A_n(a)).
+\]
+
+\begin{proposition}\label{prop:H-affine}
+For every \(x,y\in\mathbb R\),
+\[
+\mathbf H_x(y)\coloneqq \bigl((x+iy)\mathbf I_n-\mathbf A_n(a)\bigr)^*\bigl((x+iy)\mathbf I_n-\mathbf A_n(a)\bigr)
+=
+\mathbf M_x+y^2\mathbf I_n-2y\,\mathbf K.
+\]
+In particular,
+\[
+s(x,y)^2=\lambda_{\min}\!\bigl(\mathbf H_x(y)\bigr).
+\]
+\end{proposition}
+
+\begin{proof}
+Since
+\[
+\bigl((x+iy)\mathbf I_n-\mathbf A_n(a)\bigr)^*
+=
+(x-iy)\mathbf I_n-\mathbf A_n(a)^{\mathsf T},
+\]
+we have
+\[
+\mathbf H_x(y)
+=
+\mathbf M_x
++y^2\mathbf I_n
++iy\bigl(\mathbf A_n(a)-\mathbf A_n(a)^{\mathsf T}\bigr).
+\]
+Now
+\[
+\mathbf A_n(a)-\mathbf A_n(a)^{\mathsf T}
+=
+(1-a)(\mathbf S-\mathbf S^{\mathsf T}),
+\]
+hence
+\[
+iy\bigl(\mathbf A_n(a)-\mathbf A_n(a)^{\mathsf T}\bigr)
+=
+-2y\,\frac{1-a}{2i}(\mathbf S-\mathbf S^{\mathsf T})
+=
+-2y\,\mathbf K.
+\]
+Therefore
+\[
+\mathbf H_x(y)=\mathbf M_x+y^2\mathbf I_n-2y\,\mathbf K.
+\]
+Since \(\mathbf H_x(y)=\mathbf B_y^*\mathbf B_y\), its eigenvalues are the squares of the singular values of \(\mathbf B_y=(x+iy)\mathbf I_n-\mathbf A_n(a)\), and the smallest one is \(s(x,y)^2\).
+\end{proof}
+
+\begin{corollary}[Scalar form of vertical monotonicity]\label{cor:scalar-form}
+Let \(x\in\mathbb R\), and suppose \(s(x,y)^2\) is simple on an interval \(I\subset(0,\infty)\). Let \(\boldsymbol{\psi}(y)\) be a normalized eigenvector of \(\mathbf H_x(y)\) for
+\[
+\lambda(y)=s(x,y)^2.
+\]
+Then
+\[
+\lambda'(y)=2y-2\langle \boldsymbol{\psi}(y),\mathbf K\boldsymbol{\psi}(y)\rangle.
+\]
+Consequently, on such an interval the vertical monotonicity statement
+\[
+\frac{d}{dy}s(x,y)\ge 0
+\]
+is equivalent to
+\[
+\langle \boldsymbol{\psi}(y),\mathbf K\boldsymbol{\psi}(y)\rangle\le y.
+\]
+If \(\boldsymbol{\psi}(y)=\mathbf v(y)\) is the right singular vector from Proposition~\ref{prop:current-identity}, then
+\[
+\langle \boldsymbol{\psi}(y),\mathbf K\boldsymbol{\psi}(y)\rangle
+=
+(1-a)\sum_{j=1}^{n-1}\Im\!\bigl(\overline{v_j(y)}\,v_{j+1}(y)\bigr).
+\]
+\end{corollary}
+
+\begin{proof}
+By Proposition~\ref{prop:H-affine},
+\[
+\mathbf H_x'(y)=2y\,\mathbf I_n-2\mathbf K.
+\]
+The Hellmann--Feynman formula therefore gives
+\[
+\lambda'(y)=\langle \boldsymbol{\psi},\mathbf H_x'(y)\boldsymbol{\psi}\rangle
+=
+2y-2\langle \boldsymbol{\psi},\mathbf K\boldsymbol{\psi}\rangle.
+\]
+Since \(\lambda=s^2\) and \(s>0\) on \(y>0\), one has
+\[
+\frac{d}{dy}s(x,y)\ge 0
+\quad\Longleftrightarrow\quad
+\frac{d}{dy}\bigl(s(x,y)^2\bigr)\ge 0
+\quad\Longleftrightarrow\quad
+\langle \boldsymbol{\psi},\mathbf K\boldsymbol{\psi}\rangle\le y.
+\]
+
+Finally, if \(\boldsymbol{\psi}=\mathbf v\), then
+\[
+\langle \mathbf v,\mathbf K\mathbf v\rangle
+=
+\frac{1-a}{2i}\,\mathbf v^*(\mathbf S-\mathbf S^{\mathsf T})\mathbf v
+=
+\frac{1-a}{2i}\sum_{j=1}^{n-1}\bigl(\overline{v_j}v_{j+1}-\overline{v_{j+1}}v_j\bigr)
+=
+(1-a)\sum_{j=1}^{n-1}\Im(\overline{v_j}v_{j+1}).
+\]
+\end{proof}
+
+\begin{remark}[Concavity after subtracting \(y^2\)]\label{rem:concavity}
+By Proposition~\ref{prop:H-affine},
+\[
+s(x,y)^2-y^2
+=
+\lambda_{\min}(\mathbf M_x-2y\,\mathbf K)
+=
+\min_{\|\boldsymbol{\xi}\|_2=1}\bigl(\langle \boldsymbol{\xi},\mathbf M_x\boldsymbol{\xi}\rangle-2y\langle \boldsymbol{\xi},\mathbf K\boldsymbol{\xi}\rangle\bigr).
+\]
+Thus \(y\mapsto s(x,y)^2-y^2\) is the pointwise infimum of affine functions of \(y\), hence is concave on \(\mathbb R\).
+\end{remark}
+
+\subsection*{A matrix-valued compression}
+
+\begin{proposition}[Hidden matrix positivity on the minimal singular subspace]\label{prop:hidden-matrix-positivity}
+Assume \(s=s(x,y)>0\), and let \(m\) be the multiplicity of the singular value \(s\) of
+\[
+\mathbf B_y\coloneqq (x+iy)\mathbf I_n-\mathbf A_n(a).
+\]
+Let
+\[
+\mathbf V\in\mathbb C^{n\times m}
+\]
+have orthonormal columns spanning the right singular subspace
+\[
+\ker(\mathbf B_y^*\mathbf B_y-s^2\mathbf I_n),
+\]
+and define
+\[
+\mathbf U\coloneqq s^{-1}\mathbf B_y\mathbf V.
+\]
+Then \(\mathbf U^*\mathbf U=\mathbf V^*\mathbf V=\mathbf I_m\), and
+\[
+\mathbf B_y\mathbf V=s\,\mathbf U,
+\qquad
+\mathbf B_y^*\mathbf U=s\,\mathbf V.
+\]
+Define the Hermitian linearization
+\[
+\mathcal B_x(y)\coloneqq
+\begin{bmatrix}
+0 & \mathbf B_y\\
+\mathbf B_y^* & 0
+\end{bmatrix},
+\qquad
+\mathcal J\coloneqq
+\begin{bmatrix}
+0 & i\mathbf I_n\\
+-i\mathbf I_n & 0
+\end{bmatrix},
+\]
+and
+\[
+\mathbf W\coloneqq \frac{1}{\sqrt2}\begin{bmatrix}\mathbf U\\[1mm]\mathbf V\end{bmatrix}\in\mathbb C^{2n\times m}.
+\]
+Then
+\[
+\mathcal B_x(y)\mathbf W=s\,\mathbf W,
+\qquad
+\mathbf W^*\mathbf W=\mathbf I_m,
+\]
+and
+\[
+\boxed{
+\mathbf W^*\mathcal J\mathbf W
+=
+\frac1s
+\left(
+y\,\mathbf I_m
+-
+\frac{1-a}{2i}\,\mathbf V^*(\mathbf S-\mathbf S^{\mathsf T})\mathbf V
+\right).
+}
+\]
+In particular, when \(m=1\), this reduces exactly to the scalar inequality from Corollary~\ref{cor:scalar-form}.
+\end{proposition}
+
+\begin{proof}
+The relations \(\mathbf U^*\mathbf U=\mathbf I_m\), \(\mathbf B_y\mathbf V=s\,\mathbf U\), and \(\mathbf B_y^*\mathbf U=s\,\mathbf V\) are immediate. Therefore
+\[
+\mathcal B_x(y)\mathbf W
+=
+\frac{1}{\sqrt2}
+\begin{bmatrix}
+\mathbf B_y\mathbf V\\
+\mathbf B_y^*\mathbf U
+\end{bmatrix}
+=
+\frac{1}{\sqrt2}
+\begin{bmatrix}
+s\,\mathbf U\\
+s\,\mathbf V
+\end{bmatrix}
+=
+s\,\mathbf W,
+\]
+and
+\[
+\mathbf W^*\mathbf W
+=
+\frac12(\mathbf U^*\mathbf U+\mathbf V^*\mathbf V)
+=
+\mathbf I_m.
+\]
+
+Next,
+\[
+\mathbf W^*\mathcal J\mathbf W
+=
+\frac12
+\begin{bmatrix}\mathbf U^* & \mathbf V^*\end{bmatrix}
+\begin{bmatrix}
+0 & i\mathbf I_n\\
+-i\mathbf I_n & 0
+\end{bmatrix}
+\begin{bmatrix}\mathbf U\\ \mathbf V\end{bmatrix}
+=
+\frac{i}{2}\,(\mathbf U^*\mathbf V-\mathbf V^*\mathbf U).
+\]
+Since \(\mathbf U=s^{-1}\mathbf B_y\mathbf V\),
+\[
+\mathbf U^*\mathbf V-\mathbf V^*\mathbf U
+=
+s^{-1}\mathbf V^*(\mathbf B_y^*-\mathbf B_y)\mathbf V.
+\]
+Now
+\[
+\mathbf B_y^*-\mathbf B_y
+=
+-2iy\,\mathbf I_n+\mathbf A_n(a)-\mathbf A_n(a)^{\mathsf T}
+=
+-2iy\,\mathbf I_n+(1-a)(\mathbf S-\mathbf S^{\mathsf T}).
+\]
+Hence
+\[
+\mathbf W^*\mathcal J\mathbf W
+=
+\frac{i}{2s}\,
+\mathbf V^*\bigl(-2iy\,\mathbf I_n+(1-a)(\mathbf S-\mathbf S^{\mathsf T})\bigr)\mathbf V
+=
+\frac1s
+\left(
+y\,\mathbf I_m
+-
+\frac{1-a}{2i}\,\mathbf V^*(\mathbf S-\mathbf S^{\mathsf T})\mathbf V
+\right).
+\]
+\end{proof}
+
+\begin{remark}[Quadratic pencil positivity]\label{rem:quadratic-pencil}
+For fixed \(x\in\mathbb R\) and \(\varepsilon>0\), define the Hermitian quadratic pencil
+\[
+\mathbf Q_{x,\varepsilon}(y)
+\coloneqq
+\mathbf H_x(y)-\varepsilon^2\mathbf I_n
+=
+\mathbf M_x+y^2\mathbf I_n-2y\,\mathbf K-\varepsilon^2\mathbf I_n.
+\]
+Then
+\[
+x+iy\in\partial\Sigma_\varepsilon
+\quad\Longleftrightarrow\quad
+\mathbf Q_{x,\varepsilon}(y)\succeq 0
+\ \text{ and }\
+\ker \mathbf Q_{x,\varepsilon}(y)\neq\{0\}.
+\]
+Indeed, \(\partial\Sigma_\varepsilon\) is exactly the level set \(s(x,y)=\varepsilon\), and
+\[
+s(x,y)=\varepsilon
+\quad\Longleftrightarrow\quad
+\lambda_{\min}(\mathbf H_x(y))=\varepsilon^2
+\quad\Longleftrightarrow\quad
+\mathbf Q_{x,\varepsilon}(y)\succeq 0,\ \ker\mathbf Q_{x,\varepsilon}(y)\neq\{0\}.
+\]
+
+If \(0\) is a simple eigenvalue of \(\mathbf Q_{x,\varepsilon}(y)\) with normalized eigenvector \(\boldsymbol{\psi}\), then
+\[
+\langle \boldsymbol{\psi},\mathbf Q_{x,\varepsilon}'(y)\boldsymbol{\psi}\rangle
+=
+2\bigl(y-\langle \boldsymbol{\psi},\mathbf K\boldsymbol{\psi}\rangle\bigr).
+\]
+Thus the desired vertical monotonicity at a boundary point is equivalent to the nonnegativity of the compression of \(\mathbf Q_{x,\varepsilon}'(y)\) to \(\ker \mathbf Q_{x,\varepsilon}(y)\). This is the quadratic-pencil form of the hidden positivity.
+\end{remark}
+
+\section{Rigorous partial results}
+
+\begin{proposition}[A large-\(y\) monotonicity region]\label{prop:large-y}
+Let \(\lambda(y)=s(x,y)^2\), and let \(\boldsymbol{\psi}(y)\) be a normalized eigenvector of \(\mathbf H_x(y)\) for \(\lambda(y)\) on an interval of simplicity. Then
+\[
+\lambda'(y)\ge 0
+\qquad\text{whenever}\qquad
+y\ge (1-a)\cos\!\left(\frac{\pi}{n+1}\right).
+\]
+\end{proposition}
+
+\begin{proof}
+By Corollary~\ref{cor:scalar-form},
+\[
+\lambda'(y)=2y-2\langle \boldsymbol{\psi},\mathbf K\boldsymbol{\psi}\rangle.
+\]
+Since \(\mathbf K\) is Hermitian,
+\[
+\langle \boldsymbol{\psi},\mathbf K\boldsymbol{\psi}\rangle\le \|\mathbf K\|.
+\]
+Now
+\[
+\mathbf K=\frac{1-a}{2}\,\mathbf L,
+\qquad
+\mathbf L\coloneqq i(\mathbf S^{\mathsf T}-\mathbf S).
+\]
+Let
+\[
+\mathbf D=\operatorname{diag}\bigl(1,i,i^2,\dots,i^{n-1}\bigr).
+\]
+A direct computation shows
+\[
+\mathbf D^*\mathbf L\mathbf D=\mathbf S+\mathbf S^{\mathsf T}.
+\]
+Thus
+\[
+\|\mathbf K\|
+=
+\frac{1-a}{2}\,\|\mathbf S+\mathbf S^{\mathsf T}\|.
+\]
+The symmetric tridiagonal Toeplitz matrix \(\mathbf S+\mathbf S^{\mathsf T}\) has eigenvalues
+\[
+2\cos\!\left(\frac{k\pi}{n+1}\right),\qquad k=1,\dots,n,
+\]
+hence
+\[
+\|\mathbf S+\mathbf S^{\mathsf T}\|=2\cos\!\left(\frac{\pi}{n+1}\right).
+\]
+Therefore
+\[
+\|\mathbf K\|
+=
+(1-a)\cos\!\left(\frac{\pi}{n+1}\right).
+\]
+If \(y\ge \|\mathbf K\|\), then
+\[
+\lambda'(y)=2y-2\langle \boldsymbol{\psi},\mathbf K\boldsymbol{\psi}\rangle\ge 2y-2\|\mathbf K\|\ge 0.
+\]
+\end{proof}
+
+\begin{proposition}[The case \(n=2\)]\label{prop:n=2}
+For \(n=2\), one has
+\[
+\frac{d}{dy}\bigl(s(x,y)^2\bigr)\ge 0
+\qquad (y\ge 0,\ x\in\mathbb R).
+\]
+In particular, Conjecture~\ref{conj:vertical-monotonicity} holds for \(n=2\).
+\end{proposition}
+
+\begin{proof}
+For \(n=2\),
+\[
+\mathbf B_y=
+\begin{bmatrix}
+x+iy & -1\\
+-a & x+iy
+\end{bmatrix},
+\]
+so
+\[
+\mathbf H_x(y)=\mathbf B_y^*\mathbf B_y=
+\begin{bmatrix}
+a^2+x^2+y^2 & -(a+1)x+i(1-a)y\\
+-(a+1)x-i(1-a)y & 1+x^2+y^2
+\end{bmatrix}.
+\]
+The smaller eigenvalue is
+\[
+s(x,y)^2
+=
+x^2+y^2+\frac{1+a^2}{2}
+-\frac12\sqrt{(1-a^2)^2+4(a+1)^2x^2+4(1-a)^2y^2}.
+\]
+Differentiating gives
+\[
+\frac{d}{dy}\bigl(s(x,y)^2\bigr)
+=
+2y\left(
+1-\frac{(1-a)^2}{
+\sqrt{(1-a^2)^2+4(a+1)^2x^2+4(1-a)^2y^2}}
+\right).
+\]
+Since
+\[
+\sqrt{(1-a^2)^2+4(a+1)^2x^2+4(1-a)^2y^2}\ge 1-a^2\ge (1-a)^2,
+\]
+the bracket is nonnegative, hence
+\[
+\frac{d}{dy}\bigl(s(x,y)^2\bigr)\ge 0
+\qquad (y\ge 0).
+\]
+Because \(s(x,y)\ge 0\), this implies \(d s(x,y)/dy\ge 0\) whenever \(s(x,y)>0\), and therefore Conjecture~\ref{conj:vertical-monotonicity} follows for \(n=2\).
+\end{proof}
+
+\section{Convexity and the reduced-resolvent form}
+
+Fix \(x\in\mathbb R\). On an interval of simplicity, let
+\[
+\lambda(y)\coloneqq s(x,y)^2=\lambda_{\min}(\mathbf H_x(y)),
+\]
+and let \(\boldsymbol{\psi}(y)\) be a normalized eigenvector of \(\mathbf H_x(y)\) for \(\lambda(y)\). Write the remaining eigenpairs as
+\[
+\mathbf H_x(y)\boldsymbol{\psi}_k(y)=\lambda_k(y)\boldsymbol{\psi}_k(y),
+\qquad
+k=2,\dots,n,
+\]
+with \(\{\boldsymbol{\psi},\boldsymbol{\psi}_2,\dots,\boldsymbol{\psi}_n\}\) orthonormal, and define the positive reduced resolvent
+\[
+\mathcal G(y)\coloneqq \sum_{k=2}^n \frac{1}{\lambda_k(y)-\lambda(y)}\,\boldsymbol{\psi}_k(y)\boldsymbol{\psi}_k(y)^*.
+\]
+Equivalently,
+\[
+(\mathbf H_x(y)-\lambda(y)\mathbf I_n)\mathcal G(y)=\mathcal G(y)(\mathbf H_x(y)-\lambda(y)\mathbf I_n)=\mathbf I_n-\boldsymbol{\psi}(y)\boldsymbol{\psi}(y)^*.
+\]
+
+\begin{proposition}[Reduced-resolvent form of convexity]\label{prop:reduced-resolvent}
+On an interval of simplicity,
+\[
+\lambda''(y)
+=
+2-8\,\bigl\langle \mathbf K\boldsymbol{\psi}(y),\,\mathcal G(y)\,\mathbf K\boldsymbol{\psi}(y)\bigr\rangle.
+\]
+Hence the convexity statement
+\[
+\lambda''(y)\ge 0
+\]
+is equivalent to
+\[
+\boxed{
+\bigl\langle \mathbf K\boldsymbol{\psi}(y),\,\mathcal G(y)\,\mathbf K\boldsymbol{\psi}(y)\bigr\rangle\le \frac14.
+}
+\]
+\end{proposition}
+
+\begin{proof}
+We have
+\[
+\mathbf H_x'(y)=2y\,\mathbf I_n-2\mathbf K,
+\qquad
+\mathbf H_x''(y)=2\mathbf I_n.
+\]
+For a simple Hermitian eigenvalue branch, the second-derivative formula is
+\[
+\lambda''(y)
+=
+\langle \boldsymbol{\psi},\mathbf H_x''(y)\boldsymbol{\psi}\rangle
+-
+2\sum_{k=2}^n \frac{\bigl|\langle \boldsymbol{\psi}_k,\mathbf H_x'(y)\boldsymbol{\psi}\rangle\bigr|^2}{\lambda_k-\lambda}.
+\]
+Since \(\boldsymbol{\psi}_k^*\boldsymbol{\psi}=0\), the scalar part \(2y\mathbf I_n\) drops out:
+\[
+\langle \boldsymbol{\psi}_k,\mathbf H_x'(y)\boldsymbol{\psi}\rangle
+=
+-2\langle \boldsymbol{\psi}_k,\mathbf K\boldsymbol{\psi}\rangle.
+\]
+Therefore
+\[
+\lambda''(y)
+=
+2-8\sum_{k=2}^n \frac{|\langle \boldsymbol{\psi}_k,\mathbf K\boldsymbol{\psi}\rangle|^2}{\lambda_k-\lambda}
+=
+2-8\,\langle \mathbf K\boldsymbol{\psi},\mathcal G\,\mathbf K\boldsymbol{\psi}\rangle.
+\]
+This is exactly the stated bound.
+\end{proof}
+
+\begin{remark}[A numerical-range reformulation]\label{rem:numerical-range}
+Define
+\[
+\alpha_x(t)\coloneqq
+\min\bigl\{
+\langle \boldsymbol{\xi},\mathbf M_x\boldsymbol{\xi}\rangle:\;
+\|\boldsymbol{\xi}\|_2=1,\ \langle \boldsymbol{\xi},\mathbf K\boldsymbol{\xi}\rangle=t
+\bigr\},
+\]
+for \(t\) in the interval
+\[
+I_x\coloneqq \{\langle \boldsymbol{\xi},\mathbf K\boldsymbol{\xi}\rangle:\ \|\boldsymbol{\xi}\|_2=1\}.
+\]
+Then
+\[
+\lambda(y)-y^2
+=
+\min_{t\in I_x}\bigl(\alpha_x(t)-2yt\bigr).
+\]
+If \(y\mapsto \lambda(y)\) is simple and the lower boundary function \(\alpha_x\) is \(C^2\) at the minimizing point \(t(y)=\langle \boldsymbol{\psi}(y),\mathbf K\boldsymbol{\psi}(y)\rangle\), then
+\[
+\alpha_x'(t(y))=2y,
+\qquad
+\lambda''(y)-2=-\frac{4}{\alpha_x''(t(y))}.
+\]
+Comparing with Proposition~\ref{prop:reduced-resolvent}, one obtains
+\[
+\bigl\langle \mathbf K\boldsymbol{\psi}(y),\,\mathcal G(y)\,\mathbf K\boldsymbol{\psi}(y)\bigr\rangle
+=
+\frac{1}{2\,\alpha_x''(t(y))}.
+\]
+Thus convexity of \(\lambda(y)=s(x,y)^2\) is equivalent to the lower boundary of this numerical-range profile being \(2\)-strongly convex:
+\[
+\alpha_x''(t)\ge 2.
+\]
+\end{remark}
+
+\section{Boundary-defect and boundary-resolvent reductions}
+
+Define
+\[
+\mathbf T\coloneqq \mathbf S+\mathbf S^{\mathsf T},
+\qquad
+\mathbf L\coloneqq i(\mathbf S^{\mathsf T}-\mathbf S),
+\qquad
+\mathbf P_1\coloneqq \mathbf e_1\mathbf e_1^{\mathsf T},
+\qquad
+\mathbf P_n\coloneqq \mathbf e_n\mathbf e_n^{\mathsf T}.
+\]
+Then
+\[
+\mathbf K=\frac{1-a}{2}\,\mathbf L,
+\qquad
+\mathbf A_n(a)=\frac{1+a}{2}\,\mathbf T+i\mathbf K.
+\]
+
+\begin{proposition}[Boundary-defect identity]\label{prop:boundary-defect}
+For every \(x,y\in\mathbb R\),
+\[
+\mathbf H_x(y)
+=
+\Bigl(x\mathbf I_n-\frac{1+a}{2}\mathbf T\Bigr)^2
++
+\bigl(y\mathbf I_n-\mathbf K\bigr)^2
++
+\frac{1-a^2}{2}\,(\mathbf P_n-\mathbf P_1).
+\]
+\end{proposition}
+
+\begin{proof}
+Write
+\[
+\mathbf X\coloneqq x\mathbf I_n-\frac{1+a}{2}\mathbf T,
+\qquad
+\mathbf Y\coloneqq y\mathbf I_n-\mathbf K.
+\]
+Then
+\[
+(x+iy)\mathbf I_n-\mathbf A_n(a)=\mathbf X+i\mathbf Y.
+\]
+Hence
+\[
+\mathbf H_x(y)
+=
+(\mathbf X-i\mathbf Y)(\mathbf X+i\mathbf Y)
+=
+\mathbf X^2+\mathbf Y^2+i[\mathbf X,\mathbf Y].
+\]
+Since scalar matrices commute,
+\[
+[\mathbf X,\mathbf Y]
+=
+\left[-\frac{1+a}{2}\mathbf T,\,-\mathbf K\right]
+=
+\frac{1+a}{2}\,[\mathbf T,\mathbf K].
+\]
+Now
+\[
+\mathbf K=\frac{1-a}{2}\mathbf L,
+\]
+so
+\[
+[\mathbf T,\mathbf K]=\frac{1-a}{2}[\mathbf T,\mathbf L].
+\]
+A direct computation using
+\[
+\mathbf S\mathbf S^{\mathsf T}=\mathbf I_n-\mathbf P_n,
+\qquad
+\mathbf S^{\mathsf T}\mathbf S=\mathbf I_n-\mathbf P_1,
+\]
+gives
+\[
+[\mathbf T,\mathbf L]
+=
+2i(\mathbf P_1-\mathbf P_n).
+\]
+Therefore
+\[
+i[\mathbf X,\mathbf Y]
+=
+i\cdot \frac{1+a}{2}\cdot \frac{1-a}{2}\cdot 2i(\mathbf P_1-\mathbf P_n)
+=
+\frac{1-a^2}{2}\,(\mathbf P_n-\mathbf P_1).
+\]
+Substituting this into the expression for \(\mathbf H_x(y)\) proves the claim.
+\end{proof}
+
+\begin{remark}
+Proposition~\ref{prop:boundary-defect} shows that the noncommutative correction to the ``sum of squares''
+\[
+\Bigl(x\mathbf I_n-\frac{1+a}{2}\mathbf T\Bigr)^2
++
+\bigl(y\mathbf I_n-\mathbf K\bigr)^2
+\]
+is a rank-two boundary defect supported at the left and right endpoints. This strongly suggests that the unresolved convexity issue is a boundary phenomenon rather than a bulk one.
+\end{remark}
+
+We next isolate an almost-commuting symmetry of
+\[
+\mathbf B_y=(x+iy)\mathbf I_n-\mathbf A_n(a).
+\]
+
+\begin{proposition}[Rank-two commutator for \(\mathbf B_y\)]\label{prop:B-commutator}
+Let
+\[
+\mathbf M\coloneqq \mathbf P_n-\mathbf P_1.
+\]
+Then
+\[
+[\mathbf B_y,\mathbf L]=i(1+a)\mathbf M,
+\qquad
+[\mathbf B_y^*,\mathbf L]=i(1+a)\mathbf M.
+\]
+Consequently,
+\[
+[\mathbf H_x(y),\mathbf L]
+=
+i(1+a)\bigl(\mathbf B_y^*\mathbf M+\mathbf M\mathbf B_y\bigr).
+\]
+Moreover, the Hermitian matrix
+\[
+\mathbf C_x\coloneqq \mathbf B_y^*\mathbf M+\mathbf M\mathbf B_y
+\]
+is independent of \(y\) and is supported on \(\operatorname{span}\{\mathbf e_1,\mathbf e_2,\mathbf e_{n-1},\mathbf e_n\}\). Explicitly,
+\[
+\mathbf C_x
+=
+-2x\,\mathbf P_1
++2x\,\mathbf P_n
++\mathbf E_{12}+\mathbf E_{21}
+-a\mathbf E_{n-1,n}
+-a\mathbf E_{n,n-1},
+\]
+where \(\mathbf E_{jk}=\mathbf e_j\mathbf e_k^{\mathsf T}\).
+\end{proposition}
+
+\begin{proof}
+Since \(\mathbf B_y=(x+iy)\mathbf I_n-a\mathbf S^{\mathsf T}-\mathbf S\), it is enough to compute
+\[
+[\mathbf S,\mathbf L]
+=
+\mathbf S\,i(\mathbf S^{\mathsf T}-\mathbf S)-i(\mathbf S^{\mathsf T}-\mathbf S)\mathbf S
+=
+i(\mathbf S\mathbf S^{\mathsf T}-\mathbf S^{\mathsf T}\mathbf S)
+=
+i(\mathbf P_1-\mathbf P_n),
+\]
+and similarly
+\[
+[\mathbf S^{\mathsf T},\mathbf L]
+=
+i(\mathbf P_1-\mathbf P_n).
+\]
+Hence
+\[
+[\mathbf B_y,\mathbf L]
+=
+-a[\mathbf S^{\mathsf T},\mathbf L]-[\mathbf S,\mathbf L]
+=
+-(1+a)i(\mathbf P_1-\mathbf P_n)
+=
+i(1+a)\mathbf M.
+\]
+The identity for \([\mathbf B_y^*,\mathbf L]\) is identical.
+
+Now
+\[
+[\mathbf H_x(y),\mathbf L]
+=
+\mathbf B_y^*[\mathbf B_y,\mathbf L]+[\mathbf B_y^*,\mathbf L]\mathbf B_y
+=
+i(1+a)\bigl(\mathbf B_y^*\mathbf M+\mathbf M\mathbf B_y\bigr).
+\]
+This proves the commutator identity.
+
+To compute \(\mathbf C_x\), note that
+\[
+\mathbf M\mathbf B_y
+=
+-x\,\mathbf P_1
++x\,\mathbf P_n
++\mathbf E_{12}
+-a\mathbf E_{n,n-1},
+\]
+and
+\[
+\mathbf B_y^*\mathbf M
+=
+-x\,\mathbf P_1
++x\,\mathbf P_n
++\mathbf E_{21}
+-a\mathbf E_{n-1,n}.
+\]
+The \(iy\)-terms cancel, so \(\mathbf C_x\) is independent of \(y\), and summing the two displays gives the stated formula.
+\end{proof}
+
+\begin{proposition}[Boundary Green-function reduction]\label{prop:boundary-green}
+Let \(x\in\mathbb R\), and suppose \(\lambda(y)=s(x,y)^2\) is simple on an interval of \(y\)-values. Let \(\boldsymbol{\psi}(y)\) be a normalized eigenvector of \(\mathbf H_x(y)\) for \(\lambda(y)\), and let
+\[
+\mathcal G(y)
+=
+\sum_{k=2}^n \frac{1}{\lambda_k(y)-\lambda(y)}\,\boldsymbol{\psi}_k(y)\boldsymbol{\psi}_k(y)^*
+\]
+be the positive reduced resolvent. Then
+\[
+(\mathbf I_n-\boldsymbol{\psi}\boldsymbol{\psi}^*)\,\mathbf L\boldsymbol{\psi}
+=
+i(1+a)\,\mathcal G\,\mathbf C_x\boldsymbol{\psi},
+\]
+and
+\[
+\boxed{
+\bigl\langle \mathbf K\boldsymbol{\psi},\mathcal G\,\mathbf K\boldsymbol{\psi}\bigr\rangle
+=
+\frac{(1-a^2)^2}{4}\,
+\bigl\langle \mathbf C_x\boldsymbol{\psi},\mathcal G^{\,3}\mathbf C_x\boldsymbol{\psi}\bigr\rangle.
+}
+\]
+In particular, by Proposition~\ref{prop:reduced-resolvent}, convexity of \(y\mapsto s(x,y)^2\) is equivalent to the boundary estimate
+\[
+(1-a^2)^2\,
+\bigl\langle \mathbf C_x\boldsymbol{\psi},\mathcal G^{\,3}\mathbf C_x\boldsymbol{\psi}\bigr\rangle
+\le 1.
+\]
+\end{proposition}
+
+\begin{proof}
+Since \(\mathbf H_x(y)\boldsymbol{\psi}=\lambda(y)\boldsymbol{\psi}\), Proposition~\ref{prop:B-commutator} gives
+\[
+(\mathbf H_x(y)-\lambda(y)\mathbf I_n)\,\mathbf L\boldsymbol{\psi}
+=
+[\mathbf H_x(y),\mathbf L]\boldsymbol{\psi}
+=
+i(1+a)\mathbf C_x\boldsymbol{\psi}.
+\]
+Now \(\mathbf C_x\) is Hermitian, and
+\[
+\langle \boldsymbol{\psi},[\mathbf H_x(y),\mathbf L]\boldsymbol{\psi}\rangle=0,
+\]
+so
+\[
+\langle \boldsymbol{\psi},\mathbf C_x\boldsymbol{\psi}\rangle=0.
+\]
+Hence \(\mathbf C_x\boldsymbol{\psi}\in \boldsymbol{\psi}^\perp\), and applying \(\mathcal G\) to the previous identity yields
+\[
+(\mathbf I_n-\boldsymbol{\psi}\boldsymbol{\psi}^*)\,\mathbf L\boldsymbol{\psi}
+=
+i(1+a)\,\mathcal G\,\mathbf C_x\boldsymbol{\psi}.
+\]
+Since
+\[
+\mathbf K=\frac{1-a}{2}\mathbf L,
+\]
+we obtain
+\[
+(\mathbf I_n-\boldsymbol{\psi}\boldsymbol{\psi}^*)\,\mathbf K\boldsymbol{\psi}
+=
+i\,\frac{1-a^2}{2}\,\mathcal G\,\mathbf C_x\boldsymbol{\psi}.
+\]
+Because \(\mathcal G\boldsymbol{\psi}=0\),
+\[
+\langle \mathbf K\boldsymbol{\psi},\mathcal G\,\mathbf K\boldsymbol{\psi}\rangle
+=
+\left\langle
+(\mathbf I_n-\boldsymbol{\psi}\boldsymbol{\psi}^*)\mathbf K\boldsymbol{\psi},\,
+\mathcal G\,(\mathbf I_n-\boldsymbol{\psi}\boldsymbol{\psi}^*)\mathbf K\boldsymbol{\psi}
+\right\rangle.
+\]
+Substituting the previous display gives
+\[
+\langle \mathbf K\boldsymbol{\psi},\mathcal G\,\mathbf K\boldsymbol{\psi}\rangle
+=
+\frac{(1-a^2)^2}{4}\,
+\langle \mathcal G\mathbf C_x\boldsymbol{\psi},\mathcal G^{\,2}\mathbf C_x\boldsymbol{\psi}\rangle
+=
+\frac{(1-a^2)^2}{4}\,
+\langle \mathbf C_x\boldsymbol{\psi},\mathcal G^{\,3}\mathbf C_x\boldsymbol{\psi}\rangle.
+\]
+The last statement follows by combining this identity with Proposition~\ref{prop:reduced-resolvent}.
+\end{proof}
+
+\begin{remark}[Antiunitary symmetry of the ground state]\label{rem:antiunitary}
+Since \(\mathbf H_x(y)\) has real coefficients except for purely imaginary skew-symmetric terms, one checks that
+\[
+\mathbf R\,\overline{\mathbf H_x(y)}\,\mathbf R=\mathbf H_x(y).
+\]
+Hence, whenever \(\lambda(y)\) is simple, the normalized eigenvector \(\boldsymbol{\psi}(y)\) may be chosen so that
+\[
+\mathbf R\,\overline{\boldsymbol{\psi}(y)}=\boldsymbol{\psi}(y).
+\]
+Equivalently,
+\[
+\psi_n=\overline{\psi_1},
+\qquad
+\psi_{n-1}=\overline{\psi_2}.
+\]
+With the explicit formula for \(\mathbf C_x\) from Proposition~\ref{prop:B-commutator},
+\[
+\mathbf C_x\boldsymbol{\psi}
+=
+(-2x\psi_1+\psi_2)\mathbf e_1
++\psi_1\mathbf e_2
+-a\overline{\psi_1}\,\mathbf e_{n-1}
++\bigl(2x\overline{\psi_1}-a\overline{\psi_2}\bigr)\mathbf e_n.
+\]
+Thus the boundary source \(\mathbf C_x\boldsymbol{\psi}\) is determined by the first two components of \(\boldsymbol{\psi}\).
+\end{remark}
+
+\section{Constant-coefficient bulk recurrence}
+
+\begin{proposition}[Interior fourth-order recurrence]\label{prop:bulk-recurrence}
+Let \(\mu\in\mathbb R\), and let
+\[
+\mathbf u=
+\begin{bmatrix}
+u_1\\
+\vdots\\
+u_n
+\end{bmatrix}
+\]
+satisfy
+\[
+(\mathbf H_x(y)-\mu\mathbf I_n)\mathbf u=0.
+\]
+Then for every interior index \(j\) for which all shifted terms are defined,
+\[
+a u_{j+2}
+-c\,u_{j+1}
++
+\bigl(1+a^2+x^2+y^2-\mu\bigr)u_j
+-\overline c\,u_{j-1}
++a u_{j-2}
+=0,
+\]
+where
+\[
+c\coloneqq (1+a)x-i(1-a)y.
+\]
+Equivalently, the characteristic polynomial of the bulk recurrence is
+\[
+p_\mu(r)
+=
+a r^4-c r^3+\bigl(1+a^2+x^2+y^2-\mu\bigr)r^2-\overline c\,r+a.
+\]
+It factorizes as
+\[
+\boxed{
+p_\mu(r)
+=
+(ar^2-\overline z\,r+1)(r^2-zr+a)-\mu r^2,
+\qquad
+z=x+iy.
+}
+\]
+\end{proposition}
+
+\begin{proof}
+Let
+\[
+\mathbf B_y=(x+iy)\mathbf I_n-\mathbf A_n(a).
+\]
+Then
+\[
+(\mathbf B_y\mathbf u)_j
+=
+zu_j-a u_{j-1}-u_{j+1},
+\qquad z=x+iy.
+\]
+Since
+\[
+\mathbf H_x(y)=\mathbf B_y^*\mathbf B_y,
+\]
+one computes
+\begin{align*}
+(\mathbf H_x(y)\mathbf u)_j
+&=
+\overline z(zu_j-a u_{j-1}-u_{j+1})
+-(zu_{j-1}-a u_{j-2}-u_j)
+-a(zu_{j+1}-a u_j-u_{j+2}) \\
+&=
+a u_{j+2}
+-(\overline z+a z)u_{j+1}
++\bigl(1+a^2+|z|^2\bigr)u_j
+-(z+a\overline z)u_{j-1}
++a u_{j-2}.
+\end{align*}
+Now
+\[
+\overline z+a z=(1+a)x-i(1-a)y=c,
+\qquad
+z+a\overline z=\overline c.
+\]
+Thus
+\[
+(\mathbf H_x(y)-\mu\mathbf I_n)\mathbf u=0
+\]
+gives the stated recurrence. The polynomial \(p_\mu(r)\) is its characteristic polynomial. Expanding
+\[
+(ar^2-\overline z\,r+1)(r^2-zr+a)-\mu r^2
+\]
+shows that it is exactly equal to \(p_\mu(r)\).
+\end{proof}
+
+\begin{remark}
+Proposition~\ref{prop:bulk-recurrence} shows that the bulk equation is a constant-coefficient fourth-order recurrence with a palindromic characteristic polynomial. The unresolved boundary-resolvent estimate from Proposition~\ref{prop:boundary-green} should therefore be expressible in terms of the two characteristic roots of \(p_\mu\) inside the unit disk and an explicit boundary Schur complement.
+\end{remark}
+
+\section{Empirical observations and conjectural next steps}
+
+\begin{remark}[Empirical observations]\label{rem:numerics}
+Informal numerical experiments suggest the following statements for all \(n>1\), \(0<a<1\), and fixed \(x\in\mathbb R\):
+\begin{enumerate}
+\item the map \(y\mapsto s(x,y)^2\) is convex on \([0,\infty)\);
+\item the quantity
+\[
+\mathcal R_x(y)\coloneqq \bigl\langle \mathbf K\boldsymbol{\psi}(y),\,\mathcal G(y)\,\mathbf K\boldsymbol{\psi}(y)\bigr\rangle
+\]
+appears to be nonincreasing in \(y\);
+\item on simple singular-value branches, the local currents
+\[
+J_j(y)=\Im\!\bigl(\overline{v_j(y)}\,v_{j+1}(y)\bigr)
+\]
+appear to satisfy \(J_j(y)\ge 0\), and the reflected phases
+\[
+\Im\!\bigl(v_j(y)v_{n+1-j}(y)\bigr)
+\]
+appear to satisfy
+\[
+\Im\!\bigl(v_j(y)v_{n+1-j}(y)\bigr)\le 0.
+\]
+\end{enumerate}
+At present these statements remain conjectural. The rigorous reductions above show that the weakest statement needed for the topology is the scalar inequality
+\[
+\langle \boldsymbol{\psi}(y),\mathbf K\boldsymbol{\psi}(y)\rangle\le y,
+\]
+or equivalently the reduced-resolvent bound
+\[
+\bigl\langle \mathbf K\boldsymbol{\psi}(y),\,\mathcal G(y)\,\mathbf K\boldsymbol{\psi}(y)\bigr\rangle\le \frac14.
+\]
+\end{remark}
+
+\begin{remark}[Summary of the remaining analytic problem]
+The simply-connectedness theorem is reduced to Conjecture~\ref{conj:vertical-monotonicity}. On intervals of simplicity, this conjecture is equivalent to any of the following:
+\begin{enumerate}
+\item
+\[
+\langle \boldsymbol{\psi}(y),\mathbf K\boldsymbol{\psi}(y)\rangle\le y;
+\]
+\item
+\[
+\mathbf W^*\mathcal J\mathbf W\succeq 0
+\quad\text{on the minimal positive eigenspace of the Hermitian linearization }\mathcal B_x(y);
+\]
+\item
+\[
+\mathbf Q'_{x,\varepsilon}(y)\succeq 0
+\quad\text{on }\ker \mathbf Q_{x,\varepsilon}(y)
+\quad\text{at boundary points }s(x,y)=\varepsilon;
+\]
+\item
+\[
+\lambda''(y)\ge 0
+\quad\Longleftrightarrow\quad
+\bigl\langle \mathbf K\boldsymbol{\psi}(y),\mathcal G(y)\mathbf K\boldsymbol{\psi}(y)\bigr\rangle\le \frac14;
+\]
+\item
+\[
+(1-a^2)^2\,
+\bigl\langle \mathbf C_x\boldsymbol{\psi}(y),\mathcal G(y)^3\mathbf C_x\boldsymbol{\psi}(y)\bigr\rangle\le 1.
+\]
+\end{enumerate}
+The last form is a \(4\times4\) boundary Green-function problem, because \(\mathbf C_x\) is supported only on \(\operatorname{span}\{\mathbf e_1,\mathbf e_2,\mathbf e_{n-1},\mathbf e_n\}\).
+\end{remark}
+
+\section{Exact boundary Weyl matrix from the root basis}
+
+In this section we assume \(n\ge 5\).
+
+Fix \(x\in\mathbb R\), \(y>0\), and write
+\[
+z=x+iy,
+\qquad
+\mathbf H_{x,y}
+\coloneqq
+\bigl(z\mathbf I_n-\mathbf A_n(a)\bigr)^*\bigl(z\mathbf I_n-\mathbf A_n(a)\bigr).
+\]
+Then
+\[
+\lambda_1(x,y)=s(x,y)^2=\lambda_{\min}(\mathbf H_{x,y}).
+\]
+Also set
+\[
+c\coloneqq \overline z + a z = (1+a)x-i(1-a)y,
+\qquad
+d_\mu\coloneqq 1+a^2+|z|^2-\mu.
+\]
+For \(\mu\in\mathbb R\), recall from Proposition~\ref{prop:bulk-recurrence} the quartic
+\[
+p_\mu(r)
+=
+a r^4-c r^3+d_\mu r^2-\overline c\,r+a.
+\]
+
+We introduce the boundary-coordinate map
+\[
+\mathbf P_\partial:\mathbb C^n\to\mathbb C^4,
+\qquad
+\mathbf P_\partial \mathbf u=
+\begin{bmatrix}
+u_1\\
+u_2\\
+u_{n-1}\\
+u_n
+\end{bmatrix}.
+\]
+
+\begin{proposition}[Where the two-decaying-root picture breaks]\label{prop:symbol-floor}
+For \(\theta\in\mathbb R\), one has
+\[
+p_\mu(e^{i\theta})=0
+\quad\Longleftrightarrow\quad
+\mu=
+\bigl|z-e^{i\theta}-a e^{-i\theta}\bigr|^2.
+\]
+Hence the quartic \(p_\mu\) has a unit-circle root if and only if
+\[
+\mu\in
+\left\{
+\bigl|z-e^{i\theta}-a e^{-i\theta}\bigr|^2:\ \theta\in[0,2\pi)
+\right\}.
+\]
+In particular, if we define the symbol floor
+\[
+\mu_{\mathrm{sym}}(x,y)
+\coloneqq
+\min_{\theta\in[0,2\pi)}
+\bigl|z-e^{i\theta}-a e^{-i\theta}\bigr|^2,
+\]
+then the regime in which \(p_\mu\) has exactly two roots in the open unit disk and two outside it is, in general, only
+\[
+\mu<\mu_{\mathrm{sym}}(x,y).
+\]
+\end{proposition}
+
+\begin{proof}
+For \(|r|=1\), one has \(r^{-1}=\overline r\), and therefore
+\[
+r^{-2}p_\mu(r)
+=
+a r^2-c r+d_\mu-\overline c\,r^{-1}+a r^{-2}.
+\]
+Using \(c=\overline z + a z\), a direct expansion gives
+\[
+a r^2-c r+(1+a^2+|z|^2)-\overline c\,r^{-1}+a r^{-2}
+=
+\bigl|z-r-a r^{-1}\bigr|^2.
+\]
+Hence, for \(|r|=1\),
+\[
+r^{-2}p_\mu(r)=\bigl|z-r-a r^{-1}\bigr|^2-\mu.
+\]
+Taking \(r=e^{i\theta}\) gives the claim.
+
+Finally, \(p_\mu\) is self-inversive, with leading and constant coefficients both equal to \(a\), so its roots come in reciprocal-conjugate pairs and their product has modulus \(1\). Therefore, once there is no unit-circle root, there must be exactly two roots in \(\mathbb D\) and two outside \(\overline{\mathbb D}\).
+\end{proof}
+
+\begin{remark}
+Proposition~\ref{prop:symbol-floor} shows that the correct exact boundary object is the \emph{four-root} Evans/Weyl matrix below, not the two-decaying-root formula by itself. The latter survives as an exact factorization only in the subthreshold regime \(\mu<\mu_{\mathrm{sym}}(x,y)\).
+\end{remark}
+
+\subsection*{The four-root boundary trace/residual matrices}
+
+Assume for the moment that \(p_\mu\) has four simple roots
+\[
+\zeta_1(\mu),\dots,\zeta_4(\mu).
+\]
+(Repeated-root parameters are exceptional; the formulas below extend to them by continuity, or by replacing repeated root columns with the corresponding generalized-root solutions.)
+
+For each root \(\zeta\) of \(p_\mu\), define the scalar sequence
+\[
+u_j^{(\zeta)}\coloneqq \zeta^{\,j-1},
+\qquad
+j=1,\dots,n.
+\]
+Because \(p_\mu(\zeta)=0\), the vector
+\[
+\mathbf u^{(\zeta)}=
+\begin{bmatrix}
+u_1^{(\zeta)}\\
+\vdots\\
+u_n^{(\zeta)}
+\end{bmatrix}
+\]
+solves the interior homogeneous equation
+\[
+(\mathbf H_{x,y}-\mu\mathbf I_n)\mathbf u^{(\zeta)}=0
+\qquad\text{for rows }j=3,\dots,n-2.
+\]
+
+Define the boundary trace column
+\[
+\mathbf t(\zeta)\coloneqq
+\begin{bmatrix}
+1\\
+\zeta\\
+\zeta^{\,n-2}\\
+\zeta^{\,n-1}
+\end{bmatrix}
+=
+\mathbf P_\partial \mathbf u^{(\zeta)}.
+\]
+
+Define also the boundary residual column
+\[
+\mathbf n(\zeta)\coloneqq
+\mathbf P_\partial
+\bigl((\mathbf H_{x,y}-\mu\mathbf I_n)\mathbf u^{(\zeta)}\bigr).
+\]
+A direct row-by-row computation gives
+\[
+\mathbf n(\zeta)=
+\begin{bmatrix}
+\overline c\,\zeta^{-1}-a\zeta^{-2}-1\\[1mm]
+-a\zeta^{-1}\\[1mm]
+-a\zeta^{\,n}\\[1mm]
+\zeta^{\,n-1}\bigl(c\zeta-a\zeta^2-a^2\bigr)
+\end{bmatrix}.
+\]
+
+Now set
+\[
+\mathbf T_n(\mu)\coloneqq
+\bigl[\mathbf t(\zeta_1)\ \mathbf t(\zeta_2)\ \mathbf t(\zeta_3)\ \mathbf t(\zeta_4)\bigr]
+\in\mathbb C^{4\times 4},
+\]
+\[
+\mathbf N_n(\mu)\coloneqq
+\bigl[\mathbf n(\zeta_1)\ \mathbf n(\zeta_2)\ \mathbf n(\zeta_3)\ \mathbf n(\zeta_4)\bigr]
+\in\mathbb C^{4\times 4}.
+\]
+
+\begin{proposition}[Exact boundary Green matrix]\label{prop:four-root-boundary-green}
+Assume \(\mu\notin\sigma(\mathbf H_{x,y})\), and assume \(p_\mu\) has four simple roots. Then
+\[
+\mathbf G_n(\mu)
+\coloneqq
+\mathbf P_\partial(\mathbf H_{x,y}-\mu\mathbf I_n)^{-1}\mathbf P_\partial^*
+\]
+is given exactly by
+\[
+\boxed{
+\mathbf G_n(\mu)=\mathbf T_n(\mu)\,\mathbf N_n(\mu)^{-1}.
+}
+\]
+If, in addition, \(\mathbf T_n(\mu)\) is invertible, then the boundary Weyl matrix
+\[
+\mathbf M_n(\mu)\coloneqq \mathbf N_n(\mu)\,\mathbf T_n(\mu)^{-1}
+\]
+is well defined and satisfies
+\[
+\boxed{
+\mathbf M_n(\mu)=\mathbf G_n(\mu)^{-1}.
+}
+\]
+\end{proposition}
+
+\begin{proof}
+Let
+\[
+\mathbf f\in\mathbb C^4,
+\]
+and solve
+\[
+(\mathbf H_{x,y}-\mu\mathbf I_n)\mathbf u=\mathbf P_\partial^* \mathbf f.
+\]
+Since the forcing is supported only at the boundary rows \(1,2,n-1,n\), the interior rows \(j=3,\dots,n-2\) satisfy the homogeneous recurrence from Proposition~\ref{prop:bulk-recurrence}. Therefore \(\mathbf u\) is a linear combination of the four root modes:
+\[
+\mathbf u=\sum_{\ell=1}^4 \gamma_\ell \mathbf u^{(\zeta_\ell)}
+\]
+for some
+\[
+\boldsymbol{\gamma}=
+\begin{bmatrix}
+\gamma_1\\
+\gamma_2\\
+\gamma_3\\
+\gamma_4
+\end{bmatrix}
+\in\mathbb C^4.
+\]
+
+Applying \(\mathbf P_\partial\) gives
+\[
+\mathbf P_\partial\mathbf u=\mathbf T_n(\mu)\boldsymbol{\gamma},
+\]
+while applying \(\mathbf P_\partial(\mathbf H_{x,y}-\mu\mathbf I_n)\) gives
+\[
+\mathbf f=\mathbf N_n(\mu)\boldsymbol{\gamma}.
+\]
+Because \(\mu\notin\sigma(\mathbf H_{x,y})\), the boundary-value problem is uniquely solvable for every \(\mathbf f\), so \(\mathbf N_n(\mu)\) is invertible and
+\[
+\mathbf P_\partial\mathbf u=\mathbf T_n(\mu)\mathbf N_n(\mu)^{-1}\mathbf f.
+\]
+Since \(\mathbf f\) was arbitrary, this proves
+\[
+\mathbf G_n(\mu)=\mathbf T_n(\mu)\mathbf N_n(\mu)^{-1}.
+\]
+
+If \(\mathbf T_n(\mu)\) is invertible, then \(\mathbf G_n(\mu)\) is a product of two invertible matrices and therefore invertible, with
+\[
+\mathbf G_n(\mu)^{-1}
+=
+\mathbf N_n(\mu)\mathbf T_n(\mu)^{-1}
+=
+\mathbf M_n(\mu).
+\]
+\end{proof}
+
+\begin{remark}
+The four-root formula in Proposition~\ref{prop:four-root-boundary-green} is the exact finite-volume object. It remains valid all the way up to the finite-volume eigenvalue \(\lambda_1(x,y)\), provided the roots stay simple. This is the correct replacement for the purely subthreshold two-decaying-root ansatz.
+\end{remark}
+
+\subsection*{Subthreshold factorization through the two decaying roots}
+
+Assume now that
+\[
+\mu<\mu_{\mathrm{sym}}(x,y),
+\]
+so that \(p_\mu\) has exactly two roots \(r_1,r_2\) in \(\mathbb D\), and the other two are
+\[
+\rho_1=\overline{r_1}^{\,-1},
+\qquad
+\rho_2=\overline{r_2}^{\,-1}.
+\]
+Set
+\[
+\sigma_1\coloneqq r_1+r_2,
+\qquad
+\sigma_2\coloneqq r_1r_2,
+\qquad
+\mathbf J\coloneqq
+\begin{bmatrix}
+0&1\\
+1&0
+\end{bmatrix}.
+\]
+Define
+\[
+F_k\coloneqq \frac{r_1^k-r_2^k}{r_1-r_2},
+\qquad k\ge 0,
+\]
+with \(F_0=0\), \(F_1=1\), and
+\[
+\mathbf A_0\coloneqq \mathbf I_2,
+\qquad
+\mathbf A_k\coloneqq
+\begin{bmatrix}
+-\sigma_2 F_{k-1} & F_k\\
+-\sigma_2 F_k & F_{k+1}
+\end{bmatrix},
+\qquad k\ge 1.
+\]
+Equivalently,
+\[
+\mathbf A_k=\mathbf C^k,
+\qquad
+\mathbf C\coloneqq
+\begin{bmatrix}
+0&1\\
+-\sigma_2&\sigma_1
+\end{bmatrix}.
+\]
+Also define
+\[
+\mathbf B_k\coloneqq \mathbf J\,\overline{\mathbf A_k}\,\mathbf J.
+\]
+
+\begin{lemma}\label{lem:block-propagators}
+Let \(\mathbf u^L\) be a linear combination of the two left-decaying modes \(r_1^{j-1},r_2^{j-1}\). Then
+\[
+\begin{bmatrix}
+u_{k+1}^L\\
+u_{k+2}^L
+\end{bmatrix}
+=
+\mathbf A_k
+\begin{bmatrix}
+u_1^L\\
+u_2^L
+\end{bmatrix}.
+\]
+Likewise, if \(\mathbf u^R\) is a linear combination of the two right-decaying modes
+\(\rho_1^{j-n},\rho_2^{j-n}\), then
+\[
+\begin{bmatrix}
+u_{n-k-1}^R\\
+u_{n-k}^R
+\end{bmatrix}
+=
+\mathbf B_k
+\begin{bmatrix}
+u_{n-1}^R\\
+u_n^R
+\end{bmatrix}.
+\]
+\end{lemma}
+
+\begin{proof}
+For \(\mathbf u^L\), the two-dimensional space spanned by \(r_1^{j-1},r_2^{j-1}\) satisfies the second-order recurrence
+\[
+u_{j+2}=\sigma_1 u_{j+1}-\sigma_2 u_j,
+\]
+hence the transfer matrix from \((u_1,u_2)\) to \((u_{k+1},u_{k+2})\) is \(\mathbf C^k\). The explicit formula for \(\mathbf A_k\) is the standard closed form for \(\mathbf C^k\). The right-decaying statement follows by conjugate reflection.
+\end{proof}
+
+For \(n\ge 5\), let
+\[
+\boldsymbol{\xi}\coloneqq
+\begin{bmatrix}
+u_1\\
+u_2
+\end{bmatrix},
+\qquad
+\boldsymbol{\eta}\coloneqq
+\begin{bmatrix}
+u_{n-1}\\
+u_n
+\end{bmatrix},
+\qquad
+\mathbf q_L\coloneqq
+\begin{bmatrix}
+u_3\\
+u_4
+\end{bmatrix},
+\qquad
+\mathbf q_R\coloneqq
+\begin{bmatrix}
+u_{n-3}\\
+u_{n-2}
+\end{bmatrix}.
+\]
+If \(\mathbf u=\mathbf u^L+\mathbf u^R\) is a homogeneous bulk solution, then
+\[
+\begin{bmatrix}\boldsymbol{\xi}\\ \boldsymbol{\eta}\end{bmatrix}
+=
+\begin{bmatrix}
+\mathbf I_2 & \mathbf B_{n-2}\\
+\mathbf A_{n-2} & \mathbf I_2
+\end{bmatrix}
+\begin{bmatrix}
+\boldsymbol{\xi}^L\\
+\boldsymbol{\eta}^R
+\end{bmatrix},
+\]
+and
+\[
+\begin{bmatrix}
+\mathbf q_L\\
+\mathbf q_R
+\end{bmatrix}
+=
+\begin{bmatrix}
+\mathbf A_2 & \mathbf B_{n-4}\\
+\mathbf A_{n-4} & \mathbf B_2
+\end{bmatrix}
+\begin{bmatrix}
+\boldsymbol{\xi}^L\\
+\boldsymbol{\eta}^R
+\end{bmatrix}.
+\]
+Hence
+\[
+\begin{bmatrix}
+\mathbf q_L\\
+\mathbf q_R
+\end{bmatrix}
+=
+\Gamma_n(\mu)
+\begin{bmatrix}
+\boldsymbol{\xi}\\
+\boldsymbol{\eta}
+\end{bmatrix},
+\]
+where
+\[
+\boxed{
+\Gamma_n(\mu)\coloneqq
+\begin{bmatrix}
+\mathbf A_2 & \mathbf B_{n-4}\\
+\mathbf A_{n-4} & \mathbf B_2
+\end{bmatrix}
+\begin{bmatrix}
+\mathbf I_2 & \mathbf B_{n-2}\\
+\mathbf A_{n-2} & \mathbf I_2
+\end{bmatrix}^{-1}.
+}
+\]
+
+Now set
+\[
+\mathbf L_0\coloneqq
+\begin{bmatrix}
+d_\mu-1 & -c\\
+-\overline c & d_\mu
+\end{bmatrix},
+\qquad
+\mathbf L_1\coloneqq
+\begin{bmatrix}
+a&0\\
+-c&a
+\end{bmatrix},
+\]
+\[
+\mathbf R_0\coloneqq
+\begin{bmatrix}
+d_\mu & -c\\
+-\overline c & d_\mu-a^2
+\end{bmatrix},
+\qquad
+\mathbf R_1\coloneqq
+\begin{bmatrix}
+a&-\overline c\\
+0&a
+\end{bmatrix}.
+\]
+
+\begin{proposition}[Subthreshold \(2\times2\) block factorization]\label{prop:subthreshold-block-weyl}
+Assume \(\mu<\mu_{\mathrm{sym}}(x,y)\), \(n\ge 5\), and that the matrix
+\[
+\begin{bmatrix}
+\mathbf I_2 & \mathbf B_{n-2}\\
+\mathbf A_{n-2} & \mathbf I_2
+\end{bmatrix}
+\]
+is invertible. Then the boundary Weyl matrix \(\mathbf M_n(\mu)\) from Proposition~\ref{prop:four-root-boundary-green} is exactly
+\[
+\boxed{
+\mathbf M_n(\mu)
+=
+\begin{bmatrix}
+\mathbf L_0&0\\
+0&\mathbf R_0
+\end{bmatrix}
++
+\begin{bmatrix}
+\mathbf L_1&0\\
+0&\mathbf R_1
+\end{bmatrix}
+\Gamma_n(\mu).
+}
+\]
+\end{proposition}
+
+\begin{proof}
+For a homogeneous bulk solution \(\mathbf u\), the first two boundary rows are
+\[
+\begin{bmatrix}
+f_1\\
+f_2
+\end{bmatrix}
+=
+\mathbf L_0\,\boldsymbol{\xi}+\mathbf L_1\,\mathbf q_L,
+\]
+and the last two are
+\[
+\begin{bmatrix}
+f_{n-1}\\
+f_n
+\end{bmatrix}
+=
+\mathbf R_0\,\boldsymbol{\eta}+\mathbf R_1\,\mathbf q_R.
+\]
+Substitute
+\[
+\begin{bmatrix}
+\mathbf q_L\\
+\mathbf q_R
+\end{bmatrix}
+=
+\Gamma_n(\mu)
+\begin{bmatrix}
+\boldsymbol{\xi}\\
+\boldsymbol{\eta}
+\end{bmatrix}.
+\]
+This gives exactly the displayed block formula.
+\end{proof}
+
+\begin{remark}
+Proposition~\ref{prop:subthreshold-block-weyl} is the exact two-decaying-root factorization suggested by the numerical experiments. It is very useful below the symbol floor, but Proposition~\ref{prop:symbol-floor} shows that it is not, by itself, enough to reach \(\mu=\lambda_1(x,y)\) in finite volume. For that, one must use the four-root matrix \(\mathbf G_n(\mu)\), or the corresponding Weyl matrix \(\mathbf M_n(\mu)\) when the latter is defined.
+\end{remark}
+
+\subsection*{A boundary-Weyl derivative formula for \(\lambda_1(x,y)\)}
+
+Assume now that \(\lambda_1(x,y)\) is simple, and let \(\boldsymbol{\psi}(x,y)\) be a normalized eigenvector of
+\(\mathbf H_{x,y}\) for \(\lambda_1(x,y)\):
+\[
+\mathbf H_{x,y}\boldsymbol{\psi}=\lambda_1(x,y)\boldsymbol{\psi},
+\qquad
+\|\boldsymbol{\psi}\|_2=1.
+\]
+Set
+\[
+\mathbf b(x,y)\coloneqq \mathbf P_\partial \boldsymbol{\psi}(x,y)\in\mathbb C^4.
+\]
+
+\begin{proposition}[Boundary Weyl derivative identity]\label{prop:boundary-weyl-derivative}
+Assume that \(p_{\lambda_1(x,y)}\) has four simple roots and that \(\mathbf T_n(\mu)\) is invertible for \(\mu\) in a neighborhood of \(\lambda_1(x,y)\). Let
+\[
+\mathbf M_n(\mu)\coloneqq \mathbf N_n(\mu)\mathbf T_n(\mu)^{-1}.
+\]
+Then:
+\begin{enumerate}
+\item
+\[
+\mathbf M_n(\lambda_1(x,y))\,\mathbf b(x,y)=0.
+\]
+\item
+\[
+\mathbf b(x,y)^*\,\partial_\mu \mathbf M_n(\lambda_1(x,y))\,\mathbf b(x,y)=-1.
+\]
+\item Consequently,
+\[
+\boxed{
+\partial_y \lambda_1(x,y)
+=
+\mathbf b(x,y)^*\,\partial_y \mathbf M_n(\lambda_1(x,y))\,\mathbf b(x,y).
+}
+\]
+\end{enumerate}
+Thus the vertical monotonicity problem for \(s(x,y)^2=\lambda_1(x,y)\) is exactly the positivity problem
+\[
+\mathbf b^*\,\partial_y \mathbf M_n(\lambda_1(x,y),y)\,\mathbf b\ge 0
+\qquad
+\text{on }\ker \mathbf M_n(\lambda_1(x,y),y).
+\]
+\end{proposition}
+
+\begin{proof}
+Let
+\[
+\mathbf G_n(\mu)=\mathbf P_\partial(\mathbf H_{x,y}-\mu\mathbf I_n)^{-1}\mathbf P_\partial^*.
+\]
+By the spectral theorem,
+\[
+\mathbf G_n(\mu)
+=
+\sum_{k=1}^n
+\frac{\mathbf b_k\mathbf b_k^*}{\lambda_k-\mu},
+\qquad
+\mathbf b_k\coloneqq \mathbf P_\partial \boldsymbol{\psi}_k,
+\]
+where \(\{\boldsymbol{\psi}_k\}\) is an orthonormal eigenbasis of \(\mathbf H_{x,y}\) and \(\lambda_1=\lambda_1(x,y)\). Since \(\lambda_1\) is simple and \(\mathbf b=\mathbf P_\partial \boldsymbol{\psi}\),
+\[
+\mathbf G_n(\mu)
+=
+\frac{\mathbf b\,\mathbf b^*}{\lambda_1-\mu}
++
+\mathbf G_n^{\mathrm{reg}}(\mu)
+\]
+near \(\mu=\lambda_1\).
+
+By Proposition~\ref{prop:four-root-boundary-green}, \(\mathbf G_n(\mu)=\mathbf T_n(\mu)\mathbf N_n(\mu)^{-1}\), and by the invertibility assumption on \(\mathbf T_n(\mu)\), the matrix
+\[
+\mathbf M_n(\mu)=\mathbf N_n(\mu)\mathbf T_n(\mu)^{-1}
+\]
+is defined near \(\lambda_1\) and satisfies
+\[
+\mathbf M_n(\mu)\mathbf G_n(\mu)=\mathbf I_4
+\]
+for \(\mu\neq \lambda_1\) close to \(\lambda_1\). Comparing the coefficient of \((\lambda_1-\mu)^{-1}\) gives
+\[
+\mathbf M_n(\lambda_1)\mathbf b=0.
+\]
+Using instead \(\mathbf G_n(\mu)\mathbf M_n(\mu)=\mathbf I_4\) and applying both sides to \(\mathbf b\), we obtain
+\[
+\left(\frac{\mathbf b\,\mathbf b^*}{\lambda_1-\mu}+\mathbf G_n^{\mathrm{reg}}(\mu)\right)\mathbf M_n(\mu)\mathbf b=\mathbf b.
+\]
+Since \(\mathbf M_n(\lambda_1)\mathbf b=0\), we have
+\[
+\mathbf M_n(\mu)\mathbf b
+=
+(\mu-\lambda_1)\,\partial_\mu \mathbf M_n(\lambda_1)\mathbf b+o(\mu-\lambda_1),
+\]
+and therefore
+\[
+-\mathbf b\,\mathbf b^*\,\partial_\mu \mathbf M_n(\lambda_1)\mathbf b=\mathbf b.
+\]
+Left-multiplying by \(\mathbf b^*\) yields
+\[
+-\|\mathbf b\|_2^2\,\mathbf b^*\,\partial_\mu \mathbf M_n(\lambda_1)\mathbf b
+=
+\|\mathbf b\|_2^2,
+\]
+hence
+\[
+\mathbf b^*\,\partial_\mu \mathbf M_n(\lambda_1)\mathbf b=-1.
+\]
+
+Now differentiate the kernel relation
+\[
+\mathbf M_n(\lambda_1(x,y),y)\,\mathbf b(x,y)=0
+\]
+with respect to \(y\):
+\[
+\Bigl(\partial_\mu \mathbf M_n(\lambda_1,y)\,\partial_y\lambda_1
++\partial_y\mathbf M_n(\lambda_1,y)\Bigr)\mathbf b
++
+\mathbf M_n(\lambda_1,y)\,\partial_y\mathbf b
+=0.
+\]
+Left-multiplying by \(\mathbf b^*\), and using \(\mathbf M_n(\lambda_1)\mathbf b=0\) and Hermiticity of \(\mathbf M_n(\lambda_1)\), yields
+\[
+\mathbf b^*\,\partial_\mu \mathbf M_n(\lambda_1)\,\mathbf b\;\partial_y\lambda_1
++
+\mathbf b^*\,\partial_y\mathbf M_n(\lambda_1)\,\mathbf b
+=0.
+\]
+Using \(\mathbf b^*\,\partial_\mu \mathbf M_n(\lambda_1)\,\mathbf b=-1\), we obtain
+\[
+\partial_y\lambda_1
+=
+\mathbf b^*\,\partial_y\mathbf M_n(\lambda_1)\,\mathbf b.
+\]
+\end{proof}
+
+\begin{corollary}[Root-coordinate form]\label{cor:root-coordinate-derivative}
+Assume the hypotheses of Proposition~\ref{prop:boundary-weyl-derivative}. Let
+\[
+\boldsymbol{\gamma}(x,y)\in\ker \mathbf N_n(\lambda_1(x,y))
+\]
+be chosen so that
+\[
+\mathbf b(x,y)=\mathbf T_n(\lambda_1(x,y))\,\boldsymbol{\gamma}(x,y).
+\]
+Then
+\[
+\boxed{
+\partial_y\lambda_1(x,y)
+=
+\boldsymbol{\gamma}(x,y)^*\,\mathbf T_n(\lambda_1)^*
+\bigl(\partial_y \mathbf N_n(\lambda_1)\bigr)\,
+\boldsymbol{\gamma}(x,y).
+}
+\]
+Moreover,
+\[
+\boxed{
+\boldsymbol{\gamma}(x,y)^*\,\mathbf T_n(\lambda_1)^*
+\bigl(\partial_\mu \mathbf N_n(\lambda_1)\bigr)\,
+\boldsymbol{\gamma}(x,y)
+=
+-1.
+}
+\]
+\end{corollary}
+
+\begin{proof}
+Since
+\[
+\mathbf M_n(\mu)=\mathbf N_n(\mu)\mathbf T_n(\mu)^{-1},
+\]
+and \(\mathbf b=\mathbf T_n(\lambda_1)\boldsymbol{\gamma}\) with \(\mathbf N_n(\lambda_1)\boldsymbol{\gamma}=0\), we have
+\[
+\mathbf M_n(\lambda_1)\mathbf b=0,
+\]
+and
+\[
+\partial_y\mathbf M_n(\lambda_1)\,\mathbf b
+=
+\bigl(\partial_y\mathbf N_n(\lambda_1)\bigr)\boldsymbol{\gamma},
+\]
+because the term involving \(\partial_y(\mathbf T_n^{-1})\) is annihilated by
+\(\mathbf N_n(\lambda_1)\boldsymbol{\gamma}\). Therefore
+\[
+\mathbf b^*\,\partial_y\mathbf M_n(\lambda_1)\,\mathbf b
+=
+\boldsymbol{\gamma}^*\,\mathbf T_n(\lambda_1)^*\,
+\bigl(\partial_y\mathbf N_n(\lambda_1)\bigr)\boldsymbol{\gamma}.
+\]
+Now apply Proposition~\ref{prop:boundary-weyl-derivative}. The \(\mu\)-derivative formula is identical.
+\end{proof}
+
+\subsection*{Back to the reduced-resolvent criterion}
+
+Let \(\widehat{\mathbf C}_x\) be the \(4\times4\) boundary matrix corresponding to the operator \(\mathbf C_x\) from Proposition~\ref{prop:B-commutator}:
+\[
+\widehat{\mathbf C}_x=
+\begin{bmatrix}
+-2x&1&0&0\\
+1&0&0&0\\
+0&0&0&-a\\
+0&0&-a&2x
+\end{bmatrix},
+\qquad
+\mathbf C_x=\mathbf P_\partial^*\,\widehat{\mathbf C}_x\,\mathbf P_\partial.
+\]
+Set
+\[
+\mathbf q(x,y)\coloneqq \widehat{\mathbf C}_x\,\mathbf b(x,y)\in\mathbb C^4.
+\]
+Because \(\widehat{\mathbf C}_x\) is Hermitian and
+\[
+[\mathbf H_{x,y},\mathbf L]=i(1+a)\mathbf P_\partial^* \widehat{\mathbf C}_x \mathbf P_\partial
+\]
+by Proposition~\ref{prop:B-commutator}, we have
+\[
+\mathbf b^*\mathbf q
+=
+\boldsymbol{\psi}^*\,\mathbf P_\partial^* \widehat{\mathbf C}_x \mathbf P_\partial\,\boldsymbol{\psi}
+=
+\frac{1}{i(1+a)}\boldsymbol{\psi}^*[\mathbf H_{x,y},\mathbf L]\boldsymbol{\psi}
+=0.
+\]
+Hence the pole of the boundary resolvent cancels on the vector \(\mathbf q\).
+
+\begin{proposition}[Exact \(4\times4\) scalar Stieltjes reduction]\label{prop:4x4-stieltjes}
+Define
+\[
+g_{x,y}(\mu)\coloneqq
+\mathbf q(x,y)^*\,\mathbf G_n(\mu)\,\mathbf q(x,y)
+=
+\mathbf q(x,y)^*\,\mathbf T_n(\mu)\mathbf N_n(\mu)^{-1}\mathbf q(x,y),
+\qquad
+\mu\notin\sigma(\mathbf H_{x,y}).
+\]
+Then \(g_{x,y}(\mu)\) extends holomorphically through \(\mu=\lambda_1(x,y)\), and
+\[
+\boxed{
+\left\langle
+\mathbf C_x\boldsymbol{\psi}(x,y),\,
+(\mathbf H_{x,y}-\lambda_1(x,y)\mathbf I_n)^{-3}_{\perp}\,
+\mathbf C_x\boldsymbol{\psi}(x,y)
+\right\rangle
+=
+\frac12\,g_{x,y}''\bigl(\lambda_1(x,y)\bigr).
+}
+\]
+Consequently, the reduced-resolvent convexity inequality from Proposition~\ref{prop:boundary-green} is equivalent to
+\[
+\boxed{
+(1-a^2)^2\,g_{x,y}''\bigl(\lambda_1(x,y)\bigr)\le 2.
+}
+\]
+\end{proposition}
+
+\begin{proof}
+Since \(\mathbf q\perp \mathbf b\), the pole term
+\[
+\frac{\mathbf b\,\mathbf b^*}{\lambda_1-\mu}
+\]
+in \(\mathbf G_n(\mu)\) does not contribute to \(\mathbf q^*\mathbf G_n(\mu)\mathbf q\). Thus \(g_{x,y}\) is regular at \(\mu=\lambda_1\).
+
+Let \(\{\boldsymbol{\psi}_k\}_{k=1}^n\) be an orthonormal eigenbasis of \(\mathbf H_{x,y}\), with
+\(\boldsymbol{\psi}_1=\boldsymbol{\psi}\) and \(\lambda_1=\lambda_1(x,y)\). Set
+\[
+\mathbf b_k\coloneqq \mathbf P_\partial \boldsymbol{\psi}_k\in\mathbb C^4.
+\]
+Then
+\[
+\mathbf G_n(\mu)
+=
+\sum_{k=1}^n \frac{\mathbf b_k\mathbf b_k^*}{\lambda_k-\mu},
+\]
+and therefore
+\[
+g_{x,y}(\mu)
+=
+\sum_{k=1}^n \frac{|\mathbf q^*\mathbf b_k|^2}{\lambda_k-\mu}.
+\]
+Because \(\mathbf q^*\mathbf b_1=\mathbf q^*\mathbf b=0\), we get
+\[
+g_{x,y}(\mu)
+=
+\sum_{k=2}^n \frac{|\mathbf q^*\mathbf b_k|^2}{\lambda_k-\mu},
+\]
+and hence
+\[
+\frac12\,g_{x,y}''(\lambda_1)
+=
+\sum_{k=2}^n
+\frac{|\mathbf q^*\mathbf b_k|^2}{(\lambda_k-\lambda_1)^3}.
+\]
+Now
+\[
+\mathbf q^*\mathbf b_k
+=
+\mathbf b^*\widehat{\mathbf C}_x \mathbf b_k
+=
+\boldsymbol{\psi}^* \mathbf P_\partial^* \widehat{\mathbf C}_x \mathbf P_\partial \boldsymbol{\psi}_k
+=
+\langle \mathbf C_x\boldsymbol{\psi},\boldsymbol{\psi}_k\rangle,
+\]
+so the previous sum is exactly
+\[
+\left\langle
+\mathbf C_x\boldsymbol{\psi},
+(\mathbf H_{x,y}-\lambda_1\mathbf I_n)^{-3}_{\perp}
+\mathbf C_x\boldsymbol{\psi}
+\right\rangle.
+\]
+The last equivalence is Proposition~\ref{prop:boundary-green}.
+\end{proof}
+
+\begin{remark}[Where the proof now stands]
+The route through the bulk current has now been replaced by an exact \(4\times4\) boundary-Weyl problem.
+
+\smallskip
+
+\noindent
+The vertical monotonicity of \(\lambda_1(x,y)=s(x,y)^2\) is equivalent to
+\[
+\mathbf b^*\,\partial_y\mathbf M_n(\lambda_1(x,y),y)\,\mathbf b\ge 0
+\qquad
+\text{for }\mathbf b\in\ker \mathbf M_n(\lambda_1(x,y),y),
+\]
+whenever the matrix \(\mathbf M_n\) is defined near \(\lambda_1(x,y)\). Equivalently, in root coordinates,
+\[
+\boldsymbol{\gamma}^*\,\mathbf T_n(\lambda_1)^*
+\bigl(\partial_y\mathbf N_n(\lambda_1)\bigr)\boldsymbol{\gamma}\ge 0
+\qquad
+\text{for }\boldsymbol{\gamma}\in\ker \mathbf N_n(\lambda_1).
+\]
+And the reduced-resolvent bound is equivalent to the scalar inequality
+\[
+(1-a^2)^2\,g_{x,y}''(\lambda_1(x,y))\le 2
+\]
+for the explicit \(4\times4\) Stieltjes function
+\[
+g_{x,y}(\mu)=\mathbf q^*\,\mathbf T_n(\mu)\mathbf N_n(\mu)^{-1}\mathbf q.
+\]
+
+\smallskip
+
+\noindent
+So the analytic heart of the problem is now compressed to an explicit \(4\times4\) Evans/Weyl matrix, valid up to the actual finite-volume eigenvalue. The remaining missing step is a sign estimate for \(\partial_y\mathbf M_n\) on its kernel, or equivalently the second-derivative bound above for \(g_{x,y}\).
+\end{remark}
+
+\section{Further progress toward Conjecture~\ref{conj:vertical-monotonicity}}
+
+In this section we record several rigorous partial results for the monotonicity problem. The strongest one is a complete proof on the imaginary axis \(x=0\). We then prove a continuation result in the \(x\)-variable along simple branches on which the right singular vector has no zero entries.
+
+For \(x\in\mathbb R\) and \(y>0\), write
+\[
+\mathbf B_{x,y}\coloneqq (x+iy)\mathbf I_n-\mathbf A_n(a),
+\qquad
+\mathbf H_x(y)\coloneqq \mathbf B_{x,y}^*\,\mathbf B_{x,y}.
+\]
+Whenever \(\lambda_1(x,y)=s(x,y)^2\) is simple, we choose a normalized right singular vector
+\[
+\mathbf v(x,y)=
+\begin{bmatrix}
+v_1(x,y)\\
+\vdots\\
+v_n(x,y)
+\end{bmatrix}
+\]
+and a normalized left singular vector
+\[
+\mathbf u(x,y)=
+\begin{bmatrix}
+u_1(x,y)\\
+\vdots\\
+u_n(x,y)
+\end{bmatrix}
+\]
+in the canonical gauge
+\[
+\mathbf B_{x,y}\mathbf v=s(x,y)\,\mathbf u,
+\qquad
+\mathbf B_{x,y}^*\mathbf u=s(x,y)\,\mathbf v,
+\qquad
+\mathbf u=\mathbf R\,\overline{\mathbf v}.
+\]
+Then the singular-vector equation reads componentwise
+\[
+(x+iy)v_j-a v_{j-1}-v_{j+1}=s(x,y)\,\overline{v_{n+1-j}},
+\qquad
+j=1,\dots,n,
+\]
+with \(v_0=v_{n+1}=0\).
+
+\begin{lemma}[A real telescoping invariant]\label{lem:W-real}
+Assume \(\lambda_1(x,y)=s(x,y)^2\) is simple and let \(\mathbf v\) be in the canonical gauge above. Define
+\[
+W_j\coloneqq v_{j+1}v_{n+1-j}-a\,v_jv_{n-j},
+\qquad
+j=0,\dots,n,
+\]
+with \(v_0=v_{n+1}=0\). Then
+\[
+W_0=0,
+\qquad
+W_j-W_{j-1}=s(x,y)\bigl(|v_j|^2-|v_{n+1-j}|^2\bigr)\in\mathbb R.
+\]
+In particular,
+\[
+W_j\in\mathbb R
+\qquad
+(j=0,\dots,n).
+\]
+\end{lemma}
+
+\begin{proof}
+Using the singular-vector equation at indices \(j\) and \(n+1-j\), one gets
+\[
+v_{j+1}+a v_{j-1}=(x+iy)v_j-s\,\overline{v_{n+1-j}},
+\]
+and
+\[
+v_{n+2-j}+a v_{n-j}=(x+iy)v_{n+1-j}-s\,\overline{v_j}.
+\]
+Subtracting,
+\begin{align*}
+W_j-W_{j-1}
+&=
+v_{n+1-j}\bigl(v_{j+1}+a v_{j-1}\bigr)
+-
+v_j\bigl(v_{n+2-j}+a v_{n-j}\bigr) \\
+&=
+v_{n+1-j}\bigl((x+iy)v_j-s\,\overline{v_{n+1-j}}\bigr)
+-
+v_j\bigl((x+iy)v_{n+1-j}-s\,\overline{v_j}\bigr) \\
+&=
+s\bigl(|v_j|^2-|v_{n+1-j}|^2\bigr)\in\mathbb R.
+\end{align*}
+Since \(W_0=0\), it follows by induction that \(W_j\in\mathbb R\) for all \(j\).
+\end{proof}
+
+\begin{proposition}[Imaginary-axis structure and monotonicity]\label{prop:x=0-monotonicity}
+For every \(y>0\), the eigenvalue \(\lambda_1(0,y)=s(0,y)^2\) is simple. Moreover, the corresponding canonical right singular vector \(\mathbf v(0,y)\) can be chosen so that
+\[
+\Im\!\left(\frac{v_{j+1}(0,y)}{v_j(0,y)}\right)>0,
+\qquad
+j=1,\dots,n-1,
+\]
+and
+\[
+\Im\!\left(\frac{\overline{v_{n+1-j}(0,y)}}{v_j(0,y)}\right)>0,
+\qquad
+j=1,\dots,n.
+\]
+Consequently,
+\[
+\frac{\partial}{\partial y}\bigl(s(0,y)^2\bigr)\ge 0
+\qquad (y>0),
+\]
+and hence Conjecture~\ref{conj:vertical-monotonicity} holds for \(x=0\).
+\end{proposition}
+
+\begin{proof}
+Set
+\[
+\mathbf B_{0,y}=iy\,\mathbf I_n-\mathbf A_n(a),
+\qquad
+\mathbf H_0(y)=\mathbf B_{0,y}^*\,\mathbf B_{0,y}.
+\]
+Let
+\[
+\mathbf D\coloneqq \operatorname{diag}\bigl(1,i,i^2,\dots,i^{n-1}\bigr),
+\qquad
+\widehat{\mathbf H}_y\coloneqq \mathbf D^*\,\mathbf H_0(y)\,\mathbf D.
+\]
+A direct computation shows that \(\widehat{\mathbf H}_y\) is real symmetric, with diagonal entries
+\[
+(\widehat{\mathbf H}_y)_{11}=a^2+y^2,
+\qquad
+(\widehat{\mathbf H}_y)_{jj}=1+a^2+y^2\quad (2\le j\le n-1),
+\qquad
+(\widehat{\mathbf H}_y)_{nn}=1+y^2,
+\]
+and nonzero off-diagonal entries
+\[
+(\widehat{\mathbf H}_y)_{j,j+1}=-(1-a)y<0,
+\qquad
+(\widehat{\mathbf H}_y)_{j,j+2}=-a<0,
+\]
+whenever the indices are defined. Thus \(\widehat{\mathbf H}_y\) is a real symmetric irreducible \(5\)-diagonal \(Z\)-matrix.
+
+Choose \(\Lambda>\max_{1\le j\le n}(\widehat{\mathbf H}_y)_{jj}\). Then \(\Lambda\mathbf I_n-\widehat{\mathbf H}_y\) is entrywise nonnegative and irreducible, so by Perron--Frobenius its spectral radius is simple and has a strictly positive eigenvector. Equivalently, the smallest eigenvalue of \(\widehat{\mathbf H}_y\) is simple and has an eigenvector
+\[
+\mathbf w=
+\begin{bmatrix}
+w_1\\
+\vdots\\
+w_n
+\end{bmatrix},
+\qquad
+w_j>0\quad (j=1,\dots,n).
+\]
+Since \(\mathbf H_0(y)\) and \(\widehat{\mathbf H}_y\) are unitarily similar, the normalized right singular vector of \(\mathbf B_{0,y}\) for \(s(0,y)\) may be written as
+\[
+v_j=\beta\,i^{\,j-1}w_j,
+\qquad
+j=1,\dots,n,
+\]
+for some unimodular \(\beta\).
+
+Now insert this into the singular-vector equation
+\[
+iy\,v_j-a v_{j-1}-v_{j+1}=s(0,y)\,\overline{v_{n+1-j}}.
+\]
+After dividing by \(\beta i^j\), one obtains
+\[
+w_{j+1}-y w_j-a w_{j-1}=-\gamma\,s(0,y)\,w_{n+1-j},
+\qquad
+\gamma\coloneqq \frac{\overline\beta}{\beta}(-i)^n.
+\]
+At \(j=n\), this gives
+\[
+y w_n+a w_{n-1}=\gamma\,s(0,y)\,w_1.
+\]
+The left-hand side is strictly positive, and \(|\gamma|=1\), so necessarily \(\gamma=1\).
+
+With this normalization,
+\[
+r_j\coloneqq \frac{v_{j+1}}{v_j}=i\,\frac{w_{j+1}}{w_j},
+\qquad
+j=1,\dots,n-1,
+\]
+and hence
+\[
+\Im r_j>0,
+\qquad
+j=1,\dots,n-1.
+\]
+Also,
+\[
+p_j\coloneqq \frac{\overline{v_{n+1-j}}}{v_j}=i\,\frac{w_{n+1-j}}{w_j},
+\qquad
+j=1,\dots,n,
+\]
+so
+\[
+\Im p_j>0
+\qquad
+(j=1,\dots,n).
+\]
+
+By Proposition~\ref{prop:current-identity},
+\[
+J_j-aJ_{j-1}=y|v_j|^2+s(0,y)\,\Im(v_jv_{n+1-j}).
+\]
+But
+\[
+\Im p_j
+=
+-\frac{\Im(v_jv_{n+1-j})}{|v_j|^2},
+\]
+so \(\Im p_j>0\) implies
+\[
+\Im(v_jv_{n+1-j})<0.
+\]
+Hence
+\[
+J_j-aJ_{j-1}\le y|v_j|^2.
+\]
+Inductively,
+\[
+J_j\le y\sum_{k=1}^j a^{\,j-k}|v_k|^2,
+\]
+and therefore
+\[
+(1-a)\sum_{j=1}^{n-1}J_j
+\le
+y\sum_{k=1}^{n-1}(1-a^{\,n-k})|v_k|^2
+\le
+y.
+\]
+Using Proposition~\ref{prop:current-identity} again,
+\[
+\frac{\partial}{\partial y}\bigl(s(0,y)^2\bigr)
+=
+2y-2(1-a)\sum_{j=1}^{n-1}J_j
+\ge 0.
+\]
+\end{proof}
+
+\begin{lemma}[Boundary entries never vanish]\label{lem:boundary-entries-nonzero}
+Assume \(\lambda_1(x,y)=s(x,y)^2\) is simple, \(y>0\), and let \(\mathbf v\) be in the canonical gauge. Then
+\[
+v_1\neq 0,
+\qquad
+v_n\neq 0.
+\]
+\end{lemma}
+
+\begin{proof}
+We first prove \(v_n\neq 0\). Assume \(v_n=0\). The case \(n=2\) is immediate, so assume \(n\ge 3\).
+
+If also \(v_1=0\), then the equations at \(j=1\) and \(j=n\) imply \(v_2=0\) and \(v_{n-1}=0\). Repeatedly using the singular-vector equations then yields \(v_j=0\) for every \(j\), contradicting \(\|\mathbf v\|_2=1\). Hence \(v_1\neq 0\).
+
+From the singular-vector equation at \(j=1\),
+\[
+(x+iy)v_1-v_2=s\,\overline{v_n}=0,
+\]
+hence
+\[
+v_2=(x+iy)v_1.
+\]
+At \(j=n-1\),
+\[
+(x+iy)v_{n-1}-a v_{n-2}-v_n=s\,\overline{v_2},
+\]
+so
+\[
+(x+iy)v_{n-1}-a v_{n-2}=s\,\overline{x+iy}\,\overline{v_1}.
+\]
+Now
+\[
+W_{n-2}=v_{n-1}v_2-a v_{n-2}v_1
+=
+v_1\bigl((x+iy)v_{n-1}-a v_{n-2}\bigr)
+=
+s\,\overline{x+iy}\,|v_1|^2.
+\]
+By Lemma~\ref{lem:W-real}, \(W_{n-2}\in\mathbb R\), but
+\[
+\Im\!\bigl(s\,\overline{x+iy}\,|v_1|^2\bigr)=-s\,y\,|v_1|^2\neq 0,
+\]
+a contradiction. Thus \(v_n\neq 0\).
+
+Now assume \(v_1=0\). By the first part, \(v_n\neq 0\). From \(j=1\),
+\[
+-v_2=s\,\overline{v_n},
+\qquad\text{so}\qquad
+v_2=-s\,\overline{v_n}.
+\]
+From \(j=n\),
+\[
+(x+iy)v_n-a v_{n-1}=s\,\overline{v_1}=0,
+\qquad\text{so}\qquad
+a v_{n-1}=(x+iy)v_n.
+\]
+At \(j=2\),
+\[
+(x+iy)v_2-v_3=s\,\overline{v_{n-1}}.
+\]
+Hence
+\[
+v_3=(x+iy)v_2-s\,\overline{v_{n-1}}.
+\]
+Therefore
+\[
+W_2=v_3v_n-a v_2v_{n-1}
+=
+-s\,\overline{v_{n-1}}\,v_n
+=
+-\frac{s}{a}\,\overline{x+iy}\,|v_n|^2.
+\]
+Again \(W_2\in\mathbb R\) by Lemma~\ref{lem:W-real}, while
+\[
+\Im\!\left(-\frac{s}{a}\,\overline{x+iy}\,|v_n|^2\right)
+=
+\frac{s\,y}{a}|v_n|^2\neq 0.
+\]
+This contradiction proves \(v_1\neq 0\).
+\end{proof}
+
+\begin{proposition}[Persistence of \(\Im r_j>0\) along nonvanishing simple branches]\label{prop:r-positivity-branch}
+Fix \(y>0\), and let \(I\subset\mathbb R\) be an open interval on which \(\lambda_1(x,y)=s(x,y)^2\) is simple. Let
+\[
+\mathbf v(x)=
+\begin{bmatrix}
+v_1(x)\\
+\vdots\\
+v_n(x)
+\end{bmatrix}
+\]
+be the corresponding analytic right singular vector in the canonical gauge. Let \(J\) be a connected component of
+\[
+\{x\in I:\ v_1(x)\cdots v_n(x)\neq 0\}.
+\]
+Assume that for some \(x_0\in J\),
+\[
+\Im\!\left(\frac{v_{j+1}(x_0)}{v_j(x_0)}\right)>0,
+\qquad
+j=1,\dots,n-1.
+\]
+Then for every \(x\in J\),
+\[
+\Im\!\left(\frac{v_{j+1}(x)}{v_j(x)}\right)>0,
+\qquad
+j=1,\dots,n-1.
+\]
+Equivalently, if we define
+\[
+r_j(x)\coloneqq \frac{v_{j+1}(x)}{v_j(x)},
+\qquad
+\rho_j(x)\coloneqq r_{n-j}(x),
+\]
+then
+\[
+\Im r_j(x)>0,
+\qquad
+\Im \rho_j(x)>0,
+\qquad
+j=1,\dots,n-1,
+\quad x\in J.
+\]
+\end{proposition}
+
+\begin{proof}
+Since \(v_j(x)\neq 0\) on \(J\), we may write
+\[
+v_j(x)=t_j(x)e^{i\phi_j(x)},
+\qquad
+t_j(x)>0,
+\]
+and define
+\[
+\delta_j(x)\coloneqq \phi_{j+1}(x)-\phi_j(x),
+\qquad
+j=1,\dots,n-1.
+\]
+Then
+\[
+r_j(x)=\frac{t_{j+1}(x)}{t_j(x)}e^{i\delta_j(x)},
+\]
+so \(\Im r_j(x)>0\) is equivalent to
+\[
+\delta_j(x)\in(0,\pi).
+\]
+
+Set
+\[
+c\coloneqq (1+a)x-i(1-a)y.
+\]
+Since \(y>0\), we may write
+\[
+c=|c|e^{-i\theta},
+\qquad
+\theta\in(0,\pi).
+\]
+A direct expansion of the quadratic form of \(\mathbf H_x(y)\) shows that
+\[
+\langle \mathbf v,\mathbf H_x(y)\mathbf v\rangle
+=
+\sum_{j=1}^n d_j\,t_j^2
++
+\mathcal P_x(\delta_1,\dots,\delta_{n-1}),
+\]
+where
+\[
+d_1=a^2+x^2+y^2,
+\qquad
+d_j=1+a^2+x^2+y^2\quad(2\le j\le n-1),
+\qquad
+d_n=1+x^2+y^2,
+\]
+and
+\[
+\mathcal P_x(\delta_1,\dots,\delta_{n-1})
+=
+-2|c|\sum_{j=1}^{n-1} t_j t_{j+1}\cos(\delta_j-\theta)
++
+2a\sum_{j=1}^{n-2} t_j t_{j+2}\cos(\delta_j+\delta_{j+1}).
+\]
+For fixed amplitudes \(t_1,\dots,t_n\), the phase vector
+\[
+\bigl[\delta_1(x),\dots,\delta_{n-1}(x)\bigr]
+\]
+must minimize \(\mathcal P_x\), because \(\mathbf v(x)\) is a ground state of \(\mathbf H_x(y)\).
+
+Let
+\[
+E\coloneqq \{x\in J:\ \delta_j(x)\in(0,\pi)\ \text{for all }j=1,\dots,n-1\}.
+\]
+By hypothesis, \(x_0\in E\), so \(E\neq\varnothing\). Clearly \(E\) is open in \(J\). We show that \(E\) is also closed in \(J\). Let \(x_*\in \overline E\cap J\). Then
+\[
+\delta_j(x_*)\in[0,\pi]
+\qquad
+(j=1,\dots,n-1).
+\]
+If every \(\delta_j(x_*)\in(0,\pi)\), then \(x_*\in E\). So suppose some \(\delta_k(x_*)\in\{0,\pi\}\).
+
+Consider the tail-rotation variation
+\[
+\phi_m\mapsto \phi_m+\varepsilon,
+\qquad
+m\ge k+1.
+\]
+This changes only \(\delta_k\), replacing it by \(\delta_k+\varepsilon\). Therefore
+\[
+f_k(\varepsilon)\coloneqq
+\mathcal P_x(\delta_1,\dots,\delta_{k-1},\delta_k+\varepsilon,\delta_{k+1},\dots,\delta_{n-1})
+\]
+satisfies \(f_k'(0)=0\) at the minimizing phase vector. A direct differentiation gives
+\begin{align*}
+f_k'(0)
+&=
+2|c|\,t_k t_{k+1}\sin(\delta_k-\theta) \\
+&\quad
+-2a\,\mathbf 1_{\{k\ge 2\}}\,t_{k-1}t_{k+1}\sin(\delta_{k-1}+\delta_k) \\
+&\quad
+-2a\,\mathbf 1_{\{k\le n-2\}}\,t_k t_{k+2}\sin(\delta_k+\delta_{k+1}).
+\end{align*}
+
+If \(\delta_k(x_*)=0\), then \(\theta\in(0,\pi)\) implies
+\[
+\sin(\delta_k-\theta)=\sin(-\theta)<0,
+\]
+while the other two terms are \(\ge 0\), because \(\delta_{k-1}(x_*),\delta_{k+1}(x_*)\in[0,\pi]\). Hence \(f_k'(0)<0\), contradicting minimality.
+
+If \(\delta_k(x_*)=\pi\), then
+\[
+\sin(\delta_k-\theta)=\sin(\pi-\theta)>0,
+\]
+and again the other two terms are \(\ge 0\). Hence \(f_k'(0)>0\), again a contradiction.
+
+Therefore no \(\delta_k\) can hit \(0\) or \(\pi\), so \(x_*\in E\). Thus \(E\) is closed in \(J\). Since \(J\) is connected and \(E\subset J\) is nonempty, open, and closed, we conclude \(E=J\). This proves \(\Im r_j(x)>0\) for all \(x\in J\), and the statement for \(\rho_j(x)=r_{n-j}(x)\) follows immediately.
+\end{proof}
+
+\begin{lemma}[Exact angular identity]\label{lem:angular-identity}
+Assume \(\lambda_1(x,y)=s(x,y)^2\) is simple and \(\mathbf v\) is in the canonical gauge. Let
+\[
+r_j\coloneqq \frac{v_{j+1}}{v_j},
+\qquad
+\rho_j\coloneqq r_{n-j},
+\qquad
+p_j\coloneqq \frac{\overline{v_{n+1-j}}}{v_j},
+\]
+and define
+\[
+\alpha_j\coloneqq (x+iy)-\frac{a}{r_{j-1}},
+\qquad
+\beta_j\coloneqq (x-iy)-\overline{\rho_{j-1}},
+\qquad
+j=1,\dots,n-1,
+\]
+with the convention \(r_0=\infty\). Then
+\[
+\Im\!\bigl(\alpha_j\overline{p_j}\bigr)
+=
+-\Im\!\bigl(\beta_j p_j\bigr),
+\qquad
+j=1,\dots,n-1.
+\]
+\end{lemma}
+
+\begin{proof}
+From the singular-vector equation at index \(j\),
+\[
+\biggl((x+iy)-\frac{a}{r_{j-1}}\biggr)v_j
+=
+v_{j+1}+s\,\overline{v_{n+1-j}},
+\]
+so
+\[
+\alpha_j\overline{p_j}
+=
+\frac{v_{j+1}v_{n+1-j}+s\,|v_{n+1-j}|^2}{|v_j|^2}.
+\]
+Hence
+\[
+\Im\!\bigl(\alpha_j\overline{p_j}\bigr)
+=
+\frac{\Im\!\bigl(v_{j+1}v_{n+1-j}\bigr)}{|v_j|^2}.
+\]
+
+Now conjugate the singular-vector equation at index \(n+1-j\):
+\[
+(x-iy)\,\overline{v_{n+1-j}}-a\,\overline{v_{n-j}}-\overline{v_{n+2-j}}
+=
+s\,v_j.
+\]
+Therefore
+\[
+\beta_j p_j
+=
+\bigl((x-iy)-\overline{\rho_{j-1}}\bigr)\frac{\overline{v_{n+1-j}}}{v_j}
+=
+s+a\,\frac{\overline{v_{n-j}}}{v_j},
+\]
+and thus
+\[
+\Im(\beta_j p_j)
+=
+-\frac{a\,\Im(v_jv_{n-j})}{|v_j|^2}.
+\]
+
+Finally, Lemma~\ref{lem:W-real} gives
+\[
+v_{j+1}v_{n+1-j}-a\,v_jv_{n-j}\in\mathbb R,
+\]
+so
+\[
+\Im\!\bigl(v_{j+1}v_{n+1-j}\bigr)
+=
+a\,\Im(v_jv_{n-j}).
+\]
+Substituting into the two displays above yields
+\[
+\Im\!\bigl(\alpha_j\overline{p_j}\bigr)
+=
+-\Im\!\bigl(\beta_j p_j\bigr).
+\]
+\end{proof}
+
+\begin{proposition}[Persistence of \(\Im p_j>0\) on nonvanishing simple branches]\label{prop:p-positivity-branch}
+Fix \(y>0\), and let \(J\) be as in Proposition~\ref{prop:r-positivity-branch}. Assume that on \(J\),
+\[
+\Im r_j(x)>0,
+\qquad
+\Im \rho_j(x)>0,
+\qquad
+j=1,\dots,n-1,
+\]
+and that for some \(x_0\in J\),
+\[
+\Im p_j(x_0)>0,
+\qquad
+j=1,\dots,n.
+\]
+Then
+\[
+\Im p_j(x)>0,
+\qquad
+j=1,\dots,n,
+\quad x\in J.
+\]
+\end{proposition}
+
+\begin{proof}
+Fix \(j\in\{1,\dots,n\}\), and suppose that \(\Im p_j\) vanishes somewhere on \(J\). Since \(p_j\) depends continuously on \(x\), there exists \(x_*\in J\) with
+\[
+p_j(x_*)\in\mathbb R.
+\]
+
+We first note that \(p_j(x_*)\neq 0\). Indeed, by definition,
+\[
+p_j=\frac{\overline{v_{n+1-j}}}{v_j},
+\]
+and \(v_j,v_{n+1-j}\neq 0\) on \(J\) by construction.
+
+At \(x_*\), the number \(p_j(x_*)\) is real and nonzero. By Proposition~\ref{prop:r-positivity-branch},
+\[
+\Im r_{j-1}(x_*)>0
+\qquad
+(j\ge 2),
+\]
+and for \(j=1\) the convention \(r_0=\infty\) gives \(\alpha_1=x_*+iy\). In either case,
+\[
+\Im \alpha_j(x_*)
+=
+y+\Im\!\left(-\frac{a}{r_{j-1}(x_*)}\right)
+>0.
+\]
+Now Lemma~\ref{lem:angular-identity} gives
+\[
+\Im\!\bigl(\alpha_j(x_*)\,\overline{p_j(x_*)}\bigr)
+=
+-\Im\!\bigl(\beta_j(x_*)\,p_j(x_*)\bigr).
+\]
+Since \(p_j(x_*)\in\mathbb R\setminus\{0\}\), this simplifies to
+\[
+p_j(x_*)\,\Im \alpha_j(x_*)
+=
+-p_j(x_*)\,\Im \beta_j(x_*),
+\]
+hence
+\[
+\Im \beta_j(x_*)=-\Im \alpha_j(x_*)<0.
+\]
+
+On the other hand, the reflected ratio recursion gives
+\[
+\overline{\rho_j}
+=
+\frac{a}{\beta_j-s/p_j}.
+\]
+At \(x_*\), the denominator has the same imaginary part as \(\beta_j(x_*)\), namely a strictly negative one. Therefore
+\[
+\Im \overline{\rho_j}(x_*)>0,
+\qquad\text{so}\qquad
+\Im \rho_j(x_*)<0,
+\]
+contradicting the hypothesis \(\Im \rho_j>0\) on \(J\).
+
+Thus \(\Im p_j\) never vanishes on \(J\). Since \(\Im p_j(x_0)>0\) at one point and \(J\) is connected, we conclude
+\[
+\Im p_j(x)>0
+\qquad
+(x\in J).
+\]
+\end{proof}
+
+\begin{corollary}[Monotonicity on nonvanishing simple branches]\label{cor:monotonicity-on-branch}
+Fix \(y>0\), and let \(J\) be as in Proposition~\ref{prop:r-positivity-branch}. Assume that at some \(x_0\in J\),
+\[
+\Im r_j(x_0)>0,
+\qquad
+j=1,\dots,n-1,
+\]
+and
+\[
+\Im p_j(x_0)>0,
+\qquad
+j=1,\dots,n.
+\]
+Then for every \(x\in J\),
+\[
+\frac{\partial}{\partial y}\bigl(s(x,y)^2\bigr)\ge 0.
+\]
+\end{corollary}
+
+\begin{proof}
+By Propositions~\ref{prop:r-positivity-branch} and \ref{prop:p-positivity-branch},
+\[
+\Im p_j(x)>0
+\qquad
+(j=1,\dots,n,\ x\in J).
+\]
+Using
+\[
+\Im p_j
+=
+-\frac{\Im(v_jv_{n+1-j})}{|v_j|^2},
+\]
+we obtain
+\[
+\Im(v_jv_{n+1-j})<0.
+\]
+Hence Proposition~\ref{prop:current-identity} gives
+\[
+J_j-aJ_{j-1}
+=
+y|v_j|^2+s(x,y)\,\Im(v_jv_{n+1-j})
+\le y|v_j|^2.
+\]
+Inductively,
+\[
+J_j\le y\sum_{k=1}^j a^{\,j-k}|v_k|^2,
+\]
+and therefore
+\[
+(1-a)\sum_{j=1}^{n-1}J_j
+\le
+y\sum_{k=1}^{n-1}(1-a^{\,n-k})|v_k|^2
+\le
+y.
+\]
+Now Proposition~\ref{prop:current-identity} yields
+\[
+\frac{\partial}{\partial y}\bigl(s(x,y)^2\bigr)
+=
+2y-2(1-a)\sum_{j=1}^{n-1}J_j
+\ge 0.
+\]
+\end{proof}
+
+\begin{corollary}[Local continuation from the imaginary axis]\label{cor:local-continuation-from-x0}
+Fix \(y_*>0\). Then there exists \(\delta>0\) such that
+\[
+\frac{\partial}{\partial y}\bigl(s(x,y)^2\bigr)\Big|_{y=y_*}\ge 0
+\qquad
+\text{for all }x\in(-\delta,\delta).
+\]
+\end{corollary}
+
+\begin{proof}
+By Proposition~\ref{prop:x=0-monotonicity}, at \(x=0\) one has a simple ground-state branch with
+\[
+\Im r_j(0,y_*)>0,
+\qquad
+j=1,\dots,n-1,
+\]
+and
+\[
+\Im p_j(0,y_*)>0,
+\qquad
+j=1,\dots,n.
+\]
+Since \(\lambda_1(0,y_*)\) is simple, standard analytic perturbation theory yields an open interval \(I\ni 0\) on which \(\lambda_1(x,y_*)\) remains simple and the corresponding singular vector is analytic in \(x\). The set
+\[
+\{x\in I:\ v_1(x)\cdots v_n(x)\neq 0\}
+\]
+is open and contains \(0\), so it contains some interval \((-\delta,\delta)\). On that interval, Corollary~\ref{cor:monotonicity-on-branch} applies and proves the claim.
+\end{proof}
+
+\begin{remark}[What remains open]\label{rem:remaining-gap-monotonicity}
+The results above prove Conjecture~\ref{conj:vertical-monotonicity} in full on the slice \(x=0\), and they prove the differential inequality
+\[
+\frac{\partial}{\partial y}\bigl(s(x,y)^2\bigr)\ge 0
+\]
+on every simple branch in the \(x\)-variable on which the right singular vector has no zero entries. By Lemma~\ref{lem:boundary-entries-nonzero}, only interior zeros can occur. The remaining unresolved issue is therefore global continuation in \(x\): one must exclude, or control, possible interior zeros of the lowest singular vector and possible singular-value multiplicity points.
+\end{remark}
+
+%===========================================================
+% Analyticity and the principal-minor criterion for interior zeros
+% Suggested location: after Remark~\ref{rem:remaining-gap-monotonicity}
+%===========================================================
+
+\begin{proposition}[Analyticity on intervals of simplicity]\label{prop:analyticity-on-simple-interval}
+Fix \(y_*>0\), and define
+\[
+\mathbf H(x)\coloneqq \mathbf H_x(y_*)
+=
+\bigl((x+iy_*)\mathbf I_n-\mathbf A_n(a)\bigr)^*
+\bigl((x+iy_*)\mathbf I_n-\mathbf A_n(a)\bigr).
+\]
+Let \(I\subset\mathbb R\) be an open interval on which
+\[
+\lambda_1(x)\coloneqq \lambda_{\min}(\mathbf H(x))=s(x,y_*)^2
+\]
+is simple. Then \(\lambda_1\) is real-analytic on \(I\), and there exists a real-analytic map
+\[
+I\ni x\longmapsto \mathbf v(x)\in\mathbb C^n,
+\qquad
+\|\mathbf v(x)\|_2=1,
+\]
+such that
+\[
+\mathbf H(x)\mathbf v(x)=\lambda_1(x)\mathbf v(x).
+\]
+Consequently the corresponding right singular vector of
+\[
+\mathbf B(x)\coloneqq (x+iy_*)\mathbf I_n-\mathbf A_n(a)
+\]
+may be chosen real-analytically on \(I\); after multiplication by a real-analytic unimodular factor, it may moreover be put in the canonical gauge used in Section~7.
+\end{proposition}
+
+\begin{proof}
+The entries of \(\mathbf H(x)\) are polynomials in \(x\), so \(x\mapsto \mathbf H(x)\) is a holomorphic family of Hermitian matrices. On an interval where \(\lambda_1(x)\) is simple, standard analytic perturbation theory yields that \(\lambda_1\) and the corresponding rank-one spectral projection are real-analytic. Since \(I\) is contractible, one may choose a real-analytic unit vector \(\mathbf v(x)\) spanning the range of that projection.
+
+Because \(y_*>0\), the matrix \((x+iy_*)\mathbf I_n-\mathbf A_n(a)\) is invertible for every \(x\in\mathbb R\) by Lemma~\ref{lem:real-spectrum}, hence \(s(x,y_*)>0\). Define
+\[
+\mathbf u(x)\coloneqq s(x,y_*)^{-1}\mathbf B(x)\mathbf v(x).
+\]
+Then \(\mathbf u(x)\) is real-analytic and
+\[
+\mathbf B(x)\mathbf v(x)=s(x,y_*)\,\mathbf u(x),
+\qquad
+\mathbf B(x)^*\mathbf u(x)=s(x,y_*)\,\mathbf v(x).
+\]
+Finally, the same phase-normalization argument as in Lemma~\ref{lem:persymmetry} produces a real-analytic unimodular factor \(\beta(x)\) such that
+\[
+\beta(x)\mathbf u(x)=\mathbf R\,\overline{\beta(x)\mathbf v(x)}.
+\]
+Multiplication by \(\beta(x)\) does not change the zero set of any component of \(\mathbf v(x)\).
+\end{proof}
+
+\begin{corollary}[Interior zeros are isolated on a simple branch]\label{cor:isolated-interior-zeros}
+Under the assumptions of Proposition~\ref{prop:analyticity-on-simple-interval}, each component
+\[
+x\longmapsto v_j(x)
+\]
+is real-analytic on \(I\). Hence, for each \(j=1,\dots,n\), either \(v_j\equiv 0\) on \(I\), or else
+\[
+\{x\in I:\ v_j(x)=0\}
+\]
+is a discrete subset of \(I\).
+
+If \(0\in I\), then the second alternative holds for every \(j\). In particular,
+\[
+\mathcal Z\coloneqq \bigcup_{j=2}^{n-1}\{x\in I:\ v_j(x)=0\}
+\]
+is a discrete subset of \(I\).
+\end{corollary}
+
+\begin{proof}
+Each \(v_j\) is real-analytic by Proposition~\ref{prop:analyticity-on-simple-interval}, so its zero set is either all of \(I\) or a discrete subset of \(I\).
+
+If \(0\in I\), then Proposition~\ref{prop:x=0-monotonicity} gives a canonical right singular vector at \(x=0\) with all entries nonzero. Since multiplying by a unimodular factor does not create or remove zeros, none of the functions \(v_j\) can vanish identically on \(I\). Therefore each zero set is discrete.
+\end{proof}
+
+\begin{proposition}[Principal-minor formula at a simple eigenvalue]\label{prop:principal-minor-formula}
+Let \(M\in\mathbb C^{n\times n}\) be Hermitian with simple smallest eigenvalue \(\lambda_1\), and let
+\[
+\lambda_1<\lambda_2\le \cdots\le \lambda_n
+\]
+be the eigenvalues of \(M\). Let \(\mathbf v\) be a normalized eigenvector for \(\lambda_1\), and let
+\[
+M^{(j)}
+\]
+denote the principal \((n-1)\times(n-1)\) submatrix obtained from \(M\) by deleting row \(j\) and column \(j\). Then, for each \(j=1,\dots,n\),
+\[
+\det\!\bigl(M^{(j)}-\lambda_1\mathbf I_{n-1}\bigr)
+=
+\Bigl(\prod_{k=2}^n(\lambda_k-\lambda_1)\Bigr)\,|v_j|^2.
+\]
+In particular,
+\[
+v_j=0
+\quad\Longleftrightarrow\quad
+\det\!\bigl(M^{(j)}-\lambda_1\mathbf I_{n-1}\bigr)=0
+\quad\Longleftrightarrow\quad
+\lambda_1\in \sigma\!\bigl(M^{(j)}\bigr).
+\]
+\end{proposition}
+
+\begin{proof}
+Set
+\[
+N\coloneqq M-\lambda_1\mathbf I_n.
+\]
+Then \(N\) is Hermitian positive semidefinite, \(\operatorname{rank}N=n-1\), and
+\[
+\ker N=\operatorname{span}\{\mathbf v\}.
+\]
+Choose a unitary matrix \(U\) with first column \(\mathbf v\), so that
+\[
+N
+=
+U\,\operatorname{diag}\bigl(0,\lambda_2-\lambda_1,\dots,\lambda_n-\lambda_1\bigr)\,U^*.
+\]
+Therefore
+\[
+\operatorname{adj}(N)
+=
+\Bigl(\prod_{k=2}^n(\lambda_k-\lambda_1)\Bigr)\,
+U\,\operatorname{diag}(1,0,\dots,0)\,U^*
+=
+\Bigl(\prod_{k=2}^n(\lambda_k-\lambda_1)\Bigr)\,\mathbf v\mathbf v^*.
+\]
+Now the \((j,j)\)-entry of \(\operatorname{adj}(N)\) is exactly the \((j,j)\)-cofactor of \(N\), namely
+\[
+\det\!\bigl(M^{(j)}-\lambda_1\mathbf I_{n-1}\bigr).
+\]
+Comparing \((j,j)\)-entries yields the stated identity. The equivalences follow immediately.
+\end{proof}
+
+\begin{corollary}[Interior zeros and strict bottom interlacing]\label{cor:interior-zeros-vs-interlacing}
+Fix \(y_*>0\), let \(I\) be an interval of simplicity as in Proposition~\ref{prop:analyticity-on-simple-interval}, and for each \(x\in I\) let
+\[
+\mathbf H_x^{(j)}(y_*)
+\]
+denote the principal submatrix obtained from \(\mathbf H_x(y_*)\) by deleting row \(j\) and column \(j\). Then for every \(x\in I\) and every interior index \(j=2,\dots,n-1\),
+\[
+v_j(x)\neq 0
+\quad\Longleftrightarrow\quad
+\lambda_{\min}\!\bigl(\mathbf H_x^{(j)}(y_*)\bigr)>\lambda_1(x).
+\]
+Equivalently,
+\[
+v_j(x)=0
+\quad\Longleftrightarrow\quad
+\lambda_{\min}\!\bigl(\mathbf H_x^{(j)}(y_*)\bigr)=\lambda_1(x).
+\]
+\end{corollary}
+
+\begin{proof}
+Apply Proposition~\ref{prop:principal-minor-formula} with \(M=\mathbf H_x(y_*)\). Since \(M\) is Hermitian, Cauchy interlacing gives
+\[
+\lambda_1(x)\le \lambda_{\min}\!\bigl(\mathbf H_x^{(j)}(y_*)\bigr).
+\]
+Hence
+\[
+\lambda_1(x)\in \sigma\!\bigl(\mathbf H_x^{(j)}(y_*)\bigr)
+\quad\Longleftrightarrow\quad
+\lambda_{\min}\!\bigl(\mathbf H_x^{(j)}(y_*)\bigr)=\lambda_1(x).
+\]
+Now use Proposition~\ref{prop:principal-minor-formula}.
+\end{proof}
+
+\begin{corollary}[Reduction of the remaining gap on a simple interval]\label{cor:remaining-gap-simple-interval}
+Fix \(y_*>0\), and let \(I\ni 0\) be an open interval on which \(\lambda_1(x)=s(x,y_*)^2\) is simple. Then
+\[
+\frac{\partial}{\partial y}\bigl(s(x,y)^2\bigr)\Big|_{y=y_*}\ge 0
+\qquad
+\text{for every }x\in I\setminus\mathcal Z,
+\]
+where \(\mathcal Z\) is the discrete set from Corollary~\ref{cor:isolated-interior-zeros}. Consequently, to prove the differential inequality on all of \(I\), it is enough to prove the strict bottom interlacing inequalities
+\[
+\lambda_{\min}\!\bigl(\mathbf H_x^{(j)}(y_*)\bigr)>\lambda_1(x),
+\qquad
+j=2,\dots,n-1,\ x\in I.
+\]
+\end{corollary}
+
+\begin{proof}
+On each connected component of \(I\setminus\mathcal Z\), all entries of \(\mathbf v(x)\) are nonzero, so Corollary~\ref{cor:monotonicity-on-branch} applies and gives
+\[
+\frac{\partial}{\partial y}\bigl(s(x,y)^2\bigr)\Big|_{y=y_*}\ge 0.
+\]
+The last statement is exactly Corollary~\ref{cor:interior-zeros-vs-interlacing}.
+\end{proof}
+
+%===========================================================
+% Further reduction of interior zeros to a one-site resonance problem
+% Suggested location: after Corollary~\ref{cor:remaining-gap-simple-interval}
+%===========================================================
+
+\begin{proposition}[Strict one-sided interlacing]\label{prop:strict-one-sided-interlacing}
+Fix \(y_*>0\), and let \(I\subset\mathbb R\) be an open interval on which
+\[
+\lambda_1(x)\coloneqq s(x,y_*)^2=\lambda_{\min}(\mathbf H_x(y_*))
+\]
+is simple. For \(m=1,\dots,n-1\), let
+\[
+\mathbf L_m(x)\coloneqq \mathbf H_x(y_*)[\{1,\dots,m\}],
+\qquad
+\mathbf R_m(x)\coloneqq \mathbf H_x(y_*)[\{m,\dots,n\}],
+\]
+denote the leading and trailing principal submatrices. Then, for every \(x\in I\),
+\[
+\lambda_{\min}\bigl(\mathbf L_m(x)\bigr)>\lambda_1(x),
+\qquad
+\lambda_{\min}\bigl(\mathbf R_m(x)\bigr)>\lambda_1(x).
+\]
+\end{proposition}
+
+\begin{proof}
+We prove the statement for \(\mathbf L_m(x)\); the proof for \(\mathbf R_m(x)\) is analogous by reversing the order of the coordinates.
+
+Fix \(x\in I\), and write \(\lambda=\lambda_1(x)\). Suppose first that \(m\le n-2\), and assume for contradiction that
+\[
+\lambda_{\min}\bigl(\mathbf L_m(x)\bigr)=\lambda.
+\]
+Let
+\[
+\mathbf u=
+\begin{bmatrix}
+u_1\\ \vdots\\ u_m
+\end{bmatrix}\neq 0
+\]
+satisfy
+\[
+\mathbf L_m(x)\mathbf u=\lambda \mathbf u.
+\]
+Extend \(\mathbf u\) by zeros to a vector \(\widehat{\mathbf u}\in\mathbb C^n\):
+\[
+\widehat u_k=
+\begin{cases}
+u_k,&1\le k\le m,\\
+0,&m+1\le k\le n.
+\end{cases}
+\]
+Since rows \(1,\dots,m\) of \(\mathbf H_x(y_*)\) coincide with those of \(\mathbf L_m(x)\) when applied to \(\widehat{\mathbf u}\), we have
+\[
+(\mathbf H_x(y_*)-\lambda \mathbf I_n)\widehat{\mathbf u}=0
+\qquad\text{in rows }1,\dots,m.
+\]
+Now use the explicit five-diagonal form of \(\mathbf H_x(y_*)\). In row \(m+2\), the only possibly nonzero contribution comes from the entry \(a\widehat u_m\), so
+\[
+a u_m=0.
+\]
+Hence \(u_m=0\). In row \(m+1\), the only remaining possibly nonzero contribution is \(a u_{m-1}\), so
+\[
+a u_{m-1}=0.
+\]
+Hence \(u_{m-1}=0\). Returning to row \(m\), the eigenvalue equation becomes
+\[
+a u_{m-2}=0,
+\]
+so \(u_{m-2}=0\). Continuing backward row by row yields
+\[
+u_m=u_{m-1}=\dots=u_1=0,
+\]
+contradicting \(\mathbf u\neq 0\).
+
+It remains to treat \(m=n-1\). If
+\[
+\lambda_{\min}\bigl(\mathbf L_{n-1}(x)\bigr)=\lambda,
+\]
+then by Corollary~\ref{cor:interior-zeros-vs-interlacing} applied with \(j=n\), the canonical right singular vector satisfies \(v_n(x)=0\), contradicting Lemma~\ref{lem:boundary-entries-nonzero}. Therefore
+\[
+\lambda_{\min}\bigl(\mathbf L_{n-1}(x)\bigr)>\lambda.
+\]
+This proves the claim for \(\mathbf L_m(x)\).
+\end{proof}
+
+\begin{corollary}[Positivity of one-sided reduced resolvents]\label{cor:one-sided-resolvents}
+Under the assumptions of Proposition~\ref{prop:strict-one-sided-interlacing}, for every \(x\in I\) and every \(m=1,\dots,n-1\),
+\[
+\mathbf L_m(x)-\lambda_1(x)\mathbf I_m \succ 0,
+\qquad
+\mathbf R_m(x)-\lambda_1(x)\mathbf I_{n-m+1} \succ 0.
+\]
+Hence all one-sided Green matrices at \(\lambda_1(x)\) are well defined and positive definite.
+\end{corollary}
+
+\begin{proposition}[The second boundary layer never vanishes]\label{prop:second-layer-nonzero}
+Fix \(y_*>0\), let \(I\subset\mathbb R\) be an interval of simplicity for \(\lambda_1(x)=s(x,y_*)^2\), and let
+\[
+\mathbf v(x)=
+\begin{bmatrix}
+v_1(x)\\ \vdots\\ v_n(x)
+\end{bmatrix}
+\]
+be the canonical right singular vector from Section~7. Then, for every \(x\in I\),
+\[
+v_2(x)\neq 0,
+\qquad
+v_{n-1}(x)\neq 0.
+\]
+\end{proposition}
+
+\begin{proof}
+We prove \(v_2(x)\neq 0\); the proof for \(v_{n-1}(x)\neq 0\) is similar.
+
+Fix \(x\in I\), write \(z=x+iy_*\), \(s=s(x,y_*)\), and suppose for contradiction that \(v_2=0\).
+By Lemma~\ref{lem:boundary-entries-nonzero}, \(v_1\neq 0\) and \(v_n\neq 0\).
+
+From the singular-vector equations at \(j=1\) and \(j=n\),
+\[
+z v_1-v_2=s\,\overline{v_n},
+\qquad
+z v_n-a v_{n-1}=s\,\overline{v_1},
+\]
+we obtain
+\[
+z v_1=s\,\overline{v_n},
+\qquad
+a v_{n-1}=z v_n-s\,\overline{v_1}.
+\]
+Using the first identity,
+\[
+v_n=\frac{s}{\overline z}\,\overline{v_1},
+\]
+hence
+\[
+a v_{n-1}
+=
+s\left(\frac{z}{\overline z}-1\right)\overline{v_1}
+=
+\frac{2isy_*}{\overline z}\,\overline{v_1}.
+\]
+Therefore
+\[
+W_1
+=
+v_2v_n-a v_1v_{n-1}
+=
+-\frac{2isy_*}{\overline z}\,|v_1|^2.
+\]
+By Lemma~\ref{lem:W-real}, \(W_1\in\mathbb R\). Since \(y_*>0\) and \(v_1\neq 0\), this forces
+\[
+\frac{i}{\overline z}\in\mathbb R,
+\]
+hence \(x=0\).
+
+But at \(x=0\), Proposition~\ref{prop:x=0-monotonicity} gives a canonical right singular vector of the form
+\[
+v_j(0,y_*)=\beta\, i^{\,j-1} w_j,
+\qquad
+w_j>0,
+\]
+so no component vanishes. This contradiction proves \(v_2(x)\neq 0\).
+
+Now suppose \(v_{n-1}=0\). From the singular-vector equations at \(j=n\) and \(j=1\),
+\[
+z v_n=s\,\overline{v_1},
+\qquad
+z v_1-v_2=s\,\overline{v_n},
+\]
+we get
+\[
+v_1=\frac{s}{\overline z}\,\overline{v_n},
+\qquad
+v_2
+=
+z v_1-s\,\overline{v_n}
+=
+\frac{2isy_*}{\overline z}\,\overline{v_n}.
+\]
+Hence
+\[
+W_{n-1}
+=
+v_n v_2-a v_{n-1}v_1
+=
+\frac{2isy_*}{\overline z}\,|v_n|^2.
+\]
+Again Lemma~\ref{lem:W-real} implies \(W_{n-1}\in\mathbb R\), forcing \(x=0\), contradicting Proposition~\ref{prop:x=0-monotonicity}. Thus \(v_{n-1}(x)\neq 0\).
+\end{proof}
+
+\begin{proposition}[Defect-resonance criterion for an interior zero]\label{prop:defect-resonance}
+Fix \(y_*>0\), let \(I\subset\mathbb R\) be an interval of simplicity for \(\lambda_1(x)=s(x,y_*)^2\), and fix
+\[
+x\in I,\qquad \lambda\coloneqq \lambda_1(x),\qquad z\coloneqq x+iy_*,
+\qquad c\coloneqq \overline z + a z.
+\]
+Let \(j\in\{3,\dots,n-2\}\). Define the one-sided truncations
+\[
+\mathbf L_j\coloneqq \mathbf H_x(y_*)[\{1,\dots,j-1\}],
+\qquad
+\mathbf R_j\coloneqq \mathbf H_x(y_*)[\{j+1,\dots,n\}],
+\]
+and let
+\[
+\mathbf G_j^{L}\coloneqq (\mathbf L_j-\lambda \mathbf I)^{-1},
+\qquad
+\mathbf G_j^{R}\coloneqq (\mathbf R_j-\lambda \mathbf I)^{-1},
+\]
+which are well defined by Corollary~\ref{cor:one-sided-resolvents}. Write
+\[
+g_j^{L}\coloneqq \langle e_{j-1},\mathbf G_j^{L} e_{j-1}\rangle>0,
+\qquad
+h_j^{L}\coloneqq \langle e_{j-2},\mathbf G_j^{L} e_{j-1}\rangle,
+\]
+where \(e_{j-2},e_{j-1}\) are the last two standard basis vectors in \(\mathbb C^{j-1}\), and
+\[
+g_j^{R}\coloneqq \langle e_{1},\mathbf G_j^{R} e_{1}\rangle>0,
+\qquad
+h_j^{R}\coloneqq \langle e_{2},\mathbf G_j^{R} e_{1}\rangle,
+\]
+where \(e_{1},e_{2}\) are the first two standard basis vectors in \(\mathbb C^{n-j}\).
+
+If
+\[
+v_j(x)=0,
+\]
+then the following two identities hold:
+\[
+\boxed{a^2 g_j^{L} g_j^{R}=1,}
+\]
+and
+\[
+\boxed{
+\left(a\frac{h_j^{L}}{g_j^{L}}-\overline c\right)\,u_{j-1}
++
+\left(-c+a\frac{h_j^{R}}{g_j^{R}}\right)\,v_{j+1}
+=0,
+}
+\]
+where \(u_{j-1}=v_{j-1}(x)\) and \(v_{j+1}=v_{j+1}(x)\). Equivalently, since
+\[
+v_{j-1}(x)=-a g_j^{L} v_{j+1}(x),
+\]
+one has the scalar condition
+\[
+\boxed{
+a\overline c\,g_j^{L}-a^2 h_j^{L}-c+a\frac{h_j^{R}}{g_j^{R}}=0.
+}
+\]
+\end{proposition}
+
+\begin{proof}
+Assume \(v_j(x)=0\), and split the eigenvector into left and right pieces
+\[
+\mathbf u=
+\begin{bmatrix}
+v_1\\ \vdots\\ v_{j-1}
+\end{bmatrix}\in\mathbb C^{j-1},
+\qquad
+\mathbf w=
+\begin{bmatrix}
+v_{j+1}\\ \vdots\\ v_n
+\end{bmatrix}\in\mathbb C^{n-j}.
+\]
+Because \(v_j=0\), the rows \(1,\dots,j-1\) and \(j+1,\dots,n\) of
+\[
+(\mathbf H_x(y_*)-\lambda \mathbf I)\mathbf v=0
+\]
+give
+\[
+(\mathbf L_j-\lambda \mathbf I)\mathbf u + a\,v_{j+1}\,e_{j-1}=0,
+\]
+\[
+(\mathbf R_j-\lambda \mathbf I)\mathbf w + a\,v_{j-1}\,e_{1}=0.
+\]
+Thus
+\[
+\mathbf u=-a\,v_{j+1}\,\mathbf G_j^{L}e_{j-1},
+\qquad
+\mathbf w=-a\,v_{j-1}\,\mathbf G_j^{R}e_{1}.
+\]
+Reading off the boundary entries yields
+\[
+v_{j-1}=-a g_j^{L}v_{j+1},
+\qquad
+v_{j+1}=-a g_j^{R}v_{j-1}.
+\]
+Since \(v_{j-1}\neq 0\) and \(v_{j+1}\neq 0\) by Proposition~\ref{prop:second-layer-nonzero} and Corollary~\ref{cor:interior-zeros-vs-interlacing}, we conclude
+\[
+a^2 g_j^{L}g_j^{R}=1.
+\]
+
+Next, the \(j\)-th row of \((\mathbf H_x(y_*)-\lambda \mathbf I)\mathbf v=0\) gives
+\[
+a v_{j-2}-\overline c\,v_{j-1}-c\,v_{j+1}+a v_{j+2}=0.
+\]
+Using
+\[
+v_{j-2}=\frac{h_j^{L}}{g_j^{L}}\,v_{j-1},
+\qquad
+v_{j+2}=\frac{h_j^{R}}{g_j^{R}}\,v_{j+1},
+\]
+we obtain
+\[
+\left(a\frac{h_j^{L}}{g_j^{L}}-\overline c\right)v_{j-1}
++
+\left(-c+a\frac{h_j^{R}}{g_j^{R}}\right)v_{j+1}
+=0.
+\]
+Substituting \(v_{j-1}=-a g_j^{L}v_{j+1}\) yields
+\[
+a\overline c\,g_j^{L}-a^2 h_j^{L}-c+a\frac{h_j^{R}}{g_j^{R}}=0.
+\]
+\end{proof}
+
+\begin{corollary}[Phase-separation criterion]\label{cor:phase-separation}
+Under the assumptions of Proposition~\ref{prop:defect-resonance}, define
+\[
+m_j^{L}(\lambda)\coloneqq a\frac{h_j^{L}}{g_j^{L}}-\overline c,
+\qquad
+m_j^{R}(\lambda)\coloneqq -c+a\frac{h_j^{R}}{g_j^{R}}.
+\]
+If for every \(x\in I\), every \(j=3,\dots,n-2\), and \(\lambda=\lambda_1(x)\), one has
+\[
+\Im m_j^{L}(\lambda)<0<\Im m_j^{R}(\lambda),
+\]
+then no interior zero can occur:
+\[
+v_j(x)\neq 0
+\qquad
+(j=2,\dots,n-1,\ x\in I).
+\]
+Hence
+\[
+\frac{\partial}{\partial y}\bigl(s(x,y)^2\bigr)\Big|_{y=y_*}\ge 0
+\qquad (x\in I).
+\]
+\end{corollary}
+
+\begin{proof}
+By Proposition~\ref{prop:second-layer-nonzero}, only indices \(j=3,\dots,n-2\) need be considered. If \(v_j(x)=0\), then Proposition~\ref{prop:defect-resonance} gives
+\[
+m_j^{L}(\lambda)\,v_{j-1}+m_j^{R}(\lambda)\,v_{j+1}=0,
+\qquad
+v_{j-1}=-a g_j^{L}v_{j+1}.
+\]
+Since \(a g_j^{L}>0\), this implies
+\[
+m_j^{R}(\lambda)=a g_j^{L}\,m_j^{L}(\lambda).
+\]
+The right-hand side has the same argument as \(m_j^{L}(\lambda)\), contradicting
+\[
+\Im m_j^{L}(\lambda)<0<\Im m_j^{R}(\lambda).
+\]
+Therefore \(v_j(x)\neq 0\) for all interior \(j\), and Corollary~\ref{cor:monotonicity-on-branch} gives the derivative inequality on all of \(I\).
+\end{proof}
+
+%===========================================================
+% Weyl-quotient formulas and elimination of interior zeros
+% Suggested location: after Proposition~\ref{prop:defect-resonance}
+%===========================================================
+
+\subsection*{Explicit Schur-complement formulas for \(m_j^L\) and \(m_j^R\)}
+
+Fix \(y_*>0\), let \(x\in\mathbb R\), and write
+\[
+z\coloneqq x+iy_*,
+\qquad
+\lambda\coloneqq \lambda_1(x,y_*)=s(x,y_*)^2,
+\qquad
+c\coloneqq \overline z + a z=(1+a)x-i(1-a)y_*.
+\]
+Set
+\[
+d_-\coloneqq a^2+|z|^2-\lambda,
+\qquad
+d\coloneqq 1+a^2+|z|^2-\lambda,
+\qquad
+d_+\coloneqq 1+|z|^2-\lambda.
+\]
+Also define
+\[
+D\coloneqq
+\begin{bmatrix}
+d & -c\\
+-\overline c & d
+\end{bmatrix},
+\qquad
+E\coloneqq
+\begin{bmatrix}
+a&0\\
+-c&a
+\end{bmatrix}.
+\]
+Then
+\[
+\mathbf H_x(y_*)-\lambda \mathbf I_n
+\]
+is the Hermitian five-diagonal matrix whose interior \(2\times2\)-block structure is governed by
+\(D\) on the diagonal and \(E,E^*\) on the first block off-diagonals.
+
+For \(j=3,\dots,n-2\), let
+\[
+\mathbf L_j\coloneqq \mathbf H_x(y_*)[\{1,\dots,j-1\}] - \lambda \mathbf I_{j-1},
+\qquad
+\mathbf R_j\coloneqq \mathbf H_x(y_*)[\{j+1,\dots,n\}] - \lambda \mathbf I_{n-j}.
+\]
+By Corollary~\ref{cor:one-sided-resolvents}, these are positive definite.
+
+We now define the \(2\times2\) edge Schur complements:
+
+\begin{definition}[Left and right edge Schur complements]\label{def:edge-schur}
+For \(j=3,\dots,n-2\), let \(\mathbf S_j^L\) be the Schur complement of \(\mathbf L_j\) onto its last
+two coordinates \((j-2,j-1)\), and let \(\mathbf S_j^R\) be the Schur complement of \(\mathbf R_j\) onto
+its first two coordinates \((j+1,j+2)\).
+\end{definition}
+
+Since \(\mathbf L_j\) and \(\mathbf R_j\) are positive definite, so are \(\mathbf S_j^L\) and \(\mathbf S_j^R\).
+
+\begin{proposition}[Riccati recursions for the edge Schur complements]\label{prop:edge-schur-recursion}
+For the left edge one has
+\[
+\mathbf S_3^L=
+\begin{bmatrix}
+d_- & -c\\
+-\overline c & d
+\end{bmatrix},
+\]
+\[
+\mathbf S_4^L=
+\begin{bmatrix}
+d-\dfrac{|c|^2}{d_-} & -c+\dfrac{a\overline c}{d_-}\\[3mm]
+-\overline c+\dfrac{ac}{d_-} & d-\dfrac{a^2}{d_-}
+\end{bmatrix},
+\]
+and for every \(j\ge 5\),
+\[
+\boxed{
+\mathbf S_j^L = D - E^*(\mathbf S_{j-2}^L)^{-1}E.
+}
+\]
+
+For the right edge one has
+\[
+\mathbf S_{n-2}^R=
+\begin{bmatrix}
+d & -c\\
+-\overline c & d_+
+\end{bmatrix},
+\]
+\[
+\mathbf S_{n-3}^R=
+\begin{bmatrix}
+d-\dfrac{a^2}{d_+} & -c+\dfrac{a\overline c}{d_+}\\[3mm]
+-\overline c+\dfrac{ac}{d_+} & d-\dfrac{|c|^2}{d_+}
+\end{bmatrix},
+\]
+and for every \(j\le n-4\),
+\[
+\boxed{
+\mathbf S_j^R = D - E(\mathbf S_{j+2}^R)^{-1}E^*.
+}
+\]
+\end{proposition}
+
+\begin{proof}
+These are direct block Schur-complement identities for the five-diagonal matrix
+\(\mathbf H_x(y_*)-\lambda \mathbf I_n\). The only point to note is that, because the bandwidth is two,
+adding two new sites changes the edge Schur complement by the Riccati step
+\[
+D - (\text{coupling})^*(\text{previous edge Schur complement})^{-1}(\text{coupling}),
+\]
+with coupling matrix \(E\) on the left and \(E^*\) on the right.
+\end{proof}
+
+\begin{proposition}[Explicit formulas for \(m_j^L\) and \(m_j^R\)]\label{prop:mLR-from-schur}
+Write
+\[
+\mathbf S_j^L=
+\begin{bmatrix}
+\alpha_j^L & \beta_j^L\\
+\overline{\beta_j^L} & \delta_j^L
+\end{bmatrix},
+\qquad
+\mathbf S_j^R=
+\begin{bmatrix}
+\alpha_j^R & \beta_j^R\\
+\overline{\beta_j^R} & \delta_j^R
+\end{bmatrix}.
+\]
+Then:
+\begin{enumerate}
+\item
+\[
+g_j^L=\bigl((\mathbf S_j^L)^{-1}\bigr)_{22},
+\qquad
+h_j^L=\bigl((\mathbf S_j^L)^{-1}\bigr)_{12},
+\]
+hence
+\[
+\frac{h_j^L}{g_j^L}
+=
+-\frac{\beta_j^L}{\alpha_j^L}.
+\]
+Therefore
+\[
+\boxed{
+m_j^L
+=
+a\frac{h_j^L}{g_j^L}-\overline c
+=
+-\overline c-a\,\frac{\beta_j^L}{\alpha_j^L}.
+}
+\]
+
+\item
+\[
+g_j^R=\bigl((\mathbf S_j^R)^{-1}\bigr)_{11},
+\qquad
+h_j^R=\bigl((\mathbf S_j^R)^{-1}\bigr)_{21},
+\]
+hence
+\[
+\frac{h_j^R}{g_j^R}
+=
+-\frac{\overline{\beta_j^R}}{\delta_j^R}.
+\]
+Therefore
+\[
+\boxed{
+m_j^R
+=
+-c+a\frac{h_j^R}{g_j^R}
+=
+-c-a\,\frac{\overline{\beta_j^R}}{\delta_j^R}.
+}
+\]
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+For a positive definite Hermitian matrix
+\[
+S=\begin{bmatrix}\alpha&\beta\\ \overline\beta&\delta\end{bmatrix},
+\qquad
+\det S=\alpha\delta-|\beta|^2>0,
+\]
+one has
+\[
+S^{-1}
+=
+\frac1{\det S}
+\begin{bmatrix}
+\delta & -\beta\\
+-\overline\beta & \alpha
+\end{bmatrix}.
+\]
+Applying this to \(\mathbf S_j^L\) and \(\mathbf S_j^R\) gives the stated formulas.
+\end{proof}
+
+\begin{lemma}[Propagation of positive imaginary part]\label{lem:beta-propagation}
+Let
+\[
+S=
+\begin{bmatrix}
+\alpha&\beta\\
+\overline\beta&\delta
+\end{bmatrix}\succ 0,
+\qquad
+\Delta\coloneqq \alpha\delta-|\beta|^2>0.
+\]
+Then:
+\begin{enumerate}
+\item If
+\[
+T_L\coloneqq D-E^*S^{-1}E
+=
+\begin{bmatrix}
+\alpha'&\beta'\\
+\overline{\beta'}&\delta'
+\end{bmatrix},
+\]
+then
+\[
+\beta'
+=
+\frac{a^2\beta+a\alpha\,\overline c-c\,\Delta}{\Delta},
+\]
+and hence
+\[
+\Im \beta'
+=
+\frac{a^2\Im\beta + a\alpha(1-a)y_* + \Delta(1-a)y_*}{\Delta}.
+\]
+
+\item If
+\[
+T_R\coloneqq D-ES^{-1}E^*
+=
+\begin{bmatrix}
+\widetilde\alpha&\widetilde\beta\\
+\overline{\widetilde\beta}&\widetilde\delta
+\end{bmatrix},
+\]
+then
+\[
+\widetilde\beta
+=
+\frac{a^2\beta+a\delta\,\overline c-c\,\Delta}{\Delta},
+\]
+and hence
+\[
+\Im \widetilde\beta
+=
+\frac{a^2\Im\beta + a\delta(1-a)y_* + \Delta(1-a)y_*}{\Delta}.
+\]
+\end{enumerate}
+In particular, if \(\Im\beta>0\), then
+\[
+\Im\beta'>0,
+\qquad
+\Im\widetilde\beta>0.
+\]
+\end{lemma}
+
+\begin{proof}
+This is a direct computation from
+\[
+S^{-1}
+=
+\frac1\Delta
+\begin{bmatrix}
+\delta & -\beta\\
+-\overline\beta & \alpha
+\end{bmatrix},
+\qquad
+c=(1+a)x-i(1-a)y_*.
+\]
+The stated formulas follow by multiplying out the matrices. Since \(0<a<1\), \(y_*>0\), and
+\(\alpha,\delta,\Delta>0\), the displayed expressions for the imaginary parts are strictly positive whenever
+\(\Im\beta>0\).
+\end{proof}
+
+\begin{corollary}[All edge off-diagonal Schur entries lie in the upper half-plane]\label{cor:beta-upper-half-plane}
+For every \(j=3,\dots,n-2\),
+\[
+\Im \beta_j^L>0,
+\qquad
+\Im \beta_j^R>0.
+\]
+\end{corollary}
+
+\begin{proof}
+The base cases in Proposition~\ref{prop:edge-schur-recursion} satisfy
+\[
+\Im(-c)=(1-a)y_*>0,
+\qquad
+\Im\!\left(-c+\frac{a\overline c}{d_\pm}\right)
+=
+(1-a)y_*\left(1+\frac{a}{d_\pm}\right)>0,
+\]
+because \(d_\pm>0\). Hence
+\[
+\Im \beta_3^L>0,\qquad \Im \beta_4^L>0,
+\qquad
+\Im \beta_{n-2}^R>0,\qquad \Im \beta_{n-3}^R>0.
+\]
+The inductive step is exactly Lemma~\ref{lem:beta-propagation}.
+\end{proof}
+
+\begin{corollary}[Half-plane separation for the defect Weyl quotients]\label{cor:mLR-half-plane}
+For every \(j=3,\dots,n-2\),
+\[
+\Im m_j^L<0<\Im m_j^R.
+\]
+More explicitly,
+\[
+\Im m_j^L
+=
+-(1-a)y_* - a\,\frac{\Im\beta_j^L}{\alpha_j^L}<0,
+\]
+and
+\[
+\Im m_j^R
+=
+(1-a)y_* + a\,\frac{\Im\beta_j^R}{\delta_j^R}>0.
+\]
+\end{corollary}
+
+\begin{proof}
+This follows immediately from Proposition~\ref{prop:mLR-from-schur} and
+Corollary~\ref{cor:beta-upper-half-plane}, using \(\alpha_j^L>0\) and \(\delta_j^R>0\).
+\end{proof}
+
+\begin{theorem}[No interior zeros on intervals of simplicity]\label{thm:no-interior-zeros-simple-interval}
+Fix \(y_*>0\), and let \(I\subset\mathbb R\) be an open interval on which
+\[
+\lambda_1(x)=s(x,y_*)^2
+\]
+is simple. Let
+\[
+\mathbf v(x)=
+\begin{bmatrix}
+v_1(x)\\
+\vdots\\
+v_n(x)
+\end{bmatrix}
+\]
+be the canonical right singular vector on \(I\). Then
+\[
+v_j(x)\neq 0
+\qquad
+(j=1,\dots,n,\ x\in I).
+\]
+In particular, no interior zero can occur on a simple branch.
+\end{theorem}
+
+\begin{proof}
+By Lemma~\ref{lem:boundary-entries-nonzero} and Proposition~\ref{prop:second-layer-nonzero},
+the only possible zero indices are \(j=3,\dots,n-2\).
+
+Assume for contradiction that \(v_j(x)=0\) for some \(x\in I\) and some such \(j\). Then
+Proposition~\ref{prop:defect-resonance} gives
+\[
+m_j^L\,v_{j-1}+m_j^R\,v_{j+1}=0,
+\qquad
+v_{j-1}=-a g_j^L\,v_{j+1},
+\]
+with \(a g_j^L>0\). Hence
+\[
+m_j^R = a g_j^L\, m_j^L.
+\]
+The right-hand side is a positive real multiple of \(m_j^L\), so it has the same argument as
+\(m_j^L\). But Corollary~\ref{cor:mLR-half-plane} gives
+\[
+\Im m_j^L<0<\Im m_j^R,
+\]
+which is impossible. Therefore \(v_j(x)\neq 0\).
+\end{proof}
+
+\begin{remark}[Where this leaves Conjecture~\ref{conj:vertical-monotonicity}]
+The interior-zero obstruction is now completely removed on every interval of simplicity in the
+\(x\)-variable. Thus the only remaining obstruction to a global proof of
+Conjecture~\ref{conj:vertical-monotonicity} is the treatment of points where the lowest singular
+value branch ceases to be simple.
+\end{remark}
+
+\section{Completion of the proof of Conjecture~\ref{conj:vertical-monotonicity}}
+
+In this section we complete the proof of Conjecture~\ref{conj:vertical-monotonicity}.
+Throughout, fix
+\[
+n>1,\qquad 0<a<1,\qquad y>0,\qquad x\in\mathbb R,
+\]
+and write
+\[
+z\coloneqq x+iy,
+\qquad
+\lambda\coloneqq \lambda_1(x,y)=s(x,y)^2=\lambda_{\min}\!\bigl(\mathbf H_x(y)\bigr),
+\]
+where
+\[
+\mathbf H_x(y)=\bigl((x+iy)\mathbf I_n-\mathbf A_n(a)\bigr)^*\bigl((x+iy)\mathbf I_n-\mathbf A_n(a)\bigr).
+\]
+For an index set \(J\subset\{1,\dots,n\}\), we denote by
+\[
+\mathbf M[J]
+\]
+the principal submatrix of \(\mathbf M\) indexed by \(J\).
+
+As in Proposition~\ref{prop:bulk-recurrence}, set
+\[
+c\coloneqq \overline z + a z=(1+a)x-i(1-a)y,
+\]
+and
+\[
+d_-\coloneqq a^2+|z|^2-\lambda,
+\qquad
+d\coloneqq 1+a^2+|z|^2-\lambda,
+\qquad
+d_+\coloneqq 1+|z|^2-\lambda.
+\]
+Then
+\[
+\mathbf H_x(y)-\lambda\mathbf I_n
+=
+\begin{bmatrix}
+d_- & -c & a \\
+-\overline c & d & -c & a \\
+a & -\overline c & d & -c & a \\
+& \ddots & \ddots & \ddots & \ddots & \ddots \\
+&& a & -\overline c & d & -c\\
+&&& a & -\overline c & d_+
+\end{bmatrix},
+\]
+with omitted entries equal to \(0\).
+
+For \(j=2,\dots,n-1\), define the one-sided truncations
+\[
+\mathbf L_j\coloneqq \bigl(\mathbf H_x(y)-\lambda\mathbf I_n\bigr)[\{1,\dots,j-1\}],
+\qquad
+\mathbf R_j\coloneqq \bigl(\mathbf H_x(y)-\lambda\mathbf I_n\bigr)[\{j+1,\dots,n\}].
+\]
+
+\begin{proposition}[Strict positivity of one-sided truncations]\label{prop:one-sided-truncations-positive}
+For every \(j=2,\dots,n-1\),
+\[
+\mathbf L_j\succ 0,
+\qquad
+\mathbf R_j\succ 0.
+\]
+In particular,
+\[
+d_->0,
+\qquad
+d_+>0.
+\]
+\end{proposition}
+
+\begin{proof}
+We prove the statement for \(\mathbf R_j\); the proof for \(\mathbf L_j\) is analogous by backward propagation.
+
+Fix \(j\in\{2,\dots,n-1\}\), and suppose \(\mathbf R_j\mathbf w=0\) for some
+\[
+\mathbf w=
+\begin{bmatrix}
+w_1\\ \vdots\\ w_{n-j}
+\end{bmatrix}\in\mathbb C^{n-j}.
+\]
+Extend \(\mathbf w\) to \(\widehat{\mathbf w}\in\mathbb C^n\) by inserting \(j\) zeros on the left:
+\[
+\widehat{\mathbf w}=
+\begin{bmatrix}
+0\\ \vdots\\ 0\\ w_1\\ \vdots\\ w_{n-j}
+\end{bmatrix}.
+\]
+Then rows \(j+1,\dots,n\) of \((\mathbf H_x(y)-\lambda\mathbf I_n)\widehat{\mathbf w}\) vanish, because
+\(\mathbf R_j\mathbf w=0\).
+
+Now inspect the rows immediately to the left of the support of \(\widehat{\mathbf w}\).
+Row \(j-1\) gives
+\[
+a w_1=0,
+\]
+hence \(w_1=0\). Row \(j\) then gives
+\[
+-c\,w_1+a w_2=0,
+\]
+hence \(w_2=0\) (when \(n-j\ge 2\); if \(n-j=1\), we are done).
+
+Next, the first row of \(\mathbf R_j\mathbf w=0\) becomes
+\[
+d\,w_1-c\,w_2+a w_3=0,
+\]
+so \(w_3=0\). Proceeding inductively, each subsequent row reduces to
+\[
+a w_{k+2}=0,
+\]
+and therefore all components of \(\mathbf w\) vanish. Thus \(\ker \mathbf R_j=\{0\}\). Since \(\mathbf R_j\) is Hermitian positive semidefinite by interlacing, it follows that \(\mathbf R_j\succ 0\).
+
+The proof for \(\mathbf L_j\) is the same, starting from rows \(j+1\) and \(j\) and propagating leftward. Finally,
+\[
+d_-=\mathbf L_2,
+\qquad
+d_+=\mathbf R_{n-1},
+\]
+so \(d_->0\) and \(d_+>0\).
+\end{proof}
+
+We next introduce the \(2\times 2\) edge Schur complements. Set
+\[
+D\coloneqq
+\begin{bmatrix}
+d & -c\\
+-\overline c & d
+\end{bmatrix},
+\qquad
+E\coloneqq
+\begin{bmatrix}
+a&0\\
+-c&a
+\end{bmatrix}.
+\]
+
+\begin{definition}[Edge Schur complements]\label{def:edge-schur-complements}
+For \(j=3,\dots,n-1\), let \(\mathbf S_j^L\) be the Schur complement of \(\mathbf L_j\) onto its last two coordinates \((j-2,j-1)\). For \(j=2,\dots,n-2\), let \(\mathbf S_j^R\) be the Schur complement of \(\mathbf R_j\) onto its first two coordinates \((j+1,j+2)\). Since \(\mathbf L_j\succ0\) and \(\mathbf R_j\succ0\), the matrices \(\mathbf S_j^L\) and \(\mathbf S_j^R\) are Hermitian positive definite whenever they are defined.
+\end{definition}
+
+\begin{proposition}[Edge Schur complement recursions]\label{prop:edge-schur-recursions}
+One has
+\[
+\mathbf S_3^L=
+\begin{bmatrix}
+d_- & -c\\
+-\overline c & d
+\end{bmatrix},
+\qquad
+\mathbf S_4^L=
+\begin{bmatrix}
+d-\dfrac{|c|^2}{d_-} & -c+\dfrac{a\overline c}{d_-}\\[3mm]
+-\overline c+\dfrac{ac}{d_-} & d-\dfrac{a^2}{d_-}
+\end{bmatrix},
+\]
+and, for every \(j\ge 5\),
+\[
+\boxed{
+\mathbf S_j^L
+=
+D-E^*(\mathbf S_{j-2}^L)^{-1}E.
+}
+\]
+
+Likewise,
+\[
+\mathbf S_{n-2}^R=
+\begin{bmatrix}
+d & -c\\
+-\overline c & d_+
+\end{bmatrix},
+\qquad
+\mathbf S_{n-3}^R=
+\begin{bmatrix}
+d-\dfrac{a^2}{d_+} & -c+\dfrac{a\overline c}{d_+}\\[3mm]
+-\overline c+\dfrac{ac}{d_+} & d-\dfrac{|c|^2}{d_+}
+\end{bmatrix},
+\]
+and, for every \(j\le n-4\),
+\[
+\boxed{
+\mathbf S_j^R
+=
+D-E(\mathbf S_{j+2}^R)^{-1}E^*.
+}
+\]
+\end{proposition}
+
+\begin{proof}
+These are direct block Schur-complement identities for the five-diagonal matrix
+\(\mathbf H_x(y)-\lambda\mathbf I_n\). Because the bandwidth is two, adding two new sites changes the edge Schur complement by one Riccati step with coupling matrix \(E\) on the right edge and \(E^*\) on the left edge. The displayed base cases are obtained by direct calculation.
+\end{proof}
+
+\begin{lemma}[Propagation of the upper-half-plane property]\label{lem:beta-propagation-final}
+Let
+\[
+S=
+\begin{bmatrix}
+\alpha&\beta\\
+\overline\beta&\delta
+\end{bmatrix}\succ0,
+\qquad
+\Delta\coloneqq \alpha\delta-|\beta|^2>0.
+\]
+Then:
+\begin{enumerate}
+\item If
+\[
+T_L\coloneqq D-E^*S^{-1}E=
+\begin{bmatrix}
+\alpha'&\beta'\\
+\overline{\beta'}&\delta'
+\end{bmatrix},
+\]
+then
+\[
+\beta'=\frac{a^2\beta+a\alpha\,\overline c-c\,\Delta}{\Delta},
+\]
+hence
+\[
+\Im\beta'
+=
+\frac{a^2\Im\beta+a\alpha(1-a)y+\Delta(1-a)y}{\Delta}.
+\]
+
+\item If
+\[
+T_R\coloneqq D-ES^{-1}E^*=
+\begin{bmatrix}
+\widetilde\alpha&\widetilde\beta\\
+\overline{\widetilde\beta}&\widetilde\delta
+\end{bmatrix},
+\]
+then
+\[
+\widetilde\beta=\frac{a^2\beta+a\delta\,\overline c-c\,\Delta}{\Delta},
+\]
+hence
+\[
+\Im\widetilde\beta
+=
+\frac{a^2\Im\beta+a\delta(1-a)y+\Delta(1-a)y}{\Delta}.
+\]
+\end{enumerate}
+In particular, if \(\Im\beta>0\), then
+\[
+\Im\beta'>0,
+\qquad
+\Im\widetilde\beta>0.
+\]
+\end{lemma}
+
+\begin{proof}
+Using
+\[
+S^{-1}
+=
+\frac1\Delta
+\begin{bmatrix}
+\delta&-\beta\\
+-\overline\beta&\alpha
+\end{bmatrix},
+\]
+one computes directly
+\[
+D-E^*S^{-1}E
+\quad\text{and}\quad
+D-ES^{-1}E^*.
+\]
+The displayed formulas follow after a short calculation. Since \(0<a<1\), \(y>0\), and
+\(\alpha,\delta,\Delta>0\), the formulas for the imaginary parts imply the last claim.
+\end{proof}
+
+\begin{corollary}[Upper-half-plane property for all edge Schur complements]\label{cor:beta-upper-half-plane-final}
+For every \(j=3,\dots,n-1\),
+\[
+\mathbf S_j^L=
+\begin{bmatrix}
+\alpha_j^L&\beta_j^L\\
+\overline{\beta_j^L}&\delta_j^L
+\end{bmatrix}
+\quad\Longrightarrow\quad
+\Im\beta_j^L>0,
+\]
+and for every \(j=2,\dots,n-2\),
+\[
+\mathbf S_j^R=
+\begin{bmatrix}
+\alpha_j^R&\beta_j^R\\
+\overline{\beta_j^R}&\delta_j^R
+\end{bmatrix}
+\quad\Longrightarrow\quad
+\Im\beta_j^R>0.
+\]
+\end{corollary}
+
+\begin{proof}
+For the left edge, the base cases are
+\[
+\beta_3^L=-c,
+\qquad
+\beta_4^L=-c+\frac{a\overline c}{d_-},
+\]
+and therefore
+\[
+\Im\beta_3^L=(1-a)y>0,
+\qquad
+\Im\beta_4^L=(1-a)y\left(1+\frac{a}{d_-}\right)>0.
+\]
+Now apply Lemma~\ref{lem:beta-propagation-final} inductively through the recursion in
+Proposition~\ref{prop:edge-schur-recursions}.
+
+For the right edge, the base cases are
+\[
+\beta_{n-2}^R=-c,
+\qquad
+\beta_{n-3}^R=-c+\frac{a\overline c}{d_+},
+\]
+so again
+\[
+\Im\beta_{n-2}^R=(1-a)y>0,
+\qquad
+\Im\beta_{n-3}^R=(1-a)y\left(1+\frac{a}{d_+}\right)>0.
+\]
+The recursion and Lemma~\ref{lem:beta-propagation-final} complete the proof.
+\end{proof}
+
+\begin{proposition}[The second boundary layer never vanishes for a ground state]\label{prop:v2-nonzero-groundstate}
+Assume \(n\ge 3\). Let
+\[
+\mathbf v=
+\begin{bmatrix}
+v_1\\ \vdots\\ v_n
+\end{bmatrix}\in \ker\bigl(\mathbf H_x(y)-\lambda\mathbf I_n\bigr)
+\setminus\{0\}.
+\]
+Then
+\[
+v_2\neq 0,
+\qquad
+v_{n-1}\neq 0.
+\]
+\end{proposition}
+
+\begin{proof}
+We first prove \(v_2\neq 0\).
+
+Assume \(v_2=0\). Then \(v_1\neq 0\): otherwise the equation
+\[
+\mathbf R_2
+\begin{bmatrix}
+v_3\\ \vdots\\ v_n
+\end{bmatrix}
++
+a v_1 e_1
+=
+0
+\]
+would reduce to \(\mathbf R_2 \mathbf w=0\), so \(\mathbf w=0\) by Proposition~\ref{prop:one-sided-truncations-positive}, and hence \(\mathbf v=0\), a contradiction.
+
+If \(n=3\), then \(\mathbf R_2=[d_+]\), so row \(3\) gives
+\[
+d_+ v_3 + a v_1=0,
+\qquad\text{hence}\qquad
+v_3=-\frac{a}{d_+}v_1.
+\]
+Row \(2\) then gives
+\[
+-\overline c\,v_1-c\,v_3=0,
+\qquad\text{so}\qquad
+\overline c=\frac{a}{d_+}c.
+\]
+This is impossible because \(a/d_+>0\), while
+\[
+\Im(\overline c)=+(1-a)y>0,
+\qquad
+\Im(c)=-(1-a)y<0.
+\]
+
+Now assume \(n\ge 4\). Define
+\[
+\mathbf G_2\coloneqq \mathbf R_2^{-1},
+\qquad
+g\coloneqq \langle e_1,\mathbf G_2 e_1\rangle>0,
+\qquad
+h\coloneqq \langle e_2,\mathbf G_2 e_1\rangle.
+\]
+From
+\[
+\mathbf R_2
+\begin{bmatrix}
+v_3\\ \vdots\\ v_n
+\end{bmatrix}
++
+a v_1 e_1
+=
+0
+\]
+we get
+\[
+\begin{bmatrix}
+v_3\\ \vdots\\ v_n
+\end{bmatrix}
+=
+-a v_1 \mathbf G_2 e_1,
+\]
+hence
+\[
+v_3=-a g\,v_1,
+\qquad
+v_4=-a h\,v_1.
+\]
+Row \(1\) gives
+\[
+d_- v_1 + a v_3=0,
+\]
+so
+\[
+d_-=a^2 g>0.
+\]
+Row \(2\) gives
+\[
+-\overline c\,v_1-c\,v_3+a v_4=0.
+\]
+Substituting the formulas for \(v_3\) and \(v_4\), we obtain
+\[
+-\overline c + a g\,c - a^2 h =0.
+\]
+Equivalently, with
+\[
+m_2^R\coloneqq -c+a\frac{h}{g},
+\]
+we have
+\[
+m_2^R=-\frac{1}{ag}\,\overline c=-\frac{a}{d_-}\,\overline c.
+\]
+Therefore
+\[
+\Im m_2^R=-\frac{a}{d_-}\Im(\overline c)<0.
+\]
+
+On the other hand, let
+\[
+\mathbf S_2^R=
+\begin{bmatrix}
+\alpha_2^R&\beta_2^R\\
+\overline{\beta_2^R}&\delta_2^R
+\end{bmatrix}
+\]
+be the Schur complement of \(\mathbf R_2\) onto its first two coordinates. By the block inversion formula,
+\[
+\frac{h}{g}
+=
+-\frac{\overline{\beta_2^R}}{\delta_2^R},
+\]
+hence
+\[
+m_2^R
+=
+-c-a\,\frac{\overline{\beta_2^R}}{\delta_2^R}.
+\]
+By Corollary~\ref{cor:beta-upper-half-plane-final},
+\[
+\Im\beta_2^R>0,
+\]
+so
+\[
+\Im m_2^R
+=
+(1-a)y+a\,\frac{\Im\beta_2^R}{\delta_2^R}>0.
+\]
+This contradiction proves \(v_2\neq 0\).
+
+Finally, because
+\[
+\mathbf R\,\overline{\mathbf H_x(y)}\,\mathbf R=\mathbf H_x(y),
+\]
+the vector \(\mathbf R\overline{\mathbf v}\) is again a nonzero eigenvector for \(\lambda\). Applying the first part to \(\mathbf R\overline{\mathbf v}\) yields
+\[
+(\mathbf R\overline{\mathbf v})_2=\overline{v_{n-1}}\neq 0.
+\]
+Thus \(v_{n-1}\neq 0\).
+\end{proof}
+
+\begin{proposition}[Defect resonance for an interior zero]\label{prop:defect-resonance-final}
+Assume \(n\ge 5\). Let
+\[
+\mathbf v=
+\begin{bmatrix}
+v_1\\ \vdots\\ v_n
+\end{bmatrix}\in \ker\bigl(\mathbf H_x(y)-\lambda\mathbf I_n\bigr)\setminus\{0\},
+\]
+and let \(j\in\{3,\dots,n-2\}\). If \(v_j=0\), then the following hold.
+
+Define
+\[
+\mathbf G_j^L\coloneqq \mathbf L_j^{-1},
+\qquad
+\mathbf G_j^R\coloneqq \mathbf R_j^{-1},
+\]
+and
+\[
+g_j^L\coloneqq \bigl\langle e_{j-1},\mathbf G_j^L e_{j-1}\bigr\rangle>0,
+\qquad
+h_j^L\coloneqq \bigl\langle e_{j-2},\mathbf G_j^L e_{j-1}\bigr\rangle,
+\]
+where \(e_{j-2},e_{j-1}\) are the last two basis vectors of \(\mathbb C^{j-1}\), and
+\[
+g_j^R\coloneqq \bigl\langle e_1,\mathbf G_j^R e_1\bigr\rangle>0,
+\qquad
+h_j^R\coloneqq \bigl\langle e_2,\mathbf G_j^R e_1\bigr\rangle,
+\]
+where \(e_1,e_2\) are the first two basis vectors of \(\mathbb C^{n-j}\).
+
+Then:
+\begin{enumerate}
+\item
+\[
+v_{j-1}=-a g_j^L\,v_{j+1},
+\qquad
+v_{j+1}=-a g_j^R\,v_{j-1}.
+\]
+In particular,
+\[
+v_{j-1}\neq 0,\qquad v_{j+1}\neq 0,
+\qquad
+a^2 g_j^L g_j^R=1.
+\]
+
+\item Writing
+\[
+m_j^L\coloneqq a\frac{h_j^L}{g_j^L}-\overline c,
+\qquad
+m_j^R\coloneqq -c+a\frac{h_j^R}{g_j^R},
+\]
+the \(j\)-th row of \((\mathbf H_x(y)-\lambda\mathbf I_n)\mathbf v=0\) is equivalent to
+\[
+m_j^L\,v_{j-1}+m_j^R\,v_{j+1}=0.
+\]
+Hence
+\[
+\boxed{
+m_j^R=a g_j^L\,m_j^L.
+}
+\]
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Split \(\mathbf v\) into left and right pieces:
+\[
+\mathbf u=
+\begin{bmatrix}
+v_1\\ \vdots\\ v_{j-1}
+\end{bmatrix}\in\mathbb C^{j-1},
+\qquad
+\mathbf w=
+\begin{bmatrix}
+v_{j+1}\\ \vdots\\ v_n
+\end{bmatrix}\in\mathbb C^{n-j}.
+\]
+Because \(v_j=0\), the equations on the left and right of the defect are
+\[
+\mathbf L_j \mathbf u + a v_{j+1} e_{j-1}=0,
+\qquad
+\mathbf R_j \mathbf w + a v_{j-1} e_1=0.
+\]
+Thus
+\[
+\mathbf u=-a v_{j+1}\mathbf G_j^L e_{j-1},
+\qquad
+\mathbf w=-a v_{j-1}\mathbf G_j^R e_1.
+\]
+Taking the last component of \(\mathbf u\) and the first component of \(\mathbf w\) gives
+\[
+v_{j-1}=-a g_j^L v_{j+1},
+\qquad
+v_{j+1}=-a g_j^R v_{j-1}.
+\]
+If \(v_{j+1}=0\), then \(\mathbf u=0\), so \(v_{j-1}=0\), hence \(\mathbf w=0\), contradicting \(\mathbf v\neq 0\). Therefore \(v_{j+1}\neq 0\), and similarly \(v_{j-1}\neq 0\). Multiplying the two displayed relations gives
+\[
+a^2 g_j^L g_j^R=1.
+\]
+
+Next, from the same formulas,
+\[
+v_{j-2}=\frac{h_j^L}{g_j^L}v_{j-1},
+\qquad
+v_{j+2}=\frac{h_j^R}{g_j^R}v_{j+1}.
+\]
+The \(j\)-th row of \((\mathbf H_x(y)-\lambda\mathbf I_n)\mathbf v=0\) is
+\[
+a v_{j-2}-\overline c\,v_{j-1}-c\,v_{j+1}+a v_{j+2}=0.
+\]
+Substituting the displayed formulas yields
+\[
+\left(a\frac{h_j^L}{g_j^L}-\overline c\right)v_{j-1}
++
+\left(-c+a\frac{h_j^R}{g_j^R}\right)v_{j+1}
+=0,
+\]
+that is,
+\[
+m_j^L\,v_{j-1}+m_j^R\,v_{j+1}=0.
+\]
+Using \(v_{j-1}=-a g_j^L v_{j+1}\) and \(v_{j+1}\neq 0\) gives
+\[
+m_j^R=a g_j^L m_j^L.
+\qedhere
+\]
+\end{proof}
+
+\begin{proposition}[Schur-complement formulas for the defect Weyl quotients]\label{prop:mLR-schur-formulas-final}
+For \(j=3,\dots,n-2\), write
+\[
+\mathbf S_j^L=
+\begin{bmatrix}
+\alpha_j^L&\beta_j^L\\
+\overline{\beta_j^L}&\delta_j^L
+\end{bmatrix},
+\qquad
+\mathbf S_j^R=
+\begin{bmatrix}
+\alpha_j^R&\beta_j^R\\
+\overline{\beta_j^R}&\delta_j^R
+\end{bmatrix}.
+\]
+Then:
+\begin{enumerate}
+\item
+\[
+\frac{h_j^L}{g_j^L}=-\frac{\beta_j^L}{\alpha_j^L},
+\qquad
+m_j^L=-\overline c-a\,\frac{\beta_j^L}{\alpha_j^L}.
+\]
+
+\item
+\[
+\frac{h_j^R}{g_j^R}=-\frac{\overline{\beta_j^R}}{\delta_j^R},
+\qquad
+m_j^R=-c-a\,\frac{\overline{\beta_j^R}}{\delta_j^R}.
+\]
+
+\item
+\[
+\Im m_j^L<0<\Im m_j^R.
+\]
+More explicitly,
+\[
+\Im m_j^L=-(1-a)y-a\,\frac{\Im\beta_j^L}{\alpha_j^L}<0,
+\]
+and
+\[
+\Im m_j^R=(1-a)y+a\,\frac{\Im\beta_j^R}{\delta_j^R}>0.
+\]
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Since \(\mathbf S_j^L\) is the Schur complement of \(\mathbf L_j\) onto the last two coordinates,
+the inverse block formula shows that
+\[
+(\mathbf S_j^L)^{-1}
+\]
+is the lower-right \(2\times 2\) block of \(\mathbf G_j^L=\mathbf L_j^{-1}\). Thus
+\[
+g_j^L=\bigl((\mathbf S_j^L)^{-1}\bigr)_{22},
+\qquad
+h_j^L=\bigl((\mathbf S_j^L)^{-1}\bigr)_{12}.
+\]
+Now
+\[
+(\mathbf S_j^L)^{-1}
+=
+\frac{1}{\alpha_j^L\delta_j^L-|\beta_j^L|^2}
+\begin{bmatrix}
+\delta_j^L&-\beta_j^L\\
+-\overline{\beta_j^L}&\alpha_j^L
+\end{bmatrix},
+\]
+so
+\[
+\frac{h_j^L}{g_j^L}=-\frac{\beta_j^L}{\alpha_j^L},
+\]
+and therefore
+\[
+m_j^L=-\overline c-a\,\frac{\beta_j^L}{\alpha_j^L}.
+\]
+
+The proof for the right edge is identical:
+\[
+g_j^R=\bigl((\mathbf S_j^R)^{-1}\bigr)_{11},
+\qquad
+h_j^R=\bigl((\mathbf S_j^R)^{-1}\bigr)_{21},
+\]
+hence
+\[
+\frac{h_j^R}{g_j^R}=-\frac{\overline{\beta_j^R}}{\delta_j^R},
+\qquad
+m_j^R=-c-a\,\frac{\overline{\beta_j^R}}{\delta_j^R}.
+\]
+
+Finally, Corollary~\ref{cor:beta-upper-half-plane-final} gives
+\[
+\Im\beta_j^L>0,
+\qquad
+\Im\beta_j^R>0.
+\]
+Since \(\alpha_j^L>0\) and \(\delta_j^R>0\), we obtain
+\[
+\Im m_j^L
+=
+\Im(-\overline c)-a\,\frac{\Im\beta_j^L}{\alpha_j^L}
+=
+-(1-a)y-a\,\frac{\Im\beta_j^L}{\alpha_j^L}
+<0,
+\]
+and
+\[
+\Im m_j^R
+=
+\Im(-c)-a\,\Im\!\left(\frac{\overline{\beta_j^R}}{\delta_j^R}\right)
+=
+(1-a)y+a\,\frac{\Im\beta_j^R}{\delta_j^R}
+>0.
+\]
+This proves the claim.
+\end{proof}
+
+\begin{theorem}[No interior zeros for any ground-state eigenvector]\label{thm:no-interior-zeros-groundstate}
+Assume \(n\ge 3\). Let
+\[
+\mathbf v=
+\begin{bmatrix}
+v_1\\ \vdots\\ v_n
+\end{bmatrix}
+\in \ker\bigl(\mathbf H_x(y)-\lambda\mathbf I_n\bigr)\setminus\{0\}.
+\]
+Then
+\[
+v_j\neq 0
+\qquad
+(j=2,\dots,n-1).
+\]
+\end{theorem}
+
+\begin{proof}
+By Proposition~\ref{prop:v2-nonzero-groundstate},
+\[
+v_2\neq 0,
+\qquad
+v_{n-1}\neq 0.
+\]
+So it remains to exclude zeros at indices \(j=3,\dots,n-2\).
+
+Assume for contradiction that \(v_j=0\) for some such \(j\). Then
+Proposition~\ref{prop:defect-resonance-final} gives
+\[
+m_j^R=a g_j^L\,m_j^L,
+\]
+where \(a g_j^L>0\). Thus \(m_j^R\) is a positive real multiple of \(m_j^L\), and in particular
+\(m_j^R\) and \(m_j^L\) must have the same argument. But
+Proposition~\ref{prop:mLR-schur-formulas-final} gives
+\[
+\Im m_j^L<0<\Im m_j^R,
+\]
+which is impossible. Therefore no such \(j\) exists.
+\end{proof}
+
+\begin{corollary}[Global simplicity of the lowest branch]\label{cor:global-simplicity-lowest-branch}
+For every \(x\in\mathbb R\) and every \(y>0\), the smallest eigenvalue
+\[
+\lambda_1(x,y)=s(x,y)^2
+\]
+of \(\mathbf H_x(y)\) is simple.
+\end{corollary}
+
+\begin{proof}
+For \(n=2\), this is already contained in Proposition~\ref{prop:n=2}.
+
+Assume \(n\ge 3\), and let
+\[
+E_1(x,y)\coloneqq \ker\bigl(\mathbf H_x(y)-\lambda_1(x,y)\mathbf I_n\bigr)
+\]
+be the lowest eigenspace. If \(\dim E_1(x,y)\ge 2\), then the linear map
+\[
+E_1(x,y)\longrightarrow \mathbb C,
+\qquad
+\mathbf v\longmapsto v_2
+\]
+has nontrivial kernel. Hence there exists a nonzero \(\mathbf v\in E_1(x,y)\) with \(v_2=0\), contradicting
+Theorem~\ref{thm:no-interior-zeros-groundstate}. Therefore \(\dim E_1(x,y)=1\), so \(\lambda_1(x,y)\) is simple.
+\end{proof}
+
+\begin{theorem}[Conjecture~\ref{conj:vertical-monotonicity}]\label{thm:vertical-monotonicity-complete}
+For every fixed \(x\in\mathbb R\), the function
+\[
+[0,\infty)\ni y\longmapsto s(x,y)
+\]
+is nondecreasing. Equivalently,
+\[
+\frac{\partial}{\partial y}\bigl(s(x,y)^2\bigr)\ge 0
+\qquad
+(x\in\mathbb R,\ y>0).
+\]
+Consequently, for every \(\varepsilon>0\), every connected component of
+\[
+\Sigma_\varepsilon=\sigma_\varepsilon\bigl(\mathbf A_n(a)\bigr)
+\]
+is simply connected.
+\end{theorem}
+
+\begin{proof}
+For \(n=2\), the conclusion follows from Proposition~\ref{prop:n=2}. Assume \(n\ge 3\).
+
+Fix \(y_*>0\). By Corollary~\ref{cor:global-simplicity-lowest-branch}, the lowest eigenvalue
+\[
+x\longmapsto \lambda_1(x,y_*)=s(x,y_*)^2
+\]
+is simple for every \(x\in\mathbb R\). Since \(x\mapsto \mathbf H_x(y_*)\) is real-analytic, standard
+finite-dimensional perturbation theory yields a real-analytic normalized eigenvector branch
+\[
+x\longmapsto \mathbf v(x)=
+\begin{bmatrix}
+v_1(x)\\ \vdots\\ v_n(x)
+\end{bmatrix},
+\qquad
+\mathbf H_x(y_*)\mathbf v(x)=\lambda_1(x,y_*)\,\mathbf v(x).
+\]
+Passing to the canonical singular-vector gauge used in Section~7 multiplies \(\mathbf v(x)\) by a
+real-analytic unimodular factor, so does not change the zero set of any component.
+
+By Theorem~\ref{thm:no-interior-zeros-groundstate},
+\[
+v_j(x)\neq 0
+\qquad
+(j=2,\dots,n-1,\ x\in\mathbb R).
+\]
+By Lemma~\ref{lem:boundary-entries-nonzero},
+\[
+v_1(x)\neq 0,
+\qquad
+v_n(x)\neq 0
+\qquad
+(x\in\mathbb R),
+\]
+because the lowest branch is simple on all of \(\mathbb R\). Thus every component of the canonical
+right singular vector is nonzero for all \(x\in\mathbb R\).
+
+Now apply Proposition~\ref{prop:r-positivity-branch} with \(J=\mathbb R\). At \(x=0\),
+Proposition~\ref{prop:x=0-monotonicity} gives
+\[
+\Im\!\left(\frac{v_{j+1}(0)}{v_j(0)}\right)>0,
+\qquad
+j=1,\dots,n-1.
+\]
+Hence
+\[
+\Im\!\left(\frac{v_{j+1}(x)}{v_j(x)}\right)>0
+\qquad
+(j=1,\dots,n-1,\ x\in\mathbb R).
+\]
+Equivalently,
+\[
+\Im \rho_j(x)>0,
+\qquad
+j=1,\dots,n-1,
+\]
+with \(\rho_j=r_{n-j}\) as in Proposition~\ref{prop:r-positivity-branch}.
+
+Next apply Proposition~\ref{prop:p-positivity-branch}. Again by Proposition~\ref{prop:x=0-monotonicity},
+\[
+\Im p_j(0)>0,
+\qquad
+j=1,\dots,n.
+\]
+Therefore
+\[
+\Im p_j(x)>0
+\qquad
+(j=1,\dots,n,\ x\in\mathbb R).
+\]
+
+Now Corollary~\ref{cor:monotonicity-on-branch} applies with \(J=\mathbb R\), yielding
+\[
+\frac{\partial}{\partial y}\bigl(s(x,y)^2\bigr)\Big|_{y=y_*}\ge 0
+\qquad
+(x\in\mathbb R).
+\]
+Since \(y_*>0\) was arbitrary, we obtain
+\[
+\frac{\partial}{\partial y}\bigl(s(x,y)^2\bigr)\ge 0
+\qquad
+(x\in\mathbb R,\ y>0).
+\]
+Because \(s(x,-y)=s(x,y)\) by Lemma~\ref{lem:conjugation-symmetry}, the function
+\(y\mapsto s(x,y)^2\) is even, hence nondecreasing on \([0,\infty)\). Since \(s(x,y)\ge 0\),
+the same is true of \(y\mapsto s(x,y)\). This proves Conjecture~\ref{conj:vertical-monotonicity}.
+
+Finally, Theorem~\ref{thm:components-simply-connected} now applies and shows that every connected
+component of \(\Sigma_\varepsilon\) is simply connected.
+\end{proof}
+
+\end{document}

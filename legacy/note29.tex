@@ -1,0 +1,510 @@
+\documentclass[11pt]{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{remark}[theorem]{Remark}
+
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\dist}{dist}
+\DeclareMathOperator{\spec}{spec}
+\DeclareMathOperator{\nul}{null}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\tr}{tr}
+
+\begin{document}
+
+\title{The Median Eigenvalue Branch and the Smallest Singular Value}
+\author{}
+\date{}
+\maketitle
+
+\section*{Statement}
+
+Fix an integer $n\geq 2$ and a parameter $0<a<1$.  Let
+\[
+A_n(a)=
+\begin{pmatrix}
+0&1&&&0\\
+a&0&1&&\\
+& a&0&\ddots&\\
+&&\ddots&\ddots&1\\
+0&&&a&0
+\end{pmatrix},
+\]
+and let $R_n$ be the reversal matrix,
+\[
+R_n e_j=e_{n+1-j},\qquad j=1,\ldots,n.
+\]
+For $x\in\mathbb R$ put
+\[
+B_n(x)=xI_n-A_n(a),\qquad C_n(x)=R_nB_n(x).
+\]
+The matrix $C_n(x)$ is real symmetric.  Let
+\[
+\lambda_1^{(n)}(x)\leq \lambda_2^{(n)}(x)\leq \cdots\leq \lambda_n^{(n)}(x)
+\]
+be the ordered eigenvalues of $C_n(x)$, and define the median index
+\[
+q_n=\left\lfloor\frac n2\right\rfloor+1.
+\]
+The eigenvalues of $A_n(a)$ are
+\[
+\mu_j^{(n)}=2\sqrt a\cos\frac{j\pi}{n+1},\qquad j=1,\ldots,n,
+\]
+ordered as
+\[
+\mu_1^{(n)}>\mu_2^{(n)}>\cdots>\mu_n^{(n)}.
+\]
+The goal is to prove
+\[
+\boxed{
+ s_{\min}\bigl(xI_n-A_n(a)\bigr)
+ =
+ \left|\lambda_{q_n}^{(n)}(x)\right|
+ }
+\]
+for every
+\[
+x\in[\mu_n^{(n)},\mu_1^{(n)}].
+\]
+
+\section*{A finite Green-kernel input}
+
+The proof uses the following standard finite-dimensional form of the
+Gantmacher--Krein oscillation theorem for Green kernels.  It is stated here
+in the exact form needed below.
+
+\begin{theorem}[Finite Green-kernel simplicity theorem]\label{thm:GK}
+Let $0<s<1$, let $n\geq 2$, and let
+\[
+\theta\in\left(\frac{r\pi}{n+1},\frac{(r+1)\pi}{n+1}\right),
+\qquad r=1,\ldots,n-1.
+\]
+Define the real symmetric matrix $K_{n,s,\theta}=(K_{ij})_{i,j=1}^n$ by
+\[
+K_{ij}
+=
+\frac{
+ s^{i+j-n-2}\sin(i\theta)\sin(j\theta)
+}{
+ \sin\theta\,\sin((n+1)\theta)
+},
+\qquad i+j\leq n+1,
+\]
+and
+\[
+K_{ij}
+=
+\frac{
+ s^{i+j-n-2}\sin((n+1-i)\theta)\sin((n+1-j)\theta)
+}{
+ \sin\theta\,\sin((n+1)\theta)
+},
+\qquad i+j\geq n+1.
+\]
+Then the spectral radius of $K_{n,s,\theta}$ is attained by a unique simple
+real eigenvalue.  More precisely,
+\[
+(-1)^r\rho(K_{n,s,\theta})
+\]
+is a simple eigenvalue of $K_{n,s,\theta}$, and every other eigenvalue $\nu$
+satisfies
+\[
+|\nu|<\rho(K_{n,s,\theta}).
+\]
+\end{theorem}
+
+\begin{remark}
+Theorem~\ref{thm:GK} is the finite discrete Sturm--Gantmacher--Krein theorem:
+the Green kernel in the $r$-th spectral gap is strictly sign-regular, and the
+variation-diminishing property gives a unique dominant eigenvalue with exactly
+the corresponding oscillation class.  This is the only external oscillation
+input in the argument.
+\end{remark}
+
+\section*{Step 1: Symmetrization}
+
+\begin{lemma}\label{lem:symmetric}
+For every $x\in\mathbb R$, the matrix
+\[
+C_n(x)=R_n(xI_n-A_n(a))
+\]
+is real symmetric, and
+\[
+s_j(C_n(x))=s_j(xI_n-A_n(a)),\qquad j=1,\ldots,n.
+\]
+Consequently,
+\[
+s_{\min}(xI_n-A_n(a))
+=
+\min_{1\leq j\leq n}\left|\lambda_j^{(n)}(x)\right|.
+\]
+\end{lemma}
+
+\begin{proof}
+Since
+\[
+A_n(a)^T=R_nA_n(a)R_n,
+\]
+we have
+\[
+C_n(x)^T
+=
+(xI_n-A_n(a))^TR_n
+=(xI_n-A_n(a)^T)R_n
+=R_n(xI_n-A_n(a))
+=C_n(x).
+\]
+Thus $C_n(x)$ is real symmetric.  Since $R_n$ is orthogonal, left
+multiplication by $R_n$ preserves singular values.  Therefore
+\[
+s_j(C_n(x))=s_j(xI_n-A_n(a)),\qquad j=1,\ldots,n.
+\]
+Because $C_n(x)$ is real symmetric, its singular values are precisely the
+absolute values of its eigenvalues.  The claimed formula follows.
+\end{proof}
+
+\section*{Step 2: The inertia calculation}
+
+Put
+\[
+s=\sqrt a,
+\qquad
+D_n=\diag(1,s,s^2,\ldots,s^{n-1}),
+\]
+and
+\[
+J_n=D_n^{-1}A_n(a)D_n
+=
+\operatorname{tridiag}(s,0,s).
+\]
+Thus $J_n$ is the real symmetric Jacobi matrix with zero diagonal and constant
+off-diagonal entry $s$.
+
+\begin{lemma}\label{lem:inertia}
+Let
+\[
+I_r=(\mu_{r+1}^{(n)},\mu_r^{(n)}),
+\qquad r=1,\ldots,n-1.
+\]
+For $x\in I_r$,
+\[
+\nu_-(C_n(x))
+=
+\left\lfloor\frac n2\right\rfloor
++
+\begin{cases}
+1,& r\text{ odd},\\
+0,& r\text{ even},
+\end{cases}
+\]
+where $\nu_-(M)$ denotes the number of negative eigenvalues of a real symmetric
+matrix $M$, counted with multiplicity.  Consequently,
+\[
+\lambda_{q_n}^{(n)}(x)>0\quad\text{if }r\text{ is even},
+\]
+and
+\[
+\lambda_{q_n}^{(n)}(x)<0\quad\text{if }r\text{ is odd}.
+\]
+Moreover,
+\[
+\lambda_{q_n}^{(n)}(\mu_j^{(n)})=0,
+\qquad j=1,\ldots,n.
+\]
+\end{lemma}
+
+\begin{proof}
+Since
+\[
+R_nD_n=s^{n-1}D_n^{-1}R_n,
+\]
+and $A_n(a)=D_nJ_nD_n^{-1}$, we have
+\[
+C_n(x)
+=R_nD_n(xI_n-J_n)D_n^{-1}
+=s^{n-1}D_n^{-1}R_n(xI_n-J_n)D_n^{-1}.
+\]
+Thus $C_n(x)$ is congruent, up to the positive scalar $s^{n-1}$, to
+\[
+R_n(xI_n-J_n).
+\]
+Congruence preserves inertia.
+
+The sine vectors
+\[
+u_k(i)=\sin\frac{ik\pi}{n+1},
+\qquad i=1,\ldots,n,
+\]
+diagonalize $J_n$:
+\[
+J_nu_k=\mu_k^{(n)}u_k,
+\qquad
+\mu_k^{(n)}=2s\cos\frac{k\pi}{n+1}.
+\]
+They are also eigenvectors of $R_n$, because
+\[
+R_nu_k=(-1)^{k+1}u_k.
+\]
+Therefore the eigenvalues of $R_n(xI_n-J_n)$ are
+\[
+(-1)^{k+1}(x-\mu_k^{(n)}),
+\qquad k=1,\ldots,n.
+\]
+If $x\in I_r$, then $x-\mu_k^{(n)}<0$ for $k\leq r$, and
+$x-\mu_k^{(n)}>0$ for $k\geq r+1$.  Hence the number of negative signs is
+\[
+\#\{1\leq k\leq r:k\text{ odd}\}
++
+\#\{r+1\leq k\leq n:k\text{ even}\}.
+\]
+This equals
+\[
+\left\lceil\frac r2\right\rceil
++
+\left(\left\lfloor\frac n2\right\rfloor-
+       \left\lfloor\frac r2\right\rfloor\right)
+=
+\left\lfloor\frac n2\right\rfloor
++
+\begin{cases}
+1,& r\text{ odd},\\
+0,& r\text{ even}.
+\end{cases}
+\]
+The sign statement for $\lambda_{q_n}^{(n)}(x)$ follows immediately from the
+definition $q_n=\lfloor n/2\rfloor+1$.
+
+Finally, $A_n(a)$ has the simple eigenvalues $\mu_j^{(n)}$.  Hence
+$B_n(\mu_j^{(n)})$ and $C_n(\mu_j^{(n)})$ have nullity one.  The preceding
+inertia formula shows that, when $x$ crosses any $\mu_j^{(n)}$, the unique
+eigenvalue crossing zero is the ordered eigenvalue with index $q_n$.  Therefore
+\[
+\lambda_{q_n}^{(n)}(\mu_j^{(n)})=0.
+\]
+\end{proof}
+
+\section*{Step 3: Simplicity of the smallest singular value in each open gap}
+
+\begin{lemma}[Jacobi inverse formula]\label{lem:jacobi-inverse}
+Let
+\[
+J_n=\operatorname{tridiag}(s,0,s),\qquad s>0,
+\]
+and let $x=2s\cos\theta$, where $\sin((n+1)\theta)\neq0$.  Then
+$xI_n-J_n$ is invertible.  For $i\leq j$,
+\[
+\bigl((xI_n-J_n)^{-1}\bigr)_{ij}
+=
+\frac{
+ \sin(i\theta)\sin((n+1-j)\theta)
+}{
+ s\sin\theta\,\sin((n+1)\theta)
+},
+\]
+and the entries for $i\geq j$ are obtained by symmetry.
+\end{lemma}
+
+\begin{proof}
+Let $\Delta_m$ be the determinant of the leading $m\times m$ principal minor
+of $xI_n-J_n$, with $\Delta_0=1$.  The continuant recurrence is
+\[
+\Delta_m=x\Delta_{m-1}-s^2\Delta_{m-2},
+\qquad m\geq2,
+\]
+with $\Delta_1=x$.  Since $x=2s\cos\theta$, this gives
+\[
+\Delta_m=s^m\frac{\sin((m+1)\theta)}{\sin\theta}.
+\]
+Cramer's rule for a symmetric tridiagonal matrix gives, for $i\leq j$,
+\[
+\bigl((xI_n-J_n)^{-1}\bigr)_{ij}
+=s^{j-i}\frac{\Delta_{i-1}\Delta_{n-j}}{\Delta_n}.
+\]
+Substituting the displayed formula for $\Delta_m$ yields the claim.
+\end{proof}
+
+\begin{lemma}\label{lem:green-simplicity}
+For every $r=1,\ldots,n-1$ and every
+\[
+x\in I_r=(\mu_{r+1}^{(n)},\mu_r^{(n)}),
+\]
+the smallest singular value of $B_n(x)=xI_n-A_n(a)$ is simple:
+\[
+s_{\min}(B_n(x))<s_2(B_n(x)).
+\]
+\end{lemma}
+
+\begin{proof}
+Fix $x\in I_r$.  Since $x$ is not an eigenvalue of $A_n(a)$, the matrix
+$B_n(x)$ is invertible.  By Lemma~\ref{lem:symmetric},
+\[
+C_n(x)=R_nB_n(x)
+\]
+is real symmetric.  Also
+\[
+C_n(x)^{-1}=B_n(x)^{-1}R_n.
+\]
+Since right multiplication by the orthogonal matrix $R_n$ preserves singular
+values,
+\[
+s_j(B_n(x)^{-1})=s_j(C_n(x)^{-1}),
+\qquad j=1,\ldots,n.
+\]
+Because $C_n(x)^{-1}$ is real symmetric, the singular values of
+$C_n(x)^{-1}$ are the absolute values of its eigenvalues.  Thus the largest
+singular value of $B_n(x)^{-1}$ is simple if and only if the spectral radius of
+$C_n(x)^{-1}$ is attained by a unique simple eigenvalue.
+
+We now identify $C_n(x)^{-1}$ with the Green kernel in
+Theorem~\ref{thm:GK}.  Write
+\[
+x=2s\cos\theta,
+\qquad
+\theta\in\left(\frac{r\pi}{n+1},\frac{(r+1)\pi}{n+1}\right).
+\]
+From the identity
+\[
+C_n(x)
+=s^{n-1}D_n^{-1}R_n(xI_n-J_n)D_n^{-1},
+\]
+we get
+\[
+C_n(x)^{-1}
+=s^{1-n}D_n(xI_n-J_n)^{-1}R_nD_n.
+\]
+Lemma~\ref{lem:jacobi-inverse} gives, for
+$i\leq j$,
+\[
+\bigl((xI_n-J_n)^{-1}\bigr)_{ij}
+=
+\frac{
+ \sin(i\theta)\sin((n+1-j)\theta)
+}{
+ s\sin\theta\,\sin((n+1)\theta)
+},
+\]
+and the symmetric formula for $i\geq j$.  Substituting this into the displayed
+formula for $C_n(x)^{-1}$ gives exactly the matrix $K_{n,s,\theta}$ from
+Theorem~\ref{thm:GK}.  Hence the spectral radius of $C_n(x)^{-1}$ is attained
+by a unique simple eigenvalue.
+
+It follows that the largest singular value of $B_n(x)^{-1}$ is simple.  Since
+$B_n(x)$ is invertible, the singular values of the inverse are
+\[
+s_j(B_n(x)^{-1})=\frac{1}{s_{n+1-j}(B_n(x))},
+\]
+with the singular values of $B_n(x)$ listed increasingly on the right.  Thus
+simplicity of the largest singular value of $B_n(x)^{-1}$ is exactly
+simplicity of the smallest singular value of $B_n(x)$.  Therefore
+\[
+s_{\min}(B_n(x))<s_2(B_n(x)).
+\]
+\end{proof}
+
+\section*{Step 4: The median branch cannot lose the minimum}
+
+\begin{proposition}\label{prop:median-gap}
+For every $r=1,\ldots,n-1$ and every $x\in I_r$,
+\[
+s_{\min}(B_n(x))=
+\left|\lambda_{q_n}^{(n)}(x)\right|.
+\]
+\end{proposition}
+
+\begin{proof}
+Fix a gap $I_r=(\mu_{r+1}^{(n)},\mu_r^{(n)})$.  Define
+\[
+E_r=
+\left\{
+ x\in I_r:
+ s_{\min}(B_n(x))=
+ \left|\lambda_{q_n}^{(n)}(x)\right|
+\right\}.
+\]
+We prove that $E_r=I_r$.
+
+First, $E_r$ is nonempty.  Indeed, at each endpoint $\mu_j^{(n)}$ of the gap,
+Lemma~\ref{lem:inertia} gives
+\[
+\lambda_{q_n}^{(n)}(\mu_j^{(n)})=0,
+\]
+and the nullity of $C_n(\mu_j^{(n)})$ is one.  All other eigenvalues of
+$C_n(\mu_j^{(n)})$ are therefore nonzero.  By continuity of the ordered
+eigenvalues of a real symmetric matrix, $|\lambda_{q_n}^{(n)}(x)|$ is strictly
+smaller than the absolute values of all other eigenvalues for all $x$ in a
+sufficiently small one-sided neighbourhood of the endpoint inside $I_r$.  Hence
+$E_r\neq\varnothing$.
+
+Second, $E_r$ is closed in $I_r$, because both
+$s_{\min}(B_n(x))$ and $|\lambda_{q_n}^{(n)}(x)|$ are continuous functions of
+$x$.
+
+Third, $E_r$ is open in $I_r$.  Let $x_0\in E_r$.  By
+Lemma~\ref{lem:green-simplicity}, the smallest singular value of $B_n(x_0)$ is
+simple.  Since the singular values of $B_n(x_0)$ are the absolute values of the
+eigenvalues of $C_n(x_0)$, this means that
+$|\lambda_{q_n}^{(n)}(x_0)|$ is strictly smaller than
+$|\lambda_j^{(n)}(x_0)|$ for every $j\neq q_n$.  By continuity, the same strict
+inequalities persist in a neighbourhood of $x_0$.  Therefore that
+neighbourhood is contained in $E_r$, so $E_r$ is open.
+
+The interval $I_r$ is connected.  Since $E_r\subset I_r$ is nonempty, open,
+and closed in $I_r$, we have $E_r=I_r$.
+\end{proof}
+
+\section*{Conclusion}
+
+\begin{theorem}[Median branch equals the smallest singular value]\label{thm:median}
+For every $n\geq2$, every $0<a<1$, and every
+\[
+x\in[\mu_n^{(n)},\mu_1^{(n)}],
+\]
+one has
+\[
+\boxed{
+ s_{\min}\bigl(xI_n-A_n(a)\bigr)
+ =
+ \left|
+ \lambda_{\lfloor n/2\rfloor+1}^{(n)}
+ \bigl(R_n(xI_n-A_n(a))\bigr)
+ \right|.
+}
+\]
+\end{theorem}
+
+\begin{proof}
+The assertion holds on each open gap
+\[
+I_r=(\mu_{r+1}^{(n)},\mu_r^{(n)}),
+\qquad r=1,\ldots,n-1,
+\]
+by Proposition~\ref{prop:median-gap}.  At each endpoint $x=\mu_j^{(n)}$, both
+sides are zero: the left-hand side is zero because $\mu_j^{(n)}$ is an
+eigenvalue of $A_n(a)$, and the right-hand side is zero by
+Lemma~\ref{lem:inertia}.  Hence the equality holds on the whole interval
+$[\mu_n^{(n)},\mu_1^{(n)}]$.
+\end{proof}
+
+\begin{thebibliography}{9}
+
+\bibitem{GK}
+F.~R. Gantmacher and M.~G. Krein,
+\emph{Oscillation Matrices and Kernels and Small Vibrations of Mechanical Systems},
+AMS Chelsea Publishing, Providence, RI, revised edition, 2002.
+
+\bibitem{Pinkus}
+A. Pinkus,
+\emph{Totally Positive Matrices},
+Cambridge Tracts in Mathematics, Cambridge University Press, 2010.
+
+\end{thebibliography}
+
+\end{document}

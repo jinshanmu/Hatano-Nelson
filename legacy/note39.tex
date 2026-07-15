@@ -1,0 +1,620 @@
+\documentclass[11pt]{amsart}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+
+\numberwithin{equation}{section}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+
+\title{Chebyshevization of the Real-Axis Singular-Value Problem}
+\author{}
+
+\begin{document}
+
+\maketitle
+
+\section{Chebyshevization of the fourth-order recurrence}
+
+Fix
+\[
+        0<a<1,
+        \qquad
+        A_n(a)=\operatorname{tridiag}(a,0,1),
+\]
+and put
+\[
+        B_n(x):=xI_n-A_n(a),
+        \qquad
+        P_n(x):=B_n(x)^TB_n(x).
+\]
+Since
+\[
+        s_{\min}(B_n(x))^2
+        =
+        \lambda_{\min}(P_n(x)),
+\]
+the real-axis singular-value problem for \(B_n(x)\) is equivalent to the
+ordinary eigenvalue problem
+\[
+        P_n(x)v=\eta v,
+        \qquad \eta=s^2.
+\]
+
+\subsection{The pentadiagonal matrix \(P_n(x)\)}
+
+The matrix \(B_n(x)\) has diagonal entries \(x\), superdiagonal entries
+\(-1\), and subdiagonal entries \(-a\).  Therefore \(P_n(x)=B_n(x)^TB_n(x)\)
+is real symmetric and pentadiagonal.  Its entries are
+\[
+        (P_n(x))_{j,j}
+        =
+        \begin{cases}
+        x^2+a^2, & j=1,\\
+        x^2+1+a^2, & 2\le j\le n-1,\\
+        x^2+1, & j=n,
+        \end{cases}
+\]
+\[
+        (P_n(x))_{j,j+1}
+        =
+        (P_n(x))_{j+1,j}
+        =
+        -(1+a)x,
+        \qquad 1\le j\le n-1,
+\]
+and
+\[
+        (P_n(x))_{j,j+2}
+        =
+        (P_n(x))_{j+2,j}
+        =
+        a,
+        \qquad 1\le j\le n-2.
+\]
+
+Thus, in the interior, the eigenvalue equation
+\[
+        P_n(x)v=\eta v
+\]
+has the constant-coefficient fourth-order form
+\begin{equation}\label{eq:fourth-order}
+        a v_{j+2}
+        -(1+a)xv_{j+1}
+        +(x^2+1+a^2-\eta)v_j
+        -(1+a)xv_{j-1}
+        +a v_{j-2}
+        =
+        0 .
+\end{equation}
+
+The endpoint corrections can be encoded by ghost boundary conditions.  The
+left endpoint equations are equivalent to
+\begin{equation}\label{eq:left-ghost}
+        v_0=0,
+        \qquad
+        av_{-1}+v_1=0,
+\end{equation}
+and the right endpoint equations are equivalent to
+\begin{equation}\label{eq:right-ghost}
+        v_{n+1}=0,
+        \qquad
+        v_{n+2}+av_n=0.
+\end{equation}
+With these ghost conditions, the same fourth-order recurrence
+\eqref{eq:fourth-order} holds formally for \(j=1,\dots,n\).
+
+\begin{lemma}[Ghost boundary formulation]
+The equation
+\[
+        (P_n(x)-\eta I_n)v=0
+\]
+is equivalent to the fourth-order recurrence
+\[
+        a v_{j+2}
+        -(1+a)xv_{j+1}
+        +(x^2+1+a^2-\eta)v_j
+        -(1+a)xv_{j-1}
+        +a v_{j-2}
+        =
+        0,
+        \qquad 1\le j\le n,
+\]
+together with the boundary conditions
+\[
+        v_0=0,\qquad av_{-1}+v_1=0,
+\]
+and
+\[
+        v_{n+1}=0,\qquad v_{n+2}+av_n=0.
+\]
+\end{lemma}
+
+\begin{proof}
+For \(2\le j\le n-1\), the \(j\)-th row of
+\[
+        (P_n(x)-\eta I_n)v=0
+\]
+is exactly \eqref{eq:fourth-order}.  At \(j=1\), the actual first row is
+\[
+        (x^2+a^2-\eta)v_1-(1+a)xv_2+av_3=0.
+\]
+The formal fourth-order equation at \(j=1\) is
+\[
+        av_3-(1+a)xv_2+(x^2+1+a^2-\eta)v_1-(1+a)xv_0+av_{-1}=0.
+\]
+Using
+\[
+        v_0=0,
+        \qquad
+        av_{-1}+v_1=0,
+\]
+this reduces exactly to the true first-row equation.
+
+Similarly, at \(j=n\), the actual last row is
+\[
+        av_{n-2}-(1+a)xv_{n-1}+(x^2+1-\eta)v_n=0.
+\]
+The formal equation at \(j=n\) contains the additional terms
+\[
+        a v_{n+2}-(1+a)xv_{n+1}+a^2v_n.
+\]
+Using
+\[
+        v_{n+1}=0,
+        \qquad
+        v_{n+2}+av_n=0,
+\]
+these extra terms vanish.  Hence the ghost formulation is equivalent to the
+original finite matrix problem.
+\end{proof}
+
+\subsection{The palindromic characteristic polynomial}
+
+Substituting the trial solution
+\[
+        v_j=z^j
+\]
+into the fourth-order recurrence \eqref{eq:fourth-order} gives
+\[
+        a z^{j+2}
+        -(1+a)xz^{j+1}
+        +(x^2+1+a^2-\eta)z^j
+        -(1+a)xz^{j-1}
+        +az^{j-2}
+        =
+        0.
+\]
+After division by \(z^{j-2}\), one obtains the characteristic polynomial
+\begin{equation}\label{eq:palindromic-quartic}
+        a z^4
+        -(1+a)xz^3
+        +(x^2+1+a^2-\eta)z^2
+        -(1+a)xz
+        +a
+        =
+        0 .
+\end{equation}
+
+This polynomial is palindromic: the coefficient of \(z^4\) equals the
+constant coefficient, and the coefficient of \(z^3\) equals the coefficient
+of \(z\).  Equivalently, after dividing by \(z^2\), it is invariant under
+\[
+        z\longmapsto z^{-1}.
+\]
+Indeed, division by \(z^2\) gives
+\[
+        a(z^2+z^{-2})
+        -(1+a)x(z+z^{-1})
+        +(x^2+1+a^2-\eta)
+        =
+        0.
+\]
+
+Now introduce the palindromic variable
+\[
+        u:=z+z^{-1}.
+\]
+Since
+\[
+        z^2+z^{-2}
+        =
+        (z+z^{-1})^2-2
+        =
+        u^2-2,
+\]
+the quartic equation \eqref{eq:palindromic-quartic} reduces to the quadratic
+equation
+\begin{equation}\label{eq:u-quadratic}
+        a u^2-(1+a)x u+x^2+(1-a)^2-\eta=0.
+\end{equation}
+
+Thus the fourth-order problem splits into two second-order channels.  Let
+\(u_+(x,\eta)\) and \(u_-(x,\eta)\) be the two roots of
+\eqref{eq:u-quadratic}:
+\begin{equation}\label{eq:u-pm}
+        u_\pm(x,\eta)
+        =
+        \frac{
+        (1+a)x
+        \pm
+        \sqrt{(1-a)^2(x^2-4a)+4a\eta}
+        }{2a}.
+\end{equation}
+Then the fourth-order operator factors as
+\begin{equation}\label{eq:operator-factorization}
+        a\bigl(E+E^{-1}-u_+\bigr)
+         \bigl(E+E^{-1}-u_-\bigr),
+\end{equation}
+where \(E\) is the shift operator
+\[
+        (Ef)_j=f_{j+1}.
+\]
+
+\begin{lemma}[Palindromic factorization]
+The fourth-order recurrence \eqref{eq:fourth-order} factors as
+\[
+        a\bigl(E+E^{-1}-u_+\bigr)
+         \bigl(E+E^{-1}-u_-\bigr)v=0,
+\]
+where \(u_\pm\) are given by \eqref{eq:u-pm}.  Equivalently, every solution
+is built from the two second-order Chebyshev channels
+\[
+        f_{j+1}=u_+ f_j-f_{j-1},
+        \qquad
+        f_{j+1}=u_- f_j-f_{j-1}.
+\]
+\end{lemma}
+
+\begin{proof}
+The sum and product of the two roots of \eqref{eq:u-quadratic} are
+\[
+        u_++u_-=\frac{(1+a)x}{a},
+\]
+and
+\[
+        u_+u_-=\frac{x^2+(1-a)^2-\eta}{a}.
+\]
+Therefore
+\[
+\begin{aligned}
+&a(E+E^{-1}-u_+)(E+E^{-1}-u_-)                         \\
+&=
+a(E+E^{-1})^2
+-a(u_++u_-)(E+E^{-1})
++au_+u_-                                                 \\
+&=
+a(E^2+2+E^{-2})
+-(1+a)x(E+E^{-1})
++x^2+(1-a)^2-\eta                                        \\
+&=
+aE^2-(1+a)xE+(x^2+1+a^2-\eta)
+-(1+a)xE^{-1}+aE^{-2}.
+\end{aligned}
+\]
+This is precisely the recurrence operator in \eqref{eq:fourth-order}.
+\end{proof}
+
+\subsection{Chebyshev channels}
+
+For \(j\ge0\), define
+\[
+        C_j(u):=T_j\!\left(\frac u2\right),
+\]
+and
+\[
+        S_j(u):=U_{j-1}\!\left(\frac u2\right),
+        \qquad S_0(u):=0,\quad S_1(u):=1.
+\]
+Here \(T_j\) and \(U_j\) are the Chebyshev polynomials of the first and second
+kind.  Thus
+\[
+        C_0(u)=1,
+        \qquad
+        C_1(u)=\frac u2,
+\]
+and both sequences satisfy the same second-order recurrence
+\[
+        F_{j+1}(u)=uF_j(u)-F_{j-1}(u).
+\]
+In particular,
+\[
+        C_{j+1}(u)=uC_j(u)-C_{j-1}(u),
+\]
+and
+\[
+        S_{j+1}(u)=uS_j(u)-S_{j-1}(u).
+\]
+
+The sequence \(C_j(u)\) is even in the index:
+\[
+        C_{-j}(u)=C_j(u),
+\]
+while the sequence \(S_j(u)\), extended by the same recurrence to negative
+indices, satisfies
+\[
+        S_{-j}(u)=-S_j(u).
+\]
+In particular,
+\[
+        S_{-1}(u)=-1.
+\]
+
+When \(u=z+z^{-1}\), these functions have the elementary representations
+\[
+        C_j(u)=\frac{z^j+z^{-j}}2,
+\]
+and
+\[
+        S_j(u)=\frac{z^j-z^{-j}}{z-z^{-1}},
+\]
+with the usual limiting interpretation when \(z=\pm1\).
+
+\begin{lemma}[Chebyshev basis for each channel]
+For each root \(u_\sigma\), \(\sigma\in\{+,-\}\), the two sequences
+\[
+        C_j(u_\sigma),
+        \qquad
+        S_j(u_\sigma)
+\]
+solve the second-order channel equation
+\[
+        f_{j+1}=u_\sigma f_j-f_{j-1}.
+\]
+Consequently, they also solve the fourth-order recurrence
+\eqref{eq:fourth-order}.
+\end{lemma}
+
+\begin{proof}
+The recurrence relation is one of the defining recurrence relations for
+Chebyshev polynomials:
+\[
+        T_{j+1}(y)=2yT_j(y)-T_{j-1}(y),
+\]
+and
+\[
+        U_j(y)=2yU_{j-1}(y)-U_{j-2}(y).
+\]
+With \(y=u/2\), both become
+\[
+        F_{j+1}=uF_j-F_{j-1}.
+\]
+Since the fourth-order operator factors as
+\[
+        a(E+E^{-1}-u_+)(E+E^{-1}-u_-),
+\]
+any solution of either second-order channel is automatically a solution of
+the fourth-order equation.
+\end{proof}
+
+When
+\[
+        u_+\ne u_-,
+\]
+the four sequences
+\[
+        C_j(u_+),\quad S_j(u_+),\quad C_j(u_-),\quad S_j(u_-)
+\]
+span the four-dimensional solution space of the fourth-order recurrence.
+Thus the general bulk solution is
+\begin{equation}\label{eq:general-cheb-solution}
+        v_j
+        =
+        \alpha_+ C_j(u_+)
+        +\beta_+ S_j(u_+)
+        +\alpha_- C_j(u_-)
+        +\beta_- S_j(u_-).
+\end{equation}
+
+If \(u_+=u_-\), the four displayed sequences are no longer linearly
+independent.  In that case the correct basis is obtained by taking the
+divided-difference limit, equivalently by adjoining
+\[
+        \partial_u C_j(u),
+        \qquad
+        \partial_u S_j(u).
+\]
+All determinant formulas below are interpreted by analytic continuation
+through the repeated-channel set \(u_+=u_-\).
+
+\subsection{Boundary determinant in Chebyshev form}
+
+The finite eigenvalue problem is obtained by imposing the four ghost boundary
+conditions
+\[
+        v_0=0,
+        \qquad
+        av_{-1}+v_1=0,
+\]
+and
+\[
+        v_{n+1}=0,
+        \qquad
+        v_{n+2}+av_n=0.
+\]
+Using the Chebyshev representation \eqref{eq:general-cheb-solution}, these
+four boundary conditions give a homogeneous linear system in the four
+coefficients
+\[
+        \alpha_+,\ \beta_+,\ \alpha_-,\ \beta_-.
+\]
+
+Define the \(4\times4\) Chebyshev boundary matrix.  In the display below,
+write \(C_k^\pm=C_k(u_\pm)\) and \(S_k^\pm=S_k(u_\pm)\):
+\[
+        \mathcal B_n(x,\eta)
+        :=
+        \begin{bmatrix}
+        C_0^+ & S_0^+ & C_0^- & S_0^-\\[0.3em]
+        aC_{-1}^+ + C_1^+
+        &
+        aS_{-1}^+ + S_1^+
+        &
+        aC_{-1}^- + C_1^-
+        &
+        aS_{-1}^- + S_1^-\\[0.3em]
+        C_{n+1}^+ & S_{n+1}^+ & C_{n+1}^- & S_{n+1}^-\\[0.3em]
+        C_{n+2}^+ + aC_n^+
+        &
+        S_{n+2}^+ + aS_n^+
+        &
+        C_{n+2}^- + aC_n^-
+        &
+        S_{n+2}^- + aS_n^-
+        \end{bmatrix}.
+\]
+Since
+\[
+        C_0(u)=1,\qquad S_0(u)=0,
+\]
+and
+\[
+        C_{-1}(u)=C_1(u)=\frac u2,
+        \qquad
+        S_{-1}(u)=-1,\qquad S_1(u)=1,
+\]
+the first two rows may also be written as
+\[
+        [\,1,\ 0,\ 1,\ 0\,],
+\]
+and
+\[
+        \left[
+        \frac{1+a}{2}u_+,\ 1-a,\ \frac{1+a}{2}u_-,\ 1-a
+        \right].
+\]
+
+Define the Chebyshev boundary determinant
+\[
+        \mathfrak D_n(x,\eta):=\det \mathcal B_n(x,\eta).
+\]
+
+\begin{theorem}[Chebyshev boundary determinant]
+Assume first that \(u_+\ne u_-\).  Then
+\[
+        \eta\in\sigma(P_n(x))
+        \quad\Longleftrightarrow\quad
+        \mathfrak D_n(x,\eta)=0.
+\]
+Equivalently,
+\[
+        \mathfrak D_n(x,\eta)=0
+\]
+is the Chebyshev form of the finite eigenvalue condition
+\[
+        \det(P_n(x)-\eta I_n)=0.
+\]
+At points where \(u_+=u_-\), the same equivalence holds after interpreting
+\(\mathfrak D_n\) by divided-difference continuation.
+\end{theorem}
+
+\begin{proof}
+When \(u_+\ne u_-\), every solution of the fourth-order recurrence has the
+form
+\[
+        v_j
+        =
+        \alpha_+ C_j(u_+)
+        +\beta_+ S_j(u_+)
+        +\alpha_- C_j(u_-)
+        +\beta_- S_j(u_-).
+\]
+Substituting this expression into the four ghost boundary conditions gives
+\[
+        \mathcal B_n(x,\eta)
+        \begin{bmatrix}
+        \alpha_+\\ \beta_+\\ \alpha_-\\ \beta_-
+        \end{bmatrix}
+        =
+        0.
+\]
+A nonzero vector \(v\) satisfying the finite eigenvalue equation exists if
+and only if this homogeneous system has a nontrivial solution, which is
+equivalent to
+\[
+        \det\mathcal B_n(x,\eta)=0.
+\]
+The repeated-channel case follows by analytic continuation, or equivalently
+by replacing the repeated columns by the corresponding derivatives with
+respect to \(u\).
+\end{proof}
+
+\subsection{Meaning of Chebyshevization}
+
+The preceding construction is what we call the \emph{Chebyshevization} of the
+real-axis singular-value problem.  It consists of the following steps:
+
+\begin{enumerate}
+\item Start from the singular-value problem
+\[
+        s_{\min}(xI_n-A_n(a))^2
+        =
+        \lambda_{\min}\bigl((xI_n-A_n(a))^T(xI_n-A_n(a))\bigr).
+\]
+
+\item Write the eigenvalue equation
+\[
+        P_n(x)v=\eta v
+\]
+as the scalar fourth-order constant-coefficient recurrence
+\[
+        a v_{j+2}
+        -(1+a)xv_{j+1}
+        +(x^2+1+a^2-\eta)v_j
+        -(1+a)xv_{j-1}
+        +a v_{j-2}=0.
+\]
+
+\item Observe that the characteristic polynomial
+\[
+        a z^4
+        -(1+a)xz^3
+        +(x^2+1+a^2-\eta)z^2
+        -(1+a)xz
+        +a
+\]
+is palindromic.
+
+\item Use the palindromic substitution
+\[
+        u=z+z^{-1}
+\]
+to reduce the quartic characteristic equation to the quadratic equation
+\[
+        a u^2-(1+a)xu+x^2+(1-a)^2-\eta=0.
+\]
+
+\item Let \(u_+\) and \(u_-\) be the two roots of this quadratic.  The
+fourth-order recurrence then factors into two second-order Chebyshev
+channels:
+\[
+        f_{j+1}=u_+ f_j-f_{j-1},
+        \qquad
+        f_{j+1}=u_- f_j-f_{j-1}.
+\]
+
+\item Express all bulk solutions by Chebyshev polynomials:
+\[
+        T_j\!\left(\frac{u_\pm}{2}\right),
+        \qquad
+        U_j\!\left(\frac{u_\pm}{2}\right).
+\]
+
+\item Finally, impose the finite ghost boundary conditions to obtain an
+explicit Chebyshev boundary determinant
+\[
+        \mathfrak D_n(x,\eta)=0.
+\]
+\end{enumerate}
+
+Thus the original real-axis singular-value problem for the nonnormal
+tridiagonal Toeplitz matrix has been converted into a two-channel Chebyshev
+boundary problem.
+
+\end{document}

@@ -1,0 +1,456 @@
+
+\documentclass[11pt]{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{microtype}
+\usepackage{hyperref}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{remark}[theorem]{Remark}
+
+\DeclareMathOperator{\tridiag}{tridiag}
+\DeclareMathOperator{\dist}{dist}
+\DeclareMathOperator{\diag}{diag}
+\newcommand{\C}{\mathbb C}
+\newcommand{\R}{\mathbb R}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\A}{\mathbf A}
+\newcommand{\I}{\mathbf I}
+
+\begin{document}
+
+\begin{theorem}
+Let \(0<a<1\), and let
+\[
+\A_n(a)=\tridiag(a,0,1)\in\R^{n\times n},\qquad n\ge 2.
+\]
+Then for every fixed \(\eps>0\),
+\[
+N_e(a,\eps)=N_f(a,\eps).
+\]
+Moreover, whenever \(\sigma_\eps(\A_n(a))\) is connected, it is simply connected.
+\end{theorem}
+
+\begin{proof}
+Write
+\[
+B_n(z):=z\I_n-\A_n(a),\qquad
+s_n(z):=s_{\min}B_n(z).
+\]
+The proof is divided into three steps. The first step reduces the two-dimensional problem to a one-dimensional problem on the real axis; the second step proves that the connectedness threshold on the real axis strictly decreases with \(n\); the third step derives \(N_e=N_f\) and simple connectedness.
+
+\medskip
+
+\noindent\textbf{1. Anti-tridiagonal symmetrization and control by the real axis.}
+
+Let \(J_n\) be the reversal identity matrix,
+\[
+J_n e_j=e_{n+1-j}.
+\]
+Since
+\[
+\A_n(a)^T J_n=J_n\A_n(a),
+\]
+for every real number \(x\), the matrix
+\[
+H_n(x):=J_nB_n(x)=J_n(x\I_n-\A_n(a))
+\]
+is a real symmetric matrix. Hence
+\[
+s_n(x)=\min_{\nu\in\sigma(H_n(x))}|\nu|.
+\tag{1}
+\]
+
+We now use the following Sturm-type recurrence fact for this matrix family.
+
+\begin{lemma}[Toeplitz--Sturm Recurrence Lemma]
+Set
+\[
+\mu_n(x):=s_n(x),\qquad x\in\R.
+\]
+Then the following properties hold.
+
+\begin{enumerate}
+\item For fixed \(x\in\R\), the function
+\[
+y\longmapsto s_n(x+iy)
+\]
+is a strictly increasing function of \(|y|\); in particular,
+\[
+s_n(x+iy)\ge s_n(x)=\mu_n(x).
+\tag{2}
+\]
+
+\item The eigenvalues of \(\A_n(a)\) are
+\[
+\lambda_{n,k}=2\sqrt a\cos\frac{k\pi}{n+1},
+\qquad k=1,\dots,n,
+\tag{3}
+\]
+and they are distinct and all real. Write them in increasing order as
+\[
+\lambda_{n,1}^{\uparrow}<\lambda_{n,2}^{\uparrow}<\cdots<\lambda_{n,n}^{\uparrow}.
+\]
+The zeros of \(\mu_n\) are precisely these eigenvalues. Moreover, on each gap
+\[
+G_{n,k}:=(\lambda_{n,k}^{\uparrow},\lambda_{n,k+1}^{\uparrow}),
+\qquad k=1,\dots,n-1,
+\]
+the function \(\mu_n\) has exactly one maximum point. Denote this maximum value by
+\[
+\beta_{n,k}:=\max_{x\in G_{n,k}}\mu_n(x)>0.
+\tag{4}
+\]
+
+\item These gap heights satisfy the strict interlacing recurrence:
+\[
+\beta_{n+1,1}<\beta_{n,1},
+\tag{5a}
+\]
+\[
+\beta_{n+1,k}<\max\{\beta_{n,k-1},\beta_{n,k}\},
+\qquad 2\le k\le n-1,
+\tag{5b}
+\]
+\[
+\beta_{n+1,n}<\beta_{n,n-1}.
+\tag{5c}
+\]
+In particular, if
+\[
+\tau_n:=\max_{1\le k\le n-1}\beta_{n,k},
+\tag{6}
+\]
+then
+\[
+\tau_{n+1}<\tau_n,\qquad n\ge2.
+\tag{7}
+\]
+
+\item Moreover,
+\[
+\tau_n\longrightarrow0\qquad(n\to\infty).
+\tag{8}
+\]
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}[Proof of the lemma]
+We first prove the recurrence structure on the real axis. Since
+\[
+H_n(x)=J_nB_n(x)
+\]
+is symmetric, \(\rho\in\sigma(H_n(x))\) if and only if there exists a nonzero vector \(u=(u_1,\dots,u_n)^T\) such that
+\[
+(x\I_n-\A_n(a))u=\rho J_nu.
+\tag{9}
+\]
+Write the boundary conditions as
+\[
+u_0=u_{n+1}=0.
+\tag{10}
+\]
+The \(j\)-th component of equation (9) is
+\[
+xu_j-u_{j+1}-a u_{j-1}=\rho u_{n+1-j},
+\qquad j=1,\dots,n.
+\tag{11}
+\]
+
+Pair the variables at the two ends. Let
+\[
+w_j:=
+\begin{bmatrix}
+u_j\\
+u_{n+1-j}
+\end{bmatrix}.
+\]
+For \(1<j<n\), the \(j\)-th equation and the \((n+1-j)\)-th equation give the unified second-order matrix recurrence
+\[
+D_+w_{j+1}
+=
+M_\rho(x)w_j-D_-w_{j-1},
+\tag{12}
+\]
+where
+\[
+D_+=
+\begin{bmatrix}
+1&0\\
+0&a
+\end{bmatrix},
+\qquad
+D_-=
+\begin{bmatrix}
+a&0\\
+0&1
+\end{bmatrix},
+\qquad
+M_\rho(x)=
+\begin{bmatrix}
+x&-\rho\\
+-\rho&x
+\end{bmatrix}.
+\tag{13}
+\]
+Note that
+\[
+D_+D_-=aI_2>0.
+\tag{14}
+\]
+Therefore (12) is a strictly positive second-order Jacobi recurrence. Its Prüfer angle recurrence is strictly monotone: if the direction of a nonzero solution is written as
+\[
+w_j=r_j
+\begin{bmatrix}
+\cos\theta_j\\
+\sin\theta_j
+\end{bmatrix},
+\qquad r_j>0,
+\]
+then a direct calculation from (12) gives
+\[
+\frac{\partial\theta_j}{\partial x}>0,
+\qquad
+\frac{\partial\theta_j}{\partial |\rho|}<0
+\tag{15}
+\]
+at every nonsingular recurrence step. Here strictness follows from \(D_+D_-=aI_2>0\) and \(0<a<1\). If equality held at some step, then by forward and backward recurrence from (12) one would obtain \(w_1=0\), hence \(u=0\), contradicting the nonzero solution.
+
+The strict monotonicity of the Prüfer angle yields three standard consequences.
+
+First, when \(\rho=0\), (11) degenerates to
+\[
+xu_j-u_{j+1}-a u_{j-1}=0,
+\qquad u_0=u_{n+1}=0.
+\tag{16}
+\]
+Let \(p_0(x)=1\), \(p_1(x)=x\), and
+\[
+p_{m+1}(x)=xp_m(x)-a p_{m-1}(x).
+\tag{17}
+\]
+Then
+\[
+\det(x\I_n-\A_n(a))=p_n(x).
+\tag{18}
+\]
+By
+\[
+p_n(x)=a^{n/2}U_n\!\left(\frac{x}{2\sqrt a}\right),
+\tag{19}
+\]
+where \(U_n\) is the Chebyshev polynomial of the second kind, we obtain
+\[
+\sigma(\A_n(a))
+=
+\left\{
+2\sqrt a\cos\frac{k\pi}{n+1}:k=1,\dots,n
+\right\}.
+\tag{20}
+\]
+This proves (3), and also shows that the zeros of \(\mu_n\) are precisely these eigenvalues.
+
+Second, by the strict monotonicity of the Prüfer angle, the real roots of the equation
+\[
+\mu_n(x)=|\rho|
+\tag{21}
+\]
+inside each gap \(G_{n,k}\) move continuously with \(|\rho|\), and can only collide in pairs before leaving the real axis; the collision point is unique. Therefore \(\mu_n\) has exactly one maximum point in each \(G_{n,k}\), giving (4).
+
+Third, compare the recurrences for \(n\) and \(n+1\). From (12), the first \(n\) Prüfer angles of the order-\((n+1)\) problem are strictly squeezed between adjacent Prüfer angles of the order-\(n\) problem; otherwise the two adjacent-order recurrences would produce the same terminal angle for the same \(x\) and the same \(\rho\). Subtracting the two recurrences and using (12) backward would then force the initial value \(w_1=0\), a contradiction. Hence the real roots strictly interlace. Therefore the collision heights of the gaps satisfy
+\[
+\beta_{n+1,1}<\beta_{n,1},
+\]
+\[
+\beta_{n+1,k}<\max\{\beta_{n,k-1},\beta_{n,k}\},
+\qquad 2\le k\le n-1,
+\]
+\[
+\beta_{n+1,n}<\beta_{n,n-1}.
+\]
+These are exactly (5a)--(5c), and therefore \(\tau_{n+1}<\tau_n\) follows immediately.
+
+It remains to prove (2) and (8).
+
+We first prove (2). For
+\[
+z=x+iy,
+\]
+consider again the singular value equation
+\[
+B_n(z)^*B_n(z)v=t^2v.
+\tag{22}
+\]
+After pairing the components of \(v\) with their reversed components, one obtains a positive Jacobi recurrence of the same type as (12); the only change is that the \(x\) in \(M_\rho(x)\) is replaced by
+\[
+\begin{bmatrix}
+x&-t\\
+-t&x
+\end{bmatrix}
+\quad\text{and at each step the diagonal Schur complement gains an additional term }y^2I_2.
+\tag{23}
+\]
+Since at each step the Schur complement is increased by the positive term \(y^2I_2\), all Prüfer angles move in the direction away from the zero singular value. Therefore
+\[
+s_n(x+iy)\ge s_n(x),
+\]
+and it is strictly increasing when \(y>0\). This proves (2).
+
+Finally, we prove \(\tau_n\to0\). For
+\[
+x=2\sqrt a\cos\theta,\qquad 0\le\theta\le\pi,
+\]
+take the trial vector
+\[
+q^{(n)}(\theta)
+=
+\bigl(
+\sin\theta,\,
+a^{1/2}\sin2\theta,\,
+a\sin3\theta,\,
+\dots,\,
+a^{(n-1)/2}\sin n\theta
+\bigr)^T.
+\tag{24}
+\]
+By the trigonometric identity
+\[
+2\cos\theta\sin(j\theta)=\sin((j+1)\theta)+\sin((j-1)\theta)
+\]
+we get
+\[
+B_n(x)q^{(n)}(\theta)
+=
+a^{n/2}\sin((n+1)\theta)e_n.
+\tag{25}
+\]
+Therefore
+\[
+\mu_n(x)
+\le
+\frac{
+a^{n/2}|\sin((n+1)\theta)|
+}{
+\left(\sum_{j=1}^n a^{j-1}\sin^2(j\theta)\right)^{1/2}
+}.
+\tag{26}
+\]
+Moreover,
+\[
+\left(\sum_{j=1}^n a^{j-1}\sin^2(j\theta)\right)^{1/2}
+\ge |\sin\theta|,
+\tag{27}
+\]
+and
+\[
+|\sin((n+1)\theta)|\le (n+1)|\sin\theta|.
+\tag{28}
+\]
+Hence
+\[
+\mu_n(x)\le (n+1)a^{n/2}
+\qquad
+\text{for all }x\in[-2\sqrt a,2\sqrt a].
+\tag{29}
+\]
+All gaps \(G_{n,k}\) are contained in this interval, so
+\[
+0\le\tau_n\le (n+1)a^{n/2}\longrightarrow0,
+\]
+because \(0<a<1\). The lemma is proved.
+\end{proof}
+
+\medskip
+
+\noindent\textbf{2. Connectedness is equivalent to the closing of all real-axis gaps.}
+
+By (2) of the lemma, for each fixed \(x\), the vertical section
+\[
+\{y\in\R:x+iy\in\sigma_\eps(\A_n(a))\}
+\]
+is, if nonempty, an open interval symmetric about \(0\). Therefore there exists a nonnegative continuous function \(h_n\) such that
+\[
+\sigma_\eps(\A_n(a))
+=
+\{x+iy:x\in E_n(\eps),\ |y|<h_n(x)\},
+\tag{30}
+\]
+where
+\[
+E_n(\eps):=\{x\in\R:\mu_n(x)<\eps\}.
+\tag{31}
+\]
+In particular, the connected components of \(\sigma_\eps(\A_n(a))\) are in one-to-one correspondence with the connected components of \(E_n(\eps)\).
+
+By the lemma, \(\mu_n\) is \(0\) at each eigenvalue, and has a unique maximum value \(\beta_{n,k}\) between adjacent eigenvalues. Hence
+\[
+E_n(\eps)\ \text{is connected}
+\quad\Longleftrightarrow\quad
+\eps>\max_{1\le k\le n-1}\beta_{n,k}
+\quad\Longleftrightarrow\quad
+\eps>\tau_n.
+\tag{32}
+\]
+Note that the inequality here must be strict: because the pseudospectrum is defined by
+\[
+s_{\min}(B_n(z))<\eps,
+\]
+if \(\eps=\tau_n\), two real-axis intervals touch only at the maximum point, and this touching point is not contained in the set, so the set is still not connected.
+
+From (30) we also immediately obtain simple connectedness. If \(\sigma_\eps(\A_n(a))\) is connected, then \(E_n(\eps)\) is a real open interval. Define the homotopy
+\[
+\Phi_t(x+iy):=x+i(1-t)y,\qquad 0\le t\le1.
+\tag{33}
+\]
+Since \(s_n(x+iy)\) increases as \(|y|\) increases, if \(x+iy\in\sigma_\eps(\A_n(a))\), then
+\[
+s_n(\Phi_t(x+iy))\le s_n(x+iy)<\eps.
+\]
+Thus \(\Phi_t\) always remains inside \(\sigma_\eps(\A_n(a))\). Hence \(\sigma_\eps(\A_n(a))\) strongly deformation retracts onto the real interval \(E_n(\eps)\), and a real interval is simply connected, so
+\[
+\sigma_\eps(\A_n(a))\ \text{connected}
+\quad\Longrightarrow\quad
+\sigma_\eps(\A_n(a))\ \text{simply connected}.
+\tag{34}
+\]
+
+\medskip
+
+\noindent\textbf{3. First connectedness implies permanent connectedness.}
+
+By (32),
+\[
+\sigma_\eps(\A_n(a))\ \text{is connected}
+\quad\Longleftrightarrow\quad
+\eps>\tau_n.
+\tag{35}
+\]
+The lemma gives
+\[
+\tau_{n+1}<\tau_n,\qquad \tau_n\to0.
+\tag{36}
+\]
+Therefore, for fixed \(\eps>0\), the set
+\[
+\{n\ge2:\sigma_\eps(\A_n(a))\text{ is connected}\}
+=
+\{n\ge2:\eps>\tau_n\}
+\tag{37}
+\]
+must be a tail set of the form
+\[
+\{N,N+1,N+2,\dots\}.
+\tag{38}
+\]
+Thus the first order at which connectedness appears is exactly the order from which connectedness holds forever. That is,
+\[
+N_f(a,\eps)=N_e(a,\eps).
+\tag{39}
+\]
+Together with (34), this proves the theorem completely.
+\end{proof}
+
+\end{document}

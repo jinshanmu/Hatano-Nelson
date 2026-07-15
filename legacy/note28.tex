@@ -1,0 +1,1638 @@
+\documentclass[11pt]{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools,bm}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\allowdisplaybreaks
+\numberwithin{equation}{section}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{gap}[theorem]{Gap}
+
+\title{Current State of the Connectedness Threshold Proof\\
+for the Open-Boundary Hatano--Nelson Matrix}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This note records the current partial proof of the connectedness threshold problem
+for
+\[
+\mathbf A_n(a)=\operatorname{tridiag}(a,0,1),\qquad 0<a<1,\qquad n\ge2.
+\]
+The uploaded manuscript proves that connectedness of the pseudospectrum is
+equivalent to crossing a one-dimensional real-axis barrier. Thus the threshold
+problem is reduced to proving
+\[
+\eta_{n+1}(a)\le \eta_n(a),\qquad n\ge2.
+\]
+The present note records the additional analytic and Weyl-contact reductions
+developed so far. In particular, it proves the endpoint and large-\(n\) exclusions
+used to reduce the problem to a finite middle block, derives the reversal-pencil
+active-contact identities, and records the elimination of the exact-rigid
+even-to-odd Weyl branch. The note ends with the currently unfinished gaps.
+\end{abstract}
+
+\tableofcontents
+
+\section{Basic notation and the barrier reduction}
+
+Fix
+\[
+0<a<1,\qquad n\ge2,
+\]
+and define
+\[
+\mathbf A_n(a)=
+\begin{bmatrix}
+0&1\\
+a&0&1\\
+&\ddots&\ddots&\ddots\\
+&&a&0&1\\
+&&&a&0
+\end{bmatrix}.
+\]
+For \(z=x+iy\), write
+\[
+s_n(x,y)
+=
+s_{\min}\!\bigl((x+iy)\mathbf I_n-\mathbf A_n(a)\bigr),
+\qquad
+s_n(x):=s_n(x,0).
+\]
+The \(\varepsilon\)-pseudospectrum is
+\[
+\Sigma_\varepsilon^{(n)}
+=
+\{z\in\mathbb C:\ s_n(\Re z,\Im z)<\varepsilon\}.
+\]
+The real slice is
+\[
+I_\varepsilon^{(n)}
+=
+\Sigma_\varepsilon^{(n)}\cap\mathbb R
+=
+\{x\in\mathbb R:\ s_n(x)<\varepsilon\}.
+\]
+
+The eigenvalues of \(\mathbf A_n(a)\) are
+\[
+\mu_k^{(n)}
+=
+2\sqrt a\cos\frac{k\pi}{n+1},
+\qquad k=1,\dots,n,
+\]
+and
+\[
+\mu_1^{(n)}>\mu_2^{(n)}>\cdots>\mu_n^{(n)}.
+\]
+Define the \(k\)-th real-axis barrier by
+\[
+\beta_{n,k}(a)
+=
+\max_{x\in[\mu_{k+1}^{(n)},\mu_k^{(n)}]}s_n(x),
+\qquad k=1,\dots,n-1,
+\]
+and define the global real-axis barrier
+\[
+\eta_n(a):=\max_{1\le k\le n-1}\beta_{n,k}(a).
+\]
+
+\begin{theorem}[Barrier criterion, imported from the manuscript]
+\label{thm:barrier}
+For every \(n\ge2\) and every \(\varepsilon>0\),
+\[
+\Sigma_\varepsilon^{(n)}\text{ is connected}
+\quad\Longleftrightarrow\quad
+I_\varepsilon^{(n)}\text{ is connected}
+\quad\Longleftrightarrow\quad
+\varepsilon>\eta_n(a).
+\]
+\end{theorem}
+
+\begin{corollary}[Threshold reduction]
+\label{cor:threshold-reduction}
+The connectedness threshold theorem follows from
+\[
+\eta_{n+1}(a)\le\eta_n(a),
+\qquad n\ge2,\quad 0<a<1.
+\]
+Indeed, if this monotonicity holds, then
+\[
+\Sigma_\varepsilon^{(n)}\text{ connected}
+\quad\Longleftrightarrow\quad
+\eta_n(a)<\varepsilon
+\]
+is an upper-tail condition in \(n\).
+\end{corollary}
+
+Thus the remaining connectedness threshold problem is the monotonicity problem
+\[
+\boxed{
+\eta_{n+1}(a)\le\eta_n(a).
+}
+\]
+
+\section{Analytic exclusions outside a finite middle block}
+
+This section records the analytic exclusions currently available. They do not yet
+prove the theorem for all \(n,a\), but they imply that any counterexample must
+belong to a finite middle block, provided the asymptotic estimates stated below are
+accepted as established.
+
+\subsection{\texorpdfstring{Uniform small-\(a\) exclusion}{Uniform small-a exclusion}}
+
+Let
+\[
+r=\sqrt a.
+\]
+Write
+\[
+\mathbf A_n(a)=S_n+r^2S_n^T,
+\]
+where \(S_n\) is the upper shift. For
+\[
+x=2r\cos\theta,
+\]
+set
+\[
+B_n(\theta)=2r\cos\theta\,\mathbf I_n-\mathbf A_n(a).
+\]
+The real spectral hull corresponds to
+\[
+\theta\in\left[\frac{\pi}{n+1},\frac{n\pi}{n+1}\right].
+\]
+
+\begin{lemma}[Uniform small-\(a\) upper bound]
+\label{lem:small-upper}
+If \(0<r\le1/10\), then
+\[
+\eta_{n+1}(a)\le r^{n+1}(n+2).
+\]
+\end{lemma}
+
+\begin{proof}
+For \(\theta\) not on the eigenvalue grid, the tridiagonal Toeplitz inverse formula gives
+\[
+(B_n(\theta)^{-1})_{ij}
+=
+\frac{r^{i-j-1}}{\sin\theta\,\sin((n+1)\theta)}
+\begin{cases}
+\sin(i\theta)\sin((n+1-j)\theta),&i\le j,\\
+\sin(j\theta)\sin((n+1-i)\theta),&i\ge j.
+\end{cases}
+\]
+Let \(\Pi_n\) be the reversal matrix. The \((1,1)\)-entry of
+\(B_n(\theta)^{-1}\Pi_n\) is
+\[
+\frac{r^{-n}\sin\theta}{\sin((n+1)\theta)}.
+\]
+Thus
+\[
+\|B_n(\theta)^{-1}\|_2
+\ge
+r^{-n}\frac{\sin\theta}{|\sin((n+1)\theta)|}.
+\]
+Therefore
+\[
+s_n(2r\cos\theta)
+\le
+r^n\frac{|\sin((n+1)\theta)|}{\sin\theta}
+=
+r^n|U_n(\cos\theta)|,
+\]
+where \(U_n\) is the Chebyshev polynomial of the second kind. Since
+\[
+|U_n(\cos\theta)|\le n+1,
+\]
+we get
+\[
+\eta_n(a)\le r^n(n+1),
+\]
+and replacing \(n\) by \(n+1\) gives the claim.
+\end{proof}
+
+\begin{lemma}[Uniform small-\(a\) lower bound]
+\label{lem:small-lower}
+For \(0<r\le1/10\) and every \(n\ge2\),
+\[
+\eta_n(a)\ge \frac{r^n(n+1)}{C_*},
+\qquad
+C_*<5.3.
+\]
+\end{lemma}
+
+\begin{proof}
+Choose
+\[
+\theta_n=\frac{3\pi}{2(n+1)}.
+\]
+Then
+\[
+\theta_n\in\left[\frac{\pi}{n+1},\frac{n\pi}{n+1}\right],
+\qquad
+|\sin((n+1)\theta_n)|=1.
+\]
+Using the inverse formula above and multiplying on the right by \(\Pi_n\), one writes
+\[
+B_n(\theta_n)^{-1}\Pi_n=H_n^{(1)}+H_n^{(2)},
+\]
+where \(H_n^{(1)}\) is the rank-one dominant triangular part and
+\(H_n^{(2)}\) is the reflected triangular remainder. The dominant part obeys
+\[
+\|H_n^{(1)}\|_2
+\le
+1.05\frac{3\pi}{2}\frac{r^{-n}}{n+1},
+\]
+because
+\[
+\sum_{j=1}^\infty j^2r^{2(j-1)}
+=
+\frac{1+r^2}{(1-r^2)^3}
+<1.05
+\qquad (r\le1/10).
+\]
+The reflected remainder satisfies
+\[
+\|H_n^{(2)}\|_2
+\le
+\frac13\frac{r^{-n}}{n+1}.
+\]
+Hence
+\[
+\|B_n(\theta_n)^{-1}\|_2
+\le
+C_*\frac{r^{-n}}{n+1},
+\qquad
+C_*=
+1.05\frac{3\pi}{2}+\frac13<5.3.
+\]
+Therefore
+\[
+s_n(2r\cos\theta_n)
+=
+\|B_n(\theta_n)^{-1}\|_2^{-1}
+\ge
+\frac{r^n(n+1)}{C_*}.
+\]
+Since \(\eta_n(a)\) is the maximum over the real hull, the result follows.
+\end{proof}
+
+\begin{theorem}[Uniform small-\(a\) monotonicity]
+\label{thm:small-a}
+For
+\[
+0<a\le10^{-2},
+\]
+one has
+\[
+\eta_{n+1}(a)<\eta_n(a),
+\qquad n\ge2.
+\]
+\end{theorem}
+
+\begin{proof}
+By Lemmas~\ref{lem:small-upper} and \ref{lem:small-lower},
+\[
+\frac{\eta_{n+1}(a)}{\eta_n(a)}
+\le
+rC_*\frac{n+2}{n+1}.
+\]
+For \(n\ge2\),
+\[
+\frac{n+2}{n+1}\le\frac43.
+\]
+If \(r\le1/10\), then
+\[
+rC_*\frac{n+2}{n+1}
+\le
+\frac1{10}\cdot5.3\cdot\frac43<1.
+\]
+Thus \(\eta_{n+1}(a)<\eta_n(a)\).
+\end{proof}
+
+\subsection{Perturbative near-Hermitian exclusion}
+
+At \(a=1\), the matrix
+\[
+\mathbf A_n(1)=\operatorname{tridiag}(1,0,1)
+\]
+is Hermitian. Hence
+\[
+s_n(x)=\operatorname{dist}(x,\sigma(\mathbf A_n(1))).
+\]
+The eigenvalues are
+\[
+\lambda_k^{(n)}=2\cos\frac{k\pi}{n+1}.
+\]
+Thus \(\eta_n(1)\) is half of the largest spectral gap. Explicitly,
+\[
+\eta_n(1)=
+\begin{cases}
+2\sin\frac{\pi}{2(n+1)},&n\text{ even},\\[1mm]
+\sin\frac{\pi}{n+1},&n\text{ odd}.
+\end{cases}
+\]
+
+\begin{lemma}[Hermitian gap]
+\label{lem:hermitian-gap}
+For \(n\ge2\),
+\[
+\eta_n(1)-\eta_{n+1}(1)
+\ge
+\frac{1}{(n+2)^2}.
+\]
+\end{lemma}
+
+\begin{proof}
+This follows directly from the preceding trigonometric formulas and the mean value
+theorem applied to \(\sin t\) on \([0,\pi/2]\). The constant is deliberately conservative.
+\end{proof}
+
+\begin{theorem}[Inner near-Hermitian layer]
+\label{thm:inner-layer}
+If
+\[
+1-a\le\frac{1}{4(n+2)^2},
+\]
+then
+\[
+\eta_{n+1}(a)<\eta_n(a).
+\]
+\end{theorem}
+
+\begin{proof}
+Since
+\[
+\mathbf A_n(a)-\mathbf A_n(1)=(a-1)S_n^T,
+\]
+we have
+\[
+\|\mathbf A_n(a)-\mathbf A_n(1)\|_2=1-a.
+\]
+The least singular value is \(1\)-Lipschitz in the matrix, hence
+\[
+|\eta_n(a)-\eta_n(1)|\le1-a
+\]
+provided the Hermitian maximizer remains inside the smaller real spectral hull.
+Under the displayed hypothesis this is true, because \(a>3/4\). Therefore
+\[
+\eta_n(a)-\eta_{n+1}(a)
+\ge
+\eta_n(1)-\eta_{n+1}(1)-2(1-a).
+\]
+Using Lemma~\ref{lem:hermitian-gap},
+\[
+\eta_n(a)-\eta_{n+1}(a)
+\ge
+\frac{1}{(n+2)^2}-2(1-a)
+\ge
+\frac{1}{2(n+2)^2}>0.
+\]
+\end{proof}
+
+\subsection{\texorpdfstring{Large-\(n\) middle and near-Hermitian transition estimates}{Large-n middle and near-Hermitian transition estimates}}
+
+The following estimates were derived from the exact Green kernel of
+\[
+B_n(\theta)=2r\cos\theta\,\mathbf I_n-\mathbf A_n(a),
+\qquad r=\sqrt a.
+\]
+They are part of the current proof package, but their full polished write-up should
+include all uniform remainder estimates.
+
+\begin{theorem}[Compact-middle eventual monotonicity]
+\label{thm:compact-middle}
+For every compact interval
+\[
+0<a_-<a_+<1,
+\]
+there exists \(N=N(a_-,a_+)\) such that
+\[
+a\in[a_-,a_+],\quad n\ge N
+\quad\Longrightarrow\quad
+\eta_{n+1}(a)<\eta_n(a).
+\]
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+Set \(r=\sqrt a\) and \(x=2r\cos\theta\). The exact inverse kernel gives, uniformly for
+\(r\in[r_-,r_+]\subset(0,1)\),
+\[
+s_n(2r\cos\theta)
+=
+r^n|\sin((n+1)\theta)|
+\frac{\sin\theta}{S_r(\theta)}
+\left(1+O(n^3r_+^n)\right),
+\]
+where
+\[
+S_r(\theta)=\sum_{j=1}^{\infty}r^{2(j-1)}\sin^2(j\theta).
+\]
+Near the endpoint \(\theta=0\),
+\[
+\frac{\sin\theta}{S_r(\theta)}
+=
+\frac{(1-r^2)^3}{1+r^2}\frac1\theta+O(\theta).
+\]
+Therefore
+\[
+\eta_n(a)
+=
+r^n(n+1)
+\frac{(1-r^2)^3}{1+r^2}
+\kappa
+\left(1+O\!\left(\frac1n\right)\right),
+\]
+uniformly on compact subintervals of \((0,1)\), where
+\[
+\kappa=\max_{u\ge\pi}\frac{|\sin u|}{u}.
+\]
+Thus
+\[
+\frac{\eta_{n+1}(a)}{\eta_n(a)}
+=
+r\frac{n+2}{n+1}\left(1+O\!\left(\frac1n\right)\right),
+\]
+uniformly for \(a\in[a_-,a_+]\). Since \(r\le\sqrt{a_+}<1\), the ratio is eventually
+strictly less than \(1\).
+\end{proof}
+
+\begin{theorem}[Near-Hermitian mesoscopic transition estimate]
+\label{thm:mesoscopic}
+Let
+\[
+N=n+1,\qquad
+a=e^{-2\Gamma/N},
+\qquad
+1\le\Gamma\le C\log N.
+\]
+Let
+\[
+(\mathcal V_\Gamma f)(s)
+=
+\int_s^1 e^{\Gamma(t-s)}f(t)\,dt
+\]
+and
+\[
+\sigma(\Gamma)=\|\mathcal V_\Gamma\|_2^{-1}.
+\]
+Then
+\[
+\eta_n(e^{-2\Gamma/N})
+=
+\frac{2\sigma(\Gamma)}{N}
++
+\frac{E(\Gamma)}{N^2}
++
+O_C\!\left(\frac{\sigma(\Gamma)(1+\Gamma)^2}{N^3}\right),
+\]
+uniformly for \(1\le\Gamma\le C\log N\), with
+\[
+|E(\Gamma)|+|E'(\Gamma)|
+\le
+K_C\sigma(\Gamma)(1+\Gamma).
+\]
+Consequently, for every \(C>0\), there exists \(N_C\) such that
+\[
+1\le -\frac{n+1}{2}\log a\le C\log(n+1),\quad n\ge N_C
+\]
+implies
+\[
+\eta_{n+1}(a)<\eta_n(a).
+\]
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+The exact Green kernel, after staggering near the central gap
+\[
+\theta=\frac{\pi}{2}+O(N^{-1}),
+\]
+converges after scaling to the Volterra operator \(\mathcal V_\Gamma\). The
+Euler--Maclaurin expansion of the kernel gives the displayed two-term expansion.
+For fixed \(a\), set
+\[
+\Gamma_N(a)=-\frac{N}{2}\log a.
+\]
+Then
+\[
+\Gamma_{N+1}(a)=\Gamma_N(a)\left(1+\frac1N\right).
+\]
+The two-term expansion gives
+\[
+\eta_n(a)-\eta_{n+1}(a)
+=
+\frac{2(\sigma(\Gamma)-\Gamma\sigma'(\Gamma))}{N^2}
++
+O_C\!\left(
+\frac{\sigma(\Gamma)(1+\Gamma)^2}{N^3}
+\right).
+\]
+The kernel of \(\mathcal V_\Gamma\) increases pointwise with \(\Gamma\), so
+\(\|\mathcal V_\Gamma\|\) is strictly increasing and \(\sigma'(\Gamma)<0\). Hence
+\[
+\sigma(\Gamma)-\Gamma\sigma'(\Gamma)>\sigma(\Gamma)>0.
+\]
+Since \((1+\Gamma)^2/N\to0\) for \(\Gamma\le C\log N\), the difference is positive
+for all large \(N\).
+\end{proof}
+
+\begin{corollary}[Finite middle block reduction]
+\label{cor:finite-block}
+Assuming Theorems~\ref{thm:compact-middle} and \ref{thm:mesoscopic} with their
+uniform remainders, any counterexample to
+\[
+\eta_{n+1}(a)\le\eta_n(a)
+\]
+must lie in a finite set of sizes
+\[
+2\le n<N_*,
+\]
+and in a compact interval
+\[
+a\in[a_0,1-\delta]\subset(0,1).
+\]
+\end{corollary}
+
+\section{The symmetric reversal pencil and active contacts}
+
+Define the reversal matrix
+\[
+\Pi_n e_j=e_{n+1-j}.
+\]
+For real \(x\), define the symmetric reversal pencil
+\[
+\mathbf G_n(x,a)
+:=
+(x\mathbf I_n-\mathbf A_n(a))\Pi_n.
+\]
+Since \(\Pi_n\) is orthogonal,
+\[
+s_{\min}(x\mathbf I_n-\mathbf A_n(a))
+=
+\operatorname{dist}(0,\sigma(\mathbf G_n(x,a))).
+\]
+
+\begin{definition}[Simple interior active contact]
+A triple
+\[
+(x,\lambda,w)
+\]
+is a simple interior active contact for length \(n\) if
+\[
+\mathbf G_n(x,a)w=\lambda w,\qquad \|w\|=1,
+\]
+\[
+|\lambda|=\eta_n(a),
+\]
+the eigenvalue \(\lambda\) is simple and is the unique eigenvalue of \(\mathbf G_n(x,a)\)
+closest to \(0\), and \(x\) lies in the interior of the real spectral hull.
+\end{definition}
+
+Let
+\[
+E_n=\operatorname{diag}(0,1,\dots,n-1),
+\]
+\[
+M_n(w)=w^TE_nw,
+\]
+and
+\[
+Q_n(w)=2M_n(w)-(n-1).
+\]
+
+\begin{lemma}[Krein neutrality]
+\label{lem:neutrality}
+At a simple interior active contact,
+\[
+w^T\Pi_nw=0.
+\]
+\end{lemma}
+
+\begin{proof}
+Because
+\[
+\partial_x\mathbf G_n(x,a)=\Pi_n,
+\]
+Hellmann's formula gives
+\[
+\partial_x\lambda=w^T\Pi_nw.
+\]
+At an interior maximum of \(|\lambda(x)|\),
+\[
+\partial_x|\lambda|=0.
+\]
+Since \(\lambda\ne0\), this gives \(w^T\Pi_nw=0\).
+\end{proof}
+
+\begin{lemma}[Orientation derivative]
+\label{lem:orientation-derivative}
+Let
+\[
+\tau=-\frac12\log a.
+\]
+Along a differentiable simple active branch,
+\[
+\partial_\tau\log|\lambda|
+=
+-1-Q_n(w).
+\]
+Equivalently,
+\[
+\partial_\tau\log|\lambda|
+=
+n-2-2M_n(w).
+\]
+\end{lemma}
+
+\begin{proof}
+Let
+\[
+D_n(\tau)=\operatorname{diag}(1,e^{-\tau},\dots,e^{-(n-1)\tau}).
+\]
+Using the diagonal symmetrization of \(\mathbf A_n(a)\), one computes
+\[
+\partial_\tau \mathbf G_n
+=
+(n-2)\mathbf G_n-E_n\mathbf G_n-\mathbf G_nE_n.
+\]
+Hellmann's formula gives
+\[
+\partial_\tau\lambda
+=
+w^T(\partial_\tau\mathbf G_n)w.
+\]
+Since \(\mathbf G_nw=\lambda w\),
+\[
+\partial_\tau\lambda
+=
+(n-2)\lambda-2\lambda w^TE_nw.
+\]
+Dividing by \(\lambda\) gives the result.
+\end{proof}
+
+At a smooth crossing
+\[
+\eta_{n+1}(a)=\eta_n(a),
+\]
+with simple active contacts \(w_n,w_{n+1}\), one has
+\[
+\partial_\tau\log\frac{\eta_{n+1}}{\eta_n}
+=
+Q_n(w_n)-Q_{n+1}(w_{n+1}).
+\]
+Thus an upward crossing requires
+\[
+Q_{n+1}(w_{n+1})\le Q_n(w_n).
+\]
+
+\section{Tail-cone constraint}
+
+For \(1\le k\le\lfloor n/2\rfloor\), define
+\[
+\Delta_{n,k}(w)
+=
+\sum_{j=1}^{k}\left(w_{n+1-j}^2-w_j^2\right).
+\]
+
+\begin{theorem}[Active tail-cone membership]
+\label{thm:tail-cone}
+At every simple interior active contact,
+\[
+\Delta_{n,k}(w)\ge0,
+\qquad
+k=1,\dots,\left\lfloor\frac n2\right\rfloor.
+\]
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+Approach the real active contact from the upper half-plane. Let
+\[
+z=x+iy,\qquad y>0,
+\]
+and let \(v(y)\) be the right singular vector in the canonical gauge
+\[
+(z\mathbf I-\mathbf A)v=s\,u,\qquad u=\Pi_n\overline v.
+\]
+Define the current
+\[
+W_j(y)
+=
+v_{j+1}(y)v_{n+1-j}(y)-a\,v_j(y)v_{n-j}(y),
+\qquad j=0,\dots,n,
+\]
+with \(v_0=v_{n+1}=0\). The singular-vector current identity gives
+\[
+W_j-W_{j-1}
+=
+s\left(|v_j|^2-|v_{n+1-j}|^2\right).
+\]
+The phase-continuation argument in the upper half-plane gives \(W_j>0\) for
+\(1\le j\le n-1\). Therefore
+\[
+\sum_{j=1}^{k}|v_j|^2
+>
+\sum_{j=1}^{k}|v_{n+1-j}|^2.
+\]
+Letting \(y\downarrow0\) and using \(w=\Pi_nv(0)\), up to sign, gives the result.
+\end{proof}
+
+\begin{corollary}
+\[
+Q_n(w)\ge0
+\]
+at every simple interior active contact.
+\end{corollary}
+
+\begin{proof}
+By Abel summation,
+\[
+Q_n(w)
+=
+\sum_{j=1}^{\lfloor n/2\rfloor}(n+1-2j)
+\left(w_{n+1-j}^2-w_j^2\right),
+\]
+and the right side is nonnegative by Theorem~\ref{thm:tail-cone}.
+\end{proof}
+
+\section{Paired Weyl formulation}
+
+We record the even-to-odd Weyl formulation. The odd-to-even version remains a
+separate unfinished part of the proof.
+
+Let \(n=2m\). Define paired variables
+\[
+y_k=
+\binom{\ell_k}{r_k}
+:=
+\binom{w_k}{w_{2m+1-k}},
+\qquad k=1,\dots,m.
+\]
+Then the reversal eigenproblem is equivalent to
+\[
+C y_{k+1}+xJ y_k+C^T y_{k-1}=\lambda y_k,
+\qquad k=1,\dots,m,
+\]
+with
+\[
+J=
+\begin{pmatrix}0&1\\1&0\end{pmatrix},
+\qquad
+C=
+\begin{pmatrix}0&-1\\-a&0\end{pmatrix}.
+\]
+The left boundary is
+\[
+y_0=0.
+\]
+The even terminal condition is
+\[
+y_{m+1}=Jy_m.
+\]
+Equivalently,
+\[
+C y_{m+1}=B_Ey_m,
+\qquad
+B_E=
+\begin{pmatrix}-1&0\\0&-a\end{pmatrix}.
+\]
+
+For odd length \(2m+1\), one has paired variables
+\[
+\widetilde y_k=
+\binom{\widetilde\ell_k}{\widetilde r_k},
+\qquad k=1,\dots,m,
+\]
+and a center coordinate \(c\). The center equation is
+\[
+(\widetilde x-\widetilde\lambda)c
+=
+\widetilde\ell_m+a\widetilde r_m.
+\]
+Eliminating \(c\) gives the odd terminal boundary matrix
+\[
+B_O(\widetilde x,\widetilde\lambda)
+=
+-\frac{1}{\widetilde x-\widetilde\lambda}
+\binom{1}{a}\binom{1}{a}^T,
+\]
+with the non-negotiable condition
+\[
+\widetilde x-\widetilde\lambda\ne0.
+\]
+
+\section{Mixed Cauchy decomposition}
+
+Let \(Y=(y_1,\dots,y_m)\) be the paired even vector and
+\[
+\widetilde W=(\widetilde Y,c),
+\qquad
+\widetilde Y=(\widetilde y_1,\dots,\widetilde y_m),
+\]
+be the paired odd vector plus its center.
+
+Let
+\[
+\mathcal J=\operatorname{diag}(J,\dots,J).
+\]
+Even stationarity is
+\[
+\langle \mathcal JY,Y\rangle=0.
+\]
+Odd stationarity is
+\[
+\langle \mathcal J\widetilde Y,\widetilde Y\rangle=-c^2.
+\]
+
+Let
+\[
+P_\pm=\frac{I\pm\mathcal J}{2}.
+\]
+Write
+\[
+Y_\pm=P_\pm Y,
+\qquad
+\widetilde Y_\pm=P_\pm\widetilde Y.
+\]
+Then
+\[
+\|Y_+\|^2=\|Y_-\|^2=\frac12,
+\]
+and
+\[
+\|\widetilde Y_+\|^2=\frac{1-2c^2}{2},
+\qquad
+\|\widetilde Y_-\|^2=\frac12.
+\]
+
+Define
+\[
+\mathcal N=\langle \widetilde Y,Y\rangle,
+\qquad
+\mathcal S=\langle \widetilde Y,\mathcal JY\rangle,
+\]
+and
+\[
+\alpha=\mathcal N+\mathcal S,
+\qquad
+\beta=\mathcal N-\mathcal S.
+\]
+Decompose
+\[
+\widetilde Y_+=\alpha Y_+ + U_+,
+\qquad
+U_+\perp Y_+,
+\]
+\[
+\widetilde Y_-=\beta Y_- + U_-,
+\qquad
+U_-\perp Y_-.
+\]
+The Cauchy defects are
+\[
+\mathcal D_+=2\|U_+\|^2,
+\qquad
+\mathcal D_-=2\|U_-\|^2.
+\]
+The exact-rigid branch is
+\[
+\mathcal D_+=\mathcal D_-=0.
+\]
+The non-rigid branch is
+\[
+\mathcal D_++\mathcal D_->0.
+\]
+
+\section{Exact-rigid even-to-odd branch}
+
+This section records the current proof that the exact-rigid even-to-odd branch is
+empty.
+
+\subsection{Exact-rigid form}
+
+Exact rigidity means
+\[
+\widetilde Y=\alpha Y_+ +\beta Y_-.
+\]
+The alignment-sign argument gives, after changing the global sign of the odd vector,
+\[
+\alpha\beta>0.
+\]
+Hence one may write
+\[
+\widetilde y_k=L_\rho y_k,
+\qquad
+L_\rho=\rho P_+ +P_-,
+\qquad
+0\le\rho\le1,
+\]
+where now \(P_\pm=(I\pm J)/2\) on each block, and
+\[
+\rho^2=1-2c^2.
+\]
+The case \(c=0\), equivalently \(\rho=1\), is impossible for an upward crossing. Thus
+the nontrivial exact-rigid case has
+\[
+0<\rho<1.
+\]
+
+\subsection{Flat-tail exclusion}
+
+\begin{lemma}[Flat-tail exact rigidity is impossible]
+If
+\[
+\Delta_m=\sum_{k=1}^{m}(r_k^2-\ell_k^2)=0,
+\]
+then no exact-rigid active crossing exists.
+\end{lemma}
+
+\begin{proof}
+The even terminal current identity gives
+\[
+\lambda\Delta_m=\ell_m^2-ar_m^2.
+\]
+Thus
+\[
+\ell_m^2=ar_m^2.
+\]
+Since the terminal block cannot vanish, \(r_m\ne0\), so
+\[
+\ell_m/r_m=\pm\sqrt a.
+\]
+Compatibility with the odd center and current equations forces
+\[
+\ell_m/r_m=\sqrt a,
+\qquad
+\rho=\frac{1+a}{(1+\sqrt a)^2}.
+\]
+But then
+\[
+r_m^2-\ell_m^2=(1-a)r_m^2>0.
+\]
+Since
+\[
+\Delta_m=\Delta_{m-1}+(r_m^2-\ell_m^2)=0,
+\]
+we obtain
+\[
+\Delta_{m-1}<0,
+\]
+contradicting the tail-cone condition.
+\end{proof}
+
+\subsection{\texorpdfstring{Same-sign exact rigidity for \(m\ge4\)}{Same-sign exact rigidity for m >= 4}}
+
+Assume
+\[
+\widetilde\lambda=\lambda.
+\]
+The local current law becomes the projective relation
+\[
+(\ell_k-r_k)(\ell_{k+1}-r_{k+1})
++
+\rho(\ell_k+r_k)(\ell_{k+1}+r_{k+1})=0.
+\]
+In Cayley coordinate
+\[
+z_k=\frac{\ell_k-r_k}{\ell_k+r_k},
+\]
+this is
+\[
+z_kz_{k+1}=-\rho.
+\]
+Thus the projective lines satisfy
+\[
+[y_{k+2}]=[y_k].
+\]
+
+\begin{theorem}[Same-sign exact-rigid exclusion for \(m\ge4\)]
+\label{thm:same-sign-mge4}
+There is no same-sign exact-rigid even-to-odd active crossing for \(m\ge4\).
+\end{theorem}
+
+\begin{proof}
+Since \([y_{k+2}]=[y_k]\), write
+\[
+y_3=b\,y_1,\qquad y_4=g\,y_2.
+\]
+The recurrence at \(k=1\) is
+\[
+Cy_2+(xJ-\lambda I)y_1=0.
+\]
+The recurrence at \(k=3\) is
+\[
+Cy_4+(xJ-\lambda I)y_3+C^Ty_2=0.
+\]
+Substituting \(y_3=by_1\), \(y_4=gy_2\), and using the \(k=1\) recurrence gives
+\[
+((g-b)C+C^T)y_2=0.
+\]
+Since
+\[
+(g-b)C+C^T
+=
+\begin{pmatrix}
+0&-(g-b)-a\\
+-a(g-b)-1&0
+\end{pmatrix},
+\]
+and \(0<a<1\), this forces
+\[
+y_2\parallel e_1
+\quad\text{or}\quad
+y_2\parallel e_2.
+\]
+If \(y_2\parallel e_2\), the projective law implies
+\[
+\frac{\ell_1}{r_1}=\frac{1+\rho}{1-\rho}>1,
+\]
+contradicting \(\Delta_1\ge0\). If \(y_2\parallel e_1\), the recurrence at \(k=1\) and
+\(k=2\) gives two scalar equations whose signs are incompatible for \(0<a<1\).
+Thus both coordinate cases are impossible.
+\end{proof}
+
+\subsection{\texorpdfstring{Opposite-sign exact rigidity for \(m\ge4\)}{Opposite-sign exact rigidity for m >= 4}}
+
+Assume
+\[
+\widetilde\lambda=-\lambda.
+\]
+In \(J\)-eigen-coordinates, the exact-rigid modulation equations imply
+\[
+y_{k+1}=y_{k-1}+Ry_k
+\]
+for a fixed \(2\times2\) matrix \(R\). Combining this with the even recurrence gives
+\[
+y_{k-1}=Ty_k
+\]
+for a fixed \(2\times2\) matrix \(T\).
+
+\begin{theorem}[Opposite-sign exact-rigid exclusion for \(m\ge4\)]
+\label{thm:opposite-mge4}
+There is no opposite-sign exact-rigid even-to-odd active crossing for \(m\ge4\).
+\end{theorem}
+
+\begin{proof}
+Because \(y_0=0\),
+\[
+Ty_1=0.
+\]
+For \(m\ge4\), the identities at \(k=2,3\) give
+\[
+TSy_1=y_1,
+\qquad
+TSy_2=y_2,
+\]
+where \(S=T+R\). If \(y_1,y_2\) are linearly independent, then \(TS=I\), contradicting
+\(\det T=0\). Hence \(y_2=\kappa y_1\). Then all blocks satisfy
+\[
+y_k=\kappa^{k-1}y_1.
+\]
+Even stationarity gives
+\[
+0=\sum_{k=1}^{m}y_k^TJy_k
+=
+\left(\sum_{k=1}^{m}\kappa^{2(k-1)}\right)y_1^TJy_1.
+\]
+Hence \(y_1^TJy_1=0\), so \(y_1\parallel e_1\) or \(y_1\parallel e_2\) in the original
+coordinate axes. The \(k=1\) recurrence then forces \(\lambda=0\), impossible at an
+active barrier contact.
+\end{proof}
+
+\subsection{Low exact-rigid cases}
+
+The low cases \(m=1,2,3\) were handled separately.
+
+\begin{proposition}[\(m=1\)]
+There is no exact-rigid active crossing for \(m=1\).
+\end{proposition}
+
+\begin{proof}
+Here \(y_1=(\ell,r)^T\). Even stationarity gives \(\ell r=0\). The branch \(y_1\parallel e_1\)
+violates the tail cone. The branch \(y_1\parallel e_2\) gives
+\[
+x=0,\qquad \lambda=-a.
+\]
+Exact rigidity gives
+\[
+\widetilde y_1=L_\rho e_2
+=
+\binom{(\rho-1)/2}{(1+\rho)/2}.
+\]
+Substitution into the odd terminal equation, with
+\[
+\widetilde x-\widetilde\lambda\ne0,
+\]
+gives the necessary polynomial equation
+\[
+P_1(a,\rho)=0,
+\]
+where
+\[
+\begin{aligned}
+P_1(a,\rho)
+={}&
+-a^3\rho^3-3a^3\rho^2+5a^3\rho-a^3
++a^2\rho^3+a^2\rho^2+7a^2\rho-a^2\\
+&+a\rho^3-a\rho^2-a\rho+a-\rho^3+3\rho^2-3\rho+1.
+\end{aligned}
+\]
+Its Bernstein coefficients in \(\rho\in[0,1]\) are
+\[
+(1-a)(1+a)^2,\qquad
+\frac{2a(1+a)^2}{3},\qquad
+\frac{4a^2(a+3)}{3},\qquad
+8a^2,
+\]
+all positive for \(0<a<1\). Thus \(P_1>0\), contradiction.
+\end{proof}
+
+\begin{proposition}[\(m=2\)]
+There is no exact-rigid active crossing for \(m=2\).
+\end{proposition}
+
+\begin{proof}[Proof summary]
+This is the transition \(4\to5\). In the finite chart write
+\[
+y_1=\binom{s}{1},
+\qquad
+y_2=h\binom{t}{1}.
+\]
+Even stationarity gives
+\[
+t=-\frac{s}{h^2}.
+\]
+The even recurrence and terminal condition imply
+\[
+q:=\frac hs
+\]
+satisfies
+\[
+aq^2+2(1+a)q-1=0.
+\]
+The positive branch \(q=q_+(a)\in(0,1/2)\) contradicts \(\Delta_2\ge0\). Thus
+\[
+q=q_-(a)<-2-\sqrt5.
+\]
+Write \(q=-p\), so \(p>2+\sqrt5\). Then
+\[
+a=\frac{1+2p}{p(p-2)}.
+\]
+The same-sign branch gives
+\[
+\rho=
+\frac{(1-s)(1+p^2s)}{(1+s)(1-p^2s)}.
+\]
+The even equations imply
+\[
+|s|>\frac1{p^2}.
+\]
+If \(s>0\), then \(1-p^2s<0\), so \(\rho<0\). If \(s<0\), then
+\(1+p^2s<0\), again \(\rho<0\). Hence the same-sign branch is impossible.
+
+For the opposite-sign finite chart, denominator-preserving elimination gives the
+necessary condition
+\[
+\mathcal P_{42}(q)=0,
+\qquad q<-2-\sqrt5,
+\]
+where \(\mathcal P_{42}\) is the exact residual polynomial obtained from the even
+constraints, the odd bulk equation, and one denominator-preserving component of
+the odd terminal equation. Under the substitution
+\[
+q=-(2+\sqrt5+u),\qquad u>0,
+\]
+one obtains
+\[
+\mathcal P_{42}(-(2+\sqrt5+u))
+=
+\sum_{j=0}^{42}(A_j+B_j\sqrt5)u^j
+\]
+with
+\[
+A_j>0,\qquad B_j>0\qquad(0\le j\le42).
+\]
+Thus \(\mathcal P_{42}>0\) on the admissible interval, contradiction.
+
+The projective singular charts \(y_2\parallel e_1\) and \(y_2\parallel e_2\) are excluded
+directly. In the \(e_2\)-chart one obtains \(\lambda=0\). In the \(e_1\)-chart the
+remaining terminal residual reduces to a strictly positive expression after setting
+\(a=t^2\in(0,1)\). Hence no branch remains.
+\end{proof}
+
+\begin{proposition}[\(m=3\), same sign]
+There is no same-sign exact-rigid active crossing for \(m=3\).
+\end{proposition}
+
+\begin{proof}
+Use \(J\)-eigen-coordinates
+\[
+y_k=u_ke_+ +v_ke_-.
+\]
+The exact-rigid same-sign modulation equations give, for some \(\tau\),
+\[
+u_2=\tau v_1,\qquad
+v_2=-\rho\tau u_1,
+\]
+and
+\[
+u_3=(1-\rho\tau^2)u_1,\qquad
+v_3=(1-\rho\tau^2)v_1.
+\]
+Thus
+\[
+y_3=(1-\rho\tau^2)y_1.
+\]
+The cases \(u_1=0\) or \(v_1=0\) force \(\tau=0\), then \(y_2=0\), and then the
+recurrence implies \(y_1=0\), impossible. Thus \(u_1v_1\ne0\). Setting
+\(q=v_1/u_1\), the \(k=1\) recurrence eliminates \(x,\lambda\); substituting into the
+\(k=2\) recurrence gives
+\[
+\tau^2(q^2+\rho)=2,
+\qquad
+q^2=\rho.
+\]
+Therefore \(\rho\tau^2=1\), hence \(y_3=0\). Since the terminal condition gives
+\(y_4=Jy_3=0\), two consecutive zero blocks force the trivial solution, contradiction.
+\end{proof}
+
+\begin{proposition}[\(m=3\), opposite sign]
+There is no opposite-sign exact-rigid active crossing for \(m=3\).
+\end{proposition}
+
+\begin{proof}
+Use \(J\)-eigen-coordinates, in which
+\[
+C=
+\begin{pmatrix}
+-\mu&\nu\\
+-\nu&\mu
+\end{pmatrix},
+\qquad
+\mu=\frac{1+a}{2},\quad
+\nu=\frac{1-a}{2}.
+\]
+Thus \(\mu>\nu>0\). The opposite-sign modulation gives parameters \(A,B\) such that
+\[
+u_2=-Bv_1,\qquad
+v_2=-\rho A u_1,
+\]
+and
+\[
+u_3=(1+\rho AB)u_1,\qquad
+v_3=(1+\rho AB)v_1.
+\]
+If \(u_1=0\), then the \(k=1\) recurrence forces \(B=0\), and the \(k=2\) recurrence
+forces \(2\mu=0\), impossible. Hence \(u_1\ne0\). Normalize \(u_1=1\) and set
+\(q=v_1\). The \(k=1\), \(k=2\), and \(k=3\) recurrences reduce to
+\[
+A\bigl(2\mu\rho+\nu(1+\rho)q\bigr)
+=
+Bq\bigl(2\mu q+\nu(1+\rho)\bigr),
+\]
+\[
+B^2q^2-AB\rho-2=0,
+\]
+\[
+\nu\rho(1+\rho)A(A-B)+4\mu q=0,
+\]
+and finally
+\[
+\mu q(5\rho+1)+\nu\rho(1+\rho)=0,
+\]
+\[
+q\bigl(4\mu^2\rho+\nu^2(1+\rho)\bigr)+\mu\nu\rho(1+\rho)=0.
+\]
+The first of the last two equations gives
+\[
+q=-\frac{\nu\rho(1+\rho)}{\mu(5\rho+1)}.
+\]
+Substituting this into the second gives
+\[
+\frac{\nu\rho(1+\rho)^2(\mu^2-\nu^2)}
+{\mu(5\rho+1)}=0.
+\]
+But
+\[
+\mu^2-\nu^2=a>0,
+\]
+and all other factors are positive. Contradiction.
+\end{proof}
+
+\begin{theorem}[Exact-rigid even-to-odd branch eliminated]
+\label{thm:rigid-eliminated}
+There is no exact-rigid simple interior active even-to-odd upward crossing.
+\end{theorem}
+
+\begin{proof}
+The flat-tail branch is impossible. The low block lengths \(m=1,2,3\) are impossible.
+For \(m\ge4\), both the same-sign and opposite-sign branches are impossible by
+Theorems~\ref{thm:same-sign-mge4} and \ref{thm:opposite-mge4}.
+\end{proof}
+
+\section{The non-rigid even-to-odd branch}
+
+The exact-rigid branch is eliminated, so the remaining simple even-to-odd branch
+has
+\[
+\mathcal D_++\mathcal D_->0.
+\]
+
+Define
+\[
+Z=(Z_Y,c),
+\qquad
+Z_Y=\alpha Y_++\beta Y_-,
+\]
+and
+\[
+U=(U_++U_-,0).
+\]
+Then
+\[
+\widetilde W=Z+U.
+\]
+Let
+\[
+d=\|U\|^2
+=
+\frac{\mathcal D_++\mathcal D_-}{2}.
+\]
+Then
+\[
+d>0
+\]
+in the non-rigid branch.
+
+Let
+\[
+\widetilde G=
+\mathbf G_{2m+1}(\widetilde x,a),
+\qquad
+\widetilde G\widetilde W=\widetilde\lambda\widetilde W,
+\qquad
+\|\widetilde W\|=1.
+\]
+Define the squared-Rayleigh excess
+\[
+\mathcal Q(v)
+=
+\|\widetilde Gv\|^2-\widetilde\lambda^2\|v\|^2.
+\]
+Because \(|\widetilde\lambda|\) is the least absolute eigenvalue of \(\widetilde G\),
+\[
+\mathcal Q(v)\ge0.
+\]
+
+\begin{lemma}[Squared-Rayleigh identity]
+\label{lem:QZQU}
+One has
+\[
+\mathcal Q(Z)=\mathcal Q(U)\ge0.
+\]
+Moreover, if the active odd eigenvalue is simple and
+\[
+g_{\min}
+=
+\min_{\nu\in\sigma(\widetilde G),\,\nu\ne\widetilde\lambda}
+(\nu^2-\widetilde\lambda^2)>0,
+\]
+then
+\[
+\mathcal Q(Z)\ge g_{\min}d(1-d).
+\]
+\end{lemma}
+
+\begin{proof}
+Since
+\[
+(\widetilde G^2-\widetilde\lambda^2I)\widetilde W=0
+\]
+and \(\widetilde W=Z+U\), the bilinear form associated with \(\mathcal Q\) gives
+\[
+\mathcal Q(Z)=\mathcal Q(U).
+\]
+Furthermore,
+\[
+\langle Z,\widetilde W\rangle=1-d,
+\qquad
+\|Z\|^2=1-d.
+\]
+Thus, writing
+\[
+Z=(1-d)\widetilde W+Z_\perp,\qquad Z_\perp\perp\widetilde W,
+\]
+we get
+\[
+\|Z_\perp\|^2=d(1-d).
+\]
+The spectral theorem then gives
+\[
+\mathcal Q(Z)\ge g_{\min}d(1-d).
+\]
+\end{proof}
+
+\begin{lemma}[Stationarity defect of the rigid projection]
+\label{lem:stationarity-defect}
+The odd stationarity defect of \(Z\) is
+\[
+\langle \mathcal JZ_Y,Z_Y\rangle+c^2
+=
+\frac{\mathcal D_--\mathcal D_+}{2}.
+\]
+\end{lemma}
+
+\begin{proof}
+Since
+\[
+Z_Y=\alpha Y_++\beta Y_-,
+\]
+we have
+\[
+\langle \mathcal JZ_Y,Z_Y\rangle
+=
+\frac{\alpha^2-\beta^2}{2}.
+\]
+The defect identities are
+\[
+\alpha^2+\mathcal D_+=1-2c^2,
+\qquad
+\beta^2+\mathcal D_-=1.
+\]
+Thus
+\[
+\alpha^2-\beta^2=\mathcal D_--\mathcal D_+-2c^2,
+\]
+and the formula follows.
+\end{proof}
+
+The exact orientation identity is
+\[
+\begin{aligned}
+Q_{2m}(Y)-Q_{2m+1}(\widetilde Y)
+&=
+(1-\alpha\beta)Q_{2m}(Y)
+-\alpha\beta\,\Delta_m(Y)
+\\
+&\quad
+-2\alpha\langle Y_+,W_OHU_-\rangle
+\\
+&\quad
+-2\beta\langle U_+,W_OHY_-\rangle
+\\
+&\quad
+-2\langle U_+,W_OHU_-\rangle,
+\end{aligned}
+\]
+where \(H=\operatorname{diag}(-1,1)\) on each pair, and \(W_O\) is the diagonal orientation
+weight for the odd length.
+
+An upward crossing requires
+\[
+Q_{2m+1}(\widetilde Y)\le Q_{2m}(Y),
+\]
+or
+\[
+Q_{2m}(Y)-Q_{2m+1}(\widetilde Y)\ge0.
+\]
+
+The non-rigid branch is not yet excluded. The missing theorem is a defect-vector
+Picone identity proving that the last three defect terms force
+\[
+Q_{2m+1}(\widetilde Y)>Q_{2m}(Y)
+\]
+whenever
+\[
+\mathcal D_++\mathcal D_->0.
+\]
+
+\section{Current status}
+
+The connectedness threshold theorem is not fully proved yet. The current proof
+establishes the following.
+
+\begin{enumerate}[label=\textup{(\arabic*)}]
+\item The uploaded manuscript proves the barrier criterion
+\[
+\Sigma_\varepsilon^{(n)}\text{ connected}
+\iff
+\varepsilon>\eta_n(a).
+\]
+
+\item Therefore the threshold problem is reduced to
+\[
+\eta_{n+1}(a)\le\eta_n(a).
+\]
+
+\item The uniform small-\(a\) strip
+\[
+0<a\le10^{-2}
+\]
+is excluded for all \(n\ge2\).
+
+\item The perturbative near-Hermitian layer
+\[
+1-a\le \frac{1}{4(n+2)^2}
+\]
+is excluded.
+
+\item Large-\(n\) compact-middle and mesoscopic near-Hermitian asymptotics reduce
+possible counterexamples to a finite middle block.
+
+\item In the finite middle block, the simple even-to-odd active-crossing problem has
+been reduced to rigid and non-rigid Weyl-contact branches.
+
+\item The exact-rigid simple even-to-odd branch is eliminated completely.
+\end{enumerate}
+
+\section{Unfinished gaps}
+
+\begin{gap}[Non-rigid simple even-to-odd branch]
+The main remaining gap inside the current Weyl-contact route is the non-rigid branch:
+\[
+\mathcal D_++\mathcal D_->0.
+\]
+The missing result is a defect-vector Picone identity showing that non-rigidity forces
+\[
+Q_{2m+1}(\widetilde Y)>Q_{2m}(Y).
+\]
+This would contradict the upward-crossing condition
+\[
+Q_{2m+1}(\widetilde Y)\le Q_{2m}(Y).
+\]
+At present we only have the squared-Rayleigh lower bound
+\[
+\mathcal Q(Z)\ge g_{\min}d(1-d),
+\]
+and the stationarity-defect identity
+\[
+\langle \mathcal JZ_Y,Z_Y\rangle+c^2
+=
+\frac{\mathcal D_--\mathcal D_+}{2}.
+\]
+These do not yet close the non-rigid branch.
+\end{gap}
+
+\begin{gap}[Odd-to-even analogue]
+The Weyl-contact analysis above is written for even-to-odd transitions
+\[
+2m\to2m+1.
+\]
+The odd-to-even transition
+\[
+2m+1\to2m+2
+\]
+still needs its own paired Weyl formulation, exact-rigid elimination, and non-rigid
+defect analysis.
+\end{gap}
+
+\begin{gap}[Degenerate active contacts]
+The current Weyl proof assumes simple interior active contacts. One still has to pass
+to nonsimple active eigenvalues, endpoint contacts, and nonsmooth maxima. This should
+be possible by semialgebraic stratification, limiting arguments, or perturbation of
+simple active branches, but it is not yet written.
+\end{gap}
+
+\begin{gap}[Global crossing closure]
+Even after excluding simple upward crossings, one must write the global crossing
+argument carefully. Namely, if
+\[
+R_n(a)=\frac{\eta_{n+1}(a)}{\eta_n(a)}
+\]
+ever exceeds \(1\), then there must be an upward crossing in a suitable stratum.
+This needs a formal stratified argument over the finite middle block.
+\end{gap}
+
+\begin{gap}[Full rigor of asymptotic reductions]
+The large-\(n\) compact-middle and mesoscopic transition estimates are based on the
+exact Green kernel and Volterra scaling. A final manuscript must include all uniform
+operator-norm and Euler--Maclaurin remainder estimates, especially for
+\[
+1\le \Gamma\le C\log n.
+\]
+\end{gap}
+
+\begin{gap}[Finite residual audit]
+The \(m=2\) exact-rigid proof uses an exact degree-\(42\) residual polynomial with a
+positive-coefficient expansion after the substitution
+\[
+q=-(2+\sqrt5+u).
+\]
+This is an exact algebraic proof, but it should be audited and placed in a separate
+appendix with all coefficients or a shorter hand factorization if one can be found.
+\end{gap}
+
+\end{document}

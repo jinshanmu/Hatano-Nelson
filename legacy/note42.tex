@@ -1,0 +1,2314 @@
+\documentclass[11pt]{amsart}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+
+\numberwithin{equation}{section}
+
+\DeclareMathOperator{\tridiag}{tridiag}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\spec}{spec}
+\DeclareMathOperator{\dist}{dist}
+
+\newcommand{\C}{\mathbb C}
+\newcommand{\R}{\mathbb R}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\ii}{\mathrm i}
+\newcommand{\A}{A}
+\newcommand{\B}{B}
+\newcommand{\I}{I}
+\newcommand{\J}{J}
+\newcommand{\HH}{H}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{mainthm}[theorem]{Main Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{remark}[theorem]{Remark}
+
+\title[Connectedness thresholds for Toeplitz pseudospectra]
+{Real-Axis Barriers and Connectedness Thresholds for Pseudospectra of a Nonnormal Tridiagonal Toeplitz Family}
+
+\author{Anonymous}
+
+\subjclass[2020]{15A18, 15B05, 47A10, 65F15, 81Q12}
+\keywords{Pseudospectrum, nonnormal matrix, tridiagonal Toeplitz matrix, least singular value, connectedness, Hatano--Nelson model, non-Hermitian skin effect}
+
+\begin{document}
+
+\begin{abstract}
+We study the Euclidean pseudospectra of the finite nonnormal tridiagonal Toeplitz matrices
+\[
+A_n(a)=\tridiag(a,0,1),\qquad 0<a<1,\qquad n\ge2.
+\]
+The spectrum is real because \(A_n(a)\) is diagonally similar to a symmetric Jacobi matrix, but its Euclidean pseudospectra are genuinely nonnormal.  We introduce the real-axis barrier
+\[
+\tau_n(a)
+=
+\max_{1\le k\le n-1}
+\max_{\lambda_{n,k}(a)\le x\le \lambda_{n,k+1}(a)}
+s_{\min}(xI_n-A_n(a)),
+\]
+where \(\lambda_{n,1}(a)<\cdots<\lambda_{n,n}(a)\) are the eigenvalues of \(A_n(a)\).  The barrier gives the exact connectedness criterion
+\[
+\sigma_\eps(A_n(a))\ \text{is connected}
+\quad\Longleftrightarrow\quad
+\eps>\tau_n(a).
+\]
+The key point is the vertical monotonicity theorem
+\[
+s_{\min}((x+\ii y)I_n-A_n(a))
+\ge
+s_{\min}(xI_n-A_n(a)),
+\qquad x,y\in\R,
+\]
+which rules out off-real bridges before the corresponding real gap closes.  We also give explicit two-sided bounds for \(\tau_n(a)\).  The lower bound is expressed through the optimal moment naturally produced by the Green-kernel estimate,
+\[
+S_2(a)=\sum_{m=1}^{\infty}m^2a^m=\frac{a(1+a)}{(1-a)^3}.
+\]
+Consequently,
+\[
+c_2(a)(n+1)a^{n/2}
+\le
+\tau_n(a)
+\le
+(n+1)a^{n/2},
+\qquad
+c_2(a)=\frac{\sqrt8(1-a)^3}{3\pi^2(1+a)}.
+\]
+These estimates imply sharp logarithmic bounds for the first-hit connectedness threshold.  If the finite real-axis barrier monotonicity conjecture \(\tau_{n+1}(a)\le\tau_n(a)\) holds, then the first-hit threshold is also the eventual connectedness threshold.  Finally, we explain the interpretation for the open-boundary Hatano--Nelson chain.
+\end{abstract}
+
+\maketitle
+
+\section{Introduction}
+
+For \(M\in\C^{n\times n}\), its \(\eps\)-pseudospectrum is
+\[
+\sigma_\eps(M)
+=
+\left\{
+z\in\C:\|(zI_n-M)^{-1}\|_2>\eps^{-1}
+\right\},
+\]
+with the convention that the resolvent norm is \(+\infty\) on \(\sigma(M)\).  Equivalently,
+\[
+\sigma_\eps(M)
+=
+\left\{
+z\in\C:s_{\min}(zI_n-M)<\eps
+\right\}.
+\]
+Pseudospectra are central in nonnormal matrix analysis because eigenvalues alone may fail to describe resolvent growth and spectral instability; see Trefethen \cite{Trefethen1997} and Trefethen--Embree \cite{TrefethenEmbree2005}.
+
+This article concerns
+\[
+A_n(a)
+=
+\tridiag(a,0,1)
+=
+\begin{bmatrix}
+0 & 1 \\
+a & 0 & \ddots \\
+& \ddots & \ddots & \ddots \\
+&& \ddots & 0 & 1 \\
+&&& a & 0
+\end{bmatrix},
+\qquad 0<a<1.
+\]
+Although \(A_n(a)\) is nonnormal, it is diagonally similar to the symmetric matrix
+\[
+\sqrt a\,\tridiag(1,0,1).
+\]
+Hence its eigenvalues are real and explicit.  However, pseudospectra in the Euclidean norm are not invariant under nonunitary similarity.  Thus the topology of \(\sigma_\eps(A_n(a))\) reflects nonnormality.
+
+For fixed \(a\in(0,1)\), define the real-axis least singular value
+\[
+\mu_n(x;a):=s_{\min}(xI_n-A_n(a)),
+\qquad x\in\R.
+\]
+Let
+\[
+\lambda_{n,1}(a)<\lambda_{n,2}(a)<\cdots<\lambda_{n,n}(a)
+\]
+be the eigenvalues of \(A_n(a)\).  We define the \(k\)-th gap height by
+\[
+\beta_{n,k}(a)
+:=
+\max_{\lambda_{n,k}(a)\le x\le\lambda_{n,k+1}(a)}
+\mu_n(x;a),
+\qquad k=1,\dots,n-1,
+\]
+and the largest real-axis barrier by
+\[
+\tau_n(a):=\max_{1\le k\le n-1}\beta_{n,k}(a).
+\]
+This quantity is the obstruction to connectedness along the real axis.  We prove below that vertical monotonicity reduces planar connectedness of \(\sigma_\eps(A_n(a))\) exactly to connectedness of its real trace.
+
+The desired finite-dimensional monotonicity statement is
+\[
+\tau_{n+1}(a)\le\tau_n(a),
+\qquad 0<a<1.
+\]
+If true, it immediately implies that connectedness, once it appears, never disappears as \(n\) increases.  Because this comparison is the remaining hard finite-\(n\) point, we separate the unconditional connectedness criterion and estimates from the conditional eventual-threshold consequence.
+
+\section{Elementary structure}
+
+Let
+\[
+B_n(z):=zI_n-A_n(a),
+\qquad
+s_n(z):=s_{\min}(B_n(z)).
+\]
+Let \(J_n\) be the reversal matrix,
+\[
+J_ne_j=e_{n+1-j}.
+\]
+Then
+\[
+A_n(a)^TJ_n=J_nA_n(a).
+\]
+Consequently, for real \(x\),
+\[
+H_n(x):=J_nB_n(x)=J_n(xI_n-A_n(a))
+\]
+is real symmetric.  Since \(J_n\) is orthogonal,
+\begin{equation}\label{eq:real-axis-smin}
+s_n(x)
+=
+s_{\min}(H_n(x))
+=
+\min_{\rho\in\sigma(H_n(x))}|\rho|.
+\end{equation}
+
+The spectrum of \(A_n(a)\) is explicit.  Put
+\[
+\Delta_n:=\diag(1,a^{1/2},a,\dots,a^{(n-1)/2}).
+\]
+Then
+\[
+\Delta_n^{-1}A_n(a)\Delta_n
+=
+\sqrt a\,\tridiag(1,0,1).
+\]
+Therefore
+\begin{equation}\label{eq:toeplitz-spectrum}
+\sigma(A_n(a))
+=
+\left\{
+2\sqrt a\cos\frac{j\pi}{n+1}:j=1,\dots,n
+\right\}.
+\end{equation}
+We use the increasing order
+\[
+\lambda_{n,k}(a)
+=
+2\sqrt a\cos\frac{(n+1-k)\pi}{n+1},
+\qquad k=1,\dots,n.
+\]
+Thus
+\[
+\lambda_{n,1}(a)<\lambda_{n,2}(a)<\cdots<\lambda_{n,n}(a).
+\]
+
+\section{The real-axis barrier}
+
+\begin{definition}
+For \(n\ge2\), \(0<a<1\), and \(1\le k\le n-1\), set
+\[
+G_{n,k}(a)
+:=
+[\lambda_{n,k}(a),\lambda_{n,k+1}(a)].
+\]
+Define
+\[
+\beta_{n,k}(a)
+:=
+\max_{x\in G_{n,k}(a)}
+s_{\min}(xI_n-A_n(a)),
+\]
+and
+\[
+\tau_n(a)
+:=
+\max_{1\le k\le n-1}\beta_{n,k}(a).
+\]
+\end{definition}
+
+The maximum exists because \(x\mapsto s_{\min}(xI_n-A_n(a))\) is continuous and each \(G_{n,k}(a)\) is compact.  Since \(xI_n-A_n(a)\) is singular exactly at the endpoints of \(G_{n,k}(a)\), one has
+\[
+\beta_{n,k}(a)>0.
+\]
+
+\begin{proposition}[Real-axis connectedness criterion]\label{prop:real-axis-connectedness}
+Let
+\[
+E_{n,\eps}(a)
+:=
+\{x\in\R:s_{\min}(xI_n-A_n(a))<\eps\}.
+\]
+Then
+\[
+E_{n,\eps}(a)\ \text{is connected}
+\quad\Longleftrightarrow\quad
+\eps>\tau_n(a).
+\]
+\end{proposition}
+
+\begin{proof}
+The function
+\[
+x\mapsto\mu_n(x;a):=s_{\min}(xI_n-A_n(a))
+\]
+is continuous and nonnegative.  Its zeros are precisely the real eigenvalues
+\[
+\lambda_{n,1}(a),\dots,\lambda_{n,n}(a).
+\]
+Therefore \(E_{n,\eps}(a)\) contains a neighborhood of every eigenvalue.
+
+The only possible disconnections of \(E_{n,\eps}(a)\) between eigenvalues occur inside the closed gaps
+\[
+G_{n,k}(a)=[\lambda_{n,k}(a),\lambda_{n,k+1}(a)].
+\]
+The \(k\)-th gap is fully filled by the strict sublevel set \(\mu_n<\eps\) if and only if
+\[
+\mu_n(x;a)<\eps
+\qquad
+\text{for every }x\in G_{n,k}(a).
+\]
+Since
+\[
+\beta_{n,k}(a)=\max_{x\in G_{n,k}(a)}\mu_n(x;a),
+\]
+this is equivalent to
+\[
+\eps>\beta_{n,k}(a).
+\]
+All real gaps are filled if and only if
+\[
+\eps>\max_{1\le k\le n-1}\beta_{n,k}(a)=\tau_n(a).
+\]
+The strict inequality is essential because the pseudospectrum is defined by \(s_{\min}<\eps\).  If \(\eps=\tau_n(a)\), then at least one real gap contains a point where \(\mu_n=\eps\), and that point is not included in \(E_{n,\eps}(a)\).
+\end{proof}
+
+\section{Vertical monotonicity and planar connectedness}
+\label{sec:vertical-planar}
+
+The preceding real-axis criterion becomes a planar connectedness criterion once one knows that the least singular value increases along vertical lines.  In the present Toeplitz family this property is true.
+
+\begin{theorem}[Vertical monotonicity]\label{thm:vertical}
+For every \(0<a<1\), every \(n\ge2\), and every \(x,y\in\R\),
+\[
+s_{\min}((x+\ii y)I_n-A_n(a))
+\ge
+s_{\min}(xI_n-A_n(a)).
+\]
+Equivalently, for every fixed \(x\in\R\), the map
+\[
+[0,\infty)\ni y
+\longmapsto
+s_{\min}((x+\ii y)I_n-A_n(a))
+\]
+is nondecreasing.
+\end{theorem}
+
+The proof is given in a sequence of lemmas.  Throughout the proof we fix \(0<a<1\) and \(n\ge2\), and write
+\[
+A:=A_n(a),
+\qquad
+B_{x,y}:=(x+\ii y)I_n-A,
+\qquad
+\mathcal H_x(y):=B_{x,y}^*B_{x,y}.
+\]
+We also write
+\[
+s(x,y):=s_{\min}(B_{x,y}),
+\qquad
+\lambda_1(x,y):=s(x,y)^2
+=
+\lambda_{\min}(\mathcal H_x(y)).
+\]
+Let \(J=J_n\) be the reversal matrix.  Then
+\[
+JAJ=A^{\mathsf T}.
+\]
+
+\begin{lemma}[The case \(n=2\)]\label{lem:vertical-n2}
+For \(n=2\) and all \(x\in\R\), the function
+\[
+y\longmapsto \lambda_1(x,y)
+\]
+is nondecreasing on \([0,\infty)\).
+\end{lemma}
+
+\begin{proof}
+For \(n=2\),
+\[
+B_{x,y}
+=
+\begin{bmatrix}
+x+\ii y & -1\\
+-a & x+\ii y
+\end{bmatrix},
+\]
+and hence
+\[
+\mathcal H_x(y)
+=
+\begin{bmatrix}
+a^2+x^2+y^2 & -(1+a)x+\ii(1-a)y\\
+-(1+a)x-\ii(1-a)y & 1+x^2+y^2
+\end{bmatrix}.
+\]
+Therefore
+\[
+\lambda_1(x,y)
+=
+x^2+y^2+\frac{1+a^2}{2}
+-
+\frac12
+\sqrt{(1-a^2)^2+4(1+a)^2x^2+4(1-a)^2y^2}.
+\]
+Differentiation gives
+\[
+\partial_y\lambda_1(x,y)
+=
+2y
+\left(
+1-
+\frac{(1-a)^2}
+{\sqrt{(1-a^2)^2+4(1+a)^2x^2+4(1-a)^2y^2}}
+\right).
+\]
+Since
+\[
+\sqrt{(1-a^2)^2+4(1+a)^2x^2+4(1-a)^2y^2}
+\ge
+1-a^2
+\ge
+(1-a)^2,
+\]
+we have
+\[
+\partial_y\lambda_1(x,y)\ge0
+\qquad(y\ge0).
+\]
+\end{proof}
+
+For the rest of the proof of Theorem \ref{thm:vertical}, assume \(n\ge3\) and \(y>0\).  Put
+\[
+z:=x+\ii y,
+\qquad
+\lambda:=\lambda_1(x,y),
+\qquad
+c:=\overline z+az=(1+a)x-\ii(1-a)y.
+\]
+Define
+\[
+d_-:=a^2+|z|^2-\lambda,
+\qquad
+d:=1+a^2+|z|^2-\lambda,
+\qquad
+d_+:=1+|z|^2-\lambda.
+\]
+Then
+\[
+M:=\mathcal H_x(y)-\lambda I_n
+\]
+is the Hermitian pentadiagonal matrix with first diagonal entry \(d_-\), last diagonal entry \(d_+\), interior diagonal entries \(d\), first off-diagonal entries \(-c\) above the diagonal and \(-\overline c\) below the diagonal, and second off-diagonal entries \(a\).
+
+For an index set \(I\subset\{1,\dots,n\}\), write \(M[I]\) for the principal submatrix of \(M\) indexed by \(I\).  For \(2\le j\le n-1\), set
+\[
+L_j:=M[\{1,\dots,j-1\}],
+\qquad
+R_j:=M[\{j+1,\dots,n\}].
+\]
+
+\begin{lemma}[One-sided positivity]\label{lem:one-sided-positivity}
+For every \(2\le j\le n-1\),
+\[
+L_j\succ0,
+\qquad
+R_j\succ0.
+\]
+In particular,
+\[
+d_->0,
+\qquad
+d_+>0.
+\]
+\end{lemma}
+
+\begin{proof}
+Since \(\lambda=\lambda_{\min}(\mathcal H_x(y))\), one has \(M\succeq0\).  Hence every principal submatrix of \(M\) is positive semidefinite.  It remains to show that the kernels of \(L_j\) and \(R_j\) are trivial.
+
+We prove this for \(R_j\); the proof for \(L_j\) is the same after reversing the indices.  Suppose \(w\in\ker R_j\), and extend \(w\) to a vector \(\widehat w\in\C^n\) by placing zeros in the first \(j\) positions.  The rows \(j+1,\dots,n\) of \(M\widehat w\) vanish.  Row \(j-1\) gives
+\[
+aw_1=0,
+\]
+so \(w_1=0\).  If \(w\) has a second component, row \(j\) then gives
+\[
+aw_2=0,
+\]
+so \(w_2=0\).  The first row of \(R_jw=0\) now gives \(aw_3=0\), if such a component exists.  Continuing in this way gives \(w=0\).  Thus \(R_j\succ0\).  Similarly, \(L_j\succ0\).
+
+Finally,
+\[
+L_2=[d_-],
+\qquad
+R_{n-1}=[d_+],
+\]
+so \(d_->0\) and \(d_+>0\).
+\end{proof}
+
+Define
+\[
+T:=
+\begin{bmatrix}
+d & -c\\
+-\overline c & d
+\end{bmatrix},
+\qquad
+E:=
+\begin{bmatrix}
+a & 0\\
+-c & a
+\end{bmatrix}.
+\]
+For \(3\le j\le n\), let \(S_j^{\rm L}\) be the Schur complement of \(M[\{1,\dots,j-1\}]\) onto its last two coordinates.  For \(1\le j\le n-2\), let \(S_j^{\rm R}\) be the Schur complement of \(M[\{j+1,\dots,n\}]\) onto its first two coordinates.  If the eliminated block is empty, the Schur complement is understood as the corresponding \(2\times2\) matrix itself.
+
+\begin{lemma}[Schur-complement half-plane property]\label{lem:schur-half-plane}
+Whenever
+\[
+S_j^{\rm L}
+=
+\begin{bmatrix}
+\alpha_j^{\rm L} & \beta_j^{\rm L}\\
+\overline{\beta_j^{\rm L}} & \delta_j^{\rm L}
+\end{bmatrix},
+\]
+one has
+\[
+\Im\beta_j^{\rm L}>0.
+\]
+Whenever
+\[
+S_j^{\rm R}
+=
+\begin{bmatrix}
+\alpha_j^{\rm R} & \beta_j^{\rm R}\\
+\overline{\beta_j^{\rm R}} & \delta_j^{\rm R}
+\end{bmatrix},
+\]
+one has
+\[
+\Im\beta_j^{\rm R}>0.
+\]
+\end{lemma}
+
+\begin{proof}
+We first record the elementary propagation rule.  Let
+\[
+S=
+\begin{bmatrix}
+\alpha & \beta\\
+\overline\beta & \delta
+\end{bmatrix}
+\succ0,
+\qquad
+\Delta:=\alpha\delta-|\beta|^2>0.
+\]
+A direct calculation gives
+\[
+T-E^*S^{-1}E
+=
+\begin{bmatrix}
+\alpha' & \beta'\\
+\overline{\beta'} & \delta'
+\end{bmatrix},
+\]
+where
+\[
+\beta'
+=
+\frac{a^2\beta+a\alpha\,\overline c-c\Delta}{\Delta}.
+\]
+Since
+\[
+\Im c=-(1-a)y,
+\qquad
+\Im\overline c=(1-a)y,
+\]
+we obtain
+\[
+\Im\beta'
+=
+\frac{
+a^2\Im\beta+a\alpha(1-a)y+\Delta(1-a)y
+}{\Delta}.
+\]
+Thus \(\Im\beta>0\) implies \(\Im\beta'>0\).
+
+Similarly,
+\[
+T-ES^{-1}E^*
+=
+\begin{bmatrix}
+\widetilde\alpha & \widetilde\beta\\
+\overline{\widetilde\beta} & \widetilde\delta
+\end{bmatrix},
+\]
+where
+\[
+\widetilde\beta
+=
+\frac{a^2\beta+a\delta\,\overline c-c\Delta}{\Delta},
+\]
+and therefore
+\[
+\Im\widetilde\beta
+=
+\frac{
+a^2\Im\beta+a\delta(1-a)y+\Delta(1-a)y
+}{\Delta}.
+\]
+Again \(\Im\beta>0\) implies \(\Im\widetilde\beta>0\).
+
+For the left Schur complements, the initial cases are
+\[
+S_3^{\rm L}
+=
+\begin{bmatrix}
+d_- & -c\\
+-\overline c & d
+\end{bmatrix},
+\]
+and, when meaningful,
+\[
+S_4^{\rm L}
+=
+\begin{bmatrix}
+d-\dfrac{|c|^2}{d_-}
+&
+-c+\dfrac{a\overline c}{d_-}
+\\[2mm]
+-\overline c+\dfrac{ac}{d_-}
+&
+d-\dfrac{a^2}{d_-}
+\end{bmatrix}.
+\]
+Both have upper-right entry with positive imaginary part, because \(d_->0\) and \(y>0\).  For \(j\ge5\), block Schur-complement calculation gives
+\[
+S_j^{\rm L}
+=
+T-E^*(S_{j-2}^{\rm L})^{-1}E.
+\]
+The propagation rule proves \(\Im\beta_j^{\rm L}>0\) for all \(3\le j\le n\).
+
+For the right Schur complements, the terminal initial cases are
+\[
+S_{n-2}^{\rm R}
+=
+\begin{bmatrix}
+d & -c\\
+-\overline c & d_+
+\end{bmatrix},
+\]
+and, when meaningful,
+\[
+S_{n-3}^{\rm R}
+=
+\begin{bmatrix}
+d-\dfrac{a^2}{d_+}
+&
+-c+\dfrac{a\overline c}{d_+}
+\\[2mm]
+-\overline c+\dfrac{ac}{d_+}
+&
+d-\dfrac{|c|^2}{d_+}
+\end{bmatrix}.
+\]
+Again the upper-right entries have positive imaginary part.  For \(j\le n-4\),
+\[
+S_j^{\rm R}
+=
+T-E(S_{j+2}^{\rm R})^{-1}E^*.
+\]
+The second propagation rule proves \(\Im\beta_j^{\rm R}>0\) for all \(1\le j\le n-2\).
+\end{proof}
+
+\begin{lemma}[No interior zero]\label{lem:no-interior-zero}
+Let
+\[
+v=(v_1,\dots,v_n)^T\in\ker M\setminus\{0\}.
+\]
+Then
+\[
+v_j\ne0,
+\qquad
+j=2,\dots,n-1.
+\]
+\end{lemma}
+
+\begin{proof}
+We first show that
+\[
+v_2\ne0,
+\qquad
+v_{n-1}\ne0.
+\]
+By reversal symmetry it is enough to prove \(v_2\ne0\).  Suppose \(v_2=0\).
+
+If \(n=3\), then \(v_1\ne0\), because otherwise the positive definiteness of \(R_2=[d_+]\) would force \(v_3=0\).  Row \(3\) of \(Mv=0\) gives
+\[
+d_+v_3+av_1=0,
+\]
+so
+\[
+v_3=-\frac{a}{d_+}v_1.
+\]
+Row \(2\) then gives
+\[
+-\overline c\,v_1-cv_3=0,
+\]
+hence
+\[
+\overline c=\frac{a}{d_+}c.
+\]
+This is impossible because \(a/d_+>0\), whereas
+\[
+\Im\overline c=(1-a)y>0,
+\qquad
+\Im c=-(1-a)y<0.
+\]
+
+Now assume \(n\ge4\).  If \(v_1=0\), then
+\[
+R_2(v_3,\dots,v_n)^T=0,
+\]
+contradicting \(R_2\succ0\).  Hence \(v_1\ne0\).  Let
+\[
+G_2:=R_2^{-1},
+\qquad
+g:=\langle e_1,G_2e_1\rangle>0,
+\qquad
+h:=\langle e_2,G_2e_1\rangle,
+\]
+where \(e_1,e_2\) are the first two standard basis vectors in \(\C^{n-2}\).  From the equations on the coordinates \(3,\dots,n\), we get
+\[
+(v_3,\dots,v_n)^T=-av_1G_2e_1.
+\]
+Thus
+\[
+v_3=-agv_1,
+\qquad
+v_4=-ahv_1.
+\]
+Row \(1\) gives
+\[
+d_-v_1+av_3=0,
+\]
+so
+\[
+d_-=a^2g.
+\]
+Row \(2\) gives
+\[
+-\overline c\,v_1-cv_3+av_4=0,
+\]
+and therefore
+\[
+-\overline c+agc-a^2h=0.
+\]
+Equivalently,
+\[
+-c+a\frac{h}{g}
+=
+-\frac{1}{ag}\,\overline c.
+\]
+The right-hand side has negative imaginary part.
+
+On the other hand, write
+\[
+S_2^{\rm R}
+=
+\begin{bmatrix}
+\alpha_2^{\rm R} & \beta_2^{\rm R}\\
+\overline{\beta_2^{\rm R}} & \delta_2^{\rm R}
+\end{bmatrix}.
+\]
+The upper-left \(2\times2\) block of \(R_2^{-1}\) is \((S_2^{\rm R})^{-1}\), and hence
+\[
+\frac{h}{g}
+=
+-\frac{\overline{\beta_2^{\rm R}}}{\delta_2^{\rm R}}.
+\]
+Therefore
+\[
+-c+a\frac{h}{g}
+=
+-c-a\frac{\overline{\beta_2^{\rm R}}}{\delta_2^{\rm R}}.
+\]
+By Lemma \ref{lem:schur-half-plane},
+\[
+\Im\beta_2^{\rm R}>0,
+\]
+so the last expression has positive imaginary part.  This contradiction proves \(v_2\ne0\), and by reversal \(v_{n-1}\ne0\).
+
+It remains to rule out zeros at indices \(3,\dots,n-2\).  Suppose that
+\[
+v_j=0
+\]
+for some \(3\le j\le n-2\).  Set
+\[
+G_j^{\rm L}:=L_j^{-1},
+\qquad
+G_j^{\rm R}:=R_j^{-1}.
+\]
+Let
+\[
+g_j^{\rm L}
+:=
+\langle e_{j-1},G_j^{\rm L}e_{j-1}\rangle>0,
+\qquad
+h_j^{\rm L}
+:=
+\langle e_{j-2},G_j^{\rm L}e_{j-1}\rangle,
+\]
+where \(e_{j-2},e_{j-1}\) denote the last two basis vectors in \(\C^{j-1}\), and let
+\[
+g_j^{\rm R}
+:=
+\langle e_1,G_j^{\rm R}e_1\rangle>0,
+\qquad
+h_j^{\rm R}
+:=
+\langle e_2,G_j^{\rm R}e_1\rangle,
+\]
+where \(e_1,e_2\) denote the first two basis vectors in \(\C^{n-j}\).
+
+Splitting \(v\) at the zero coordinate \(j\), the left and right equations give
+\[
+v_{j-1}=-ag_j^{\rm L}v_{j+1},
+\qquad
+v_{j+1}=-ag_j^{\rm R}v_{j-1}.
+\]
+Thus
+\[
+v_{j-1}\ne0,
+\qquad
+v_{j+1}\ne0,
+\qquad
+a^2g_j^{\rm L}g_j^{\rm R}=1.
+\]
+Moreover,
+\[
+v_{j-2}
+=
+\frac{h_j^{\rm L}}{g_j^{\rm L}}v_{j-1},
+\qquad
+v_{j+2}
+=
+\frac{h_j^{\rm R}}{g_j^{\rm R}}v_{j+1}.
+\]
+Row \(j\) of \(Mv=0\) is
+\[
+av_{j-2}-\overline c\,v_{j-1}-cv_{j+1}+av_{j+2}=0.
+\]
+Hence
+\[
+m_j^{\rm L}v_{j-1}+m_j^{\rm R}v_{j+1}=0,
+\]
+where
+\[
+m_j^{\rm L}
+:=
+a\frac{h_j^{\rm L}}{g_j^{\rm L}}-\overline c,
+\qquad
+m_j^{\rm R}
+:=
+-c+a\frac{h_j^{\rm R}}{g_j^{\rm R}}.
+\]
+Using \(v_{j-1}=-ag_j^{\rm L}v_{j+1}\), we obtain
+\[
+m_j^{\rm R}=ag_j^{\rm L}m_j^{\rm L}.
+\]
+Thus \(m_j^{\rm R}\) is a positive real multiple of \(m_j^{\rm L}\).
+
+We now compute their imaginary parts.  Write
+\[
+S_j^{\rm L}
+=
+\begin{bmatrix}
+\alpha_j^{\rm L} & \beta_j^{\rm L}\\
+\overline{\beta_j^{\rm L}} & \delta_j^{\rm L}
+\end{bmatrix},
+\qquad
+S_j^{\rm R}
+=
+\begin{bmatrix}
+\alpha_j^{\rm R} & \beta_j^{\rm R}\\
+\overline{\beta_j^{\rm R}} & \delta_j^{\rm R}
+\end{bmatrix}.
+\]
+The corresponding inverse-block formulas give
+\[
+\frac{h_j^{\rm L}}{g_j^{\rm L}}
+=
+-\frac{\beta_j^{\rm L}}{\alpha_j^{\rm L}},
+\qquad
+\frac{h_j^{\rm R}}{g_j^{\rm R}}
+=
+-\frac{\overline{\beta_j^{\rm R}}}{\delta_j^{\rm R}}.
+\]
+Therefore
+\[
+m_j^{\rm L}
+=
+-\overline c-a\frac{\beta_j^{\rm L}}{\alpha_j^{\rm L}},
+\qquad
+m_j^{\rm R}
+=
+-c-a\frac{\overline{\beta_j^{\rm R}}}{\delta_j^{\rm R}}.
+\]
+By Lemma \ref{lem:schur-half-plane},
+\[
+\Im m_j^{\rm L}<0<\Im m_j^{\rm R}.
+\]
+This is incompatible with
+\[
+m_j^{\rm R}=ag_j^{\rm L}m_j^{\rm L},
+\qquad
+ag_j^{\rm L}>0.
+\]
+Hence no such \(j\) exists.
+\end{proof}
+
+\begin{lemma}[No boundary zero]\label{lem:no-boundary-zero}
+Let
+\[
+v=(v_1,\dots,v_n)^T\in\ker M\setminus\{0\}.
+\]
+Then
+\[
+v_1\ne0,
+\qquad
+v_n\ne0.
+\]
+\end{lemma}
+
+\begin{proof}
+We prove \(v_1\ne0\); the proof of \(v_n\ne0\) is symmetric.
+
+Assume \(v_1=0\).  By Lemma \ref{lem:no-interior-zero}, \(v_2\ne0\).  Let
+\[
+R_1:=M[\{2,\dots,n\}].
+\]
+Then
+\[
+(v_2,\dots,v_n)^T\in\ker R_1.
+\]
+Taking the Schur complement of \(R_1\) onto its first two coordinates gives
+\[
+S_1^{\rm R}
+=
+\begin{bmatrix}
+\alpha & \beta\\
+\overline\beta & \delta
+\end{bmatrix},
+\qquad
+\Im\beta>0
+\]
+by Lemma \ref{lem:schur-half-plane}.  The vector \((v_2,v_3)^T\) belongs to \(\ker S_1^{\rm R}\).  Since \(S_1^{\rm R}\succeq0\) and \(\beta\ne0\), one has \(\alpha>0\).  From the first row,
+\[
+\alpha v_2+\beta v_3=0,
+\]
+so
+\[
+\frac{v_3}{v_2}=-\frac{\alpha}{\beta}.
+\]
+Because \(\alpha>0\) and \(\Im\beta>0\), this ratio has positive imaginary part.
+
+On the other hand, row \(1\) of \(Mv=0\) gives
+\[
+-cv_2+av_3=0,
+\]
+so
+\[
+\frac{v_3}{v_2}=\frac{c}{a}.
+\]
+But
+\[
+\Im\frac{c}{a}
+=
+-\frac{(1-a)y}{a}<0,
+\]
+a contradiction.  Thus \(v_1\ne0\).
+
+If \(v_n=0\), then \((v_1,\dots,v_{n-1})^T\in\ker M[\{1,\dots,n-1\}]\).  Taking the Schur complement onto the last two coordinates gives
+\[
+S_n^{\rm L}
+=
+\begin{bmatrix}
+\alpha & \beta\\
+\overline\beta & \delta
+\end{bmatrix},
+\qquad
+\Im\beta>0.
+\]
+The vector \((v_{n-2},v_{n-1})^T\) belongs to \(\ker S_n^{\rm L}\).  Since \(v_{n-1}\ne0\) by Lemma \ref{lem:no-interior-zero}, the second row gives
+\[
+\frac{v_{n-2}}{v_{n-1}}
+=
+-\frac{\delta}{\overline\beta},
+\]
+which has negative imaginary part.  Row \(n\) of \(Mv=0\), however, gives
+\[
+av_{n-2}-\overline c\,v_{n-1}=0,
+\]
+so
+\[
+\frac{v_{n-2}}{v_{n-1}}
+=
+\frac{\overline c}{a},
+\]
+whose imaginary part is \((1-a)y/a>0\).  This contradiction proves \(v_n\ne0\).
+\end{proof}
+
+\begin{corollary}[Simplicity of the lowest branch]\label{cor:lowest-simple}
+For \(n\ge3\), \(x\in\R\), and \(y>0\), the eigenvalue
+\[
+\lambda_1(x,y)=\lambda_{\min}(\mathcal H_x(y))
+\]
+is simple.
+\end{corollary}
+
+\begin{proof}
+If the eigenspace had dimension at least \(2\), then there would be a nonzero ground-state vector \(v\in\ker M\) with \(v_2=0\).  This contradicts Lemma \ref{lem:no-interior-zero}.
+\end{proof}
+
+\begin{lemma}[Canonical singular-vector gauge]\label{lem:canonical-gauge}
+Assume \(n\ge3\), \(y>0\), and that one variable is restricted to an interval on which \(\lambda_1(x,y)\) is simple.  Then one can choose real-analytic unit singular vectors \(u,v\in\C^n\) such that
+\[
+B_{x,y}v=s(x,y)u,
+\qquad
+B_{x,y}^*u=s(x,y)v,
+\qquad
+u=J\overline v.
+\]
+Consequently, with \(v_0=v_{n+1}=0\),
+\begin{equation}\label{eq:canonical-coordinate}
+(x+\ii y)v_j-av_{j-1}-v_{j+1}
+=
+s(x,y)\overline{v_{n+1-j}},
+\qquad
+j=1,\dots,n.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Since the lowest eigenvalue of \(\mathcal H_x(y)\) is simple on the interval, analytic perturbation theory gives a real-analytic unit eigenvector \(v\) for \(\lambda_1(x,y)\).  Define
+\[
+u:=s(x,y)^{-1}B_{x,y}v.
+\]
+Then
+\[
+B_{x,y}v=s(x,y)u,
+\qquad
+B_{x,y}^*u=s(x,y)v.
+\]
+
+The identity \(JAJ=A^{\mathsf T}\) implies
+\[
+B_{x,y}J=JB_{x,y}^{\mathsf T},
+\qquad
+B_{x,y}^*J=J\overline{B_{x,y}}.
+\]
+Therefore, if \((u,v)\) is a singular pair, then
+\[
+(J\overline v,J\overline u)
+\]
+is also a singular pair for the same singular value, with the first vector left and the second vector right.  Since the singular value is simple, there is a unimodular scalar \(\alpha\) such that
+\[
+J\overline v=\alpha u.
+\]
+Multiplying both \(u\) and \(v\) by a unimodular square root of \(\alpha\), we obtain the gauge
+\[
+u=J\overline v.
+\]
+The coordinate equation \eqref{eq:canonical-coordinate} is just the \(j\)-th component of \(B_{x,y}v=s(x,y)J\overline v\).
+\end{proof}
+
+\begin{lemma}[Current identity]\label{lem:current-identity}
+Assume \(n\ge3\), \(y>0\), and let \(v\) be in the canonical gauge of Lemma \ref{lem:canonical-gauge}.  Define
+\[
+\mathcal J_j:=\Im(\overline{v_j}v_{j+1}),
+\qquad
+j=1,\dots,n-1,
+\]
+and set
+\[
+\mathcal J_0=\mathcal J_n=0.
+\]
+Then
+\begin{equation}\label{eq:current-identity}
+\mathcal J_j-a\mathcal J_{j-1}
+=
+y|v_j|^2+s(x,y)\Im(v_jv_{n+1-j}),
+\qquad
+j=1,\dots,n,
+\end{equation}
+and
+\begin{equation}\label{eq:lambda-y-current}
+\partial_y\lambda_1(x,y)
+=
+2y-2(1-a)\sum_{j=1}^{n-1}\mathcal J_j.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Multiply \eqref{eq:canonical-coordinate} by \(\overline{v_j}\) and take imaginary parts.  Since
+\[
+\Im(\overline{v_j}v_{j-1})=-\mathcal J_{j-1},
+\qquad
+\Im(\overline{v_j}v_{j+1})=\mathcal J_j,
+\]
+we obtain \eqref{eq:current-identity}.
+
+For the derivative, the singular-value perturbation formula gives
+\[
+\partial_y s(x,y)
+=
+\Re(u^*\ii v)
+=
+-\Im(u^*v).
+\]
+Since \(u=J\overline v\),
+\[
+u^*v
+=
+v^{\mathsf T}Jv
+=
+\sum_{j=1}^n v_jv_{n+1-j}.
+\]
+Summing \eqref{eq:current-identity} over \(j=1,\dots,n\) gives
+\[
+(1-a)\sum_{j=1}^{n-1}\mathcal J_j
+=
+y+s(x,y)\Im(u^*v).
+\]
+Thus
+\[
+s(x,y)\partial_y s(x,y)
+=
+y-(1-a)\sum_{j=1}^{n-1}\mathcal J_j.
+\]
+Since
+\[
+\lambda_1(x,y)=s(x,y)^2,
+\]
+we get \eqref{eq:lambda-y-current}.
+\end{proof}
+
+\begin{lemma}[A real Wronskian invariant]\label{lem:real-wronskian}
+Assume \(n\ge3\), \(y>0\), and let \(v\) be in canonical gauge.  Define
+\[
+W_j:=v_{j+1}v_{n+1-j}-av_jv_{n-j},
+\qquad
+j=0,\dots,n,
+\]
+with \(v_0=v_{n+1}=0\).  Then
+\[
+W_0=0,
+\qquad
+W_j-W_{j-1}
+=
+s(x,y)\bigl(|v_j|^2-|v_{n+1-j}|^2\bigr)\in\R.
+\]
+Consequently,
+\[
+W_j\in\R,
+\qquad
+j=0,\dots,n.
+\]
+\end{lemma}
+
+\begin{proof}
+Using \eqref{eq:canonical-coordinate} at the indices \(j\) and \(n+1-j\), we have
+\[
+v_{j+1}+av_{j-1}
+=
+(x+\ii y)v_j-s(x,y)\overline{v_{n+1-j}},
+\]
+and
+\[
+v_{n+2-j}+av_{n-j}
+=
+(x+\ii y)v_{n+1-j}-s(x,y)\overline{v_j}.
+\]
+Therefore
+\[
+W_j-W_{j-1}
+=
+v_{n+1-j}(v_{j+1}+av_{j-1})
+-
+v_j(v_{n+2-j}+av_{n-j})
+=
+s(x,y)\bigl(|v_j|^2-|v_{n+1-j}|^2\bigr).
+\]
+Since \(W_0=0\), all \(W_j\) are real.
+\end{proof}
+
+\begin{lemma}[Imaginary-axis seed]\label{lem:imaginary-axis-seed}
+Let \(n\ge3\) and \(y>0\).  At \(x=0\), the canonical ground-state vector \(v\) may be written in the form
+\[
+v_j=\beta\,\ii^{\,j-1}w_j,
+\qquad
+w_j>0,
+\qquad
+j=1,\dots,n,
+\]
+for some unimodular \(\beta\).  Moreover,
+\[
+\Im\left(\frac{v_{j+1}}{v_j}\right)>0,
+\qquad
+j=1,\dots,n-1,
+\]
+and
+\[
+\Im\left(\frac{\overline{v_{n+1-j}}}{v_j}\right)>0,
+\qquad
+j=1,\dots,n.
+\]
+\end{lemma}
+
+\begin{proof}
+Let
+\[
+U:=\diag(1,\ii,\ii^2,\dots,\ii^{\,n-1}).
+\]
+A direct computation shows that
+\[
+U^*\mathcal H_0(y)U
+\]
+is a real symmetric irreducible \(Z\)-matrix: its first off-diagonal entries are
+\[
+-(1-a)y<0,
+\]
+and its second off-diagonal entries are
+\[
+-a<0.
+\]
+Choosing \(\Lambda\) larger than the largest diagonal entry, the matrix
+\[
+\Lambda I_n-U^*\mathcal H_0(y)U
+\]
+is entrywise nonnegative and irreducible.  By Perron--Frobenius, the lowest eigenvalue of \(U^*\mathcal H_0(y)U\) is simple and has a strictly positive eigenvector
+\[
+w=(w_1,\dots,w_n)^T,
+\qquad
+w_j>0.
+\]
+Thus a ground-state vector of \(\mathcal H_0(y)\) has the form
+\[
+v_j=\beta\,\ii^{\,j-1}w_j.
+\]
+
+It remains to use the canonical gauge.  Insert this form into
+\[
+\ii yv_j-av_{j-1}-v_{j+1}
+=
+s(0,y)\overline{v_{n+1-j}}.
+\]
+After division by \(\beta\ii^j\), one obtains
+\[
+w_{j+1}-yw_j-aw_{j-1}
+=
+-\gamma s(0,y)w_{n+1-j},
+\qquad
+\gamma:=\frac{\overline\beta}{\beta}(-\ii)^n.
+\]
+For \(j=n\), this gives
+\[
+yw_n+aw_{n-1}
+=
+\gamma s(0,y)w_1.
+\]
+The left-hand side is strictly positive, so
+\[
+\gamma=1.
+\]
+Consequently,
+\[
+\frac{v_{j+1}}{v_j}
+=
+\ii\,\frac{w_{j+1}}{w_j},
+\]
+and hence
+\[
+\Im\left(\frac{v_{j+1}}{v_j}\right)>0.
+\]
+Also,
+\[
+\frac{\overline{v_{n+1-j}}}{v_j}
+=
+\ii\,\frac{w_{n+1-j}}{w_j},
+\]
+so
+\[
+\Im\left(\frac{\overline{v_{n+1-j}}}{v_j}\right)>0.
+\]
+\end{proof}
+
+\begin{lemma}[Angular identity]\label{lem:angular-identity}
+Assume \(n\ge3\), \(y>0\), and let \(v\) be in canonical gauge.  Since all entries of \(v\) are nonzero by Lemmas \ref{lem:no-interior-zero} and \ref{lem:no-boundary-zero}, define
+\[
+r_j:=\frac{v_{j+1}}{v_j},
+\qquad
+j=1,\dots,n-1,
+\]
+and set
+\[
+r_0:=\infty,
+\qquad
+r_n:=0.
+\]
+For \(j=1,\dots,n-1\), put
+\[
+p_j:=\frac{\overline{v_{n+1-j}}}{v_j},
+\qquad
+\alpha_j:=(x+\ii y)-\frac{a}{r_{j-1}},
+\qquad
+\beta_j:=(x-\ii y)-\overline{r_{n+1-j}}.
+\]
+Then
+\[
+\Im(\alpha_j\overline{p_j})
+=
+-\Im(\beta_jp_j).
+\]
+\end{lemma}
+
+\begin{proof}
+From \eqref{eq:canonical-coordinate},
+\[
+\alpha_jv_j
+=
+v_{j+1}+s(x,y)\overline{v_{n+1-j}}.
+\]
+Multiplying by \(v_{n+1-j}/|v_j|^2\) gives
+\[
+\alpha_j\overline{p_j}
+=
+\frac{v_{j+1}v_{n+1-j}+s(x,y)|v_{n+1-j}|^2}{|v_j|^2},
+\]
+and hence
+\[
+\Im(\alpha_j\overline{p_j})
+=
+\frac{\Im(v_{j+1}v_{n+1-j})}{|v_j|^2}.
+\]
+
+Now conjugate \eqref{eq:canonical-coordinate} at the index \(n+1-j\).  This gives
+\[
+(x-\ii y)\overline{v_{n+1-j}}
+-a\overline{v_{n-j}}
+-\overline{v_{n+2-j}}
+=
+s(x,y)v_j.
+\]
+Dividing by \(v_j\) yields
+\[
+\beta_jp_j
+=
+s(x,y)+a\frac{\overline{v_{n-j}}}{v_j}.
+\]
+Thus
+\[
+\Im(\beta_jp_j)
+=
+-\frac{a\Im(v_jv_{n-j})}{|v_j|^2}.
+\]
+By Lemma \ref{lem:real-wronskian},
+\[
+\Im(v_{j+1}v_{n+1-j})
+=
+a\Im(v_jv_{n-j}),
+\]
+and the claim follows.
+\end{proof}
+
+\begin{lemma}[Phase continuation]\label{lem:phase-continuation}
+Fix \(y>0\).  On any open interval in \(x\) on which the canonical vector \(v(x)\) is real analytic and has no zero components, if at one point \(x_0\) one has
+\[
+\Im\left(\frac{v_{j+1}(x_0)}{v_j(x_0)}\right)>0,
+\qquad
+j=1,\dots,n-1,
+\]
+and
+\[
+\Im\left(\frac{\overline{v_{n+1-j}(x_0)}}{v_j(x_0)}\right)>0,
+\qquad
+j=1,\dots,n,
+\]
+then the same inequalities hold throughout the interval.  Consequently,
+\[
+\partial_y\lambda_1(x,y)\ge0
+\]
+throughout the interval.
+\end{lemma}
+
+\begin{proof}
+Write
+\[
+v_j(x)=t_j(x)e^{\ii\phi_j(x)},
+\qquad
+t_j(x)>0,
+\]
+with continuous arguments \(\phi_j\), and set
+\[
+\delta_j(x):=\phi_{j+1}(x)-\phi_j(x),
+\qquad
+j=1,\dots,n-1.
+\]
+Then
+\[
+\Im\left(\frac{v_{j+1}}{v_j}\right)>0
+\]
+is equivalent to
+\[
+\delta_j\in(0,\pi)
+\]
+modulo \(2\pi\), after choosing continuous representatives.
+
+Write
+\[
+c=(1+a)x-\ii(1-a)y=|c|e^{-\ii\vartheta},
+\qquad
+0<\vartheta<\pi.
+\]
+For fixed amplitudes \(t_1,\dots,t_n\), the phase-dependent part of the Rayleigh quotient \(\langle v,\mathcal H_x(y)v\rangle\) is
+\[
+\mathcal P
+=
+-2|c|\sum_{j=1}^{n-1}t_jt_{j+1}\cos(\delta_j-\vartheta)
++
+2a\sum_{j=1}^{n-2}t_jt_{j+2}\cos(\delta_j+\delta_{j+1}).
+\]
+Because \(v\) is a ground-state vector, its phase vector minimizes \(\mathcal P\) for the fixed amplitudes.
+
+Let \(E_0\) be the subset of the interval on which
+\[
+\delta_j\in(0,\pi)
+\qquad
+(j=1,\dots,n-1).
+\]
+By assumption, \(E_0\) is nonempty.  It is open by continuity.  We prove it is closed.  Let \(x_*\in\overline E_0\).  Then
+\[
+\delta_j(x_*)\in[0,\pi].
+\]
+Suppose \(\delta_k(x_*)=0\) or \(\delta_k(x_*)=\pi\).  Vary the tail phases by
+\[
+\phi_m\mapsto\phi_m+\varepsilon,
+\qquad
+m\ge k+1.
+\]
+This changes only \(\delta_k\), replacing it by \(\delta_k+\varepsilon\).  The derivative of \(\mathcal P\) at \(\varepsilon=0\) is
+\[
+2|c|t_kt_{k+1}\sin(\delta_k-\vartheta)
+-2a\mathbf 1_{\{k\ge2\}}t_{k-1}t_{k+1}\sin(\delta_{k-1}+\delta_k)
+-2a\mathbf 1_{\{k\le n-2\}}t_kt_{k+2}\sin(\delta_k+\delta_{k+1}).
+\]
+If \(\delta_k=0\), this derivative is strictly negative.  If \(\delta_k=\pi\), it is strictly positive.  Either case contradicts minimality of the phase vector.  Hence no \(\delta_k\) can hit \(0\) or \(\pi\), so \(E_0\) is closed.  Since the interval is connected, \(E_0\) is the whole interval.  Therefore
+\[
+\Im\left(\frac{v_{j+1}}{v_j}\right)>0,
+\qquad
+j=1,\dots,n-1.
+\]
+
+Next set
+\[
+p_j:=\frac{\overline{v_{n+1-j}}}{v_j}.
+\]
+We show that
+\[
+\Im p_j>0,
+\qquad
+j=1,\dots,n.
+\]
+Suppose, for some \(1\le j\le n-1\), that \(p_j\) is real at a point \(x_*\).  Since all entries of \(v\) are nonzero, \(p_j(x_*)\ne0\).  By the first part of the proof,
+\[
+\Im\left((x+\ii y)-\frac{a}{r_{j-1}}\right)>0.
+\]
+Using Lemma \ref{lem:angular-identity}, and using that \(p_j(x_*)\) is real, we get
+\[
+\Im\left((x-\ii y)-\overline{r_{n+1-j}}\right)<0.
+\]
+The conjugated singular-vector equation gives
+\[
+\overline{r_{n-j}}
+=
+\frac{a}
+{(x-\ii y)-\overline{r_{n+1-j}}-s(x,y)/p_j}.
+\]
+The denominator has negative imaginary part, because \(s(x,y)/p_j\in\R\).  Therefore
+\[
+\Im\overline{r_{n-j}}>0,
+\]
+or equivalently
+\[
+\Im r_{n-j}<0,
+\]
+contradicting the already proved inequality
+\[
+\Im r_{n-j}>0.
+\]
+Thus
+\[
+\Im p_j>0,
+\qquad
+j=1,\dots,n-1.
+\]
+Finally,
+\[
+p_n=\frac{1}{\overline{p_1}},
+\]
+so \(\Im p_n>0\) as well.
+
+Since
+\[
+p_j
+=
+\frac{\overline{v_{n+1-j}}}{v_j}
+=
+\frac{\overline{v_jv_{n+1-j}}}{|v_j|^2},
+\]
+the inequality \(\Im p_j>0\) implies
+\[
+\Im(v_jv_{n+1-j})<0.
+\]
+The current identity \eqref{eq:current-identity} therefore gives
+\[
+\mathcal J_j-a\mathcal J_{j-1}
+\le
+y|v_j|^2,
+\qquad
+j=1,\dots,n.
+\]
+By induction,
+\[
+\mathcal J_j
+\le
+y\sum_{k=1}^j a^{j-k}|v_k|^2,
+\qquad
+j=1,\dots,n-1.
+\]
+Summing over \(j\) gives
+\[
+(1-a)\sum_{j=1}^{n-1}\mathcal J_j
+\le
+y\sum_{k=1}^{n-1}(1-a^{n-k})|v_k|^2
+\le
+y.
+\]
+Using \eqref{eq:lambda-y-current}, we obtain
+\[
+\partial_y\lambda_1(x,y)
+=
+2y-2(1-a)\sum_{j=1}^{n-1}\mathcal J_j
+\ge0.
+\]
+\end{proof}
+
+\begin{proof}[Proof of Theorem \ref{thm:vertical}]
+For \(n=2\), the result follows from Lemma \ref{lem:vertical-n2}.  Assume \(n\ge3\).
+
+Fix \(y_*>0\).  By Corollary \ref{cor:lowest-simple}, the lowest eigenvalue
+\[
+\lambda_1(x,y_*)
+\]
+is simple for every \(x\in\R\).  Hence Lemma \ref{lem:canonical-gauge} gives a real-analytic canonical ground-state vector \(v(x)\) on \(\R\).  Lemmas \ref{lem:no-interior-zero} and \ref{lem:no-boundary-zero} show that no component of \(v(x)\) vanishes.
+
+At \(x=0\), Lemma \ref{lem:imaginary-axis-seed} gives
+\[
+\Im\left(\frac{v_{j+1}(0)}{v_j(0)}\right)>0,
+\qquad
+j=1,\dots,n-1,
+\]
+and
+\[
+\Im\left(\frac{\overline{v_{n+1-j}(0)}}{v_j(0)}\right)>0,
+\qquad
+j=1,\dots,n.
+\]
+Applying Lemma \ref{lem:phase-continuation} on the interval \(\R\), we obtain
+\[
+\partial_y\lambda_1(x,y_*)\ge0,
+\qquad
+x\in\R.
+\]
+Since \(y_* >0\) was arbitrary,
+\[
+\partial_y\lambda_1(x,y)\ge0,
+\qquad
+x\in\R,\ y>0.
+\]
+
+Because \(A_n(a)\) is real,
+\[
+s_{\min}((x-\ii y)I_n-A_n(a))
+=
+s_{\min}((x+\ii y)I_n-A_n(a)),
+\]
+so \(\lambda_1(x,y)\) is even in \(y\).  Hence \(y\mapsto\lambda_1(x,y)\) is nondecreasing on \([0,\infty)\).  Since
+\[
+s_{\min}((x+\ii y)I_n-A_n(a))=\sqrt{\lambda_1(x,y)},
+\]
+the same is true for the least singular value.  This proves
+\[
+s_{\min}((x+\ii y)I_n-A_n(a))
+\ge
+s_{\min}(xI_n-A_n(a)).
+\]
+\end{proof}
+
+\begin{proposition}[Reduction to the real trace]\label{prop:planar-reduction}
+For every \(0<a<1\), \(n\ge2\), and \(\eps>0\),
+\[
+\sigma_\eps(A_n(a))\ \text{is connected}
+\quad\Longleftrightarrow\quad
+E_{n,\eps}(a)\ \text{is connected}.
+\]
+Consequently,
+\[
+\sigma_\eps(A_n(a))\ \text{is connected}
+\quad\Longleftrightarrow\quad
+\eps>\tau_n(a).
+\]
+Moreover, every connected component of \(\sigma_\eps(A_n(a))\) is contractible.  In particular, if \(\sigma_\eps(A_n(a))\) is connected, then it is simply connected.
+\end{proposition}
+
+\begin{proof}
+Let
+\[
+\Sigma:=\sigma_\eps(A_n(a)).
+\]
+For fixed \(x\in\R\), define the vertical section
+\[
+\Omega_x:=\{y\in\R:x+\ii y\in\Sigma\}.
+\]
+By Theorem \ref{thm:vertical} and the symmetry \(s(x,-y)=s(x,y)\), the set \(\Omega_x\) is either empty or an open interval symmetric about \(0\).  It is nonempty if and only if
+\[
+s_{\min}(xI_n-A_n(a))<\eps,
+\]
+that is, if and only if \(x\in E_{n,\eps}(a)\).  Hence the vertical projection
+\[
+\pi:\Sigma\to\R,
+\qquad
+\pi(x+\ii y)=x,
+\]
+satisfies
+\[
+\pi(\Sigma)=E_{n,\eps}(a).
+\]
+
+If \(\Sigma\) is connected, then \(E_{n,\eps}(a)\) is connected as the continuous image of a connected set.
+
+Conversely, suppose \(E_{n,\eps}(a)\) is connected.  Let
+\[
+z_0=x_0+\ii y_0,
+\qquad
+z_1=x_1+\ii y_1
+\]
+be two points of \(\Sigma\).  By vertical monotonicity, the vertical segments from \(z_0\) to \(x_0\), and from \(x_1\) to \(z_1\), lie in \(\Sigma\).  Since \(E_{n,\eps}(a)\) is an interval, the horizontal segment from \(x_0\) to \(x_1\) lies in
+\[
+E_{n,\eps}(a)\subset\Sigma.
+\]
+Concatenating these three segments gives a path in \(\Sigma\) from \(z_0\) to \(z_1\).  Thus \(\Sigma\) is path-connected, hence connected.
+
+The equivalence with
+\[
+\eps>\tau_n(a)
+\]
+now follows from Proposition \ref{prop:real-axis-connectedness}.
+
+It remains to prove the contractibility of components.  Let \(\Omega\) be a connected component of \(\Sigma\).  If \(x+\ii y\in\Omega\), then the vertical segment from \(x+\ii y\) to \(x\) lies in \(\Sigma\), hence lies in the same connected component \(\Omega\).  Thus every component meets the real axis.  Moreover, if \(x\in\Omega\cap\R\), then the whole vertical section
+\[
+\{x+\ii y:x+\ii y\in\Sigma\}
+\]
+lies in \(\Omega\), again by vertical monotonicity.  Therefore
+\[
+\Omega
+=
+\{x+\ii y:\ x\in I_\Omega,\ |y|<h_\Omega(x)\},
+\]
+where
+\[
+I_\Omega:=\Omega\cap\R
+\]
+is a connected component of \(E_{n,\eps}(a)\), hence an open interval, and \(h_\Omega(x)>0\) is the vertical half-height of the section.
+
+The homotopy
+\[
+\Phi_t(x+\ii y):=x+\ii(1-t)y,
+\qquad
+0\le t\le1,
+\]
+stays inside \(\Omega\).  Hence \(\Omega\) deformation retracts onto the interval \(I_\Omega\).  Therefore \(\Omega\) is contractible.
+\end{proof}
+
+\section{The finite monotonicity conjecture and threshold consequences}
+
+\begin{conjecture}[Real-axis barrier monotonicity]\label{conj:barrier}
+For every \(0<a<1\) and every \(n\ge2\),
+\[
+\tau_{n+1}(a)\le\tau_n(a).
+\]
+\end{conjecture}
+
+\begin{remark}
+Conjecture \ref{conj:barrier} is the remaining finite comparison principle needed to turn the exact connectedness criterion into a first-hit equals eventual-hit theorem.  It is not a consequence of ordinary Hermitian eigenvalue interlacing, because \(A_n(a)\) is only nonunitarily similar to a Hermitian matrix and the Euclidean singular values are not preserved by this similarity.
+\end{remark}
+
+For fixed \(a\in(0,1)\) and \(\eps>0\), define
+\[
+N_f(a,\eps)
+:=
+\min\{n\ge2:\sigma_\eps(A_n(a))\ \text{is connected}\},
+\]
+and
+\[
+N_e(a,\eps)
+:=
+\min\{N\ge2:\sigma_\eps(A_n(a))\ \text{is connected for every }n\ge N\}.
+\]
+
+\begin{theorem}[Threshold identity under barrier monotonicity]\label{thm:conditional-threshold}
+Assume Conjecture \ref{conj:barrier}.  Then
+\[
+N_f(a,\eps)=N_e(a,\eps).
+\]
+Writing the common value as
+\[
+N_c(a,\eps):=N_f(a,\eps)=N_e(a,\eps),
+\]
+one has
+\[
+N_c(a,\eps)
+=
+\min\{n\ge2:\eps>\tau_n(a)\}.
+\]
+\end{theorem}
+
+\begin{proof}
+By Proposition \ref{prop:planar-reduction},
+\[
+\sigma_\eps(A_n(a))\ \text{is connected}
+\quad\Longleftrightarrow\quad
+\eps>\tau_n(a).
+\]
+By Conjecture \ref{conj:barrier}, the sequence \(\tau_n(a)\) is nonincreasing.  The upper bound in Theorem \ref{thm:tau-bounds} below implies
+\[
+\tau_n(a)\le(n+1)a^{n/2}\to0.
+\]
+Hence the set
+\[
+\{n\ge2:\eps>\tau_n(a)\}
+\]
+is a nonempty tail set.  Its first element is both the first connectedness index and the eventual connectedness index.
+\end{proof}
+
+\section{Explicit Green kernel}
+
+The quantitative estimates use the inverse of
+\[
+B_n(x)=xI_n-A_n(a)
+\]
+for \(x\) away from the spectrum.  Write
+\[
+q:=\sqrt a.
+\]
+For
+\[
+x=2q\cos\theta,
+\qquad
+\sin((n+1)\theta)\ne0,
+\]
+the matrix \(B_n(x)\) is invertible.
+
+\begin{lemma}[Green kernel]\label{lem:green}
+Let \(N:=n+1\), \(q:=\sqrt a\), and \(x=2q\cos\theta\), with \(\sin\theta\ne0\) and \(\sin(N\theta)\ne0\).  Then
+\[
+(B_n(x)^{-1})_{ij}
+=
+\frac{
+q^{i-j-1}\sin(i\theta)\sin((N-j)\theta)
+}{
+\sin\theta\,\sin(N\theta)
+},
+\qquad i\le j,
+\]
+and
+\[
+(B_n(x)^{-1})_{ij}
+=
+\frac{
+q^{i-j-1}\sin(j\theta)\sin((N-i)\theta)
+}{
+\sin\theta\,\sin(N\theta)
+},
+\qquad i>j.
+\]
+Only absolute values will be used; the harmless global sign depends on the convention for the inverse of the Dirichlet Jacobi matrix.
+\end{lemma}
+
+\begin{proof}
+Let
+\[
+\Delta_n=\diag(1,q,q^2,\dots,q^{n-1}).
+\]
+Then
+\[
+\Delta_n^{-1}A_n(a)\Delta_n=qT_n,
+\]
+where
+\[
+T_n=\tridiag(1,0,1)
+\]
+is the symmetric Dirichlet Jacobi matrix.  Hence
+\[
+B_n(x)
+=
+\Delta_n(xI_n-qT_n)\Delta_n^{-1}.
+\]
+Thus
+\[
+B_n(x)^{-1}
+=
+\Delta_n(xI_n-qT_n)^{-1}\Delta_n^{-1}.
+\]
+For \(x=2q\cos\theta\),
+\[
+xI_n-qT_n
+=
+q(2\cos\theta\,I_n-T_n).
+\]
+The standard Dirichlet Green kernel for \(2\cos\theta\,I_n-T_n\) is
+\[
+\left(2\cos\theta\,I_n-T_n\right)^{-1}_{ij}
+=
+\frac{
+\sin(\min\{i,j\}\theta)\sin((N-\max\{i,j\})\theta)
+}{
+\sin\theta\,\sin(N\theta)
+},
+\]
+up to an overall sign.  Multiplying by \(q^{-1}\) and by the diagonal similarity factor \(q^{i-j}\) gives the displayed formulas.
+\end{proof}
+
+\section{Sharp two-sided bounds with \texorpdfstring{\(S_2\)}{S2}}
+
+Define
+\[
+S_2(a):=\sum_{m=1}^{\infty}m^2a^m.
+\]
+The closed form is
+\[
+S_2(a)=\frac{a(1+a)}{(1-a)^3}.
+\]
+Set
+\[
+c_2(a)
+:=
+\frac{\sqrt8\,a}{3\pi^2S_2(a)}
+=
+\frac{\sqrt8(1-a)^3}{3\pi^2(1+a)}.
+\]
+
+\begin{theorem}[Two-sided real-axis barrier bounds]\label{thm:tau-bounds}
+For every \(0<a<1\) and every \(n\ge2\),
+\[
+c_2(a)(n+1)a^{n/2}
+\le
+\tau_n(a)
+\le
+(n+1)a^{n/2}.
+\]
+\end{theorem}
+
+\begin{proof}
+We first prove the upper bound.  Let
+\[
+x=2\sqrt a\cos\theta,
+\qquad 0<\theta<\pi.
+\]
+Define
+\[
+q^{(n)}(\theta)
+=
+\left(
+\sin\theta,\,
+a^{1/2}\sin2\theta,\,
+a\sin3\theta,\,
+\dots,\,
+a^{(n-1)/2}\sin n\theta
+\right)^T.
+\]
+Using
+\[
+2\cos\theta\sin(j\theta)
+=
+\sin((j+1)\theta)+\sin((j-1)\theta),
+\]
+one obtains
+\[
+B_n(x)q^{(n)}(\theta)
+=
+a^{n/2}\sin((n+1)\theta)e_n.
+\]
+Therefore
+\[
+\mu_n(x;a)
+\le
+\frac{
+a^{n/2}|\sin((n+1)\theta)|
+}{
+\left(\sum_{j=1}^n a^{j-1}\sin^2(j\theta)\right)^{1/2}
+}.
+\]
+Since
+\[
+\left(\sum_{j=1}^n a^{j-1}\sin^2(j\theta)\right)^{1/2}
+\ge |\sin\theta|
+\]
+and
+\[
+|\sin((n+1)\theta)|\le(n+1)|\sin\theta|,
+\]
+we get
+\[
+\mu_n(x;a)\le(n+1)a^{n/2}
+\]
+for every \(x\in(-2\sqrt a,2\sqrt a)\).  All real spectral gaps lie in this interval, hence
+\[
+\tau_n(a)\le(n+1)a^{n/2}.
+\]
+
+We now prove the lower bound.  Let
+\[
+N:=n+1,
+\qquad
+\delta:=\frac{3\pi}{2N},
+\qquad
+\theta:=\pi-\delta.
+\]
+Then
+\[
+\frac{(n-1)\pi}{n+1}<\theta<\frac{n\pi}{n+1}.
+\]
+Consequently,
+\[
+x_*:=2\sqrt a\cos\theta
+\]
+lies in the leftmost real spectral gap.  Thus
+\[
+\tau_n(a)\ge \mu_n(x_*;a).
+\]
+Since \(x_*\notin\sigma(A_n(a))\),
+\[
+\mu_n(x_*;a)
+=
+\frac1{\|B_n(x_*)^{-1}\|_2}
+\ge
+\frac1{\|B_n(x_*)^{-1}\|_F}.
+\]
+
+We estimate the Frobenius norm using Lemma \ref{lem:green}.  For \(i\le j\), set
+\[
+p:=i,
+\qquad
+q_0:=N-j,
+\qquad
+m:=p+q_0.
+\]
+Then \(p,q_0\ge1\), \(m\le N\), and
+\[
+i-j-1=m-N-1.
+\]
+Moreover,
+\[
+|\sin(N\theta)|=1,
+\qquad
+\sin\theta=\sin\delta,
+\]
+and, since \(0<\delta\le\pi/2\),
+\[
+\sin\delta\ge \frac{2\delta}{\pi}.
+\]
+Also,
+\[
+|\sin(r\theta)|=|\sin(r\delta)|\le r\delta.
+\]
+Hence for \(i\le j\),
+\[
+|(B_n(x_*)^{-1})_{ij}|^2
+\le
+\frac{\pi^2}{4}\,
+p^2q_0^2\delta^2\,
+a^{m-N-1}.
+\]
+For \(i>j\), the same upper bound holds after enlarging the estimate, because the corresponding exponent is \(N-m-1\), and
+\[
+a^{N-m-1}\le a^{m-N-1}
+\qquad(0<a<1,\ m\le N).
+\]
+Therefore
+\[
+\|B_n(x_*)^{-1}\|_F^2
+\le
+\frac{\pi^2}{2}\delta^2a^{-N-1}
+\sum_{\substack{p,q_0\ge1\\p+q_0\le N}}
+p^2q_0^2a^{p+q_0}.
+\]
+Extending the sum to all \(p,q_0\ge1\) gives
+\[
+\|B_n(x_*)^{-1}\|_F^2
+\le
+\frac{\pi^2}{2}\delta^2a^{-N-1}
+\left(\sum_{p=1}^{\infty}p^2a^p\right)^2.
+\]
+Thus
+\[
+\|B_n(x_*)^{-1}\|_F^2
+\le
+\frac{\pi^2}{2}\delta^2a^{-N-1}S_2(a)^2.
+\]
+Since
+\[
+\delta=\frac{3\pi}{2N},
+\]
+we obtain
+\[
+\|B_n(x_*)^{-1}\|_F
+\le
+\frac{3\pi^2}{\sqrt8}\,
+S_2(a)\,
+\frac{a^{-(N+1)/2}}{N}.
+\]
+Therefore
+\[
+\mu_n(x_*;a)
+\ge
+\frac{\sqrt8}{3\pi^2S_2(a)}Na^{(N+1)/2}.
+\]
+Since \(N=n+1\),
+\[
+Na^{(N+1)/2}
+=
+(n+1)a^{(n+2)/2}
+=
+a(n+1)a^{n/2}.
+\]
+Hence
+\[
+\tau_n(a)
+\ge
+\frac{\sqrt8\,a}{3\pi^2S_2(a)}
+(n+1)a^{n/2}
+=
+c_2(a)(n+1)a^{n/2}.
+\]
+The proof is complete.
+\end{proof}
+
+\section{Explicit threshold bounds}
+
+Define the first-hit connectedness threshold by
+\[
+N_c(a,\eps):=\min\{n\ge2:\sigma_\eps(A_n(a))\ \text{is connected}\}.
+\]
+By Proposition \ref{prop:planar-reduction},
+\[
+N_c(a,\eps)=\min\{n\ge2:\eps>\tau_n(a)\}.
+\]
+This equality is a first-hit formula.  If Conjecture \ref{conj:barrier} holds, it is also the eventual threshold.
+
+Define
+\[
+N_+(a,\eps)
+:=
+\min\{n\ge2:(n+1)a^{n/2}<\eps\},
+\]
+and
+\[
+N_-(a,\eps)
+:=
+1+\max\{n\ge2:c_2(a)(n+1)a^{n/2}\ge\eps\},
+\]
+with the convention that the maximum over the empty set is \(1\).
+
+\begin{corollary}[Two-sided finite-size threshold bounds]\label{cor:Nc-bounds}
+For every \(0<a<1\) and every \(\eps>0\),
+\[
+N_-(a,\eps)\le N_c(a,\eps)\le N_+(a,\eps).
+\]
+If Conjecture \ref{conj:barrier} holds, the same bounds apply to the common threshold
+\[
+N_e(a,\eps)=N_f(a,\eps).
+\]
+\end{corollary}
+
+\begin{proof}
+If
+\[
+(n+1)a^{n/2}<\eps,
+\]
+then Theorem \ref{thm:tau-bounds} gives
+\[
+\tau_n(a)<\eps.
+\]
+Hence \(\sigma_\eps(A_n(a))\) is connected, and so
+\[
+N_c(a,\eps)\le n.
+\]
+Taking the least such \(n\) gives
+\[
+N_c(a,\eps)\le N_+(a,\eps).
+\]
+
+Conversely, if
+\[
+c_2(a)(n+1)a^{n/2}\ge\eps,
+\]
+then Theorem \ref{thm:tau-bounds} gives
+\[
+\tau_n(a)\ge\eps.
+\]
+Thus \(\sigma_\eps(A_n(a))\) is not connected.  Therefore the connectedness threshold must be larger than every such \(n\), which gives
+\[
+N_c(a,\eps)\ge N_-(a,\eps).
+\]
+\end{proof}
+
+Let
+\[
+\gamma:=\frac{|\log a|}{2}.
+\]
+Then
+\[
+a^{n/2}=e^{-\gamma n}.
+\]
+The equation
+\[
+C(n+1)e^{-\gamma n}=\eps
+\]
+with \(C>0\) is solved by the negative branch \(W_{-1}\) of Lambert's \(W\)-function:
+\[
+n
+=
+-\frac1\gamma
+W_{-1}\!\left(-\frac{\gamma\eps e^{-\gamma}}{C}\right)-1.
+\]
+
+\begin{corollary}[Small-\(\eps\) scale]\label{cor:small-eps}
+For fixed \(0<a<1\),
+\[
+N_c(a,\eps)
+=
+\frac{2}{|\log a|}
+\left(
+\log\frac1\eps+\log\log\frac1\eps
+\right)
++
+O_a(1),
+\qquad
+\eps\downarrow0,
+\]
+for the first-hit threshold.  If Conjecture \ref{conj:barrier} holds, the same asymptotic applies to the common eventual/first-hit threshold.
+\end{corollary}
+
+\begin{proof}
+Apply Corollary \ref{cor:Nc-bounds} with \(C=1\) and \(C=c_2(a)\).  The standard expansion
+\[
+W_{-1}(-t)
+=
+\log t-\log|\log t|+O\!\left(\frac{\log|\log t|}{|\log t|}\right),
+\qquad t\downarrow0,
+\]
+gives
+\[
+N_c(a,\eps)
+=
+\frac1\gamma
+\left(
+\log\frac1\eps+\log\log\frac1\eps
+\right)
++
+O_a(1).
+\]
+Since \(\gamma=|\log a|/2\), the result follows.
+\end{proof}
+
+\section{Physical interpretation: the open-boundary Hatano--Nelson chain}
+
+The matrix \(A_n(a)\) is the finite open-boundary Hatano--Nelson Hamiltonian with asymmetric nearest-neighbor hopping after the normalization
+\[
+t_R=1,
+\qquad
+t_L=a,
+\qquad 0<a<1.
+\]
+Writing
+\[
+a=e^{-2g},
+\qquad g>0,
+\]
+one has
+\[
+\Delta_n^{-1}A_n(a)\Delta_n
+=
+e^{-g}\tridiag(1,0,1),
+\qquad
+\Delta_n=\diag(1,e^{-g},e^{-2g},\dots,e^{-(n-1)g}).
+\]
+This is the open-boundary imaginary-gauge transformation.  It removes the hopping nonreciprocity at the spectral level but is nonunitary, and therefore does not preserve Euclidean pseudospectra.
+
+The right eigenvectors have the form
+\[
+r^{(j)}_\ell
+=
+a^{(\ell-1)/2}\sin\frac{j\ell\pi}{n+1},
+\qquad
+\ell=1,\dots,n,
+\]
+whereas the left eigenvectors have the reciprocal profile
+\[
+\ell^{(j)}_\ell
+=
+a^{-(\ell-1)/2}\sin\frac{j\ell\pi}{n+1}.
+\]
+Thus right and left eigenvectors are exponentially biased toward opposite edges.  This is the finite-chain non-Hermitian skin effect.
+
+The connectedness threshold has a direct physical interpretation.  At finite resolution \(\eps\), the open-chain pseudospectrum initially consists of separated spectral islands around individual open-boundary eigenvalues.  The threshold is the length scale at which the largest real-axis barrier is below the resolution level, so the islands merge.  The two-sided estimate
+\[
+c_2(a)(n+1)a^{n/2}
+\le
+\tau_n(a)
+\le
+(n+1)a^{n/2}
+\]
+shows that the barrier is exponentially small in the chain length, with exponent controlled by the nonreciprocity parameter \(g=|\log a|/2\).  Accordingly,
+\[
+N_c(e^{-2g},\eps)
+=
+\frac1g
+\left(
+\log\frac1\eps+\log\log\frac1\eps
+\right)
++
+O_g(1).
+\]
+Stronger nonreciprocity lowers the chain length needed for pseudospectral connectedness.  In the reciprocal limit \(a\uparrow1\), the scale diverges, consistent with the Hermitian limit.
+
+\section{Concluding remarks}
+
+The rigorous unconditional contribution of this paper is the vertical monotonicity theorem, the exact real-axis barrier formulation of planar connectedness, and the sharp two-sided estimate
+\[
+\tau_n(a)\asymp_a (n+1)a^{n/2}.
+\]
+The use of \(S_2(a)\) follows from summing the Green-kernel factors exactly:
+\[
+\sum_{p,q\ge1}p^2q^2a^{p+q}
+=
+\left(\sum_{p=1}^{\infty}p^2a^p\right)^2
+=
+S_2(a)^2.
+\]
+The finite monotonicity conjecture
+\[
+\tau_{n+1}(a)\le\tau_n(a)
+\]
+is the remaining comparison principle needed for the unconditional identity
+\[
+N_e(a,\eps)=N_f(a,\eps).
+\]
+A proof of this inequality would complete the finite-dimensional first-hit equals eventual-hit theorem for this nonnormal Toeplitz family.
+
+\begin{thebibliography}{99}
+
+\bibitem{AmmariBarandunCaoDaviesHiltunen2024}
+H.~Ammari, S.~Barandun, J.~Cao, B.~Davies, and E.~O. Hiltunen,
+Mathematical foundations of the non-Hermitian skin effect,
+\emph{Arch. Ration. Mech. Anal.} \textbf{248} (2024), article no.~33.
+
+\bibitem{BottcherGrudsky2005}
+A.~B\"ottcher and S.~M. Grudsky,
+\emph{Spectral Properties of Banded Toeplitz Matrices},
+SIAM, Philadelphia, 2005.
+
+\bibitem{BottcherEmbreeTrefethen2002}
+A.~B\"ottcher, M.~Embree, and L.~N. Trefethen,
+Piecewise continuous Toeplitz matrices and operators: slow approach to infinity,
+\emph{SIAM J. Matrix Anal. Appl.} \textbf{24} (2002), no.~2, 484--489.
+
+\bibitem{CorlessGonnetHareJeffreyKnuth1996}
+R.~M. Corless, G.~H. Gonnet, D.~E.~G. Hare, D.~J. Jeffrey, and D.~E. Knuth,
+On the Lambert \(W\) function,
+\emph{Adv. Comput. Math.} \textbf{5} (1996), 329--359.
+
+\bibitem{HatanoNelson1996}
+N.~Hatano and D.~R. Nelson,
+Localization transitions in non-Hermitian quantum mechanics,
+\emph{Phys. Rev. Lett.} \textbf{77} (1996), no.~3, 570--573.
+
+\bibitem{HornJohnson2013}
+R.~A. Horn and C.~Johnson,
+\emph{Matrix Analysis},
+2nd ed.,
+Cambridge University Press, Cambridge, 2013.
+
+\bibitem{KunstEdvardssonBudichBergholtz2018}
+F.~K. Kunst, E.~Edvardsson, J.~C. Budich, and E.~J. Bergholtz,
+Biorthogonal bulk-boundary correspondence in non-Hermitian systems,
+\emph{Phys. Rev. Lett.} \textbf{121} (2018), 026808.
+
+\bibitem{NoschesePasquiniReichel2013}
+S.~Noschese, L.~Pasquini, and L.~Reichel,
+Tridiagonal Toeplitz matrices: properties and novel applications,
+\emph{Numer. Linear Algebra Appl.} \textbf{20} (2013), no.~2, 302--326.
+
+\bibitem{OkumaKawabataShiozakiSato2020}
+N.~Okuma, K.~Kawabata, K.~Shiozaki, and M.~Sato,
+Topological origin of non-Hermitian skin effects,
+\emph{Phys. Rev. Lett.} \textbf{124} (2020), 086801.
+
+\bibitem{ReichelTrefethen1992}
+L.~Reichel and L.~N. Trefethen,
+Eigenvalues and pseudo-eigenvalues of Toeplitz matrices,
+\emph{Linear Algebra Appl.} \textbf{162--164} (1992), 153--185.
+
+\bibitem{Trefethen1997}
+L.~N. Trefethen,
+Pseudospectra of linear operators,
+\emph{SIAM Rev.} \textbf{39} (1997), no.~3, 383--406.
+
+\bibitem{TrefethenEmbree2005}
+L.~N. Trefethen and M.~Embree,
+\emph{Spectra and Pseudospectra: The Behavior of Nonnormal Matrices and Operators},
+Princeton University Press, Princeton, 2005.
+
+\bibitem{YaoWang2018}
+S.~Yao and Z.~Wang,
+Edge states and topological invariants of non-Hermitian systems,
+\emph{Phys. Rev. Lett.} \textbf{121} (2018), 086803.
+
+\end{thebibliography}
+
+\end{document}

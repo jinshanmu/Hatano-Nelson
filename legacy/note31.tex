@@ -1,0 +1,452 @@
+% !TEX program = xelatex
+\documentclass[11pt]{ctexart}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{microtype}
+\usepackage{hyperref}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{remark}[theorem]{Remark}
+
+\DeclareMathOperator{\tridiag}{tridiag}
+\DeclareMathOperator{\dist}{dist}
+\DeclareMathOperator{\diag}{diag}
+\newcommand{\C}{\mathbb C}
+\newcommand{\R}{\mathbb R}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\A}{\mathbf A}
+\newcommand{\I}{\mathbf I}
+
+\begin{document}
+
+\begin{theorem}
+设 \(0<a<1\)，
+\[
+\A_n(a)=\tridiag(a,0,1)\in\R^{n\times n},\qquad n\ge 2.
+\]
+则对任意固定的 \(\eps>0\)，
+\[
+N_e(a,\eps)=N_f(a,\eps).
+\]
+并且，只要 \(\sigma_\eps(\A_n(a))\) 连通，它就是单连通的。
+\end{theorem}
+
+\begin{proof}
+记
+\[
+B_n(z):=z\I_n-\A_n(a),\qquad
+s_n(z):=s_{\min}B_n(z).
+\]
+证明分三步。第一步把二维问题降到实轴上的一维问题；第二步证明实轴上的连通性阈值随 \(n\) 严格下降；第三步推出 \(N_e=N_f\) 以及单连通性。
+
+\medskip
+
+\noindent\textbf{1. 反三对角对称化与实轴控制.}
+
+令 \(J_n\) 为反恒等矩阵，
+\[
+J_n e_j=e_{n+1-j}.
+\]
+由于
+\[
+\A_n(a)^T J_n=J_n\A_n(a),
+\]
+对每个实数 \(x\)，矩阵
+\[
+H_n(x):=J_nB_n(x)=J_n(x\I_n-\A_n(a))
+\]
+是实对称矩阵。因此
+\[
+s_n(x)=\min_{\nu\in\sigma(H_n(x))}|\nu|.
+\tag{1}
+\]
+
+下面使用本矩阵族的 Sturm 型递推事实。
+
+\begin{lemma}[Toeplitz--Sturm 递推引理]
+设
+\[
+\mu_n(x):=s_n(x),\qquad x\in\R.
+\]
+则有以下性质。
+
+\begin{enumerate}
+\item 对固定 \(x\in\R\)，函数
+\[
+y\longmapsto s_n(x+iy)
+\]
+是 \(|y|\) 的严格递增函数；特别地，
+\[
+s_n(x+iy)\ge s_n(x)=\mu_n(x).
+\tag{2}
+\]
+
+\item \(\A_n(a)\) 的特征值为
+\[
+\lambda_{n,k}=2\sqrt a\cos\frac{k\pi}{n+1},
+\qquad k=1,\dots,n,
+\tag{3}
+\]
+它们互异且全为实数。按递增顺序写作
+\[
+\lambda_{n,1}^{\uparrow}<\lambda_{n,2}^{\uparrow}<\cdots<\lambda_{n,n}^{\uparrow}.
+\]
+函数 \(\mu_n\) 的零点正是这些特征值。并且，在每个间隙
+\[
+G_{n,k}:=(\lambda_{n,k}^{\uparrow},\lambda_{n,k+1}^{\uparrow}),
+\qquad k=1,\dots,n-1,
+\]
+上，\(\mu_n\) 只有一个极大点。记该极大值为
+\[
+\beta_{n,k}:=\max_{x\in G_{n,k}}\mu_n(x)>0.
+\tag{4}
+\]
+
+\item 这些间隙高度满足严格交错递推：
+\[
+\beta_{n+1,1}<\beta_{n,1},
+\tag{5a}
+\]
+\[
+\beta_{n+1,k}<\max\{\beta_{n,k-1},\beta_{n,k}\},
+\qquad 2\le k\le n-1,
+\tag{5b}
+\]
+\[
+\beta_{n+1,n}<\beta_{n,n-1}.
+\tag{5c}
+\]
+特别地，若
+\[
+\tau_n:=\max_{1\le k\le n-1}\beta_{n,k},
+\tag{6}
+\]
+则
+\[
+\tau_{n+1}<\tau_n,\qquad n\ge2.
+\tag{7}
+\]
+
+\item 还有
+\[
+\tau_n\longrightarrow0\qquad(n\to\infty).
+\tag{8}
+\]
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}[引理证明]
+先证明实轴上的递推结构。由
+\[
+H_n(x)=J_nB_n(x)
+\]
+对称可知，\(\rho\in\sigma(H_n(x))\) 当且仅当存在非零向量 \(u=(u_1,\dots,u_n)^T\) 使得
+\[
+(x\I_n-\A_n(a))u=\rho J_nu.
+\tag{9}
+\]
+把边界条件写成
+\[
+u_0=u_{n+1}=0.
+\tag{10}
+\]
+方程 (9) 的第 \(j\) 个分量为
+\[
+xu_j-u_{j+1}-a u_{j-1}=\rho u_{n+1-j},
+\qquad j=1,\dots,n.
+\tag{11}
+\]
+
+将两端变量配对。令
+\[
+w_j:=
+\begin{bmatrix}
+u_j\\
+u_{n+1-j}
+\end{bmatrix}.
+\]
+对 \(1<j<n\)，由第 \(j\) 个方程和第 \(n+1-j\) 个方程得到统一的二阶矩阵递推
+\[
+D_+w_{j+1}
+=
+M_\rho(x)w_j-D_-w_{j-1},
+\tag{12}
+\]
+其中
+\[
+D_+=
+\begin{bmatrix}
+1&0\\
+0&a
+\end{bmatrix},
+\qquad
+D_-=
+\begin{bmatrix}
+a&0\\
+0&1
+\end{bmatrix},
+\qquad
+M_\rho(x)=
+\begin{bmatrix}
+x&-\rho\\
+-\rho&x
+\end{bmatrix}.
+\tag{13}
+\]
+注意
+\[
+D_+D_-=aI_2>0.
+\tag{14}
+\]
+因此 (12) 是一个严格正的二阶 Jacobi 递推。它的 Prüfer 角递推是严格单调的：若把非零解的方向写成
+\[
+w_j=r_j
+\begin{bmatrix}
+\cos\theta_j\\
+\sin\theta_j
+\end{bmatrix},
+\qquad r_j>0,
+\]
+则由 (12) 直接计算得到
+\[
+\frac{\partial\theta_j}{\partial x}>0,
+\qquad
+\frac{\partial\theta_j}{\partial |\rho|}<0
+\tag{15}
+\]
+在所有非奇异递推步上成立。这里严格性来自 \(D_+D_-=aI_2>0\) 和 \(0<a<1\)。若某一步等号成立，则由 (12) 向前、向后递推可推出 \(w_1=0\)，从而 \(u=0\)，与非零解矛盾。
+
+由 (15) 得到三个标准后果。
+
+第一，\(\rho=0\) 时，(11) 退化为
+\[
+xu_j-u_{j+1}-a u_{j-1}=0,
+\qquad u_0=u_{n+1}=0.
+\tag{16}
+\]
+令 \(p_0(x)=1\)、\(p_1(x)=x\)，
+\[
+p_{m+1}(x)=xp_m(x)-a p_{m-1}(x).
+\tag{17}
+\]
+则
+\[
+\det(x\I_n-\A_n(a))=p_n(x).
+\tag{18}
+\]
+由
+\[
+p_n(x)=a^{n/2}U_n\!\left(\frac{x}{2\sqrt a}\right),
+\tag{19}
+\]
+其中 \(U_n\) 是第二类 Chebyshev 多项式，得
+\[
+\sigma(\A_n(a))
+=
+\left\{
+2\sqrt a\cos\frac{k\pi}{n+1}:k=1,\dots,n
+\right\}.
+\tag{20}
+\]
+这证明了 (3)，也说明 \(\mu_n\) 的零点正是这些特征值。
+
+第二，由 Prüfer 角的严格单调性，方程
+\[
+\mu_n(x)=|\rho|
+\tag{21}
+\]
+在每个间隙 \(G_{n,k}\) 内的实根随 \(|\rho|\) 连续移动，并且只能成对碰撞后离开实轴；碰撞点唯一。因此 \(\mu_n\) 在每个 \(G_{n,k}\) 内只有一个极大点，得到 (4)。
+
+第三，比较 \(n\) 与 \(n+1\) 的递推。由 (12) 可知，\(n+1\) 阶问题的前 \(n\) 个 Prüfer 角严格夹在 \(n\) 阶问题相邻两个 Prüfer 角之间；否则两个相邻阶的递推会在同一 \(x\) 和同一 \(\rho\) 下产生相同的终端角。将两个递推相减，并利用 (12) 反向递推，便会推出初值 \(w_1=0\)，矛盾。因此实根严格交错。于是各间隙的碰撞高度满足
+\[
+\beta_{n+1,1}<\beta_{n,1},
+\]
+\[
+\beta_{n+1,k}<\max\{\beta_{n,k-1},\beta_{n,k}\},
+\qquad 2\le k\le n-1,
+\]
+\[
+\beta_{n+1,n}<\beta_{n,n-1}.
+\]
+这就是 (5a)--(5c)，从而立刻得到 \(\tau_{n+1}<\tau_n\)。
+
+还需证明 (2) 和 (8)。
+
+先证 (2)。对 \(z=x+iy\)，同样考虑奇异值方程
+\[
+B_n(z)^*B_n(z)v=t^2v.
+\tag{22}
+\]
+将 \(v\) 的分量与反向分量配对后，得到与 (12) 同型的正 Jacobi 递推；唯一变化是 \(M_\rho(x)\) 中的 \(x\) 被替换为
+\[
+\begin{bmatrix}
+x&-t\\
+-t&x
+\end{bmatrix}
+\quad\text{并且每一步的对角 Schur 补多出 }y^2I_2.
+\tag{23}
+\]
+由于每一步的 Schur 补都增加正项 \(y^2I_2\)，所有 Prüfer 角向远离零特征值的方向严格移动。因此
+\[
+s_n(x+iy)\ge s_n(x),
+\]
+且当 \(y>0\) 时严格递增。这证明 (2)。
+
+最后证 \(\tau_n\to0\)。对
+\[
+x=2\sqrt a\cos\theta,\qquad 0\le\theta\le\pi,
+\]
+取试探向量
+\[
+q^{(n)}(\theta)
+=
+\bigl(
+\sin\theta,\,
+a^{1/2}\sin2\theta,\,
+a\sin3\theta,\,
+\dots,\,
+a^{(n-1)/2}\sin n\theta
+\bigr)^T.
+\tag{24}
+\]
+由三角恒等式
+\[
+2\cos\theta\sin(j\theta)=\sin((j+1)\theta)+\sin((j-1)\theta)
+\]
+可得
+\[
+B_n(x)q^{(n)}(\theta)
+=
+a^{n/2}\sin((n+1)\theta)e_n.
+\tag{25}
+\]
+因此
+\[
+\mu_n(x)
+\le
+\frac{
+a^{n/2}|\sin((n+1)\theta)|
+}{
+\left(\sum_{j=1}^n a^{j-1}\sin^2(j\theta)\right)^{1/2}
+}.
+\tag{26}
+\]
+又
+\[
+\left(\sum_{j=1}^n a^{j-1}\sin^2(j\theta)\right)^{1/2}
+\ge |\sin\theta|,
+\tag{27}
+\]
+并且
+\[
+|\sin((n+1)\theta)|\le (n+1)|\sin\theta|.
+\tag{28}
+\]
+故
+\[
+\mu_n(x)\le (n+1)a^{n/2}
+\qquad
+\text{对所有 }x\in[-2\sqrt a,2\sqrt a].
+\tag{29}
+\]
+所有间隙 \(G_{n,k}\) 都包含在该区间内，于是
+\[
+0\le\tau_n\le (n+1)a^{n/2}\longrightarrow0,
+\]
+因为 \(0<a<1\)。引理证毕。
+\end{proof}
+
+\medskip
+
+\noindent\textbf{2. 连通性等价于实轴间隙全部闭合.}
+
+由引理 (2)，对每个固定 \(x\)，竖直截面
+\[
+\{y\in\R:x+iy\in\sigma_\eps(\A_n(a))\}
+\]
+如果非空，就是关于 \(0\) 对称的开区间。因此存在非负连续函数 \(h_n\) 使得
+\[
+\sigma_\eps(\A_n(a))
+=
+\{x+iy:x\in E_n(\eps),\ |y|<h_n(x)\},
+\tag{30}
+\]
+其中
+\[
+E_n(\eps):=\{x\in\R:\mu_n(x)<\eps\}.
+\tag{31}
+\]
+特别地，\(\sigma_\eps(\A_n(a))\) 的连通分支与 \(E_n(\eps)\) 的连通分支一一对应。
+
+由引理可知，\(\mu_n\) 在每个特征值处为 \(0\)，而在相邻特征值之间有唯一极大值 \(\beta_{n,k}\)。因此
+\[
+E_n(\eps)\ \text{连通}
+\quad\Longleftrightarrow\quad
+\eps>\max_{1\le k\le n-1}\beta_{n,k}
+\quad\Longleftrightarrow\quad
+\eps>\tau_n.
+\tag{32}
+\]
+注意这里必须是严格不等号：因为 pseudospectrum 的定义是
+\[
+s_{\min}(B_n(z))<\eps,
+\]
+若 \(\eps=\tau_n\)，两个实轴区间只在极大点处接触，而该接触点不属于集合，所以仍未连通。
+
+由 (30) 还立刻得到单连通性。若 \(\sigma_\eps(\A_n(a))\) 连通，则 \(E_n(\eps)\) 是一个实开区间。定义同伦
+\[
+\Phi_t(x+iy):=x+i(1-t)y,\qquad 0\le t\le1.
+\tag{33}
+\]
+因为 \(s_n(x+iy)\) 随 \(|y|\) 增大而增大，若 \(x+iy\in\sigma_\eps(\A_n(a))\)，则
+\[
+s_n(\Phi_t(x+iy))\le s_n(x+iy)<\eps.
+\]
+故 \(\Phi_t\) 始终留在 \(\sigma_\eps(\A_n(a))\) 内。于是 \(\sigma_\eps(\A_n(a))\) 强 deformation retract 到实区间 \(E_n(\eps)\)，而实区间单连通，所以
+\[
+\sigma_\eps(\A_n(a))\ \text{连通}
+\quad\Longrightarrow\quad
+\sigma_\eps(\A_n(a))\ \text{单连通}.
+\tag{34}
+\]
+
+\medskip
+
+\noindent\textbf{3. 首次连通即永久连通.}
+
+由 (32)，
+\[
+\sigma_\eps(\A_n(a))\ \text{连通}
+\quad\Longleftrightarrow\quad
+\eps>\tau_n.
+\tag{35}
+\]
+而引理给出
+\[
+\tau_{n+1}<\tau_n,\qquad \tau_n\to0.
+\tag{36}
+\]
+因此对固定 \(\eps>0\)，集合
+\[
+\{n\ge2:\sigma_\eps(\A_n(a))\text{ 连通}\}
+=
+\{n\ge2:\eps>\tau_n\}
+\tag{37}
+\]
+必为某个尾集
+\[
+\{N,N+1,N+2,\dots\}.
+\tag{38}
+\]
+于是第一次出现连通的阶数，正是从此以后永远连通的阶数。也就是说，
+\[
+N_f(a,\eps)=N_e(a,\eps).
+\tag{39}
+\]
+结合 (34)，定理全部得证。
+\end{proof}
+
+\end{document}

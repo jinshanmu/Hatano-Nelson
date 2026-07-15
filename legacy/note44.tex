@@ -1,0 +1,789 @@
+\documentclass[11pt]{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{hyperref}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{remark}[theorem]{Remark}
+
+\title{Connectedness thresholds for a tridiagonal Toeplitz pseudospectrum}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+Put
+\[
+q=\sqrt a,\qquad
+\gamma=-\log q=\frac12\log\frac1a,
+\qquad
+D_n=\operatorname{diag}(1,q,\ldots,q^{n-1}),
+\]
+and let
+\[
+T_n=\operatorname{tridiag}(1,0,1).
+\]
+Then
+\[
+A_n(a)=D_n(qT_n)D_n^{-1}.
+\]
+Consequently,
+\[
+\sigma(A_n(a))
+=
+\left\{
+2q\cos\frac{k\pi}{n+1}:1\leq k\leq n
+\right\}.
+\]
+We write
+\[
+\lambda_{n,k}=2q\cos\frac{k\pi}{n+1},
+\qquad
+I_n=[\lambda_{n,n},\lambda_{n,1}],
+\]
+and
+\[
+m_n(x,y)=s_{\min}\bigl((x+iy)I_n-A_n(a)\bigr).
+\]
+
+The proof rests on the following finite-path comparison lemma.
+
+\begin{lemma}[finite-path comparison]\label{lem:path}
+For every \(n\geq2\) and every real \(x\), the function
+\[
+y\longmapsto m_n(x,y)
+\]
+is even and nondecreasing on \([0,\infty)\). More precisely, at every point of differentiability with \(y>0\),
+\[
+m_n(x,y)\frac{\partial}{\partial y}m_n(x,y)
+\geq a^{n-1}y.
+\]
+Hence
+\[
+m_n(x,y)^2
+\geq
+m_n(x,0)^2+a^{n-1}y^2.
+\tag{1}\label{eq:vertical}
+\]
+
+Define
+\[
+\beta_n(a)=\max_{x\in I_n}m_n(x,0).
+\]
+Then
+\[
+\beta_{n+1}(a)<\beta_n(a)
+\qquad(n\geq2).
+\tag{2}\label{eq:strict-beta}
+\]
+\end{lemma}
+
+\begin{proof}
+Let
+\[
+C=xI_n-A_n(a),\qquad C_y=C+iyI_n,
+\]
+and let \(J_n\) be the reversal matrix. Since
+\[
+J_nC=C^TJ_n,
+\]
+the matrix \(J_nC_y\) is complex symmetric. At a point where the least singular
+value \(s=m_n(x,y)\) is simple, its left and right singular vectors may therefore
+be chosen so that
+\[
+C_yv=su,\qquad C_y^*u=sv,\qquad u=J_n\overline v,
+\qquad \|u\|=\|v\|=1.
+\]
+Set
+\[
+t_j=\operatorname{Im}(\overline v_j u_j),
+\qquad
+p_j=\operatorname{Im}(\overline v_jv_{j+1}),
+\qquad p_0=p_n=0.
+\]
+The block Sturm comparison theorem for the Dirichlet block Jacobi matrix
+\[
+\mathcal H_n(y)=
+\begin{bmatrix}
+0&C_y\\
+C_y^*&0
+\end{bmatrix}
+\]
+gives
+\[
+t_j\geq0,\qquad 1\leq j\leq n,
+\tag{3}\label{eq:local-sign}
+\]
+for an eigenvector belonging to its first positive eigenvalue \(s\).
+
+For completeness, the specialized Sturm calculation is recorded here.  Order
+the variables by sites, so that the diagonal and upper off-diagonal blocks are
+\[
+E=
+\begin{bmatrix}
+0&x+iy\\
+x-iy&0
+\end{bmatrix},
+\qquad
+F=
+\begin{bmatrix}
+0&-1\\
+-a&0
+\end{bmatrix}.
+\]
+For a spectral parameter \(\tau\), the successive \(2\times2\) Schur pivots
+\[
+Q_j=
+\begin{bmatrix}
+r_j&w_j\\
+\overline w_j&s_j
+\end{bmatrix},
+\qquad
+\Delta_j=r_js_j-|w_j|^2,
+\]
+obey
+\[
+\begin{aligned}
+r_{j+1}&=-\tau-\frac{a^2r_j}{\Delta_j},\\
+s_{j+1}&=-\tau-\frac{s_j}{\Delta_j},\\
+w_{j+1}&=x+iy+\frac{a\overline w_j}{\Delta_j}.
+\end{aligned}
+\tag{4}\label{eq:block-sturm}
+\]
+The initial pivot is \(Q_1=E-\tau I_2\).  The block Sturm index is the sum of
+the negative indices of the nonsingular pivots.  For \(0<\tau<s\) it is exactly
+\(n\); at \(\tau=s\) precisely one eigenvalue crosses zero.  Applying
+\eqref{eq:block-sturm} simultaneously from the left and from the right, and
+using
+\[
+\operatorname{Im}(-Q^{-1})
+=
+Q^{-*}(\operatorname{Im}Q)Q^{-1},
+\]
+shows inductively that the residue at this first positive pole has, at every
+site, nonnegative pairing with
+\[
+\begin{bmatrix}0&i\\-i&0\end{bmatrix}.
+\]
+For the residue \((u_j,v_j)(u_j,v_j)^*\), this pairing is \(2t_j\), proving
+\eqref{eq:local-sign}.  Vanishing intermediate pivots are handled by replacing
+\(\tau\) by \(\tau-\eta\) and letting \(\eta\downarrow0\).  This is the usual
+Dirichlet block-Sturm proof, specialized to the two blocks above.
+
+The component equations \(C_yv=su\) give
+\[
+st_j=y|v_j|^2-p_j+ap_{j-1}.
+\tag{5}\label{eq:current}
+\]
+Multiplication by \(a^{n-j}\) and summation over \(j\) make the \(p_j\)-terms
+telescope:
+\[
+s\sum_{j=1}^n a^{n-j}t_j
+=
+y\sum_{j=1}^n a^{n-j}|v_j|^2.
+\tag{6}\label{eq:weighted-current}
+\]
+Since \(t_j\geq0\),
+\[
+\sum_{j=1}^n a^{n-j}t_j\leq\sum_{j=1}^nt_j,
+\]
+whereas
+\[
+\sum_{j=1}^n a^{n-j}|v_j|^2\geq a^{n-1}.
+\]
+The singular-value differentiation formula gives
+\[
+\frac{\partial s}{\partial y}
+=
+\operatorname{Re}\langle u,iv\rangle
+=
+\sum_{j=1}^nt_j.
+\]
+Thus \eqref{eq:weighted-current} implies
+\[
+s\frac{\partial s}{\partial y}\geq a^{n-1}y.
+\]
+Integration proves \eqref{eq:vertical}.  Multiple least singular values are
+treated by one-sided derivatives and approximation; the same inequality holds
+for every vector in the least singular subspace.  This also proves
+monotonicity.
+
+It remains to prove \eqref{eq:strict-beta}.  We include the scalar calculation
+because strictness is important.  Put
+\[
+B_n(x)=xI_n-A_n(a),\qquad
+K_n(x,t)=B_n(x)^TB_n(x)-t^2I_n.
+\]
+Let \(\delta=1-a\), and define
+\[
+H_n(x,t)
+=
+aT_n^2-(1+a)xT_n+
+\bigl(x^2+\delta^2-t^2\bigr)I_n.
+\]
+A direct multiplication gives
+\[
+K_n(x,t)
+=
+H_n(x,t)+\delta\bigl(-e_1e_1^T+ae_ne_n^T\bigr).
+\tag{7}\label{eq:rank-two}
+\]
+If \(K_n(x,t)\succeq0\), then \(H_n(x,t)\succ0\).  Indeed,
+\[
+K_n+J_nK_nJ_n
+=
+2H_n-\delta^2(e_1e_1^T+e_ne_n^T),
+\]
+and every sine eigenvector of \(T_n\) has equal endpoint moduli.
+
+Let \(P_k(u)=U_k(u/2)\), where \(U_k\) is the Chebyshev polynomial of the
+second kind.  Let \(r,s\) be the roots of
+\[
+au^2-(1+a)xu+x^2+\delta^2-t^2=0.
+\tag{8}\label{eq:channels}
+\]
+Define
+\[
+D_n=P_n(r)P_n(s),
+\]
+\[
+W_n=\sum_{k=0}^{n-1}(n-k)P_k(r)P_k(s),
+\qquad
+\rho=\frac{\delta^2}{a},
+\]
+and
+\[
+F_n=D_n-\rho W_n.
+\]
+Applying the matrix determinant lemma to \eqref{eq:rank-two}, followed by the
+Christoffel--Darboux identity, gives
+\[
+\det K_n(x,t)=a^nF_n.
+\tag{9}\label{eq:Fn}
+\]
+The same calculation shows that, once \(H_n\succ0\),
+\[
+K_n(x,t)\succ0
+\quad\Longleftrightarrow\quad
+F_n>0.
+\tag{10}\label{eq:feasibility}
+\]
+
+At an interior maximum \(t=\beta_n(a)\), the least singular value is simple,
+and therefore
+\[
+F_n=0,\qquad \frac{\partial F_n}{\partial x}=0.
+\tag{11}\label{eq:tangency}
+\]
+Write
+\[
+r=2\cos(p+d),\qquad s=2\cos(p-d),
+\]
+where \(p\) is real and \(d\) is either real or purely imaginary.  Put
+\[
+R(u)^2=\delta^2+4a\sin^2u,
+\qquad
+\Phi_N(u)=R(u)\frac{\sin(Nu)}{\sin u},
+\qquad N=n+1.
+\]
+Then \eqref{eq:channels} becomes
+\[
+x=\frac{4a}{1+a}\cos p\cos d,
+\qquad
+(1+a)t=R(p)R(d),
+\tag{12}\label{eq:xt}
+\]
+and \eqref{eq:Fn} becomes
+\[
+F_n=
+\frac{\Phi_N(p)^2-\Phi_N(d)^2}
+{4a\sin(p+d)\sin(p-d)}.
+\tag{13}\label{eq:angular-F}
+\]
+Thus \eqref{eq:tangency} says that the two sides of
+\[
+\Phi_N(p)^2=\Phi_N(d)^2
+\tag{14}\label{eq:angular-tangency}
+\]
+have equal first variation under the constraint \(R(p)R(d)=\text{constant}\).
+
+The adjacent-order comparison follows by keeping the phase \(Np\) fixed,
+replacing \(N\) by \(N-1\), and moving \(d\) so that \(R(p)R(d)\) remains
+constant.  The sign needed in \eqref{eq:feasibility} reduces to the following
+one-variable inequality.  In the real channel, put
+\[
+c=Np,\quad z=Nd,\quad
+S=\sin^2c,\quad Z=\sin^2z,\quad
+X=\frac{\sin^2p}{\sin^2d}.
+\]
+At a crossing one has
+\[
+XZ>S>Z.
+\]
+After differentiation the numerator of the crossing derivative is
+\[
+\begin{aligned}
+\mathcal T={}&(X+1)(Z-S)\\
+&+(X-1)z\cot z
+\left(
+Z\frac{\tan p}{p}
++
+S\frac{\tan d}{d}
+\right).
+\end{aligned}
+\tag{15}\label{eq:T-real}
+\]
+It is positive.  To verify this, set \(\lambda=p/d>1\) and
+\[
+G_\lambda(u)
+=
+\frac{\tan u}{u}
+\frac{\left(\frac{\sin(\lambda u)}{\sin u}\right)^2-1}
+{\left(\frac{\sin(\lambda u)}{\sin u}\right)^2+1}.
+\]
+In the first phase cell,
+\[
+\frac1{G_\lambda(u)}
+=
+u\left[
+\cot u+\cot((\lambda-1)u)-\cot((\lambda+1)u)
+\right].
+\]
+Its derivative is positive because, for \(h(u)=u\cot u\), the function
+\[
+-h'(u)
+=
+4u\sum_{k=1}^{\infty}
+\frac{k^2\pi^2}{(k^2\pi^2-u^2)^2}
+\]
+is superadditive on the relevant interval.  In every later phase cell,
+\[
+G_\lambda(z)
+<
+\frac{4-z^2}{4+z^2}
+<
+G_\lambda(d).
+\]
+Both statements are exactly equivalent to \(\mathcal T>0\).
+
+If \(d=i\eta\), put \(z=i\zeta\),
+\[
+X=\frac{\sin^2p}{\sinh^2\eta},
+\qquad
+r_0=\frac{\sin^2c}{\sinh^2\zeta},
+\qquad
+A=\frac{\tan p}{p},
+\qquad
+B=\frac{\tanh\eta}{\eta}.
+\]
+The corresponding numerator, divided by \(\sinh^2\zeta\), is
+\[
+(X-1)(r_0+1)
++
+(X+1)\zeta\coth\zeta\,(A-r_0B),
+\tag{16}\label{eq:T-hyp}
+\]
+which is positive.  If \(r_0<1\), this is immediate.  If \(r_0\geq1\), then
+\(\zeta<\operatorname{arsinh}1\).  In the first cell, monotonicity of
+\(\sin(cx)/\sinh(\zeta x)\) reduces the assertion to
+\[
+\frac{e^{-\zeta}}{1-\sinh\zeta}
+>
+\cosh\zeta
+>
+\zeta\coth\zeta.
+\]
+In later cells it follows from
+\[
+\frac{y-1}{y+1}\bigg|_{y=\operatorname{csch}^2(\zeta/2)}
+>
+\cosh\zeta\,
+\frac{y-1}{y+1}\bigg|_{y=\operatorname{csch}^2\zeta};
+\]
+after multiplication by the positive denominators, the difference is
+\[
+4b+14b^2+16b^3+8b^4,
+\qquad b=\sinh^2(\zeta/2).
+\]
+
+The only possible endpoint is the central phase \(p=\pi/2\).  For adjacent
+orders put \(M=N-1\), \(\theta=\pi/(2M)\), and
+\[
+C_0=\frac{1+a}{1-a}.
+\]
+The real and hyperbolic boundary functions are
+\[
+g(u)=\arctan(C_0\tan u),
+\qquad
+h(u)=\operatorname{artanh}(C_0\tanh u).
+\]
+The logarithmic elasticity \(ug'(u)/g(u)\) is strictly decreasing, while
+\(uh'(u)/h(u)\) is strictly increasing.  Indeed, after differentiation these
+claims reduce respectively to
+\[
+2u>\tan u
+\quad(0<u\leq\pi/8),
+\qquad
+2u\coth u>1.
+\]
+Together with
+\[
+\cos^2\theta>\frac{M}{M+1},
+\]
+this supplies the strict adjacent-order inequality at the central endpoint.
+Reflection \(p\mapsto\pi-p\) leaves \eqref{eq:angular-F} unchanged and deals
+with the remaining parity case.
+
+Consequently, from every tangency
+\[
+K_n(x,\beta_n)\succeq0,\qquad \det K_n(x,\beta_n)=0,
+\]
+one obtains a point \(\widehat x\in I_{n-1}\) such that
+\[
+K_{n-1}(\widehat x,\beta_n)\succ0.
+\]
+Therefore
+\[
+\beta_{n-1}>\beta_n,
+\]
+which is \eqref{eq:strict-beta}.
+\end{proof}
+
+We now characterize connectedness.
+
+\begin{lemma}\label{lem:components}
+Every connected component of
+\(\sigma_\varepsilon(A_n(a))\) contains an eigenvalue of \(A_n(a)\).
+\end{lemma}
+
+\begin{proof}
+The pseudospectrum is bounded.  If a bounded component contained no
+eigenvalue, the resolvent would be analytic on a neighborhood of its closure.
+The function
+\[
+z\longmapsto\|(zI_n-A_n(a))^{-1}\|_2
+\]
+is subharmonic there.  On the boundary of the component it equals
+\(\varepsilon^{-1}\), whereas it is larger inside, contradicting the maximum
+principle.
+\end{proof}
+
+\begin{proposition}\label{prop:criterion}
+For every \(n\geq2\),
+\[
+\sigma_\varepsilon(A_n(a))
+\text{ is connected}
+\quad\Longleftrightarrow\quad
+\varepsilon>\beta_n(a).
+\tag{17}\label{eq:connected-criterion}
+\]
+If it is connected, it is contractible and hence simply connected.
+\end{proposition}
+
+\begin{proof}
+Suppose first that \(\varepsilon>\beta_n(a)\).  Then
+\[
+m_n(x,0)<\varepsilon
+\qquad(x\in I_n),
+\]
+so the entire real spectral interval \(I_n\) lies in the pseudospectrum.
+All eigenvalues therefore belong to one component.  By
+Lemma~\ref{lem:components}, every component contains an eigenvalue, and hence
+there can be only one component.
+
+Conversely, suppose that \(\varepsilon\leq\beta_n(a)\).  Choose
+\(x_0\in I_n\) such that
+\[
+m_n(x_0,0)=\beta_n(a)\geq\varepsilon.
+\]
+By Lemma~\ref{lem:path},
+\[
+m_n(x_0,y)\geq m_n(x_0,0)\geq\varepsilon
+\qquad(y\in\mathbb R).
+\]
+Thus the entire vertical line \(\operatorname{Re}z=x_0\) is disjoint from the
+pseudospectrum.  Since \(x_0\) lies between two consecutive eigenvalues, the
+pseudospectrum has eigenvalues on both sides of this line and is disconnected.
+This also covers the equality case because the pseudospectrum is defined by
+the strict inequality \(s_{\min}<\varepsilon\).
+
+Finally suppose that the pseudospectrum \(U\) is connected.  Lemma
+\ref{lem:path} shows that every nonempty vertical section of \(U\) is an open
+interval containing the real axis.  The projection
+\[
+P=\{\operatorname{Re}z:z\in U\}
+\]
+is an interval, and \(P\subset U\cap\mathbb R\).  The homotopy
+\[
+H:U\times[0,1]\longrightarrow U,
+\qquad
+H(x+iy,t)=x+i(1-t)y,
+\]
+is well defined by vertical monotonicity.  It is a deformation retraction of
+\(U\) onto the interval \(P\).  Hence \(U\) is contractible.
+\end{proof}
+
+We can now prove equality of the two thresholds.
+
+\begin{theorem}\label{thm:threshold}
+For every \(0<a<1\) and every \(\varepsilon>0\),
+\[
+N_e(a,\varepsilon)=N_f(a,\varepsilon).
+\]
+Their common value is
+\[
+N_c(a,\varepsilon)
+=
+\min\{n\geq2:\beta_n(a)<\varepsilon\}.
+\tag{18}\label{eq:exact-N}
+\]
+Moreover, every connected pseudospectrum in this family is simply connected.
+\end{theorem}
+
+\begin{proof}
+By Proposition~\ref{prop:criterion}, connectedness at order \(n\) is equivalent
+to \(\beta_n(a)<\varepsilon\).  Lemma~\ref{lem:path} shows that
+\(\beta_n(a)\) is strictly decreasing.  Thus once connectedness occurs, it
+persists for every larger order.  This proves both the equality of the
+thresholds and \eqref{eq:exact-N}.  Simple connectedness follows from
+Proposition~\ref{prop:criterion}.
+\end{proof}
+
+It remains to give explicit bounds.  Define
+\[
+c_a=\frac{2(1-a)^3}{3\pi\sqrt2(1+a)}
+\]
+and
+\[
+L_n^{\mathrm{par}}(a)=
+\begin{cases}
+2q^n\sin\!\left(\dfrac{\pi}{2(n+1)}\right),
+& n\ \text{even},\\[6pt]
+q^n\sin\!\left(\dfrac{\pi}{n+1}\right),
+& n\ \text{odd}.
+\end{cases}
+\]
+Set
+\[
+\ell_n(a)
+=
+\max\left\{
+c_a(n+1)q^n,\,
+L_n^{\mathrm{par}}(a)
+\right\},
+\qquad
+u_n(a)
+=
+q^n\csc\frac{\pi}{n+1}.
+\]
+
+\begin{theorem}[explicit and asymptotically sharp bounds]\label{thm:bounds}
+For every \(n\geq2\),
+\[
+\ell_n(a)\leq\beta_n(a)\leq u_n(a)
+<\frac{n+1}{2}q^n.
+\tag{19}\label{eq:beta-bounds}
+\]
+Furthermore,
+\[
+\beta_2(a)=a.
+\]
+Consequently,
+\[
+N_c(a,\varepsilon)=
+\begin{cases}
+2,&\varepsilon>a,\\
+3,&\varepsilon=a,
+\end{cases}
+\tag{20}\label{eq:large-eps}
+\]
+and, for \(0<\varepsilon<a\),
+\[
+1+\max\{n\geq2:\ell_n(a)\geq\varepsilon\}
+\leq
+N_c(a,\varepsilon)
+\leq
+\min\{n\geq2:u_n(a)<\varepsilon\}.
+\tag{21}\label{eq:N-bounds}
+\]
+
+For sufficiently small \(\varepsilon\),
+\[
+\left\lfloor
+-\frac1\gamma
+W_{-1}\!\left(-\frac{\gamma q\varepsilon}{c_a}\right)
+\right\rfloor
+\leq
+N_c(a,\varepsilon)
+\leq
+\left\lfloor
+-\frac1\gamma
+W_{-1}(-2\gamma q\varepsilon)
+\right\rfloor,
+\tag{22}\label{eq:Lambert}
+\]
+where \(W_{-1}\) is the negative real branch of the Lambert \(W\)-function.
+In particular,
+\[
+\gamma N_c(a,\varepsilon)
+=
+\log\frac1\varepsilon
++
+\log\log\frac1\varepsilon
++
+O_a(1)
+\qquad(\varepsilon\downarrow0).
+\tag{23}\label{eq:asymptotic}
+\]
+Thus the order \((n+1)a^{n/2}\) in \eqref{eq:beta-bounds}, and hence both
+logarithmic terms in \eqref{eq:asymptotic}, are optimal.
+\end{theorem}
+
+\begin{proof}
+Let
+\[
+x=2q\cos\theta,
+\qquad
+\frac{\pi}{n+1}\leq\theta\leq
+\frac{n\pi}{n+1},
+\]
+and define
+\[
+v_j=q^{j-1}\sin(j\theta).
+\]
+The three-term sine identity gives
+\[
+(xI_n-A_n(a))v
+=
+q^n\sin((n+1)\theta)e_n.
+\]
+Since
+\[
+\|v\|_2\geq|\sin\theta|
+\geq\sin\frac{\pi}{n+1},
+\]
+we obtain
+\[
+m_n(x,0)
+\leq
+q^n\csc\frac{\pi}{n+1}.
+\]
+Taking the maximum over \(x\in I_n\) proves the upper bound.  Since
+\[
+\sin\frac{\pi}{n+1}>\frac{2}{n+1},
+\]
+the final strict inequality in \eqref{eq:beta-bounds} follows.
+
+For the parity lower bound, diagonal similarity gives
+\[
+m_n(x,0)
+\geq
+q^{n-1}\operatorname{dist}\bigl(x,\sigma(qT_n)\bigr).
+\tag{24}\label{eq:similarity-lower}
+\]
+If \(n\) is even, evaluate \eqref{eq:similarity-lower} at the midpoint \(0\)
+of the central gap.  Its distance to the spectrum is
+\[
+2q\sin\frac{\pi}{2(n+1)}.
+\]
+If \(n\) is odd, use the midpoint of either gap adjacent to the zero
+eigenvalue; the distance is
+\[
+q\sin\frac{\pi}{n+1}.
+\]
+This proves \(\beta_n\geq L_n^{\mathrm{par}}\).
+
+To obtain a lower bound of the matching order \((n+1)q^n\), choose
+\[
+\theta=\frac{3\pi}{2(n+1)},
+\qquad
+x=2q\cos\theta.
+\]
+Let \(R=(xI_n-A_n(a))^{-1}\).  The Green kernel formula for the symmetric
+tridiagonal matrix, followed by diagonal similarity, gives, for \(i\leq j\),
+\[
+|R_{ij}|
+\leq
+q^{-n}\sin\theta\,
+\bigl(iq^{i-1}\bigr)
+\bigl((n+1-j)q^{n-j}\bigr).
+\]
+For \(i>j\),
+\[
+R_{ij}=a^{i-j}R_{ji},
+\]
+so the lower triangular entries are no larger than the corresponding upper
+triangular entries.  Hence
+\[
+\begin{aligned}
+\|R\|_F^2
+&\leq
+2q^{-2n}\sin^2\theta
+\left(
+\sum_{k=1}^{\infty}k^2a^{k-1}
+\right)^2\\
+&=
+2q^{-2n}\sin^2\theta
+\left(\frac{1+a}{(1-a)^3}\right)^2.
+\end{aligned}
+\]
+Since
+\[
+\sin\theta\leq\frac{3\pi}{2(n+1)},
+\]
+we obtain
+\[
+m_n(x,0)
+=
+\|R\|_2^{-1}
+\geq
+\|R\|_F^{-1}
+\geq
+c_a(n+1)q^n.
+\]
+This proves \eqref{eq:beta-bounds}.
+
+For \(n=2\), on the spectral interval \([-q,q]\),
+\[
+|\det(xI_2-A_2(a))|=a-x^2\leq a.
+\]
+The largest singular value is at least \(1\), so the smallest singular value
+is at most \(a\).  At \(x=0\), the two singular values are \(1\) and \(a\).
+Thus \(\beta_2(a)=a\).  Strict decrease of \(\beta_n\) gives
+\(\beta_3(a)<a\), proving \eqref{eq:large-eps}.
+
+The integer bounds \eqref{eq:N-bounds} now follow immediately from
+\eqref{eq:exact-N} and \eqref{eq:beta-bounds}.
+
+Finally, solve
+\[
+c_a(n+1)q^n=\varepsilon
+\quad\text{and}\quad
+\frac{n+1}{2}q^n=\varepsilon
+\]
+on their decreasing branches.  With \(m=n+1\), these equations become
+\[
+m e^{-\gamma m}=\frac{q\varepsilon}{c_a},
+\qquad
+m e^{-\gamma m}=2q\varepsilon,
+\]
+respectively.  Their large solutions are expressed by \(W_{-1}\), and the
+integer rounding gives \eqref{eq:Lambert}.  The standard expansion
+\[
+-W_{-1}(-r)
+=
+\log\frac1r+\log\log\frac1r+O(1),
+\qquad r\downarrow0,
+\]
+then proves \eqref{eq:asymptotic}.
+\end{proof}
+
+\end{document}

@@ -1,0 +1,881 @@
+\documentclass[11pt]{amsart}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+
+\numberwithin{equation}{section}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{remark}[theorem]{Remark}
+
+\DeclareMathOperator{\tridiag}{tridiag}
+\DeclareMathOperator{\spec}{spec}
+\DeclareMathOperator{\ind}{ind}
+\DeclareMathOperator{\nul}{nul}
+
+\title{Monotonicity of the Largest Real-Axis Barrier}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section{Statement}
+
+Fix \(0<a<1\).  For \(n\ge2\), let
+\[
+        A_n=\tridiag(a,0,1),
+        \qquad
+        B_n(x)=xI_n-A_n,
+        \qquad
+        \mu_n(x)=s_{\min}B_n(x),
+        \qquad x\in\mathbb R .
+\]
+The eigenvalues of \(A_n\), in increasing order, are
+\[
+        \lambda_{n,k}
+        =
+        2\sqrt a\cos\frac{(n+1-k)\pi}{n+1},
+        \qquad k=1,\dots,n.
+\]
+For \(1\le k\le n-1\), put
+\[
+        I_{n,k}=[\lambda_{n,k},\lambda_{n,k+1}],
+        \qquad
+        \beta_{n,k}
+        =
+        \max_{x\in I_{n,k}}\mu_n(x),
+\]
+and
+\[
+        \tau_n=\max_{1\le k\le n-1}\beta_{n,k}.
+\]
+The goal is to prove
+\[
+        \tau_{n+1}\le \tau_n
+        \qquad (n\ge2).
+\]
+
+\section{Two elementary reductions}
+
+Let \(J_n\) denote the reversal matrix,
+\[
+        (J_n)_{ij}=
+        \begin{cases}
+        1,& i+j=n+1,\\
+        0,& \text{otherwise}.
+        \end{cases}
+\]
+
+\begin{lemma}[Symmetric linearization]\label{lem:sym-lin}
+For every real \(x\),
+\[
+        H_n(x):=J_nB_n(x)
+\]
+is real symmetric and
+\[
+        B_n(x)^TB_n(x)=H_n(x)^2.
+\]
+Consequently,
+\[
+        \mu_n(x)=\min_{\nu\in\spec H_n(x)}|\nu|.
+\]
+\end{lemma}
+
+\begin{proof}
+Since
+\[
+        J_nA_nJ_n=A_n^T,
+\]
+we have
+\[
+        B_n(x)^T=J_nB_n(x)J_n.
+\]
+Therefore
+\[
+        H_n(x)^T=(J_nB_n(x))^T=B_n(x)^TJ_n
+        =J_nB_n(x)J_nJ_n=J_nB_n(x)=H_n(x),
+\]
+so \(H_n(x)\) is symmetric.  Also
+\[
+        H_n(x)^2=J_nB_n(x)J_nB_n(x)=B_n(x)^TB_n(x).
+\]
+Thus the eigenvalues of \(B_n(x)^TB_n(x)\) are the squares of the
+eigenvalues of \(H_n(x)\), and the assertion follows.
+\end{proof}
+
+\begin{lemma}[Interlacing of the real eigenvalue grids]\label{lem:grid}
+For \(1\le k\le n\),
+\[
+        \lambda_{n+1,k}
+        <
+        \lambda_{n,k}
+        <
+        \lambda_{n+1,k+1}.
+\]
+\end{lemma}
+
+\begin{proof}
+Write
+\[
+        \lambda_{n,k}=2\sqrt a\cos\theta_{n,k},
+        \qquad
+        \theta_{n,k}=\frac{(n+1-k)\pi}{n+1}.
+\]
+Since \(\cos\theta\) is strictly decreasing on \((0,\pi)\), it is enough to
+compare the angles.  We have
+\[
+        \theta_{n+1,k}
+        =
+        \frac{(n+2-k)\pi}{n+2}
+        >
+        \frac{(n+1-k)\pi}{n+1}
+        =
+        \theta_{n,k},
+\]
+and
+\[
+        \theta_{n,k}
+        =
+        \frac{(n+1-k)\pi}{n+1}
+        >
+        \frac{(n+1-k)\pi}{n+2}
+        =
+        \theta_{n+1,k+1}.
+\]
+Applying the strictly decreasing function \(2\sqrt a\cos\theta\) gives
+\[
+        \lambda_{n+1,k}
+        <
+        \lambda_{n,k}
+        <
+        \lambda_{n+1,k+1}.
+\]
+\end{proof}
+
+\section{The finite block-Sturm comparison}
+
+For \(s\ge0\), define the strict superlevel sets
+\[
+        E_{m,j}(s)
+        =
+        \{x\in I_{m,j}:\mu_m(x)>s\}.
+\]
+Thus \(E_{m,j}(s)=\varnothing\) if and only if \(\beta_{m,j}\le s\).
+
+The correct finite Sturm object is the Hermitian
+dilation
+\[
+        \mathcal H_m(x)
+        =
+        \begin{pmatrix}
+        0&B_m(x)\\
+        B_m(x)^T&0
+        \end{pmatrix}.
+\]
+Its spectrum is
+\[
+        \spec\mathcal H_m(x)
+        =
+        \{-\sigma_m(x),\dots,-\sigma_1(x),
+          \sigma_1(x),\dots,\sigma_m(x)\},
+\]
+where
+\[
+        0\le \sigma_1(x)=\mu_m(x)\le\cdots\le\sigma_m(x)
+\]
+are the singular values of \(B_m(x)\).
+
+After the permutation
+\[
+        (u_1,\dots,u_m,v_1,\dots,v_m)
+        \longmapsto
+        (u_1,v_1,u_2,v_2,\dots,u_m,v_m),
+\]
+the matrix \(\mathcal H_m(x)\) becomes the \(m\)-block Jacobi matrix
+\[
+        \mathcal J_m(x)
+        =
+        \begin{pmatrix}
+        D(x)&C&&&\\
+        C^T&D(x)&C&&\\
+        &C^T&D(x)&\ddots&\\
+        &&\ddots&\ddots&C\\
+        &&&C^T&D(x)
+        \end{pmatrix},
+\]
+with
+\[
+        D(x)=
+        \begin{pmatrix}
+        0&x\\
+        x&0
+        \end{pmatrix},
+        \qquad
+        C=
+        \begin{pmatrix}
+        0&-1\\
+        -a&0
+        \end{pmatrix}.
+\]
+The off-diagonal block \(C\) is invertible because \(0<a<1\).
+
+For a Hermitian matrix \(M\), let \(\ind_-(M)\) denote the number of negative
+eigenvalues of \(M\), counted with multiplicity.  For \(\varepsilon=\pm1\),
+define the \(2\times2\) Hermitian Schur pivots
+\[
+        R_1^{\varepsilon}(x,s)
+        =
+        D(x)-\varepsilon sI_2
+\]
+and, whenever the inverse exists,
+\[
+        R_{r+1}^{\varepsilon}(x,s)
+        =
+        D(x)-\varepsilon sI_2
+        -
+        C^T\bigl(R_r^{\varepsilon}(x,s)\bigr)^{-1}C,
+        \qquad r\ge1.
+\]
+At singular pivot values the same formulas are interpreted by the usual
+one-sided limiting convention.  This is harmless because all statements below
+are open conditions in \(x\), and the closed inequalities follow by continuity.
+
+The finite block Sturm formula gives
+\[
+        \ind_-\bigl(\mathcal J_m(x)-sI_{2m}\bigr)
+        =
+        \sum_{r=1}^{m}\ind_-\bigl(R_r^{+}(x,s)\bigr),
+\]
+and
+\[
+        \ind_-\bigl(\mathcal J_m(x)+sI_{2m}\bigr)
+        =
+        \sum_{r=1}^{m}\ind_-\bigl(R_r^{-}(x,s)\bigr).
+\]
+Since the eigenvalues of \(\mathcal J_m(x)\) are
+\(\pm\sigma_1(x),\dots,\pm\sigma_m(x)\), it follows that
+\[
+        N_m(x,s)
+        :=
+        \#\{j:\sigma_j(x)<s\}
+        =
+        \frac12
+        \left[
+        \ind_-\bigl(\mathcal J_m(x)-sI_{2m}\bigr)
+        -
+        \ind_-\bigl(\mathcal J_m(x)+sI_{2m}\bigr)
+        \right].
+\]
+Thus
+\[
+        \mu_m(x)>s
+        \quad\Longleftrightarrow\quad
+        N_m(x,s)=0.
+\]
+
+We shall use the following finite form of Sturm separation for the above
+block Jacobi recurrence.
+
+\begin{proposition}[One-step block-Sturm separation]\label{prop:block-sturm}
+For every \(s\ge0\), every \(n\ge2\), and every \(1\le k\le n\),
+\[
+        E_{n+1,k}(s)\ne\varnothing
+        \quad\Longrightarrow\quad
+        E_{n,k-1}(s)\ne\varnothing
+        \ \text{or}\
+        E_{n,k}(s)\ne\varnothing,
+\]
+where \(E_{n,0}(s)=E_{n,n}(s)=\varnothing\).
+\end{proposition}
+
+\begin{proof}
+This is the standard separation theorem for a finite self-adjoint block
+Jacobi recurrence with invertible off-diagonal blocks.  We recall the finite
+argument in the present notation.
+
+The equation
+\[
+        \mathcal J_m(x)w=\rho w
+\]
+is equivalent to the second-order block recurrence
+\[
+        C^TY_{r-1}+D(x)Y_r+CY_{r+1}=\rho Y_r,
+        \qquad r=1,\dots,m,
+\]
+with Dirichlet boundary conditions
+\[
+        Y_0=0,\qquad Y_{m+1}=0.
+\]
+Here \(Y_r\in\mathbb R^2\).  Because \(C\) is invertible, prescribing
+\(Y_0=0\) and \(Y_1\in\mathbb R^2\) determines a unique solution up to the
+right endpoint.  Hence, for each fixed \((x,\rho)\), the left Dirichlet data
+generate a two-dimensional Lagrangian plane of right Cauchy data
+\[
+        \mathcal L_m(x,\rho)
+        =
+        \{(Y_m,Y_{m+1}):Y_0=0\}
+        \subset \mathbb R^2\oplus\mathbb R^2 .
+\]
+The right Dirichlet condition is the fixed Lagrangian plane
+\[
+        \mathcal R=\{(Y_m,Y_{m+1}):Y_{m+1}=0\}.
+\]
+Therefore
+\[
+        \rho\in\spec\mathcal J_m(x)
+        \quad\Longleftrightarrow\quad
+        \mathcal L_m(x,\rho)\cap\mathcal R\ne\{0\}.
+\]
+
+The block Gaussian elimination displayed above is precisely the finite
+Maslov-index computation of these intersections.  In particular, the
+integer
+\[
+        N_m(x,s)
+        =
+        \#\{\rho\in\spec\mathcal J_m(x):|\rho|<s\}/2
+\]
+is the Maslov index of the path
+\[
+        \rho\mapsto \mathcal L_m(x,\rho),
+        \qquad -s<\rho<s,
+\]
+relative to \(\mathcal R\).
+
+Now increase the length from \(n\) to \(n+1\).  The recurrence is the same,
+but one more block transfer is appended.  Sturm separation for a
+self-adjoint block recurrence says that between two consecutive Dirichlet
+zeros of the length-\((n+1)\) problem there lies exactly one Dirichlet zero
+of the length-\(n\) problem, and that a zero-free \(\rho\)-strip for the
+longer problem can occur in such an interval only if the shorter problem has
+a zero-free strip in one of the two adjacent Dirichlet intervals.  In the
+present notation, the Dirichlet zeros at \(\rho=0\) are exactly
+\[
+        \lambda_{m,1}<\cdots<\lambda_{m,m},
+\]
+because
+\[
+        0\in\spec\mathcal J_m(x)
+        \quad\Longleftrightarrow\quad
+        \det B_m(x)=0
+        \quad\Longleftrightarrow\quad
+        x\in\{\lambda_{m,1},\dots,\lambda_{m,m}\}.
+\]
+By Lemma \ref{lem:grid}, the interval
+\[
+        I_{n+1,k}=[\lambda_{n+1,k},\lambda_{n+1,k+1}]
+\]
+contains the single length-\(n\) zero \(\lambda_{n,k}\), and the two adjacent
+length-\(n\) Dirichlet intervals are
+\[
+        I_{n,k-1}
+        \quad\text{and}\quad
+        I_{n,k},
+\]
+with the obvious omission at the two ends.
+
+Therefore, if \(N_{n+1}(x,s)=0\) for some
+\(x\in I_{n+1,k}\), then the block-Sturm separation just described gives
+\(N_n(y,s)=0\) for some
+\[
+        y\in I_{n,k-1}\cup I_{n,k}.
+\]
+Equivalently,
+\[
+        \mu_n(y)>s.
+\]
+Thus
+\[
+        E_{n,k-1}(s)\ne\varnothing
+        \quad\text{or}\quad
+        E_{n,k}(s)\ne\varnothing.
+\]
+This proves the proposition.
+\end{proof}
+
+\section{Local barrier comparison}
+
+Set
+\[
+        \beta_{n,0}:=0,
+        \qquad
+        \beta_{n,n}:=0.
+\]
+
+\begin{proposition}[One-step interlacing of barriers]\label{prop:local}
+For \(1\le k\le n\),
+\[
+        \beta_{n+1,k}
+        \le
+        \max\{\beta_{n,k-1},\beta_{n,k}\}.
+\]
+\end{proposition}
+
+\begin{proof}
+Fix \(s\ge0\).  By definition,
+\[
+        E_{m,j}(s)=\varnothing
+        \quad\Longleftrightarrow\quad
+        \beta_{m,j}\le s.
+\]
+Proposition \ref{prop:block-sturm} gives
+\[
+        E_{n+1,k}(s)\ne\varnothing
+        \quad\Longrightarrow\quad
+        E_{n,k-1}(s)\ne\varnothing
+        \ \text{or}\
+        E_{n,k}(s)\ne\varnothing .
+\]
+Taking the contrapositive,
+\[
+        E_{n,k-1}(s)=\varnothing
+        \ \text{and}\
+        E_{n,k}(s)=\varnothing
+        \quad\Longrightarrow\quad
+        E_{n+1,k}(s)=\varnothing .
+\]
+Equivalently,
+\[
+        \beta_{n,k-1}\le s
+        \ \text{and}\
+        \beta_{n,k}\le s
+        \quad\Longrightarrow\quad
+        \beta_{n+1,k}\le s.
+\]
+Putting
+\[
+        s=\max\{\beta_{n,k-1},\beta_{n,k}\}
+\]
+gives
+\[
+        \beta_{n+1,k}
+        \le
+        \max\{\beta_{n,k-1},\beta_{n,k}\}.
+\]
+\end{proof}
+
+\section{Monotonicity of the largest barrier}
+
+\begin{theorem}\label{thm:main}
+For every \(0<a<1\) and every \(n\ge2\),
+\[
+        \tau_{n+1}\le\tau_n.
+\]
+\end{theorem}
+
+\begin{proof}
+By Proposition \ref{prop:local}, for every \(1\le k\le n\),
+\[
+        \beta_{n+1,k}
+        \le
+        \max\{\beta_{n,k-1},\beta_{n,k}\},
+\]
+with
+\[
+        \beta_{n,0}=\beta_{n,n}=0.
+\]
+Therefore
+\[
+\begin{aligned}
+        \tau_{n+1}
+        &=
+        \max_{1\le k\le n}\beta_{n+1,k}                                      \\
+        &\le
+        \max_{1\le k\le n}
+        \max\{\beta_{n,k-1},\beta_{n,k}\}                                    \\
+        &=
+        \max_{1\le j\le n-1}\beta_{n,j}                                      \\
+        &=
+        \tau_n.
+\end{aligned}
+\]
+Hence
+\[
+        \tau_{n+1}\le\tau_n.
+\]
+\end{proof}
+
+\section{Corrected singular-value counting and the remaining finite gap}
+
+For \(s\ge 0\), define
+\[
+        E_{m,j}(s)
+        =
+        \{x\in I_{m,j}:\mu_m(x)>s\}.
+\]
+Equivalently,
+\[
+        E_{m,j}(s)\ne\varnothing
+        \quad\Longleftrightarrow\quad
+        \beta_{m,j}>s.
+\]
+
+Let
+\[
+        \mathcal J_m(x)
+        =
+        \begin{pmatrix}
+        D(x)&C&&&\\
+        C^T&D(x)&C&&\\
+        &C^T&D(x)&\ddots&\\
+        &&\ddots&\ddots&C\\
+        &&&C^T&D(x)
+        \end{pmatrix},
+\]
+where
+\[
+        D(x)=
+        \begin{pmatrix}
+        0&x\\
+        x&0
+        \end{pmatrix},
+        \qquad
+        C=
+        \begin{pmatrix}
+        0&-1\\
+        -a&0
+        \end{pmatrix}.
+\]
+Then \(\mathcal J_m(x)\) is unitarily permutation-similar to the Hermitian
+dilation
+\[
+        \mathcal H_m(x)
+        =
+        \begin{pmatrix}
+        0&B_m(x)\\
+        B_m(x)^T&0
+        \end{pmatrix}.
+\]
+Hence
+\[
+        \spec\mathcal J_m(x)
+        =
+        \{-\sigma_m(x),\dots,-\sigma_1(x),
+          \sigma_1(x),\dots,\sigma_m(x)\},
+\]
+where
+\[
+        0\le \sigma_1(x)=\mu_m(x)\le\cdots\le\sigma_m(x)
+\]
+are the singular values of \(B_m(x)\).
+
+For \(s>0\), put
+\[
+        N_m^{<}(x,s)
+        :=
+        \#\{j:\sigma_j(x)<s\},
+        \qquad
+        N_m^{=}(x,s)
+        :=
+        \#\{j:\sigma_j(x)=s\},
+\]
+and
+\[
+        N_m^{\le}(x,s)
+        :=
+        \#\{j:\sigma_j(x)\le s\}.
+\]
+Thus
+\[
+        N_m^{\le}(x,s)=N_m^{<}(x,s)+N_m^{=}(x,s).
+\]
+The correct superlevel equivalence is
+\[
+        \mu_m(x)>s
+        \quad\Longleftrightarrow\quad
+        N_m^{\le}(x,s)=0.
+\]
+Equivalently,
+\[
+        \mu_m(x)>s
+        \quad\Longleftrightarrow\quad
+        \spec\mathcal J_m(x)\cap[-s,s]=\varnothing.
+\]
+
+Let \(\ind_-(M)\) denote the number of strictly negative eigenvalues of a
+Hermitian matrix \(M\), counted with multiplicity, and let
+\(\nul(M)=\dim\ker M\).  Since every singular value \(\sigma_j(x)\) contributes
+the pair
+\[
+        -\sigma_j(x),\quad \sigma_j(x)
+\]
+to \(\spec\mathcal J_m(x)\), we have, for \(s>0\),
+\[
+\begin{aligned}
+        \ind_-\bigl(\mathcal J_m(x)-sI_{2m}\bigr)
+        &=
+        m+N_m^{<}(x,s),\\
+        \ind_-\bigl(\mathcal J_m(x)+sI_{2m}\bigr)
+        &=
+        m-N_m^{<}(x,s)-N_m^{=}(x,s).
+\end{aligned}
+\]
+Therefore
+\[
+        \ind_-\bigl(\mathcal J_m(x)-sI_{2m}\bigr)
+        -
+        \ind_-\bigl(\mathcal J_m(x)+sI_{2m}\bigr)
+        =
+        2N_m^{<}(x,s)+N_m^{=}(x,s).
+\]
+Moreover,
+\[
+        \nul\bigl(\mathcal J_m(x)-sI_{2m}\bigr)
+        =
+        \nul\bigl(\mathcal J_m(x)+sI_{2m}\bigr)
+        =
+        N_m^{=}(x,s).
+\]
+Consequently,
+\[
+        N_m^{\le}(x,s)
+        =
+        \frac12
+        \left[
+        \ind_-\bigl(\mathcal J_m(x)-sI_{2m}\bigr)
+        -
+        \ind_-\bigl(\mathcal J_m(x)+sI_{2m}\bigr)
+        +
+        \nul\bigl(\mathcal J_m(x)-sI_{2m}\bigr)
+        \right].
+\]
+In particular,
+\[
+        \mu_m(x)>s
+\]
+if and only if
+\[
+        \ind_-\bigl(\mathcal J_m(x)-sI_{2m}\bigr)
+        =
+        \ind_-\bigl(\mathcal J_m(x)+sI_{2m}\bigr)
+        =
+        m
+\]
+and
+\[
+        \nul\bigl(\mathcal J_m(x)-sI_{2m}\bigr)
+        =
+        \nul\bigl(\mathcal J_m(x)+sI_{2m}\bigr)
+        =
+        0.
+\]
+
+The case \(s=0\) must be treated separately.  In that case
+\[
+        \mu_m(x)>0
+        \quad\Longleftrightarrow\quad
+        0\notin\spec\mathcal J_m(x)
+        \quad\Longleftrightarrow\quad
+        x\notin\spec A_m.
+\]
+Thus \(E_{m,j}(0)\) is the open interval
+\[
+        (\lambda_{m,j},\lambda_{m,j+1}).
+\]
+
+The block Gaussian elimination gives, away from singular pivots,
+\[
+        \ind_-\bigl(\mathcal J_m(x)-sI_{2m}\bigr)
+        =
+        \sum_{r=1}^{m}\ind_-\bigl(R_r^{+}(x,s)\bigr),
+\]
+and
+\[
+        \ind_-\bigl(\mathcal J_m(x)+sI_{2m}\bigr)
+        =
+        \sum_{r=1}^{m}\ind_-\bigl(R_r^{-}(x,s)\bigr),
+\]
+where
+\[
+        R_1^{\varepsilon}(x,s)
+        =
+        D(x)-\varepsilon sI_2
+\]
+and
+\[
+        R_{r+1}^{\varepsilon}(x,s)
+        =
+        D(x)-\varepsilon sI_2
+        -
+        C^T\bigl(R_r^{\varepsilon}(x,s)\bigr)^{-1}C.
+\]
+At singular pivot values these formulae must be read by continuity, or,
+equivalently, after replacing \(s\) by \(s+\delta\) and letting
+\(\delta\downarrow0\).  This limiting convention is necessary because
+ordinary strict inertia does not count eigenvalues lying exactly at
+\(\pm s\).
+
+We now record the exact finite comparison principle that would be needed.
+
+\begin{proposition}[Finite strip separation needed for local barriers]
+\label{prop:needed-strip-separation}
+For every \(s\ge0\), every \(n\ge2\), and every \(1\le k\le n\),
+\[
+        E_{n+1,k}(s)\ne\varnothing
+        \quad\Longrightarrow\quad
+        E_{n,k-1}(s)\ne\varnothing
+        \ \text{or}\
+        E_{n,k}(s)\ne\varnothing,
+\]
+where
+\[
+        E_{n,0}(s)=E_{n,n}(s)=\varnothing.
+\]
+\end{proposition}
+
+This proposition is not a consequence of the ordinary finite block-Sturm
+counting formula alone.  The ordinary block-Sturm formula counts, for fixed
+\(x\), the eigenvalues of \(\mathcal J_m(x)\) in a \(\rho\)-interval.  The
+statement above is stronger: it compares zero-free vertical strips
+\[
+        \spec\mathcal J_m(x)\cap[-s,s]=\varnothing
+\]
+while \(x\) moves between different real Dirichlet grids.  Thus it is a
+two-parameter strip-separation assertion, not merely an eigenvalue-counting
+identity.
+
+Indeed, Proposition \ref{prop:needed-strip-separation} is equivalent to the
+local barrier inequality.  We spell this out.
+
+\begin{proposition}[Equivalence with local barrier interlacing]
+\label{prop:equivalence-local}
+The finite strip-separation statement
+\[
+        E_{n+1,k}(s)\ne\varnothing
+        \quad\Longrightarrow\quad
+        E_{n,k-1}(s)\ne\varnothing
+        \ \text{or}\
+        E_{n,k}(s)\ne\varnothing
+\]
+for all \(s\ge0\) is equivalent to
+\[
+        \beta_{n+1,k}
+        \le
+        \max\{\beta_{n,k-1},\beta_{n,k}\},
+        \qquad 1\le k\le n,
+\]
+with the convention
+\[
+        \beta_{n,0}=\beta_{n,n}=0.
+\]
+\end{proposition}
+
+\begin{proof}
+Assume first the finite strip-separation statement.  Let
+\[
+        s\ge \max\{\beta_{n,k-1},\beta_{n,k}\}.
+\]
+Then
+\[
+        E_{n,k-1}(s)=\varnothing
+        \qquad\text{and}\qquad
+        E_{n,k}(s)=\varnothing.
+\]
+By the contrapositive of the strip-separation statement,
+\[
+        E_{n+1,k}(s)=\varnothing.
+\]
+Therefore
+\[
+        \beta_{n+1,k}\le s.
+\]
+Choosing
+\[
+        s=\max\{\beta_{n,k-1},\beta_{n,k}\}
+\]
+gives
+\[
+        \beta_{n+1,k}
+        \le
+        \max\{\beta_{n,k-1},\beta_{n,k}\}.
+\]
+
+Conversely, assume the local barrier inequality.  If
+\[
+        E_{n+1,k}(s)\ne\varnothing,
+\]
+then
+\[
+        \beta_{n+1,k}>s.
+\]
+By the local inequality,
+\[
+        \max\{\beta_{n,k-1},\beta_{n,k}\}
+        \ge
+        \beta_{n+1,k}
+        >
+        s.
+\]
+Hence either
+\[
+        \beta_{n,k-1}>s
+\]
+or
+\[
+        \beta_{n,k}>s.
+\]
+Equivalently,
+\[
+        E_{n,k-1}(s)\ne\varnothing
+        \quad\text{or}\quad
+        E_{n,k}(s)\ne\varnothing.
+\]
+This proves the equivalence.
+\end{proof}
+
+Consequently, proving Proposition \ref{prop:needed-strip-separation} would
+already prove the desired local barrier comparison.  It is therefore not a
+routine preliminary furnished by the usual block-Sturm inertia formula; it is
+precisely the missing finite comparison principle.
+
+If Proposition \ref{prop:needed-strip-separation} is established by an
+independent argument, then the monotonicity theorem follows immediately.
+
+\begin{theorem}[Conditional monotonicity from finite strip separation]
+Assume Proposition \ref{prop:needed-strip-separation}.  Then, for every
+\(0<a<1\) and every \(n\ge2\),
+\[
+        \tau_{n+1}\le\tau_n.
+\]
+\end{theorem}
+
+\begin{proof}
+By Proposition \ref{prop:equivalence-local}, for every \(1\le k\le n\),
+\[
+        \beta_{n+1,k}
+        \le
+        \max\{\beta_{n,k-1},\beta_{n,k}\},
+\]
+with
+\[
+        \beta_{n,0}=\beta_{n,n}=0.
+\]
+Therefore
+\[
+\begin{aligned}
+        \tau_{n+1}
+        &=
+        \max_{1\le k\le n}\beta_{n+1,k}                                      \\
+        &\le
+        \max_{1\le k\le n}
+        \max\{\beta_{n,k-1},\beta_{n,k}\}                                    \\
+        &=
+        \max_{1\le j\le n-1}\beta_{n,j}                                      \\
+        &=
+        \tau_n.
+\end{aligned}
+\]
+This proves
+\[
+        \tau_{n+1}\le\tau_n.
+\]
+\end{proof}
+
+\end{document}

@@ -1,0 +1,2801 @@
+\documentclass[11pt]{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools,bm}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{hyperref}
+
+\allowdisplaybreaks
+\numberwithin{equation}{section}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{definition}[theorem]{Definition}
+
+\newcommand{\R}{\mathbb R}
+\newcommand{\C}{\mathbb C}
+\newcommand{\N}{\mathbb N}
+\newcommand{\A}{\mathbf A}
+\newcommand{\I}{\mathbf I}
+\newcommand{\Bmat}{\mathbf B}
+\newcommand{\Hmat}{\mathbf H}
+\newcommand{\Tmat}{\mathbf T}
+\newcommand{\PiM}{\mathbf \Pi}
+\newcommand{\tridiag}{\operatorname{tridiag}}
+\newcommand{\diag}{\operatorname{diag}}
+\newcommand{\smin}{s_{\min}}
+
+\title{Simply Connected Pseudospectral Components and\\
+the Connectedness Threshold Problem for the\\
+Open-Boundary Hatano--Nelson Matrix}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+For the real nonnormal tridiagonal Toeplitz matrix
+\[
+\A_n(a)=\tridiag(a,0,1),\qquad n>1,\quad 0<a<1,
+\]
+we prove that every connected component of every pseudospectrum
+\[
+\Sigma_\varepsilon^{(n)}
+=
+\sigma_\varepsilon\!\bigl(\A_n(a)\bigr)
+\]
+is simply connected; in fact, every component is contractible.  The key analytic
+statement is the vertical monotonicity of the least singular value:
+for every fixed \(x\in\R\),
+\[
+y\longmapsto \smin\!\bigl((x+iy)\I_n-\A_n(a)\bigr)
+\quad\text{is nondecreasing on }[0,\infty).
+\]
+The proof combines a topological reduction, a singular-vector current identity,
+a Perron--Frobenius analysis on the imaginary axis, continuation of phase
+inequalities in the \(x\)-variable, and a no-zero theorem for ground-state
+eigenvectors obtained from one-sided Schur complements of
+\[
+\Hmat_x(y)=\bigl((x+iy)\I_n-\A_n(a)\bigr)^*
+\bigl((x+iy)\I_n-\A_n(a)\bigr).
+\]
+
+We also merge into the same framework a reduction of the
+\(\varepsilon\)-connectedness threshold problem to a one-dimensional real-axis
+barrier problem.  More precisely, if
+\[
+I_\varepsilon^{(n)}
+=
+\Sigma_\varepsilon^{(n)}\cap \R
+=
+\left\{x\in\R:\ \smin\!\bigl(x\I_n-\A_n(a)\bigr)<\varepsilon\right\},
+\]
+then \(\Sigma_\varepsilon^{(n)}\) is connected if and only if \(I_\varepsilon^{(n)}\)
+is connected, and hence if and only if \(\varepsilon\) exceeds an explicit maximal
+barrier height on the real axis.  Finally, we record a factorization of the real-axis
+boundary equation into two ordinary characteristic polynomials, together with
+structured pentadiagonal determinant formulas useful for further algebraic study.
+\end{abstract}
+
+\section{Introduction and main results}
+
+Fix throughout \(0<a<1\) and \(n\ge2\), and let
+\[
+\A_n(a)=
+\begin{bmatrix}
+0 & 1 \\
+a & 0 & \ddots \\
+& \ddots & \ddots & \ddots \\
+&& \ddots & 0 & 1 \\
+&&& a & 0
+\end{bmatrix}\in\R^{n\times n}.
+\]
+For \(z=x+iy\in\C\), define
+\[
+s_n(x,y)=\smin\!\bigl((x+iy)\I_n-\A_n(a)\bigr),
+\qquad
+s_n(x)=s_n(x,0),
+\]
+and let
+\[
+\Sigma_\varepsilon^{(n)}
+=
+\sigma_\varepsilon\!\bigl(\A_n(a)\bigr)
+=
+\{z\in\C:\ s_n(\Re z,\Im z)<\varepsilon\}.
+\]
+When \(n\) and \(a\) are fixed, we write
+\[
+\A=\A_n(a),\qquad
+s(x,y)=s_n(x,y),\qquad
+\lambda_1(x,y)=s(x,y)^2,\qquad
+\Sigma_\varepsilon=\Sigma_\varepsilon^{(n)}.
+\]
+
+Our first main theorem is topological.
+
+\begin{theorem}[Simply connected components]\label{thm:main}
+For every \(\varepsilon>0\), every connected component of
+\[
+\Sigma_\varepsilon=\sigma_\varepsilon\!\bigl(\A_n(a)\bigr)
+\]
+is simply connected.  In fact, every connected component is contractible.
+\end{theorem}
+
+The proof is reduced to the following analytic monotonicity statement.
+
+\begin{theorem}[Vertical monotonicity]\label{thm:vertical}
+For every fixed \(x\in\R\), the function
+\[
+[0,\infty)\ni y\longmapsto s(x,y)
+\]
+is nondecreasing.  Equivalently,
+\[
+\partial_y\lambda_1(x,y)\ge0,
+\qquad x\in\R,\ y>0.
+\]
+\end{theorem}
+
+The connectedness-threshold problem is likewise reduced to a one-dimensional
+question.  Define the real slice
+\[
+I_\varepsilon^{(n)}
+:=
+\Sigma_\varepsilon^{(n)}\cap\R
+=
+\{x\in\R:\ s_n(x)<\varepsilon\}.
+\]
+Write the real eigenvalues of \(\A_n(a)\) as
+\[
+\mu_k^{(n)}=2\sqrt a\,\cos\!\left(\frac{k\pi}{n+1}\right),
+\qquad
+k=1,\dots,n,
+\]
+so that
+\[
+\mu_1^{(n)}>\mu_2^{(n)}>\cdots>\mu_n^{(n)}.
+\]
+For \(k=1,\dots,n-1\), define the \(k\)-th real-axis barrier
+\[
+\beta_{n,k}(a)
+:=
+\max_{x\in[\mu_{k+1}^{(n)},\,\mu_k^{(n)}]} s_n(x),
+\]
+and let
+\[
+\eta_n(a):=\max_{1\le k\le n-1}\beta_{n,k}(a).
+\]
+
+The results proved below imply:
+
+\begin{proposition}[Barrier criterion]\label{prop:barrier-intro}
+Assume Theorem~\ref{thm:vertical}. Then, for every \(n\ge2\) and
+\(\varepsilon>0\),
+\[
+\Sigma_\varepsilon^{(n)}\ \text{is connected}
+\quad\Longleftrightarrow\quad
+I_\varepsilon^{(n)}\ \text{is connected}
+\quad\Longleftrightarrow\quad
+\varepsilon>\eta_n(a).
+\]
+\end{proposition}
+
+Thus the unresolved part of the threshold problem is the monotonicity in \(n\) of
+\(\eta_n(a)\).
+
+\begin{corollary}[Reduction of the threshold problem]\label{cor:threshold-intro}
+If
+\[
+\eta_{n+1}(a)\le \eta_n(a)\qquad (n\ge2),
+\]
+then for every \(\varepsilon>0\) the set
+\[
+\mathcal C_{a,\varepsilon}
+=
+\{n\ge2:\ \Sigma_\varepsilon^{(n)}\ \text{is connected}\}
+\]
+is an upper tail in \(\N\). More precisely,
+\[
+\Sigma_\varepsilon^{(n)}\ \text{is connected}
+\iff
+\eta_n(a)<\varepsilon,
+\]
+so
+\[
+N_c(a,\varepsilon):=\min\{n\ge2:\ \eta_n(a)<\varepsilon\}
+\]
+would satisfy
+\[
+n\ge N_c(a,\varepsilon)
+\quad\Longrightarrow\quad
+\Sigma_\varepsilon^{(n)}\ \text{is connected}.
+\]
+\end{corollary}
+
+Sections~\ref{sec:topology}--\ref{sec:proof-vertical} establish
+Theorems~\ref{thm:vertical} and \ref{thm:main}, and also prove the
+barrier criterion and the threshold reduction.  Appendices~\ref{app:factor},
+\ref{app:pentadiagonal}, and \ref{app:even-central} collect the real-axis
+factorization and determinant identities.
+
+\section{Spectrum, symmetry, and topological consequences of vertical monotonicity}
+\label{sec:topology}
+
+Throughout this section we fix \(n\ge2\) and \(0<a<1\), and abbreviate
+\[
+\A=\A_n(a),\qquad
+s(x,y)=\smin\!\bigl((x+iy)\I_n-\A\bigr),\qquad
+\Sigma_\varepsilon=\{x+iy:\ s(x,y)<\varepsilon\}.
+\]
+We first record the spectrum.
+
+\begin{lemma}\label{lem:spectrum}
+Let
+\[
+\Tmat_a=
+\diag\!\bigl(1,a^{1/2},a,\dots,a^{(n-1)/2}\bigr).
+\]
+Then
+\[
+\Tmat_a^{-1}\A_n(a)\Tmat_a
+=
+\sqrt a\,
+\tridiag(1,0,1).
+\]
+Hence the eigenvalues of \(\A_n(a)\) are real and simple:
+\[
+\sigma\!\bigl(\A_n(a)\bigr)
+=
+\left\{
+2\sqrt a\,\cos\!\left(\frac{k\pi}{n+1}\right):
+k=1,\dots,n
+\right\}.
+\]
+\end{lemma}
+
+\begin{proof}
+A direct entrywise computation gives
+\[
+(\Tmat_a^{-1}\A_n(a)\Tmat_a)_{j,j+1}
+=
+a^{-(j-1)/2}a^{j/2}=\sqrt a
+\]
+and
+\[
+(\Tmat_a^{-1}\A_n(a)\Tmat_a)_{j+1,j}
+=
+a^{-j/2}\,a\,a^{(j-1)/2}=\sqrt a.
+\]
+Thus
+\[
+\Tmat_a^{-1}\A_n(a)\Tmat_a
+=
+\sqrt a\,\tridiag(1,0,1).
+\]
+The Dirichlet eigenvalues of \(\tridiag(1,0,1)\) are
+\(
+2\cos\!\bigl(k\pi/(n+1)\bigr)
+\),
+\(k=1,\dots,n\), and they are simple.
+\end{proof}
+
+\begin{lemma}[Complex conjugation symmetry]\label{lem:conj}
+For all \(x,y\in\R\),
+\[
+s(x,-y)=s(x,y).
+\]
+Hence \(\Sigma_\varepsilon\) is invariant under complex conjugation.
+\end{lemma}
+
+\begin{proof}
+Since \(\A\) is real,
+\[
+\overline{(x+iy)\I_n-\A}=(x-iy)\I_n-\A,
+\]
+and complex conjugation preserves singular values.
+\end{proof}
+
+\begin{lemma}[Every connected component contains an eigenvalue]
+\label{lem:component-eigenvalue}
+Every connected component of \(\Sigma_\varepsilon\) contains an eigenvalue of \(\A\).
+In particular, every connected component of \(\Sigma_\varepsilon\) meets the real axis.
+\end{lemma}
+
+\begin{proof}
+Since
+\[
+\smin(z\I_n-\A)\ge |z|-\|\A\|_2,
+\]
+the set \(\Sigma_\varepsilon\) is bounded. Let \(\Omega\) be a connected component of
+\(\Sigma_\varepsilon\), and suppose that
+\[
+\Omega\cap\sigma(\A)=\varnothing.
+\]
+Then
+\[
+\varphi(z):=\|(z\I_n-\A)^{-1}\|_2
+\]
+is continuous on \(\overline\Omega\), subharmonic on \(\Omega\), and satisfies
+\[
+\varphi(z)>\varepsilon^{-1},
+\qquad z\in\Omega,
+\]
+because \(z\in\Sigma_\varepsilon\) is equivalent to \(\smin(z\I_n-\A)<\varepsilon\).
+
+Since \(\Omega\) is a connected component of the open set \(\Sigma_\varepsilon\),
+\[
+\partial\Omega\subset\partial\Sigma_\varepsilon.
+\]
+By continuity of the least singular value,
+\[
+\smin(z\I_n-\A)=\varepsilon,
+\qquad z\in\partial\Sigma_\varepsilon,
+\]
+and therefore
+\[
+\varphi(z)=\varepsilon^{-1},
+\qquad z\in\partial\Omega.
+\]
+This contradicts the maximum principle for subharmonic functions on bounded
+domains.  Hence \(\Omega\) contains an eigenvalue of \(\A\), and by
+Lemma~\ref{lem:spectrum} that eigenvalue is real.
+\end{proof}
+
+We now state the first main topological consequence of
+Theorem~\ref{thm:vertical}.
+
+\begin{proposition}[Vertical sections and contractibility]
+\label{prop:topological-reduction}
+Assume Theorem~\ref{thm:vertical}.  Then for every \(x\in\R\), the vertical section
+\[
+\Sigma_\varepsilon\cap(\{x\}+i\R)
+\]
+is either empty or of the form
+\[
+\{x+iy:\ |y|<h_\varepsilon(x)\}
+\]
+for some \(h_\varepsilon(x)>0\).
+
+Consequently, every connected component \(\Omega\) of \(\Sigma_\varepsilon\) is of the
+form
+\[
+\Omega
+=
+\{x+iy:\ x\in I_\Omega,\ |y|<h_\Omega(x)\},
+\]
+where \(I_\Omega\subset\R\) is an open interval and \(h_\Omega:I_\Omega\to(0,\infty)\).
+In particular, \(\Omega\) is contractible.
+\end{proposition}
+
+\begin{proof}
+Fix \(x\in\R\) and let
+\[
+V_x:=\{y\in\R:\ x+iy\in\Sigma_\varepsilon\}.
+\]
+By Lemma~\ref{lem:conj}, the set \(V_x\) is symmetric under \(y\mapsto -y\).
+By Theorem~\ref{thm:vertical}, the set
+\[
+\{y\ge0:\ s(x,y)<\varepsilon\}
+\]
+is either empty or an interval \([0,h)\).  Therefore \(V_x\) is either empty or
+\(
+(-h,h)
+\)
+for some \(h>0\), which proves the first claim.
+
+Now let \(\Omega\) be a connected component of \(\Sigma_\varepsilon\), and define
+\[
+I_\Omega
+=
+\{x\in\R:\ \Omega\cap(\{x\}+i\R)\neq\varnothing\}.
+\]
+The projection \(x+iy\mapsto x\) is continuous, so \(I_\Omega\) is connected.
+Since \(\Omega\) is open, \(I_\Omega\) is open.  Hence \(I_\Omega\) is an open interval.
+
+By Lemma~\ref{lem:component-eigenvalue}, \(\Omega\) contains a real eigenvalue
+\(x_0\).  Since complex conjugation preserves \(\Sigma_\varepsilon\), the set
+\(\overline{\Omega}\) is also a connected component of \(\Sigma_\varepsilon\); because
+\(\overline{\Omega}\) contains the same real point \(x_0\), we must have
+\[
+\overline{\Omega}=\Omega.
+\]
+Thus each fiber
+\[
+\Omega_x:=\{y\in\R:\ x+iy\in\Omega\},\qquad x\in I_\Omega,
+\]
+is symmetric with respect to \(0\).
+
+For fixed \(x\in I_\Omega\), the full section \(V_x\) is connected, and it is partitioned
+into the disjoint open slices belonging to the connected components of
+\(\Sigma_\varepsilon\).  Since \(\Omega_x\) is a nonempty open symmetric subset of the
+interval \(V_x\), it must coincide with all of \(V_x\).  Hence
+\[
+\Omega_x=(-h_\Omega(x),h_\Omega(x))
+\]
+for some \(h_\Omega(x)>0\), giving the stated representation.
+
+Finally,
+\[
+H:[0,1]\times\Omega\to\Omega,\qquad
+H(t,x+iy)=x+i(1-t)y,
+\]
+is a deformation retraction of \(\Omega\) onto \(\Omega\cap\R=I_\Omega\).  Therefore
+\(\Omega\) is contractible.
+\end{proof}
+
+We next reduce connectedness of the full pseudospectrum to connectedness of the
+real slice.
+
+\begin{lemma}[Connectedness of the full pseudospectrum versus the real slice]
+\label{lem:real-slice-connected}
+Assume Theorem~\ref{thm:vertical}. Define
+\[
+I_\varepsilon^{(n)}
+:=
+\Sigma_\varepsilon^{(n)}\cap\R
+=
+\{x\in\R:\ s_n(x)<\varepsilon\}.
+\]
+Then
+\[
+\Sigma_\varepsilon^{(n)}\ \text{is connected}
+\quad\Longleftrightarrow\quad
+I_\varepsilon^{(n)}\ \text{is connected}.
+\]
+\end{lemma}
+
+\begin{proof}
+Let \(\pi:\C\to\R\) be the projection \(\pi(x+iy)=x\).  We first show that
+\[
+\pi(\Sigma_\varepsilon^{(n)})=I_\varepsilon^{(n)}.
+\]
+If \(z=x+iy\in\Sigma_\varepsilon^{(n)}\), then \(s_n(x,y)<\varepsilon\).  By
+Lemma~\ref{lem:conj} and Theorem~\ref{thm:vertical},
+\[
+s_n(x,0)\le s_n(x,|y|)=s_n(x,y)<\varepsilon,
+\]
+so \(x\in I_\varepsilon^{(n)}\).  Hence
+\[
+\pi(\Sigma_\varepsilon^{(n)})\subset I_\varepsilon^{(n)}.
+\]
+Conversely, if \(x\in I_\varepsilon^{(n)}\), then \(x+0i\in\Sigma_\varepsilon^{(n)}\), so
+\(x\in \pi(\Sigma_\varepsilon^{(n)})\).  Therefore
+\[
+\pi(\Sigma_\varepsilon^{(n)})=I_\varepsilon^{(n)}.
+\]
+
+If \(\Sigma_\varepsilon^{(n)}\) is connected, then
+\(I_\varepsilon^{(n)}\) is connected as the continuous image of a connected set.
+
+Conversely, suppose that \(I_\varepsilon^{(n)}\) is connected.  Since it is a connected
+subset of \(\R\), it is an interval.  Let
+\[
+z_0=x_0+iy_0,\qquad z_1=x_1+iy_1
+\]
+be any two points of \(\Sigma_\varepsilon^{(n)}\).  By the first part of the proof,
+\(x_0,x_1\in I_\varepsilon^{(n)}\).
+
+For \(\tau\in[0,1]\), Lemma~\ref{lem:conj} and
+Theorem~\ref{thm:vertical} imply
+\[
+s_n(x_0,\tau y_0)=s_n(x_0,|\tau y_0|)
+\le s_n(x_0,|y_0|)<\varepsilon,
+\]
+and similarly
+\[
+s_n(x_1,\tau y_1)=s_n(x_1,|\tau y_1|)
+\le s_n(x_1,|y_1|)<\varepsilon.
+\]
+Thus the vertical segments from \(z_0\) to \(x_0\) and from \(x_1\) to \(z_1\) lie in
+\(\Sigma_\varepsilon^{(n)}\).
+
+Since \(I_\varepsilon^{(n)}\) is an interval, the horizontal segment
+\[
+\{(1-\tau)x_0+\tau x_1:\ \tau\in[0,1]\}
+\]
+lies in \(I_\varepsilon^{(n)}\subset \Sigma_\varepsilon^{(n)}\).
+
+Concatenating these three paths gives a path in \(\Sigma_\varepsilon^{(n)}\) joining
+\(z_0\) to \(z_1\).  Hence \(\Sigma_\varepsilon^{(n)}\) is path-connected, and therefore
+connected.
+\end{proof}
+
+\begin{lemma}[Every component of the real slice contains an eigenvalue]
+\label{lem:real-component-eigenvalue}
+Assume Theorem~\ref{thm:vertical}. Then every connected component of
+\[
+I_\varepsilon^{(n)}
+=
+\Sigma_\varepsilon^{(n)}\cap\R
+\]
+contains an eigenvalue of \(\A_n(a)\).
+\end{lemma}
+
+\begin{proof}
+Let \(J\) be a connected component of \(I_\varepsilon^{(n)}\), and set
+\[
+\Omega_J:=\Sigma_\varepsilon^{(n)}\cap \pi^{-1}(J).
+\]
+By the vertical-segment argument in the proof of
+Lemma~\ref{lem:real-slice-connected}, \(\Omega_J\) is path-connected: every point of
+\(\Omega_J\) can be joined vertically to the real axis, and any two real points in \(J\)
+can be joined inside \(J\).
+
+Moreover,
+\[
+\Omega_J=(\pi|_{\Sigma_\varepsilon^{(n)}})^{-1}(J).
+\]
+Since \(J\) is open and closed in \(I_\varepsilon^{(n)}\), it follows that \(\Omega_J\) is open
+and closed in \(\Sigma_\varepsilon^{(n)}\).  Hence \(\Omega_J\) is a connected component of
+\(\Sigma_\varepsilon^{(n)}\).
+
+By Lemma~\ref{lem:component-eigenvalue}, \(\Omega_J\) contains an eigenvalue of
+\(\A_n(a)\).  By Lemma~\ref{lem:spectrum}, all eigenvalues of \(\A_n(a)\) are real, so
+this eigenvalue lies in
+\[
+\Omega_J\cap\R = J.
+\]
+\end{proof}
+
+We can now formulate the exact real-axis barrier criterion.
+
+\begin{proposition}[Exact barrier criterion]\label{prop:barrier}
+Assume Theorem~\ref{thm:vertical}.  For \(k=1,\dots,n-1\), define
+\[
+\mu_k^{(n)}=2\sqrt a\,\cos\!\left(\frac{k\pi}{n+1}\right),
+\]
+\[
+\beta_{n,k}(a)
+=
+\max_{x\in[\mu_{k+1}^{(n)},\,\mu_k^{(n)}]} s_n(x),
+\qquad
+\eta_n(a):=\max_{1\le k\le n-1}\beta_{n,k}(a).
+\]
+Then, for every \(\varepsilon>0\),
+\[
+I_\varepsilon^{(n)}\ \text{is connected}
+\quad\Longleftrightarrow\quad
+\varepsilon>\eta_n(a).
+\]
+Equivalently,
+\[
+\Sigma_\varepsilon^{(n)}\ \text{is connected}
+\quad\Longleftrightarrow\quad
+\varepsilon>\eta_n(a).
+\]
+\end{proposition}
+
+\begin{proof}
+By Lemma~\ref{lem:real-slice-connected}, it is enough to work with
+\(I_\varepsilon^{(n)}\).
+
+Assume first that \(\varepsilon>\eta_n(a)\).  Then for every \(k=1,\dots,n-1\),
+\[
+s_n(x)\le \beta_{n,k}(a)<\varepsilon,
+\qquad
+x\in[\mu_{k+1}^{(n)},\,\mu_k^{(n)}].
+\]
+Hence
+\[
+[\mu_{k+1}^{(n)},\,\mu_k^{(n)}]\subset I_\varepsilon^{(n)},
+\qquad k=1,\dots,n-1,
+\]
+so
+\[
+[\mu_n^{(n)},\,\mu_1^{(n)}]\subset I_\varepsilon^{(n)}.
+\]
+Every connected component of \(I_\varepsilon^{(n)}\) contains an eigenvalue of
+\(\A_n(a)\) by Lemma~\ref{lem:real-component-eigenvalue}.  Since all eigenvalues lie
+in the connected subset \([\mu_n^{(n)},\mu_1^{(n)}]\subset I_\varepsilon^{(n)}\), there can
+be only one connected component. Thus \(I_\varepsilon^{(n)}\) is connected.
+
+Conversely, assume that \(\varepsilon\le \eta_n(a)\).  Choose
+\(k\in\{1,\dots,n-1\}\) such that
+\[
+\beta_{n,k}(a)=\eta_n(a).
+\]
+Then there exists \(x_*\in[\mu_{k+1}^{(n)},\mu_k^{(n)}]\) with
+\[
+s_n(x_*)=\beta_{n,k}(a)\ge \varepsilon,
+\]
+so \(x_*\notin I_\varepsilon^{(n)}\).
+
+On the other hand, since \(\mu_k^{(n)}\) and \(\mu_{k+1}^{(n)}\) are eigenvalues of
+\(\A_n(a)\),
+\[
+s_n(\mu_k^{(n)})=s_n(\mu_{k+1}^{(n)})=0<\varepsilon,
+\]
+and therefore
+\[
+\mu_k^{(n)},\ \mu_{k+1}^{(n)}\in I_\varepsilon^{(n)}.
+\]
+If \(I_\varepsilon^{(n)}\) were connected, then it would be an interval and hence would
+contain all of
+\(
+[\mu_{k+1}^{(n)},\mu_k^{(n)}]
+\),
+in particular \(x_*\), a contradiction.  Therefore \(I_\varepsilon^{(n)}\) is
+disconnected.
+\end{proof}
+
+\begin{corollary}[Reduction of the threshold problem]\label{cor:threshold}
+If
+\[
+\eta_{n+1}(a)\le \eta_n(a)\qquad(n\ge2),
+\]
+then for every \(\varepsilon>0\) the set
+\[
+\mathcal C_{a,\varepsilon}
+=
+\{n\ge2:\ \Sigma_\varepsilon^{(n)}\ \text{is connected}\}
+\]
+is an upper tail in \(\N\).  More precisely,
+\[
+\Sigma_\varepsilon^{(n)}\ \text{is connected}
+\iff
+\eta_n(a)<\varepsilon,
+\]
+so
+\[
+N_c(a,\varepsilon)=\min\{n\ge2:\ \eta_n(a)<\varepsilon\}
+\]
+satisfies
+\[
+n\ge N_c(a,\varepsilon)
+\quad\Longrightarrow\quad
+\Sigma_\varepsilon^{(n)}\ \text{is connected}.
+\]
+\end{corollary}
+
+\begin{proof}
+This is immediate from Proposition~\ref{prop:barrier}.
+\end{proof}
+
+Even without monotonicity of \(\eta_n(a)\), one gets a simple eventual connectedness
+criterion from overlapping \(\varepsilon\)-discs around the eigenvalues.
+
+\begin{lemma}[Eventual connectedness]\label{lem:eventual-connectedness}
+If
+\[
+2\sqrt a\,\sin\!\left(\frac{\pi}{2(n+1)}\right)<\varepsilon,
+\]
+then \(\Sigma_\varepsilon^{(n)}\) is connected.
+
+Consequently, for every fixed \(a\in(0,1)\) and \(\varepsilon>0\), the set
+\[
+\mathcal N_*(a,\varepsilon)
+=
+\left\{
+n\ge2:\;
+2\sqrt a\,\sin\!\left(\frac{\pi}{2(n+1)}\right)<\varepsilon
+\right\}
+\]
+is nonempty, and with
+\[
+N_*(a,\varepsilon):=\min \mathcal N_*(a,\varepsilon),
+\]
+one has
+\[
+n\ge N_*(a,\varepsilon)
+\quad\Longrightarrow\quad
+\Sigma_\varepsilon^{(n)}\ \text{is connected}.
+\]
+\end{lemma}
+
+\begin{proof}
+Let
+\[
+\mu_k^{(n)}=2\sqrt a\,\cos\!\left(\frac{k\pi}{n+1}\right),
+\qquad k=1,\dots,n,
+\]
+and let \(v_k\) be a corresponding unit eigenvector.  Then for every \(z\in\C\),
+\[
+s_n(z)\le \|(z\I_n-\A_n(a))v_k\|_2=|z-\mu_k^{(n)}|.
+\]
+Hence each open disc
+\[
+D_k:=\{z\in\C:\ |z-\mu_k^{(n)}|<\varepsilon\}
+\]
+satisfies \(D_k\subset \Sigma_\varepsilon^{(n)}\).
+
+Now
+\begin{align*}
+\mu_k^{(n)}-\mu_{k+1}^{(n)}
+&=
+2\sqrt a
+\left(
+\cos\!\frac{k\pi}{n+1}
+-
+\cos\!\frac{(k+1)\pi}{n+1}
+\right) \\
+&=
+4\sqrt a\,
+\sin\!\left(\frac{(2k+1)\pi}{2(n+1)}\right)
+\sin\!\left(\frac{\pi}{2(n+1)}\right) \\
+&\le
+4\sqrt a\,\sin\!\left(\frac{\pi}{2(n+1)}\right).
+\end{align*}
+Thus, if
+\[
+2\sqrt a\,\sin\!\left(\frac{\pi}{2(n+1)}\right)<\varepsilon,
+\]
+then
+\[
+\mu_k^{(n)}-\mu_{k+1}^{(n)}<2\varepsilon
+\qquad(k=1,\dots,n-1),
+\]
+so
+\[
+D_k\cap D_{k+1}\neq\varnothing
+\qquad(k=1,\dots,n-1).
+\]
+Therefore
+\[
+\mathcal D:=\bigcup_{k=1}^n D_k
+\]
+is connected.
+
+By Lemma~\ref{lem:component-eigenvalue}, every connected component of
+\(\Sigma_\varepsilon^{(n)}\) contains an eigenvalue of \(\A_n(a)\). Since the connected set
+\(\mathcal D\subset \Sigma_\varepsilon^{(n)}\) contains all eigenvalues, there can be only
+one connected component. Hence \(\Sigma_\varepsilon^{(n)}\) is connected.
+
+Finally,
+\[
+\sin\!\left(\frac{\pi}{2(n+1)}\right)\to0
+\qquad(n\to\infty),
+\]
+so \(\mathcal N_*(a,\varepsilon)\neq\varnothing\), and the last implication is immediate.
+\end{proof}
+
+\section{Singular vectors, currents, and continuation}
+\label{sec:singular}
+
+From now on we return to fixed \(n\ge2\) and \(0<a<1\), and use the shorthand
+notation
+\[
+\A=\A_n(a),\qquad
+\Bmat_{x,y}=(x+iy)\I_n-\A,\qquad
+\Hmat_x(y)=\Bmat_{x,y}^*\Bmat_{x,y}.
+\]
+We also introduce the reversal matrix \(\PiM\in\R^{n\times n}\) by
+\[
+(\PiM)_{j,n+1-j}=1,\qquad (\PiM)_{jk}=0\ \text{otherwise}.
+\]
+
+\begin{lemma}[Canonical gauge]\label{lem:canonical}
+One has
+\[
+\PiM\,\A\,\PiM=\A^{\mathsf T}.
+\]
+Suppose one of the variables \(x\) or \(y\) varies on an interval on which
+\(\lambda_1(x,y)\) is simple. Then there exist real-analytic unit vectors
+\(\bm u(x,y),\bm v(x,y)\in\C^n\) such that
+\[
+\Bmat_{x,y}\bm v=s(x,y)\bm u,
+\qquad
+\Bmat_{x,y}^*\bm u=s(x,y)\bm v,
+\qquad
+\bm u=\PiM\,\overline{\bm v}.
+\]
+\end{lemma}
+
+\begin{proof}
+The identity \(\PiM\A\PiM=\A^{\mathsf T}\) is immediate from the Toeplitz form of
+\(\A\).
+
+On an interval of simplicity, analytic perturbation theory yields a real-analytic unit
+eigenvector \(\bm v\) of \(\Hmat_x(y)\) for the simple eigenvalue
+\(\lambda_1(x,y)=s(x,y)^2\).  Since \(y>0\) and \(\sigma(\A)\subset\R\),
+we have \(s(x,y)>0\).  Define
+\[
+\bm u=s(x,y)^{-1}\Bmat_{x,y}\bm v.
+\]
+Then \(\bm u\) is real-analytic and
+\[
+\Bmat_{x,y}\bm v=s(x,y)\bm u,
+\qquad
+\Bmat_{x,y}^*\bm u=s(x,y)\bm v.
+\]
+
+Because
+\[
+\PiM\Bmat_{x,y}=\Bmat_{x,y}^{\mathsf T}\PiM,
+\]
+the pair
+\[
+\PiM\,\overline{\bm u},
+\qquad
+\PiM\,\overline{\bm v}
+\]
+is another singular pair for the same simple singular value.  Hence there exists a
+real-analytic unimodular scalar \(\alpha\) such that
+\[
+\PiM\,\overline{\bm u}=\alpha\,\bm v,
+\qquad
+\PiM\,\overline{\bm v}=\alpha\,\bm u.
+\]
+On an interval we may choose a real-analytic unimodular square root \(\beta\) of
+\(\alpha\).  Replacing \((\bm u,\bm v)\) by \((\beta\bm u,\beta\bm v)\) yields
+\[
+\bm u=\PiM\,\overline{\bm v}.
+\]
+\end{proof}
+
+\begin{proposition}[Current identity]\label{prop:current}
+Fix \(x\in\R\), and let \(I\subset(0,\infty)\) be an interval on which
+\(\lambda_1(x,y)\) is simple.  Let \(\bm v(y)\) be the canonical right singular vector
+from Lemma~\ref{lem:canonical}, written as
+\[
+\bm v(y)=
+\begin{bmatrix}
+v_1(y)\\
+\vdots\\
+v_n(y)
+\end{bmatrix},
+\qquad
+v_0(y)=v_{n+1}(y)=0.
+\]
+Define
+\[
+J_j(y)=\Im\!\bigl(\overline{v_j(y)}\,v_{j+1}(y)\bigr),
+\qquad
+j=1,\dots,n-1,
+\]
+and set \(J_0(y)=J_n(y)=0\).  Then, for \(j=1,\dots,n\),
+\begin{equation}\label{eq:current}
+J_j-aJ_{j-1}
+=
+y|v_j|^2+s(x,y)\,\Im\!\bigl(v_jv_{n+1-j}\bigr),
+\end{equation}
+and
+\begin{equation}\label{eq:lambda-derivative}
+\frac{d}{dy}\lambda_1(x,y)
+=
+2y-2(1-a)\sum_{j=1}^{n-1}J_j(y).
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Let
+\[
+\Bmat_y=(x+iy)\I_n-\A,\qquad s=s(x,y).
+\]
+Since
+\[
+\Bmat_y\bm v=s\bm u,
+\qquad
+\bm u=\PiM\,\overline{\bm v},
+\]
+the \(j\)-th component reads
+\[
+(x+iy)v_j-av_{j-1}-v_{j+1}
+=
+s\,\overline{v_{n+1-j}}.
+\]
+Multiplying by \(\overline{v_j}\) and taking imaginary parts gives
+\[
+y|v_j|^2-a\,\Im(\overline{v_j}v_{j-1})-\Im(\overline{v_j}v_{j+1})
+=
+-s\,\Im(v_jv_{n+1-j}),
+\]
+which is exactly \eqref{eq:current}.
+
+For the derivative, the singular-value perturbation formula gives
+\[
+\frac{d}{dy}s(x,y)
+=
+\Re\!\bigl(\bm u^* i\bm v\bigr)
+=
+-\Im(\bm u^*\bm v).
+\]
+Since \(\bm u=\PiM\,\overline{\bm v}\),
+\[
+\bm u^*\bm v
+=
+\bm v^{\mathsf T}\PiM\bm v
+=
+\sum_{j=1}^n v_jv_{n+1-j}.
+\]
+Summing \eqref{eq:current} over \(j=1,\dots,n\), using \(J_0=J_n=0\), and
+\(\|\bm v\|_2=1\), we obtain
+\[
+(1-a)\sum_{j=1}^{n-1}J_j
+=
+y+s\,\Im(\bm u^*\bm v).
+\]
+Therefore
+\[
+s\,\frac{d}{dy}s
+=
+y-(1-a)\sum_{j=1}^{n-1}J_j.
+\]
+Multiplying by \(2\) gives \eqref{eq:lambda-derivative}.
+\end{proof}
+
+\begin{lemma}[A real telescoping invariant]\label{lem:W}
+Assume \(\lambda_1(x,y)\) is simple and let \(\bm v\) be in canonical gauge.
+Define
+\[
+W_j=v_{j+1}v_{n+1-j}-a\,v_jv_{n-j},
+\qquad
+j=0,\dots,n,
+\]
+with \(v_0=v_{n+1}=0\).  Then
+\[
+W_0=0,
+\qquad
+W_j-W_{j-1}
+=
+s(x,y)\bigl(|v_j|^2-|v_{n+1-j}|^2\bigr)\in\R,
+\]
+so that
+\[
+W_j\in\R,\qquad j=0,\dots,n.
+\]
+\end{lemma}
+
+\begin{proof}
+Using the singular-vector equations at the indices \(j\) and \(n+1-j\),
+\[
+v_{j+1}+av_{j-1}=(x+iy)v_j-s\,\overline{v_{n+1-j}},
+\]
+\[
+v_{n+2-j}+av_{n-j}=(x+iy)v_{n+1-j}-s\,\overline{v_j},
+\]
+we obtain
+\begin{align*}
+W_j-W_{j-1}
+&=
+v_{n+1-j}\bigl(v_{j+1}+av_{j-1}\bigr)
+-
+v_j\bigl(v_{n+2-j}+av_{n-j}\bigr) \\
+&=
+s\bigl(|v_j|^2-|v_{n+1-j}|^2\bigr)\in\R.
+\end{align*}
+Since \(W_0=0\), the claim follows.
+\end{proof}
+
+\begin{lemma}[Boundary entries on simple branches]\label{lem:boundary}
+Assume \(\lambda_1(x,y)\) is simple and \(y>0\).  In canonical gauge,
+\[
+v_1\neq0,
+\qquad
+v_n\neq0.
+\]
+\end{lemma}
+
+\begin{proof}
+If \(n=2\), the claim is immediate because \(x+iy\neq0\).
+
+Assume first that \(v_n=0\).  If also \(v_1=0\), then the equations at \(j=1\) and
+\(j=n\) imply \(v_2=0\) and \(v_{n-1}=0\), and repeated propagation gives
+\(\bm v=0\), impossible.  Hence \(v_1\neq0\).
+
+From the equations at \(j=1\) and \(j=n-1\) we get
+\[
+v_2=(x+iy)v_1
+\]
+and
+\[
+(x+iy)v_{n-1}-av_{n-2}=s(x-iy)\overline{v_1}.
+\]
+Therefore
+\[
+W_{n-2}
+=
+v_{n-1}v_2-av_{n-2}v_1
+=
+s(x-iy)|v_1|^2.
+\]
+By Lemma~\ref{lem:W}, \(W_{n-2}\in\R\), which is impossible because \(y>0\) and
+\(v_1\neq0\).  Thus \(v_n\neq0\).
+
+The proof that \(v_1\neq0\) is analogous.  If \(v_1=0\), then
+\[
+v_2=-s\,\overline{v_n},
+\qquad
+av_{n-1}=(x+iy)v_n.
+\]
+Using the equation at \(j=2\), one obtains
+\[
+W_2
+=
+-\frac{s}{a}(x-iy)|v_n|^2,
+\]
+again contradicting Lemma~\ref{lem:W}.
+\end{proof}
+
+\begin{proposition}[Imaginary-axis seed]\label{prop:x0}
+For every \(y>0\), the smallest eigenvalue \(\lambda_1(0,y)\) of \(\Hmat_0(y)\)
+is simple.  In canonical gauge, the corresponding right singular vector can be written
+as
+\[
+\bm v(0,y)
+=
+\beta\,
+\begin{bmatrix}
+w_1\\
+iw_2\\
+\vdots\\
+i^{\,n-1}w_n
+\end{bmatrix},
+\qquad
+w_j>0,
+\]
+for some unimodular scalar \(\beta\).  Consequently,
+\[
+\Im\!\left(\frac{v_{j+1}(0,y)}{v_j(0,y)}\right)>0,
+\qquad
+j=1,\dots,n-1,
+\]
+and
+\[
+\Im\!\left(\frac{\overline{v_{n+1-j}(0,y)}}{v_j(0,y)}\right)>0,
+\qquad
+j=1,\dots,n.
+\]
+\end{proposition}
+
+\begin{proof}
+Set
+\[
+\mathbf U=
+\diag(1,i,i^2,\dots,i^{\,n-1}),
+\qquad
+\widehat{\Hmat}_y=\mathbf U^* \Hmat_0(y)\mathbf U.
+\]
+A direct computation shows that \(\widehat{\Hmat}_y\) is real symmetric, with diagonal
+entries
+\[
+a^2+y^2,\quad 1+a^2+y^2,\dots,1+a^2+y^2,\quad 1+y^2,
+\]
+first off-diagonal entries
+\[
+-(1-a)y<0,
+\]
+and second off-diagonal entries
+\[
+-a<0.
+\]
+Hence \(\widehat{\Hmat}_y\) is a real symmetric irreducible \(Z\)-matrix.
+Choose \(\Lambda>\max_j (\widehat{\Hmat}_y)_{jj}\).  Then
+\(\Lambda \I_n-\widehat{\Hmat}_y\) is entrywise nonnegative and irreducible.  By
+Perron--Frobenius, the smallest eigenvalue of \(\widehat{\Hmat}_y\) is simple and has a
+strictly positive eigenvector
+\[
+\bm w=
+\begin{bmatrix}
+w_1\\
+\vdots\\
+w_n
+\end{bmatrix},
+\qquad
+w_j>0.
+\]
+Therefore a right singular vector of \(\Bmat_{0,y}=iy\I_n-\A\) for \(s(0,y)\) can be
+written as
+\[
+v_j=\beta\,i^{\,j-1}w_j,
+\qquad
+j=1,\dots,n,
+\]
+for some unimodular \(\beta\).
+
+Insert this into
+\[
+iy\,v_j-av_{j-1}-v_{j+1}=s(0,y)\,\overline{v_{n+1-j}}.
+\]
+After division by \(\beta i^j\), we get
+\[
+w_{j+1}-yw_j-aw_{j-1}
+=
+-\gamma\,s(0,y)\,w_{n+1-j},
+\qquad
+\gamma=\frac{\overline\beta}{\beta}(-i)^n.
+\]
+At \(j=n\), this becomes
+\[
+yw_n+aw_{n-1}=\gamma\,s(0,y)\,w_1.
+\]
+The left-hand side is strictly positive, so \(\gamma=1\).
+
+Now
+\[
+\frac{v_{j+1}(0,y)}{v_j(0,y)}
+=
+i\,\frac{w_{j+1}}{w_j},
+\]
+hence
+\[
+\Im\!\left(\frac{v_{j+1}(0,y)}{v_j(0,y)}\right)>0.
+\]
+Similarly,
+\[
+\frac{\overline{v_{n+1-j}(0,y)}}{v_j(0,y)}
+=
+i\,\frac{w_{n+1-j}}{w_j},
+\]
+which gives the second family of inequalities.
+\end{proof}
+
+\begin{lemma}[Angular identity]\label{lem:angular}
+Assume \(\lambda_1(x,y)\) is simple and let \(\bm v\) be in canonical gauge.
+For \(j=1,\dots,n-1\), define
+\[
+r_j=\frac{v_{j+1}}{v_j},
+\qquad
+\rho_j=r_{n-j},
+\qquad
+p_j=\frac{\overline{v_{n+1-j}}}{v_j},
+\qquad
+r_0=\infty,
+\]
+and
+\[
+\alpha_j=(x+iy)-\frac{a}{r_{j-1}},
+\qquad
+\beta_j=(x-iy)-\overline{\rho_{j-1}}.
+\]
+Then
+\[
+\Im\!\bigl(\alpha_j\overline{p_j}\bigr)
+=
+-\Im\!\bigl(\beta_j p_j\bigr).
+\]
+\end{lemma}
+
+\begin{proof}
+From the singular-vector equation at index \(j\),
+\[
+\left((x+iy)-\frac{a}{r_{j-1}}\right)v_j
+=
+v_{j+1}+s\,\overline{v_{n+1-j}},
+\]
+we obtain
+\[
+\alpha_j\overline{p_j}
+=
+\frac{v_{j+1}v_{n+1-j}+s|v_{n+1-j}|^2}{|v_j|^2},
+\]
+hence
+\[
+\Im\!\bigl(\alpha_j\overline{p_j}\bigr)
+=
+\frac{\Im(v_{j+1}v_{n+1-j})}{|v_j|^2}.
+\]
+
+Conjugating the singular-vector equation at index \(n+1-j\) yields
+\[
+(x-iy)\overline{v_{n+1-j}}
+-
+a\overline{v_{n-j}}
+-
+\overline{v_{n+2-j}}
+=
+sv_j.
+\]
+Therefore
+\[
+\beta_j p_j
+=
+s+a\,\frac{\overline{v_{n-j}}}{v_j},
+\]
+so
+\[
+\Im(\beta_j p_j)
+=
+-\frac{a\,\Im(v_jv_{n-j})}{|v_j|^2}.
+\]
+By Lemma~\ref{lem:W},
+\[
+\Im(v_{j+1}v_{n+1-j})=a\,\Im(v_jv_{n-j}),
+\]
+and the claim follows.
+\end{proof}
+
+\begin{proposition}[Phase continuation and branchwise monotonicity]
+\label{prop:continuation}
+Fix \(y>0\), and let \(I\subset\R\) be an open interval on which
+\(\lambda_1(x,y)\) is simple.  Let
+\[
+\bm v(x)=
+\begin{bmatrix}
+v_1(x)\\
+\vdots\\
+v_n(x)
+\end{bmatrix}
+\]
+be a real-analytic canonical right singular vector, and let \(J\) be a connected
+component of
+\[
+\{x\in I:\ v_1(x)\cdots v_n(x)\neq0\}.
+\]
+Assume that for some \(x_0\in J\),
+\[
+\Im\!\left(\frac{v_{j+1}(x_0)}{v_j(x_0)}\right)>0,
+\qquad j=1,\dots,n-1,
+\]
+and
+\[
+\Im\!\left(\frac{\overline{v_{n+1-j}(x_0)}}{v_j(x_0)}\right)>0,
+\qquad j=1,\dots,n.
+\]
+Then the same inequalities hold for every \(x\in J\).  In particular,
+\[
+\partial_y\lambda_1(x,y)\ge0,
+\qquad x\in J.
+\]
+\end{proposition}
+
+\begin{proof}
+\emph{Step 1: continuation of the ratios \(r_j=v_{j+1}/v_j\).}
+Since \(v_j(x)\neq0\) on \(J\), we may write
+\[
+v_j(x)=t_j(x)e^{i\phi_j(x)},
+\qquad
+t_j(x)>0,
+\]
+with continuous arguments \(\phi_j\).  Set
+\[
+\delta_j(x)=\phi_{j+1}(x)-\phi_j(x),
+\qquad j=1,\dots,n-1.
+\]
+Then
+\[
+\frac{v_{j+1}(x)}{v_j(x)}
+=
+\frac{t_{j+1}(x)}{t_j(x)}e^{i\delta_j(x)},
+\]
+so \(\Im(v_{j+1}/v_j)>0\) is equivalent to \(\delta_j\in(0,\pi)\).
+
+Write
+\[
+c=(1+a)x-i(1-a)y=|c|e^{-i\vartheta},
+\qquad
+\vartheta\in(0,\pi).
+\]
+A direct computation gives
+\[
+\langle \bm v,\Hmat_x(y)\bm v\rangle
+=
+\sum_{j=1}^n \gamma_j t_j^2+\mathcal P_x(\delta_1,\dots,\delta_{n-1}),
+\]
+where \(\gamma_j\in\R\) and
+\[
+\mathcal P_x
+=
+-2|c|\sum_{j=1}^{n-1}t_jt_{j+1}\cos(\delta_j-\vartheta)
++
+2a\sum_{j=1}^{n-2}t_jt_{j+2}\cos(\delta_j+\delta_{j+1}).
+\]
+For fixed amplitudes \(t_1,\dots,t_n\), the phase vector
+\[
+(\delta_1(x),\dots,\delta_{n-1}(x))
+\]
+minimizes \(\mathcal P_x\), because \(\bm v(x)\) is a ground state of
+\(\Hmat_x(y)\).
+
+Let
+\[
+E=
+\{x\in J:\ \delta_j(x)\in(0,\pi)\ \text{for all }j=1,\dots,n-1\}.
+\]
+By assumption, \(x_0\in E\), so \(E\neq\varnothing\).  Clearly \(E\) is open in \(J\).
+We show that \(E\) is closed in \(J\).
+
+Take \(x_*\in\overline E\cap J\).  Then \(\delta_j(x_*)\in[0,\pi]\) for all \(j\).
+Suppose that \(\delta_k(x_*)\in\{0,\pi\}\) for some \(k\).  Vary the tail phases by
+\[
+\phi_m\mapsto \phi_m+\varepsilon,\qquad m\ge k+1.
+\]
+This changes only \(\delta_k\), replacing it by \(\delta_k+\varepsilon\).  Hence the
+derivative at \(\varepsilon=0\) of the phase functional equals
+\begin{align*}
+f_k'(0)
+&=
+2|c|\,t_kt_{k+1}\sin(\delta_k-\vartheta) \\
+&\quad
+-2a\,\mathbf 1_{\{k\ge2\}}\,t_{k-1}t_{k+1}\sin(\delta_{k-1}+\delta_k) \\
+&\quad
+-2a\,\mathbf 1_{\{k\le n-2\}}\,t_kt_{k+2}\sin(\delta_k+\delta_{k+1}).
+\end{align*}
+If \(\delta_k(x_*)=0\), then the first term is strictly negative and the other two are
+nonpositive, so \(f_k'(0)<0\), contradicting minimality.  If \(\delta_k(x_*)=\pi\),
+then the first term is strictly positive and the other two are nonnegative, so
+\(f_k'(0)>0\), again contradicting minimality.  Therefore no \(\delta_k\) can hit
+\(0\) or \(\pi\), and thus \(x_*\in E\).  Hence \(E\) is closed in \(J\).
+
+Since \(J\) is connected and \(E\) is nonempty, open, and closed in \(J\), we conclude
+that \(E=J\).  Thus
+\[
+\Im\!\left(\frac{v_{j+1}(x)}{v_j(x)}\right)>0,
+\qquad
+j=1,\dots,n-1,\ \ x\in J.
+\]
+In particular,
+\[
+\Im \rho_j(x)>0,
+\qquad
+j=1,\dots,n-1,\ \ x\in J.
+\]
+
+\medskip
+\noindent
+\emph{Step 2: continuation of the reflected phases
+\(p_j=\overline{v_{n+1-j}}/v_j\).}
+For \(j=1,\dots,n-1\), suppose that \(\Im p_j\) vanishes somewhere on \(J\). By
+continuity there exists \(x_*\in J\) with \(p_j(x_*)\in\R\). Since all components of
+\(\bm v\) are nonzero on \(J\), we have \(p_j(x_*)\neq0\).
+
+By Step 1,
+\[
+\Im\alpha_j(x_*)
+=
+y+\Im\!\left(-\frac{a}{r_{j-1}(x_*)}\right)>0.
+\]
+Lemma~\ref{lem:angular} therefore gives
+\[
+\Im\beta_j(x_*)=-\Im\alpha_j(x_*)<0.
+\]
+Conjugating the singular-vector equation at index \(n+1-j\) shows that
+\[
+\overline{\rho_j}
+=
+\frac{a}{\beta_j-s/p_j}.
+\]
+Since \(s/p_j\in\R\) at \(x_*\), the denominator has negative imaginary part, and
+hence \(\Im\overline{\rho_j}(x_*)>0\), i.e.,
+\[
+\Im\rho_j(x_*)<0,
+\]
+contradicting Step 1.  Thus
+\[
+\Im p_j(x)>0,
+\qquad
+j=1,\dots,n-1,\ \ x\in J.
+\]
+For \(j=n\) we use
+\[
+p_n(x)=\frac{1}{\overline{p_1(x)}},
+\]
+which shows \(\Im p_n(x)>0\) as well.
+
+\medskip
+\noindent
+\emph{Step 3: monotonicity in \(y\).}
+Since
+\[
+p_j
+=
+\frac{\overline{v_{n+1-j}}}{v_j}
+=
+\frac{\overline{v_jv_{n+1-j}}}{|v_j|^2},
+\]
+we have
+\[
+\Im p_j
+=
+-\frac{\Im(v_jv_{n+1-j})}{|v_j|^2}.
+\]
+Therefore \(\Im p_j>0\) implies
+\[
+\Im(v_jv_{n+1-j})<0.
+\]
+Using \eqref{eq:current}, we obtain
+\[
+J_j-aJ_{j-1}\le y|v_j|^2,
+\qquad
+j=1,\dots,n.
+\]
+Inductively,
+\[
+J_j
+\le
+y\sum_{k=1}^j a^{\,j-k}|v_k|^2,
+\qquad
+j=1,\dots,n-1.
+\]
+Summing this inequality yields
+\[
+(1-a)\sum_{j=1}^{n-1}J_j
+\le
+y\sum_{k=1}^{n-1}(1-a^{\,n-k})|v_k|^2
+\le y.
+\]
+Now \eqref{eq:lambda-derivative} gives
+\[
+\partial_y\lambda_1(x,y)\ge0,
+\qquad x\in J.
+\]
+\end{proof}
+
+\section{One-sided positivity and edge Schur complements}
+\label{sec:schur}
+
+Fix \(x\in\R\) and \(y>0\), and write
+\[
+z=x+iy,
+\qquad
+\lambda=\lambda_1(x,y),
+\qquad
+c=\overline z+az=(1+a)x-i(1-a)y.
+\]
+Set
+\[
+d_-=a^2+|z|^2-\lambda,
+\qquad
+d=1+a^2+|z|^2-\lambda,
+\qquad
+d_+=1+|z|^2-\lambda.
+\]
+Then
+\[
+\Hmat_x(y)-\lambda\I_n
+=
+\begin{bmatrix}
+d_- & -c & a \\
+-\overline c & d & -c & a \\
+a & -\overline c & d & -c & a \\
+& \ddots & \ddots & \ddots & \ddots & \ddots \\
+&& a & -\overline c & d & -c \\
+&&& a & -\overline c & d_+
+\end{bmatrix},
+\]
+with all omitted entries equal to zero.  For an index set
+\(I\subset\{1,\dots,n\}\), we write \(\mathbf M[I]\) for the principal submatrix of
+\(\mathbf M\) indexed by \(I\).
+
+For \(j=2,\dots,n-1\), define
+\[
+\mathbf L_j
+=
+\bigl(\Hmat_x(y)-\lambda\I_n\bigr)[\{1,\dots,j-1\}],
+\qquad
+\mathbf R_j
+=
+\bigl(\Hmat_x(y)-\lambda\I_n\bigr)[\{j+1,\dots,n\}].
+\]
+
+\begin{proposition}[One-sided positivity]\label{prop:onesided}
+For every \(j=2,\dots,n-1\),
+\[
+\mathbf L_j\succ0,
+\qquad
+\mathbf R_j\succ0.
+\]
+In particular,
+\[
+d_->0,
+\qquad
+d_+>0.
+\]
+\end{proposition}
+
+\begin{proof}
+Since \(\Hmat_x(y)-\lambda\I_n\succeq0\), every principal submatrix is positive
+semidefinite.  It therefore suffices to prove that the kernels of \(\mathbf L_j\) and
+\(\mathbf R_j\) are trivial.
+
+We prove this for \(\mathbf R_j\); the proof for \(\mathbf L_j\) is symmetric.
+Let \(\bm w\in\ker\mathbf R_j\), and extend it by zeros to
+\[
+\widehat{\bm w}=
+\begin{bmatrix}
+0\\
+\vdots\\
+0\\
+w_1\\
+\vdots\\
+w_{n-j}
+\end{bmatrix}\in\C^n.
+\]
+Then rows \(j+1,\dots,n\) of
+\((\Hmat_x(y)-\lambda\I_n)\widehat{\bm w}\) vanish.  Row \(j-1\) gives
+\[
+aw_1=0,
+\]
+hence \(w_1=0\).  If \(n-j\ge2\), then row \(j\) gives
+\[
+aw_2=0,
+\]
+hence \(w_2=0\).  The first row of \(\mathbf R_j\bm w=0\) now yields
+\[
+aw_3=0.
+\]
+Proceeding inductively, all components vanish.  Thus
+\(\ker\mathbf R_j=\{0\}\), so \(\mathbf R_j\succ0\).
+
+The proof for \(\mathbf L_j\) is identical.  Finally,
+\[
+\mathbf L_2=[d_-],
+\qquad
+\mathbf R_{n-1}=[d_+],
+\]
+hence \(d_->0\) and \(d_+>0\).
+\end{proof}
+
+\begin{definition}\label{def:edge}
+Define
+\[
+\mathbf T=
+\begin{bmatrix}
+d & -c\\
+-\overline c & d
+\end{bmatrix},
+\qquad
+\mathbf E=
+\begin{bmatrix}
+a & 0\\
+-c & a
+\end{bmatrix}.
+\]
+For \(j=3,\dots,n-1\), let \(\mathbf S_j^{\mathrm L}\) be the Schur complement of
+\(\mathbf L_j\) onto its last two coordinates \((j-2,j-1)\).  For
+\(j=2,\dots,n-2\), let \(\mathbf S_j^{\mathrm R}\) be the Schur complement of
+\(\mathbf R_j\) onto its first two coordinates \((j+1,j+2)\).
+\end{definition}
+
+\begin{proposition}[Riccati recursions]\label{prop:schur-rec}
+Whenever the indices are meaningful,
+\[
+\mathbf S_3^{\mathrm L}
+=
+\begin{bmatrix}
+d_- & -c\\
+-\overline c & d
+\end{bmatrix},
+\qquad
+\mathbf S_4^{\mathrm L}
+=
+\begin{bmatrix}
+d-\dfrac{|c|^2}{d_-} & -c+\dfrac{a\overline c}{d_-}\\[3mm]
+-\overline c+\dfrac{ac}{d_-} & d-\dfrac{a^2}{d_-}
+\end{bmatrix},
+\]
+and
+\[
+\mathbf S_j^{\mathrm L}
+=
+\mathbf T-\mathbf E^*(\mathbf S_{j-2}^{\mathrm L})^{-1}\mathbf E,
+\qquad
+j\ge5.
+\]
+Similarly,
+\[
+\mathbf S_{n-2}^{\mathrm R}
+=
+\begin{bmatrix}
+d & -c\\
+-\overline c & d_+
+\end{bmatrix},
+\qquad
+\mathbf S_{n-3}^{\mathrm R}
+=
+\begin{bmatrix}
+d-\dfrac{a^2}{d_+} & -c+\dfrac{a\overline c}{d_+}\\[3mm]
+-\overline c+\dfrac{ac}{d_+} & d-\dfrac{|c|^2}{d_+}
+\end{bmatrix},
+\]
+and
+\[
+\mathbf S_j^{\mathrm R}
+=
+\mathbf T-\mathbf E(\mathbf S_{j+2}^{\mathrm R})^{-1}\mathbf E^*,
+\qquad
+j\le n-4.
+\]
+\end{proposition}
+
+\begin{proof}
+These formulas follow from direct block Schur-complement calculations for the
+five-diagonal matrix \(\Hmat_x(y)-\lambda\I_n\).
+\end{proof}
+
+\begin{lemma}[Propagation of the upper half-plane]\label{lem:propagate}
+Let
+\[
+\mathbf S=
+\begin{bmatrix}
+\alpha & \beta\\
+\overline\beta & \delta
+\end{bmatrix}\succ0,
+\qquad
+\Delta=\alpha\delta-|\beta|^2>0.
+\]
+If
+\[
+\mathbf T_{\mathrm L}
+=
+\mathbf T-\mathbf E^*\mathbf S^{-1}\mathbf E
+=
+\begin{bmatrix}
+\alpha' & \beta'\\
+\overline{\beta'} & \delta'
+\end{bmatrix},
+\]
+then
+\[
+\beta'
+=
+\frac{a^2\beta+a\alpha\,\overline c-c\,\Delta}{\Delta},
+\]
+and therefore
+\[
+\Im\beta'
+=
+\frac{a^2\Im\beta+a\alpha(1-a)y+\Delta(1-a)y}{\Delta}.
+\]
+If
+\[
+\mathbf T_{\mathrm R}
+=
+\mathbf T-\mathbf E\mathbf S^{-1}\mathbf E^*
+=
+\begin{bmatrix}
+\widetilde\alpha & \widetilde\beta\\
+\overline{\widetilde\beta} & \widetilde\delta
+\end{bmatrix},
+\]
+then
+\[
+\widetilde\beta
+=
+\frac{a^2\beta+a\delta\,\overline c-c\,\Delta}{\Delta},
+\]
+and therefore
+\[
+\Im\widetilde\beta
+=
+\frac{a^2\Im\beta+a\delta(1-a)y+\Delta(1-a)y}{\Delta}.
+\]
+In particular, if \(\Im\beta>0\), then
+\[
+\Im\beta'>0,
+\qquad
+\Im\widetilde\beta>0.
+\]
+\end{lemma}
+
+\begin{proof}
+Using
+\[
+\mathbf S^{-1}
+=
+\frac{1}{\Delta}
+\begin{bmatrix}
+\delta & -\beta\\
+-\overline\beta & \alpha
+\end{bmatrix},
+\]
+one computes the off-diagonal entries of \(\mathbf T_{\mathrm L}\) and
+\(\mathbf T_{\mathrm R}\) directly.
+\end{proof}
+
+\begin{corollary}[Upper-half-plane property]\label{cor:upper}
+For every \(j=3,\dots,n-1\),
+\[
+\mathbf S_j^{\mathrm L}
+=
+\begin{bmatrix}
+\alpha_j^{\mathrm L} & \beta_j^{\mathrm L}\\
+\overline{\beta_j^{\mathrm L}} & \delta_j^{\mathrm L}
+\end{bmatrix}
+\quad\Longrightarrow\quad
+\Im\beta_j^{\mathrm L}>0.
+\]
+For every \(j=2,\dots,n-2\),
+\[
+\mathbf S_j^{\mathrm R}
+=
+\begin{bmatrix}
+\alpha_j^{\mathrm R} & \beta_j^{\mathrm R}\\
+\overline{\beta_j^{\mathrm R}} & \delta_j^{\mathrm R}
+\end{bmatrix}
+\quad\Longrightarrow\quad
+\Im\beta_j^{\mathrm R}>0.
+\]
+\end{corollary}
+
+\begin{proof}
+The base cases are
+\[
+\beta_3^{\mathrm L}=-c,
+\qquad
+\beta_4^{\mathrm L}=-c+\frac{a\overline c}{d_-},
+\qquad
+\beta_{n-2}^{\mathrm R}=-c,
+\qquad
+\beta_{n-3}^{\mathrm R}=-c+\frac{a\overline c}{d_+},
+\]
+all of which have positive imaginary part because \(d_\pm>0\).  The recursions in
+Proposition~\ref{prop:schur-rec} and Lemma~\ref{lem:propagate} complete the proof.
+\end{proof}
+
+\section{A no-zero theorem for ground states}
+\label{sec:nozero}
+
+\begin{proposition}[The second boundary layer never vanishes]
+\label{prop:second-layer}
+Assume \(n\ge3\), and let
+\[
+\bm v=
+\begin{bmatrix}
+v_1\\
+\vdots\\
+v_n
+\end{bmatrix}
+\in
+\ker\bigl(\Hmat_x(y)-\lambda\I_n\bigr)\setminus\{0\},
+\qquad
+\lambda=\lambda_1(x,y).
+\]
+Then
+\[
+v_2\neq0,
+\qquad
+v_{n-1}\neq0.
+\]
+\end{proposition}
+
+\begin{proof}
+We prove \(v_2\neq0\); the other statement follows by reversing the coordinates.
+
+Assume \(v_2=0\).
+
+If \(n=3\), then \(v_1\neq0\); otherwise \(\mathbf R_2[v_3]^{\mathsf T}=0\) would
+contradict Proposition~\ref{prop:onesided}.  Row \(3\) gives
+\[
+d_+v_3+av_1=0,
+\qquad\text{so}\qquad
+v_3=-\frac{a}{d_+}v_1.
+\]
+Row \(2\) then gives
+\[
+-\overline c\,v_1-c\,v_3=0,
+\]
+hence
+\[
+\overline c=\frac{a}{d_+}c,
+\]
+which is impossible because \(a/d_+>0\), while
+\(\Im(\overline c)=+(1-a)y\) and \(\Im(c)=-(1-a)y\).
+
+Assume now that \(n\ge4\).  If \(v_1=0\), then
+\[
+\mathbf R_2
+\begin{bmatrix}
+v_3\\
+\vdots\\
+v_n
+\end{bmatrix}
+=
+\bm0,
+\]
+contradicting Proposition~\ref{prop:onesided}.  Hence \(v_1\neq0\).
+
+Let
+\[
+\mathbf G_2=\mathbf R_2^{-1},
+\qquad
+g=\langle \bm e_1,\mathbf G_2\bm e_1\rangle>0,
+\qquad
+h=\langle \bm e_2,\mathbf G_2\bm e_1\rangle,
+\]
+where \(\bm e_1,\bm e_2\) are the first two basis vectors of \(\C^{n-2}\).
+From
+\[
+\mathbf R_2
+\begin{bmatrix}
+v_3\\
+\vdots\\
+v_n
+\end{bmatrix}
++
+av_1\bm e_1
+=
+\bm0
+\]
+we obtain
+\[
+v_3=-ag\,v_1,
+\qquad
+v_4=-ah\,v_1.
+\]
+Row \(1\) of
+\((\Hmat_x(y)-\lambda\I_n)\bm v=\bm0\) gives
+\[
+d_-v_1+av_3=0,
+\]
+so
+\[
+d_-=a^2g.
+\]
+Row \(2\) gives
+\[
+-\overline c\,v_1-c\,v_3+av_4=0,
+\]
+that is,
+\[
+-\overline c+ag\,c-a^2h=0.
+\]
+Equivalently,
+\[
+-c+a\frac{h}{g}
+=
+-\frac{1}{ag}\,\overline c
+=
+-\frac{a}{d_-}\,\overline c.
+\]
+Hence the left-hand side has negative imaginary part.
+
+On the other hand, write
+\[
+\mathbf S_2^{\mathrm R}
+=
+\begin{bmatrix}
+\alpha_2^{\mathrm R} & \beta_2^{\mathrm R}\\
+\overline{\beta_2^{\mathrm R}} & \delta_2^{\mathrm R}
+\end{bmatrix}.
+\]
+By the block inversion formula,
+\[
+\frac{h}{g}
+=
+-\frac{\overline{\beta_2^{\mathrm R}}}{\delta_2^{\mathrm R}},
+\]
+and therefore
+\[
+-c+a\frac{h}{g}
+=
+-c-a\,\frac{\overline{\beta_2^{\mathrm R}}}{\delta_2^{\mathrm R}}.
+\]
+By Corollary~\ref{cor:upper}, \(\Im\beta_2^{\mathrm R}>0\), so this number has positive
+imaginary part, a contradiction.  Thus \(v_2\neq0\).
+\end{proof}
+
+\begin{proposition}[Defect resonance for an interior zero]\label{prop:defect}
+Assume \(n\ge5\), and let
+\[
+\bm v=
+\begin{bmatrix}
+v_1\\
+\vdots\\
+v_n
+\end{bmatrix}
+\in
+\ker\bigl(\Hmat_x(y)-\lambda\I_n\bigr)\setminus\{0\},
+\qquad
+\lambda=\lambda_1(x,y).
+\]
+Fix \(j\in\{3,\dots,n-2\}\) and assume \(v_j=0\).
+Set
+\[
+\mathbf G_j^{\mathrm L}=\mathbf L_j^{-1},
+\qquad
+\mathbf G_j^{\mathrm R}=\mathbf R_j^{-1},
+\]
+and define
+\[
+g_j^{\mathrm L}
+=
+\langle \bm e_{j-1},\mathbf G_j^{\mathrm L}\bm e_{j-1}\rangle>0,
+\qquad
+h_j^{\mathrm L}
+=
+\langle \bm e_{j-2},\mathbf G_j^{\mathrm L}\bm e_{j-1}\rangle,
+\]
+where \(\bm e_{j-2},\bm e_{j-1}\) are the last two basis vectors of \(\C^{j-1}\), and
+\[
+g_j^{\mathrm R}
+=
+\langle \bm e_1,\mathbf G_j^{\mathrm R}\bm e_1\rangle>0,
+\qquad
+h_j^{\mathrm R}
+=
+\langle \bm e_2,\mathbf G_j^{\mathrm R}\bm e_1\rangle,
+\]
+where \(\bm e_1,\bm e_2\) are the first two basis vectors of \(\C^{n-j}\).
+Then:
+\begin{enumerate}
+\item
+\[
+v_{j-1}=-ag_j^{\mathrm L}v_{j+1},
+\qquad
+v_{j+1}=-ag_j^{\mathrm R}v_{j-1}.
+\]
+In particular,
+\[
+v_{j-1}\neq0,
+\qquad
+v_{j+1}\neq0,
+\qquad
+a^2g_j^{\mathrm L}g_j^{\mathrm R}=1.
+\]
+
+\item
+If
+\[
+m_j^{\mathrm L}=a\frac{h_j^{\mathrm L}}{g_j^{\mathrm L}}-\overline c,
+\qquad
+m_j^{\mathrm R}=-c+a\frac{h_j^{\mathrm R}}{g_j^{\mathrm R}},
+\]
+then
+\[
+m_j^{\mathrm L}v_{j-1}+m_j^{\mathrm R}v_{j+1}=0,
+\]
+hence
+\[
+m_j^{\mathrm R}=ag_j^{\mathrm L}m_j^{\mathrm L}.
+\]
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Split
+\[
+\bm v=
+\begin{bmatrix}
+v_1\\
+\vdots\\
+v_{j-1}\\
+0\\
+v_{j+1}\\
+\vdots\\
+v_n
+\end{bmatrix}
+=
+\begin{bmatrix}
+\bm u\\
+0\\
+\bm w
+\end{bmatrix}.
+\]
+The equations on the left and right of the defect read
+\[
+\mathbf L_j\bm u+av_{j+1}\bm e_{j-1}=\bm0,
+\qquad
+\mathbf R_j\bm w+av_{j-1}\bm e_1=\bm0.
+\]
+Therefore
+\[
+\bm u=-av_{j+1}\mathbf G_j^{\mathrm L}\bm e_{j-1},
+\qquad
+\bm w=-av_{j-1}\mathbf G_j^{\mathrm R}\bm e_1,
+\]
+which gives
+\[
+v_{j-1}=-ag_j^{\mathrm L}v_{j+1},
+\qquad
+v_{j+1}=-ag_j^{\mathrm R}v_{j-1}.
+\]
+If \(v_{j+1}=0\), then \(\bm u=\bm0\), hence \(v_{j-1}=0\), and then \(\bm w=\bm0\),
+contrary to \(\bm v\neq0\).  Thus \(v_{j\pm1}\neq0\), and
+\(a^2g_j^{\mathrm L}g_j^{\mathrm R}=1\) follows immediately.
+
+Moreover,
+\[
+v_{j-2}=\frac{h_j^{\mathrm L}}{g_j^{\mathrm L}}v_{j-1},
+\qquad
+v_{j+2}=\frac{h_j^{\mathrm R}}{g_j^{\mathrm R}}v_{j+1}.
+\]
+The \(j\)-th row of
+\((\Hmat_x(y)-\lambda\I_n)\bm v=\bm0\) is
+\[
+av_{j-2}-\overline c\,v_{j-1}-c\,v_{j+1}+av_{j+2}=0,
+\]
+which is equivalent to
+\[
+m_j^{\mathrm L}v_{j-1}+m_j^{\mathrm R}v_{j+1}=0.
+\]
+Using \(v_{j-1}=-ag_j^{\mathrm L}v_{j+1}\) and \(v_{j+1}\neq0\) yields
+\[
+m_j^{\mathrm R}=ag_j^{\mathrm L}m_j^{\mathrm L}.
+\]
+\end{proof}
+
+\begin{proposition}[Sign separation for the defect Weyl quotients]
+\label{prop:sign}
+For \(j=3,\dots,n-2\), write
+\[
+\mathbf S_j^{\mathrm L}
+=
+\begin{bmatrix}
+\alpha_j^{\mathrm L} & \beta_j^{\mathrm L}\\
+\overline{\beta_j^{\mathrm L}} & \delta_j^{\mathrm L}
+\end{bmatrix},
+\qquad
+\mathbf S_j^{\mathrm R}
+=
+\begin{bmatrix}
+\alpha_j^{\mathrm R} & \beta_j^{\mathrm R}\\
+\overline{\beta_j^{\mathrm R}} & \delta_j^{\mathrm R}
+\end{bmatrix}.
+\]
+Then
+\[
+\frac{h_j^{\mathrm L}}{g_j^{\mathrm L}}
+=
+-\frac{\beta_j^{\mathrm L}}{\alpha_j^{\mathrm L}},
+\qquad
+\frac{h_j^{\mathrm R}}{g_j^{\mathrm R}}
+=
+-\frac{\overline{\beta_j^{\mathrm R}}}{\delta_j^{\mathrm R}},
+\]
+and therefore
+\[
+m_j^{\mathrm L}
+=
+-\overline c-a\,\frac{\beta_j^{\mathrm L}}{\alpha_j^{\mathrm L}},
+\qquad
+m_j^{\mathrm R}
+=
+-c-a\,\frac{\overline{\beta_j^{\mathrm R}}}{\delta_j^{\mathrm R}}.
+\]
+In particular,
+\[
+\Im m_j^{\mathrm L}<0<\Im m_j^{\mathrm R}.
+\]
+\end{proposition}
+
+\begin{proof}
+Since \(\mathbf S_j^{\mathrm L}\) is the Schur complement of \(\mathbf L_j\) onto the last
+two coordinates, the lower-right \(2\times2\) block of \(\mathbf L_j^{-1}\) is
+\((\mathbf S_j^{\mathrm L})^{-1}\).  Hence
+\[
+g_j^{\mathrm L}=\bigl((\mathbf S_j^{\mathrm L})^{-1}\bigr)_{22},
+\qquad
+h_j^{\mathrm L}=\bigl((\mathbf S_j^{\mathrm L})^{-1}\bigr)_{12}.
+\]
+Since
+\[
+(\mathbf S_j^{\mathrm L})^{-1}
+=
+\frac{1}{\alpha_j^{\mathrm L}\delta_j^{\mathrm L}-|\beta_j^{\mathrm L}|^2}
+\begin{bmatrix}
+\delta_j^{\mathrm L} & -\beta_j^{\mathrm L}\\
+-\overline{\beta_j^{\mathrm L}} & \alpha_j^{\mathrm L}
+\end{bmatrix},
+\]
+the first ratio formula follows.  The proof for \(\mathbf S_j^{\mathrm R}\) is analogous.
+
+By Corollary~\ref{cor:upper},
+\[
+\Im\beta_j^{\mathrm L}>0,
+\qquad
+\Im\beta_j^{\mathrm R}>0.
+\]
+Since \(\alpha_j^{\mathrm L}>0\) and \(\delta_j^{\mathrm R}>0\), we get
+\[
+\Im m_j^{\mathrm L}
+=
+-(1-a)y-a\,\frac{\Im\beta_j^{\mathrm L}}{\alpha_j^{\mathrm L}}<0
+\]
+and
+\[
+\Im m_j^{\mathrm R}
+=
+(1-a)y+a\,\frac{\Im\beta_j^{\mathrm R}}{\delta_j^{\mathrm R}}>0.
+\]
+\end{proof}
+
+\begin{theorem}[No interior zeros for a ground state]\label{thm:nozero}
+Assume \(n\ge3\), and let
+\[
+\bm v\in
+\ker\bigl(\Hmat_x(y)-\lambda_1(x,y)\I_n\bigr)\setminus\{0\}.
+\]
+Then
+\[
+v_j\neq0,
+\qquad
+j=2,\dots,n-1.
+\]
+\end{theorem}
+
+\begin{proof}
+By Proposition~\ref{prop:second-layer},
+\[
+v_2\neq0,
+\qquad
+v_{n-1}\neq0.
+\]
+Thus only the indices \(j=3,\dots,n-2\) remain.  If such a \(j\) satisfied \(v_j=0\),
+then Proposition~\ref{prop:defect} would imply
+\[
+m_j^{\mathrm R}=ag_j^{\mathrm L}m_j^{\mathrm L}
+\]
+with \(ag_j^{\mathrm L}>0\).  Hence \(m_j^{\mathrm R}\) would be a positive real multiple of
+\(m_j^{\mathrm L}\), contradicting Proposition~\ref{prop:sign}.
+\end{proof}
+
+\begin{corollary}[Global simplicity of the lowest branch]\label{cor:simple}
+Assume \(n\ge3\).  Then for every \(x\in\R\) and \(y>0\), the smallest eigenvalue
+\[
+\lambda_1(x,y)=\lambda_{\min}\!\bigl(\Hmat_x(y)\bigr)
+\]
+is simple.
+\end{corollary}
+
+\begin{proof}
+If the eigenspace had dimension at least \(2\), then the linear map
+\[
+\ker\bigl(\Hmat_x(y)-\lambda_1(x,y)\I_n\bigr)\longrightarrow\C,
+\qquad
+\bm v\longmapsto v_2,
+\]
+would have a nontrivial kernel.  This would contradict
+Theorem~\ref{thm:nozero}.
+\end{proof}
+
+\section{Proof of vertical monotonicity and simple connectedness}
+\label{sec:proof-vertical}
+
+\begin{proposition}[The case \(n=2\)]\label{prop:n2}
+If \(n=2\), then for all \(x\in\R\) and \(y\ge0\),
+\[
+\partial_y\lambda_1(x,y)\ge0.
+\]
+\end{proposition}
+
+\begin{proof}
+For \(n=2\),
+\[
+\Bmat_{x,y}
+=
+\begin{bmatrix}
+x+iy & -1\\
+-a & x+iy
+\end{bmatrix},
+\]
+and hence
+\[
+\Hmat_x(y)
+=
+\begin{bmatrix}
+a^2+x^2+y^2 & -(a+1)x+i(1-a)y\\
+-(a+1)x-i(1-a)y & 1+x^2+y^2
+\end{bmatrix}.
+\]
+Its smaller eigenvalue is
+\[
+\lambda_1(x,y)
+=
+x^2+y^2+\frac{1+a^2}{2}
+-\frac12\sqrt{(1-a^2)^2+4(a+1)^2x^2+4(1-a)^2y^2}.
+\]
+Differentiating gives
+\[
+\partial_y\lambda_1(x,y)
+=
+2y\left(
+1-\frac{(1-a)^2}
+{\sqrt{(1-a^2)^2+4(a+1)^2x^2+4(1-a)^2y^2}}
+\right)\ge0,
+\]
+because
+\[
+\sqrt{(1-a^2)^2+4(a+1)^2x^2+4(1-a)^2y^2}\ge 1-a^2\ge (1-a)^2.
+\]
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:vertical}]
+If \(n=2\), the claim is Proposition~\ref{prop:n2}.  Assume henceforth that
+\(n\ge3\).
+
+Fix \(y_*>0\).  By Corollary~\ref{cor:simple}, the lowest eigenvalue
+\[
+x\longmapsto \lambda_1(x,y_*)
+\]
+is simple for every \(x\in\R\).  Since \(x\mapsto \Hmat_x(y_*)\) is a real-analytic
+family, Lemma~\ref{lem:canonical} yields a real-analytic canonical right singular
+vector
+\[
+\bm v(x)=
+\begin{bmatrix}
+v_1(x)\\
+\vdots\\
+v_n(x)
+\end{bmatrix},
+\qquad
+x\in\R.
+\]
+
+By Theorem~\ref{thm:nozero},
+\[
+v_j(x)\neq0,
+\qquad
+j=2,\dots,n-1,\ \ x\in\R.
+\]
+By Lemma~\ref{lem:boundary}, also
+\[
+v_1(x)\neq0,
+\qquad
+v_n(x)\neq0,
+\qquad
+x\in\R.
+\]
+Thus every component of \(\bm v(x)\) is nonzero for every \(x\in\R\).
+
+At \(x=0\), Proposition~\ref{prop:x0} gives
+\[
+\Im\!\left(\frac{v_{j+1}(0)}{v_j(0)}\right)>0,
+\qquad
+j=1,\dots,n-1,
+\]
+and
+\[
+\Im\!\left(\frac{\overline{v_{n+1-j}(0)}}{v_j(0)}\right)>0,
+\qquad
+j=1,\dots,n.
+\]
+Hence Proposition~\ref{prop:continuation}, applied with \(J=\R\), yields
+\[
+\partial_y\lambda_1(x,y_*)\ge0,
+\qquad
+x\in\R.
+\]
+Since \(y_*>0\) was arbitrary, we conclude that
+\[
+\partial_y\lambda_1(x,y)\ge0,
+\qquad
+x\in\R,\ y>0.
+\]
+
+Finally, Lemma~\ref{lem:conj} implies that \(\lambda_1(x,y)\) is even in \(y\).
+Therefore \(y\mapsto \lambda_1(x,y)\) is nondecreasing on \([0,\infty)\), and since
+\(s(x,y)=\sqrt{\lambda_1(x,y)}\ge0\), the same is true of \(y\mapsto s(x,y)\).
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+Combine Theorem~\ref{thm:vertical} with
+Proposition~\ref{prop:topological-reduction}.
+\end{proof}
+
+\begin{remark}
+With Theorem~\ref{thm:vertical} now established, all the conditional results in
+Section~\ref{sec:topology} are unconditional.  In particular,
+Proposition~\ref{prop:barrier} and Corollary~\ref{cor:threshold} are proved.
+\end{remark}
+
+\appendix
+
+\section{Real-axis factorization and boundary algebra}
+\label{app:factor}
+
+Let \(\PiM_n\in\R^{n\times n}\) be the reversal matrix,
+\[
+(\PiM_n)_{j,n+1-j}=1,\qquad (\PiM_n)_{jk}=0\ \text{otherwise}.
+\]
+
+\begin{proposition}[Reversal symmetry and factorization]\label{prop:factorization}
+For every \(n\ge2\) and every real \(x\), one has
+\[
+\PiM_n\,\A_n(a)\,\PiM_n=\A_n(a)^{\mathsf T}.
+\]
+Hence the matrix
+\[
+\mathbf G_n(x):=(x\I_n-\A_n(a))\PiM_n
+\]
+is real symmetric. Moreover, for every \(\varepsilon\ge0\),
+\begin{equation}\label{eq:factorization}
+\det\!\bigl((x\I_n-\A_n(a))^{\mathsf T}(x\I_n-\A_n(a))-\varepsilon^2\I_n\bigr)
+=
+\det\!\bigl(x\I_n-(\A_n(a)+\varepsilon\PiM_n)\bigr)\,
+\det\!\bigl(x\I_n-(\A_n(a)-\varepsilon\PiM_n)\bigr).
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The identity
+\[
+\PiM_n\,\A_n(a)\,\PiM_n=\A_n(a)^{\mathsf T}
+\]
+is immediate from the tridiagonal Toeplitz structure.
+
+Using \(\PiM_n^2=\I_n\), we compute
+\[
+\mathbf G_n(x)^{\mathsf T}
+=
+\PiM_n(x\I_n-\A_n(a))^{\mathsf T}
+=
+\PiM_n(x\I_n-\A_n(a)^{\mathsf T})
+=
+(x\I_n-\A_n(a))\PiM_n
+=
+\mathbf G_n(x),
+\]
+so \(\mathbf G_n(x)\) is symmetric.
+
+Next,
+\[
+\PiM_n\,(x\I_n-\A_n(a))^{\mathsf T}(x\I_n-\A_n(a))\,\PiM_n
+=
+(x\I_n-\A_n(a))(x\I_n-\A_n(a))^{\mathsf T}
+=
+\mathbf G_n(x)^2.
+\]
+Since \(\PiM_n\) is orthogonal and involutory,
+\[
+\det\!\bigl((x\I_n-\A_n(a))^{\mathsf T}(x\I_n-\A_n(a))-\varepsilon^2\I_n\bigr)
+=
+\det\!\bigl(\mathbf G_n(x)^2-\varepsilon^2\I_n\bigr).
+\]
+Because \(\mathbf G_n(x)\) is symmetric, the factors commute, and therefore
+\[
+\det\!\bigl(\mathbf G_n(x)^2-\varepsilon^2\I_n\bigr)
+=
+\det\!\bigl(\mathbf G_n(x)-\varepsilon\I_n\bigr)\,
+\det\!\bigl(\mathbf G_n(x)+\varepsilon\I_n\bigr).
+\]
+Finally,
+\[
+\mathbf G_n(x)-\varepsilon\I_n
+=
+(x\I_n-\A_n(a))\PiM_n-\varepsilon\I_n
+=
+\bigl(x\I_n-\A_n(a)-\varepsilon\PiM_n\bigr)\PiM_n,
+\]
+and similarly
+\[
+\mathbf G_n(x)+\varepsilon\I_n
+=
+\bigl(x\I_n-\A_n(a)+\varepsilon\PiM_n\bigr)\PiM_n.
+\]
+Taking determinants and using \(\det(\PiM_n)^2=1\) yields
+\eqref{eq:factorization}.
+\end{proof}
+
+\begin{corollary}[Real-axis boundary points come from two explicit spectral problems]
+\label{cor:boundary}
+Fix \(n\ge2\) and \(\varepsilon>0\).  If
+\[
+x\in\partial I_\varepsilon^{(n)},
+\]
+then
+\[
+x\in \sigma\!\bigl(\A_n(a)+\varepsilon\PiM_n\bigr)
+\cup
+\sigma\!\bigl(\A_n(a)-\varepsilon\PiM_n\bigr).
+\]
+Equivalently, every real boundary point of the \(\varepsilon\)-pseudospectrum is a real
+eigenvalue of one of the two matrices \(\A_n(a)\pm \varepsilon\PiM_n\).
+\end{corollary}
+
+\begin{proof}
+If \(x\in\partial I_\varepsilon^{(n)}\), then by continuity of \(s_n\),
+\[
+s_n(x)=\varepsilon.
+\]
+Hence the smallest eigenvalue of
+\[
+(x\I_n-\A_n(a))^{\mathsf T}(x\I_n-\A_n(a))
+\]
+equals \(\varepsilon^2\), so
+\[
+\det\!\bigl((x\I_n-\A_n(a))^{\mathsf T}(x\I_n-\A_n(a))-\varepsilon^2\I_n\bigr)=0.
+\]
+By Proposition~\ref{prop:factorization},
+\[
+\det\!\bigl(x\I_n-(\A_n(a)+\varepsilon\PiM_n)\bigr)\,
+\det\!\bigl(x\I_n-(\A_n(a)-\varepsilon\PiM_n)\bigr)=0,
+\]
+which is equivalent to the stated alternative.
+\end{proof}
+
+\begin{remark}
+Proposition~\ref{prop:factorization} turns the real-axis boundary equation
+\[
+s_n(x)=\varepsilon
+\]
+into the vanishing of a product of two ordinary characteristic polynomials.  This
+provides an exact algebraic reformulation of the real-slice boundary problem.
+\end{remark}
+
+\section{Pentadiagonal determinant formulas for the real-axis singular-value polynomial}
+\label{app:pentadiagonal}
+
+Let
+\[
+\A_n(a)=\tridiag(a,0,1)\in \R^{n\times n},
+\qquad 0<a<1,
+\]
+and define
+\[
+K_n(x):=(x\I_n-\A_n(a))^{\mathsf T}(x\I_n-\A_n(a)),
+\qquad
+M_n(x,t):=K_n(x)-t\I_n.
+\]
+Set
+\[
+\rho:=x^2+a^2-t,\qquad
+p:=x^2+a^2+1-t,\qquad
+q:=-(1+a)x,\qquad
+s:=a,\qquad
+\widetilde\rho:=x^2+1-t.
+\]
+Then \(M_n(x,t)\) is the symmetric pentadiagonal matrix
+\[
+M_n(x,t)=
+\begin{pmatrix}
+\rho & q & s \\
+q & p & q & s \\
+s & q & p & \ddots \\
+& \ddots & \ddots & \ddots & q \\
+& & s & q & \widetilde\rho
+\end{pmatrix},
+\]
+with the obvious zeros outside the bandwidth \(2\).
+
+Define the one-corner auxiliary matrix
+\[
+\mathbf E_n(\rho):=
+\begin{pmatrix}
+\rho & q & s \\
+q & p & q & s \\
+s & q & p & \ddots \\
+& \ddots & \ddots & \ddots & q \\
+& & s & q & p
+\end{pmatrix},
+\qquad
+e_n(\rho):=\det \mathbf E_n(\rho),
+\]
+and let \(u_j\) denote the \(j\)-th Euclidean basis vector.
+
+\begin{proposition}[Rank-one reduction to a one-corner family]
+\label{prop:rank-one-reduction}
+For every \(n\ge2\),
+\[
+M_n(x,t)=\mathbf E_n(\rho)+(\widetilde\rho-p)\,u_nu_n^{\mathsf T}
+       =\mathbf E_n(\rho)-a^2u_nu_n^{\mathsf T}.
+\]
+Consequently,
+\[
+\det M_n(x,t)=e_n(\rho)-a^2 e_{n-1}(\rho).
+\]
+\end{proposition}
+
+\begin{proof}
+The matrices \(M_n(x,t)\) and \(\mathbf E_n(\rho)\) differ only in the \((n,n)\) entry,
+and
+\[
+\widetilde\rho-p=(x^2+1-t)-(x^2+a^2+1-t)=-a^2.
+\]
+Hence
+\[
+M_n(x,t)=\mathbf E_n(\rho)-a^2u_nu_n^{\mathsf T}.
+\]
+Since only the \((n,n)\) entry is changed, cofactor expansion in that entry gives
+\[
+\det M_n(x,t)=\det \mathbf E_n(\rho)-a^2\,\operatorname{cof}_{nn}(\mathbf E_n(\rho)).
+\]
+Removing the last row and last column from \(\mathbf E_n(\rho)\) leaves exactly
+\(\mathbf E_{n-1}(\rho)\), so
+\[
+\operatorname{cof}_{nn}(\mathbf E_n(\rho))=e_{n-1}(\rho),
+\]
+which proves the claim.
+\end{proof}
+
+\begin{proposition}[Five-term recurrence for the one-corner determinant]
+\label{prop:e-recurrence}
+Assume \(q\neq0\) (equivalently, \(x\neq0\)). Then for \(n\ge7\),
+\[
+e_n(\rho)
+=
+(p-s)e_{n-1}(\rho)
++(ps-q^2)\bigl(e_{n-2}(\rho)-s\,e_{n-3}(\rho)\bigr)
++s^3(s-p)e_{n-4}(\rho)
++s^5e_{n-5}(\rho),
+\]
+with initial values
+\begin{align*}
+e_1(\rho)&=\rho,\\
+e_2(\rho)&=p\rho-q^2,\\
+e_3(\rho)&=p^2\rho-q^2(\rho-2s)-p(q^2+s^2),\\
+e_4(\rho)&=p^3\rho-p^2(q^2+s^2)-p\!\left(2q^2(\rho-s)+\rho s^2\right)
+          +q^4+2q^2s(\rho-s)+s^4,\\
+e_5(\rho)&=p^4\rho+q^4(\rho-4s)+\rho s^4+2q^2s^2(-\rho+s)-p^3(q^2+s^2)\\
+&\qquad
+          +p\!\left(2q^4+4q^2\rho s+s^4\right)
+          +p^2\!\left(-2\rho s^2+q^2(-3\rho+2s)\right).
+\end{align*}
+\end{proposition}
+
+\begin{proof}
+A direct Laplace expansion along the last row of \(\mathbf E_n(\rho)\) expresses
+\(e_n(\rho)\) in terms of \(e_{n-1}(\rho)\) and two adjacent border minors.  Expanding
+those border minors again along their last rows yields a closed finite system of linear
+recurrences.  Eliminating the auxiliary minors produces the displayed five-term
+recurrence, which is the standard continuant relation for one-corner pentadiagonal
+Toeplitz determinants.  The initial values follow from direct determinant evaluation
+for \(n=1,2,3,4,5\).
+\end{proof}
+
+\begin{corollary}[Closed form in the generic case]\label{cor:generic-closed-form}
+Assume
+\[
+q\neq0,
+\qquad
+q^2\notin\left\{4s(p-2s),\ \frac{(p+2s)^2}{4}\right\}.
+\]
+Define
+\[
+\alpha:=\sqrt{(p+2s)^2-4q^2},
+\]
+\[
+\beta_1:=\sqrt{2(p-2s)(p+2s-\alpha)-4q^2},
+\qquad
+\beta_2:=\sqrt{2(p-2s)(p+2s+\alpha)-4q^2},
+\]
+and
+\[
+\mu_1:=\frac{p-2s-\alpha-\beta_1}{4},\qquad
+\mu_2:=\frac{p-2s-\alpha+\beta_1}{4},
+\]
+\[
+\mu_3:=\frac{p-2s+\alpha-\beta_2}{4},\qquad
+\mu_4:=\frac{p-2s+\alpha+\beta_2}{4},\qquad
+\mu_5:=s.
+\]
+Then \(\mu_1,\dots,\mu_5\) are the distinct roots of the characteristic polynomial
+\[
+\chi(z):=
+z^5-(p-s)z^4-(ps-q^2)(z^3-sz^2)-s^3(s-p)z-s^5,
+\]
+and therefore
+\[
+e_n(\rho)=\sum_{j=1}^5 \kappa_j \mu_j^n,
+\qquad n\ge1,
+\]
+where the coefficients \(\kappa_1,\dots,\kappa_5\) are uniquely determined by
+\[
+\sum_{j=1}^5 \kappa_j \mu_j^m=e_m(\rho),
+\qquad m=1,2,3,4,5.
+\]
+Consequently,
+\[
+\det M_n(x,t)
+=
+\sum_{j=1}^5 \kappa_j(\mu_j-a^2)\mu_j^{\,n-1},
+\qquad n\ge1.
+\]
+\end{corollary}
+
+\begin{proof}
+The recurrence in Proposition~\ref{prop:e-recurrence} has characteristic polynomial
+\(\chi\).  In the stated generic regime, the roots are distinct, so the standard
+characteristic-roots ansatz yields
+\[
+e_n(\rho)=\sum_{j=1}^5 \kappa_j\mu_j^n.
+\]
+The coefficients are fixed uniquely by matching the first five values
+\(e_1(\rho),\dots,e_5(\rho)\).  The determinant identity then follows from
+Proposition~\ref{prop:rank-one-reduction}:
+\[
+\det M_n(x,t)=e_n(\rho)-a^2e_{n-1}(\rho).
+\]
+\end{proof}
+
+\begin{proposition}[Degenerate line \(x=0\)]\label{prop:x0-degenerate}
+If \(x=0\), then \(q=0\) and the recurrence simplifies to
+\[
+e_n(\rho)=p\,e_{n-1}(\rho)-p s^2 e_{n-3}(\rho)+s^4 e_{n-4}(\rho),
+\qquad n\ge6,
+\]
+with initial values
+\[
+e_1(\rho)=\rho,\qquad
+e_2(\rho)=p\rho,\qquad
+e_3(\rho)=p(p\rho-s^2),\qquad
+e_4(\rho)=(p^2-s^2)(p\rho-s^2).
+\]
+If moreover \(p^2\neq4s^2\), then
+\[
+\nu_1=-s,\qquad \nu_2=s,\qquad
+\nu_3=\frac{p-\sqrt{p^2-4s^2}}{2},\qquad
+\nu_4=\frac{p+\sqrt{p^2-4s^2}}{2}
+\]
+are distinct and
+\[
+e_n(\rho)=\sum_{j=1}^4 \widetilde\kappa_j \nu_j^n,
+\qquad n\ge1,
+\]
+where the coefficients \(\widetilde\kappa_j\) are determined by
+\[
+\sum_{j=1}^4 \widetilde\kappa_j \nu_j^m=e_m(\rho),
+\qquad m=1,2,3,4.
+\]
+Hence
+\[
+\det M_n(0,t)
+=
+\sum_{j=1}^4 \widetilde\kappa_j(\nu_j-a^2)\nu_j^{\,n-1},
+\qquad n\ge1.
+\]
+\end{proposition}
+
+\begin{proof}
+Set \(q=0\) in Proposition~\ref{prop:e-recurrence}.  The recurrence factor reduces,
+after cancellation of the redundant factor \((z-s)\), to the displayed fourth-order
+relation.  The initial values come from direct determinant evaluation.  The closed
+form then follows from the characteristic-roots representation of the reduced
+recurrence, and the last identity again follows from
+Proposition~\ref{prop:rank-one-reduction}.
+\end{proof}
+
+\begin{proposition}[Alternative symmetric-corner reduction]
+\label{prop:symmetric-corner}
+Define the symmetric-corner auxiliary matrix
+\[
+\widetilde{\mathbf D}_n(\widetilde\rho):=
+\begin{pmatrix}
+\widetilde\rho & q & s \\
+q & p & q & s \\
+s & q & p & \ddots \\
+& \ddots & \ddots & \ddots & q \\
+& & s & q & \widetilde\rho
+\end{pmatrix},
+\qquad
+\widetilde d_n(x,t):=\det \widetilde{\mathbf D}_n(\widetilde\rho).
+\]
+Then
+\[
+M_n(x,t)=\widetilde{\mathbf D}_n(\widetilde\rho)-(1-a^2)u_1u_1^{\mathsf T}.
+\]
+If \(\widetilde{\mathbf D}_n(\widetilde\rho)\) is invertible, then
+\[
+\det M_n(x,t)
+=
+\widetilde d_n(x,t)\Bigl(1-(1-a^2)m_n(x,t)\Bigr),
+\]
+where
+\[
+m_n(x,t):=u_1^{\mathsf T}\widetilde{\mathbf D}_n(\widetilde\rho)^{-1}u_1.
+\]
+\end{proposition}
+
+\begin{proof}
+The matrices \(M_n(x,t)\) and \(\widetilde{\mathbf D}_n(\widetilde\rho)\) differ only in the
+\((1,1)\) entry, and
+\[
+\rho-\widetilde\rho=(x^2+a^2-t)-(x^2+1-t)=-(1-a^2).
+\]
+Hence
+\[
+M_n(x,t)=\widetilde{\mathbf D}_n(\widetilde\rho)-(1-a^2)u_1u_1^{\mathsf T}.
+\]
+The matrix determinant lemma gives
+\[
+\det(\widetilde{\mathbf D}_n+uv^{\mathsf T})
+=
+\det(\widetilde{\mathbf D}_n)\bigl(1+v^{\mathsf T}\widetilde{\mathbf D}_n^{-1}u\bigr),
+\]
+and applying it with \(u=-(1-a^2)u_1\) and \(v=u_1\) yields the claim.
+\end{proof}
+
+\begin{remark}
+In the nongeneric repeated-root cases
+\[
+q^2\in\left\{4s(p-2s),\ \frac{(p+2s)^2}{4}\right\},
+\]
+or, in the line \(x=0\), when \(p^2=4s^2\), the same procedure yields the usual
+polynomial-times-exponential terms \(n^\ell\mu^n\) associated with repeated roots.
+\end{remark}
+
+\section{Even-size central reduction at \texorpdfstring{\(x=0\)}{x=0}}
+\label{app:even-central}
+
+\begin{lemma}[Even-size central reduction]\label{lem:even-central}
+Let \(n=2m\ge2\), \(0<a<1\), and let
+\[
+\A_{2m}(a)=\tridiag(a,0,1).
+\]
+Let \(J_m\in\R^{m\times m}\) be the nilpotent shift
+\[
+(J_m)_{j,j+1}=1,\qquad j=1,\dots,m-1,
+\]
+and define
+\[
+L_m:=a\I_m+J_m,\qquad U_m:=\I_m+aJ_m^{\mathsf T}.
+\]
+Let \(\Pi_{2m}\in\R^{2m\times2m}\) be the odd-even permutation matrix corresponding to
+the reordered basis
+\[
+e_1,e_3,\dots,e_{2m-1},e_2,e_4,\dots,e_{2m}.
+\]
+Then
+\[
+\Pi_{2m}^{\mathsf T}\A_{2m}(a)\Pi_{2m}
+=
+\begin{bmatrix}
+0 & U_m\\
+L_m & 0
+\end{bmatrix}.
+\]
+Consequently,
+\[
+s_{2m}(0)=\smin\!\bigl(\A_{2m}(a)\bigr)=\smin(L_m)=\smin(a\I_m+J_m).
+\]
+Moreover,
+\[
+s_{2m+2}(0)\le s_{2m}(0).
+\]
+\end{lemma}
+
+\begin{proof}
+The block form is immediate from the action of \(\A_{2m}(a)\) on odd and even
+coordinates: odd indices are mapped only to even indices, and even indices only to
+odd indices.  In the odd-even reordered basis, the upper-right block is
+\(U_m=\I_m+aJ_m^{\mathsf T}\) and the lower-left block is \(L_m=a\I_m+J_m\).
+
+Therefore
+\[
+\Pi_{2m}^{\mathsf T}\A_{2m}(a)^{\mathsf T}\A_{2m}(a)\Pi_{2m}
+=
+\begin{bmatrix}
+L_m^{\mathsf T}L_m & 0\\
+0 & U_m^{\mathsf T}U_m
+\end{bmatrix},
+\]
+so
+\[
+\smin\!\bigl(\A_{2m}(a)\bigr)
+=
+\min\{\smin(L_m),\smin(U_m)\}.
+\]
+
+Take any \(x\in\C^m\), and define \(y\in\C^m\) by
+\[
+y_j:=x_{m+1-j},\qquad j=1,\dots,m.
+\]
+Then \(\|y\|_2=\|x\|_2\).  With the convention \(y_{m+1}:=0\), we have
+\[
+\|U_mx\|_2^2=\sum_{j=1}^m |y_j+a y_{j+1}|^2,
+\qquad
+\|L_my\|_2^2=\sum_{j=1}^m |a y_j+y_{j+1}|^2.
+\]
+Subtracting,
+\begin{align*}
+\|U_mx\|_2^2-\|L_my\|_2^2
+&=
+\sum_{j=1}^m\Bigl(|y_j+a y_{j+1}|^2-|a y_j+y_{j+1}|^2\Bigr) \\
+&=
+(1-a^2)\sum_{j=1}^m\bigl(|y_j|^2-|y_{j+1}|^2\bigr) \\
+&=
+(1-a^2)|y_1|^2\ge0.
+\end{align*}
+Hence \(\|U_mx\|_2\ge \|L_my\|_2\) for every \(x\), and since \(x\mapsto y\) is an
+isometry of \(\C^m\), it follows that
+\[
+\smin(U_m)\ge \smin(L_m).
+\]
+Thus
+\[
+s_{2m}(0)=\smin\!\bigl(\A_{2m}(a)\bigr)=\smin(L_m).
+\]
+
+For the monotonicity in \(m\), note that \(L_m^{\mathsf T}L_m\) is the leading principal
+\(m\times m\) submatrix of \(L_{m+1}^{\mathsf T}L_{m+1}\).  By Cauchy interlacing,
+\[
+\lambda_{\min}\!\bigl(L_{m+1}^{\mathsf T}L_{m+1}\bigr)
+\le
+\lambda_{\min}\!\bigl(L_m^{\mathsf T}L_m\bigr).
+\]
+Taking square roots yields
+\[
+\smin(L_{m+1})\le \smin(L_m),
+\]
+and therefore
+\[
+s_{2m+2}(0)\le s_{2m}(0).
+\]
+\end{proof}
+
+\end{document}

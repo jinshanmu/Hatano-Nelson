@@ -1,0 +1,730 @@
+\documentclass[11pt]{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{hyperref}
+
+\title{}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+For \(0<a<1\) and \(n\ge2\), consider the matrix
+\[
+A_n(a)
+=
+\operatorname{tridiag}(a,0,1)
+=
+\begin{bmatrix}
+0 & 1 \\
+a & 0 & \ddots \\
+& \ddots & \ddots & \ddots \\
+&& \ddots & 0 & 1 \\
+&&& a & 0
+\end{bmatrix}\in \mathbb{R}^{n\times n}.
+\]
+With fixed \(a\), define the real-axis least singular value
+\[
+\mu_n(x;a)\coloneqq s_{\min}(xI_n-A_n(a)),
+\qquad x\in\mathbb{R}.
+\]
+Let
+\[
+\lambda_{n,k}(a)
+=
+2\sqrt a\cos\frac{(n+1-k)\pi}{n+1},
+\qquad k=1,\dots,n,
+\]
+be the eigenvalues of \(A_n(a)\) in increasing order.
+Define the \(k\)-th gap height by
+\[
+\beta_{n,k}(a)
+\coloneqq
+\max_{\lambda_{n,k}(a)\le x\le\lambda_{n,k+1}(a)}
+\mu_n(x;a),
+\qquad k=1,\dots,n-1,
+\]
+and the largest real-axis barrier by
+\[
+\tau_n(a)\coloneqq\max_{1\le k\le n-1}\beta_{n,k}(a).
+\]
+Then, for every \(0<a<1\) and every \(n\ge2\),
+\[
+\tau_{n+1}(a)\le\tau_n(a).
+\]
+
+\paragraph{A structural reduction of the problem.}
+Let \(R_n\) denote the reversal matrix,
+\[
+(R_n)_{ij}=\delta_{i,n+1-j}.
+\]
+Since
+\[
+A_n(a)^T=R_nA_n(a)R_n,
+\]
+the matrix
+\[
+H_n(x):=R_n\bigl(xI_n-A_n(a)\bigr)
+\]
+is real symmetric. Moreover,
+\[
+H_n(x)^2
+=
+R_n\bigl(xI_n-A_n(a)\bigr)R_n\bigl(xI_n-A_n(a)\bigr)
+=
+\bigl(xI_n-A_n(a)\bigr)^T\bigl(xI_n-A_n(a)\bigr).
+\]
+Consequently
+\[
+\boxed{\;
+\mu_n(x;a)
+=
+\min_{\eta\in\sigma(H_n(x))}|\eta|
+\;}
+\tag{1}
+\]
+for every real \(x\). In entries,
+\[
+(H_n(x))_{ij}
+=
+\begin{cases}
+x, & i+j=n+1,\\
+-a, & i+j=n,\\
+-1, & i+j=n+2,\\
+0, & \text{otherwise}.
+\end{cases}
+\tag{2}
+\]
+Thus the singular-value problem is exactly the problem of locating the eigenvalue of the real symmetric anti-tridiagonal pencil \(H_n(x)\) closest to zero.
+
+Let
+\[
+p_0(x)=1,\qquad p_1(x)=x,\qquad
+p_{m+1}(x)=xp_m(x)-ap_{m-1}(x)\quad(m\ge1).
+\]
+Then
+\[
+p_m(x)=\det(xI_m-A_m(a))
+=
+a^{m/2}U_m\!\left(\frac{x}{2\sqrt a}\right),
+\tag{3}
+\]
+where \(U_m\) is the Chebyshev polynomial of the second kind. Hence the zeros of \(p_n\) are precisely
+\[
+2\sqrt a\cos\frac{j\pi}{n+1},\qquad j=1,\dots,n.
+\]
+
+For \(x\notin\sigma(A_n(a))\), the inverse of \(xI_n-A_n(a)\) is given explicitly by
+\[
+\bigl(xI_n-A_n(a)\bigr)^{-1}_{ij}
+=
+\begin{cases}
+\dfrac{p_{i-1}(x)p_{n-j}(x)}{p_n(x)}, & i\le j,\\[8pt]
+a^{\,i-j}\dfrac{p_{j-1}(x)p_{n-i}(x)}{p_n(x)}, & i>j.
+\end{cases}
+\tag{4}
+\]
+This follows directly by substituting the displayed formula into
+\((xI_n-A_n(a))G=I_n\): away from \(i=j\) the entries satisfy the same
+three-term recurrence as the \(p_m\), while the jump at \(i=j\) is exactly
+the Wronskian identity
+\[
+p_jp_{n-j}-ap_{j-1}p_{n-j-1}=p_n.
+\]
+
+Multiplying (4) on the right by \(R_n\) gives a symmetric matrix
+\[
+K_n(x):=\bigl(xI_n-A_n(a)\bigr)^{-1}R_n=H_n(x)^{-1}.
+\]
+Its entries are
+\[
+(K_n(x))_{ij}
+=
+\begin{cases}
+\dfrac{p_{i-1}(x)p_{j-1}(x)}{p_n(x)}, & i+j\le n+1,\\[10pt]
+a^{\,i+j-n-1}\dfrac{p_{n-i}(x)p_{n-j}(x)}{p_n(x)}, & i+j\ge n+1.
+\end{cases}
+\tag{5}
+\]
+Because \(H_n(x)\) is symmetric,
+\[
+\mu_n(x;a)=\frac{1}{\|K_n(x)\|_2},
+\qquad x\notin\sigma(A_n(a)).
+\tag{6}
+\]
+Therefore
+\[
+\beta_{n,k}(a)^{-1}
+=
+\min_{\lambda_{n,k}(a)<x<\lambda_{n,k+1}(a)}
+\|K_n(x)\|_2,
+\tag{7}
+\]
+and
+\[
+\tau_n(a)^{-1}
+=
+\min_{1\le k\le n-1}
+\min_{\lambda_{n,k}(a)<x<\lambda_{n,k+1}(a)}
+\|K_n(x)\|_2.
+\tag{8}
+\]
+
+There is also an exact congruence diagonalization. Put
+\[
+\theta_j=\frac{j\pi}{n+1},\qquad
+\lambda_j=2\sqrt a\cos\theta_j,
+\]
+and define the right eigenvectors
+\[
+v_j(m)=a^{(m-1)/2}\sin(m\theta_j),
+\qquad m=1,\dots,n.
+\]
+Then
+\[
+A_n(a)v_j=\lambda_jv_j.
+\]
+Similarly,
+\[
+w_j(m)=a^{-(m-1)/2}\sin(m\theta_j)
+\]
+is a left eigenvector. A direct computation gives
+\[
+R_nv_j=(-1)^{j+1}a^{(n-1)/2}w_j.
+\]
+Hence
+\[
+v_\ell^{T}R_nv_j
+=
+(-1)^{j+1}a^{(n-1)/2}
+\sum_{m=1}^{n}\sin(m\theta_\ell)\sin(m\theta_j)
+=
+(-1)^{j+1}\frac{n+1}{2}a^{(n-1)/2}\delta_{\ell j}.
+\]
+Writing \(V=[v_1,\dots,v_n]\), one obtains
+\[
+\boxed{\;
+V^TH_n(x)V
+=
+\frac{n+1}{2}a^{(n-1)/2}
+\operatorname{diag}\!\left(
+(-1)^{j+1}(x-\lambda_j)
+\right)_{j=1}^n.
+\;}
+\tag{9}
+\]
+Thus \(H_n(x)\) is a self-adjoint congruence model for the non-normal
+Toeplitz resolvent problem.
+
+The monotonicity assertion
+\[
+\tau_{n+1}(a)\le \tau_n(a)
+\tag{10}
+\]
+would follow from the following localized finite-\(n\) comparison principle:
+for every \(n\ge2\), every \(1\le k\le n\), and every \(s>0\),
+\[
+\{x\in(\lambda_{n+1,k},\lambda_{n+1,k+1}):\mu_{n+1}(x;a)>s\}\ne\varnothing
+\]
+should imply
+\[
+\{x\in(\lambda_{n,k-1},\lambda_{n,k}):\mu_n(x;a)>s\}\ne\varnothing
+\quad\text{or}\quad
+\{x\in(\lambda_{n,k},\lambda_{n,k+1}):\mu_n(x;a)>s\}\ne\varnothing,
+\tag{11}
+\]
+with the evident omission of intervals outside the spectrum.
+
+Indeed, (11) is equivalent to the pointwise gap comparison
+\[
+\beta_{n+1,k}(a)
+\le
+\max\{\beta_{n,k-1}(a),\beta_{n,k}(a)\},
+\tag{12}
+\]
+where \(\beta_{n,0}=\beta_{n,n}=0\). Taking the maximum over \(k\) in
+(12) gives immediately
+\[
+\tau_{n+1}(a)
+=
+\max_{1\le k\le n}\beta_{n+1,k}(a)
+\le
+\max_{1\le j\le n-1}\beta_{n,j}(a)
+=
+\tau_n(a).
+\]
+
+Thus the original theorem is reduced, without loss, to the finite-dimensional
+comparison principle (11). The identities (1)--(9) are unconditional; the
+monotonicity (10) requires an additional proof of (11).
+
+\paragraph{Bottleneck analysis and a sharper recursive reduction.}
+Put
+\[
+M_n(x):=xI_n-A_n(a),
+\qquad
+T_n(x,s):=M_n(x)^TM_n(x)-s^2I_n .
+\]
+Then
+\[
+\mu_n(x;a)>s
+\quad\Longleftrightarrow\quad
+T_n(x,s)\succ0 .
+\tag{1}
+\]
+Thus the desired monotonicity is equivalent to the following level-set implication:
+for every \(s>0\),
+\[
+\{x\in[\lambda_{n+1,1},\lambda_{n+1,n+1}]:T_{n+1}(x,s)\succ0\}\ne\varnothing
+\]
+implies
+\[
+\{x\in[\lambda_{n,1},\lambda_{n,n}]:T_n(x,s)\succ0\}\ne\varnothing .
+\tag{2}
+\]
+Indeed, \(\tau_n(a)>s\) holds exactly when the second set in (2) is nonempty.
+
+The matrix \(T_n(x,s)\) is the real symmetric pentadiagonal matrix
+\[
+T_n(x,s)=
+\begin{bmatrix}
+d_1& e & a \\
+e& d & e & a\\
+a&e&d&e&\ddots\\
+&\ddots&\ddots&\ddots&\ddots&a\\
+&&a&e&d&e\\
+&&&a&e&d_n
+\end{bmatrix},
+\tag{3}
+\]
+where
+\[
+d_1=x^2+a^2-s^2,\qquad
+d=x^2+a^2+1-s^2,\qquad
+d_n=x^2+1-s^2,\qquad
+e=-(1+a)x .
+\tag{4}
+\]
+The only difference between the left semi-infinite leading section and the finite matrix
+\(T_n(x,s)\) is the final diagonal decrement by \(a^2\).
+
+Define recursively the pivots \(\rho_j=\rho_j(x,s)\) and the modified first off-diagonal
+entries \(\gamma_j=\gamma_j(x,s)\) by
+\[
+\rho_1=x^2+a^2-s^2,\qquad \gamma_1=-(1+a)x,
+\tag{5}
+\]
+and, for \(j\ge2\),
+\[
+\rho_j
+=
+x^2+a^2+1-s^2
+-\frac{a^2}{\rho_{j-2}}
+-\frac{\gamma_{j-1}^2}{\rho_{j-1}},
+\tag{6}
+\]
+\[
+\gamma_j
+=
+-(1+a)x-\frac{a\gamma_{j-1}}{\rho_{j-1}},
+\tag{7}
+\]
+with the convention that the term \(a^2/\rho_{j-2}\) is omitted when \(j=2\).
+These are exactly the scalar \(LDL^T\) pivots of the semi-infinite left leading
+pentadiagonal section.
+
+For the finite matrix \(T_n(x,s)\), the first \(n-1\) pivots are
+\[
+\rho_1,\rho_2,\dots,\rho_{n-1},
+\]
+while the final pivot is
+\[
+\rho_n-a^2 .
+\tag{8}
+\]
+Therefore Sylvester's criterion gives the exact finite-section test
+\[
+\boxed{\;
+\mu_n(x;a)>s
+\quad\Longleftrightarrow\quad
+\rho_1(x,s)>0,\dots,\rho_{n-1}(x,s)>0,
+\quad
+\rho_n(x,s)>a^2 .
+\;}
+\tag{9}
+\]
+
+Equivalently, if \(L_j(x,s)\) denotes the determinant of the \(j\times j\) left leading
+semi-infinite pentadiagonal section, with \(L_0=1\), then
+\[
+\rho_j=\frac{L_j}{L_{j-1}},
+\tag{10}
+\]
+and the finite determinant satisfies the exact identity
+\[
+\det T_n(x,s)
+=
+L_n(x,s)-a^2L_{n-1}(x,s).
+\tag{11}
+\]
+Thus
+\[
+\mu_n(x;a)>s
+\quad\Longleftrightarrow\quad
+L_1,\dots,L_{n-1}>0,
+\qquad
+L_n-a^2L_{n-1}>0.
+\tag{12}
+\]
+
+This is the intrinsic recursive core of the problem.  The monotonicity
+\[
+\tau_{n+1}(a)\le \tau_n(a)
+\tag{13}
+\]
+is therefore reduced to the following purely scalar continued-fraction assertion:
+
+\[
+\boxed{
+\begin{minipage}{0.91\linewidth}
+For every \(s>0\), if there exists
+\(x\in[\lambda_{n+1,1},\lambda_{n+1,n+1}]\) such that
+\[
+\rho_1(x,s)>0,\dots,\rho_n(x,s)>0,
+\qquad
+\rho_{n+1}(x,s)>a^2,
+\]
+then there exists
+\(y\in[\lambda_{n,1},\lambda_{n,n}]\) such that
+\[
+\rho_1(y,s)>0,\dots,\rho_{n-1}(y,s)>0,
+\qquad
+\rho_n(y,s)>a^2.
+\]
+\end{minipage}}
+\tag{14}
+\]
+By (9), (14) is exactly the level-set implication (2), hence exactly the desired
+monotonicity.
+
+The important point is that (14) is not a routine consequence of principal-submatrix
+interlacing.  The obstruction is visible directly from the pivot test.  Positivity of
+\(T_{n+1}(x,s)\) gives
+\[
+\rho_1,\dots,\rho_n>0,\qquad \rho_{n+1}>a^2,
+\tag{15}
+\]
+whereas positivity of \(T_n(x,s)\) would require
+\[
+\rho_1,\dots,\rho_{n-1}>0,\qquad \rho_n>a^2.
+\tag{16}
+\]
+Thus the missing step is precisely the passage from the final condition
+\(\rho_{n+1}>a^2\) to the previous final condition \(\rho_n>a^2\), possibly at a different
+real point in the adjacent spectral interval.  Pointwise monotonicity is false; one cannot
+hope to prove
+\[
+\mu_{n+1}(x;a)\le \mu_n(x;a)
+\]
+for all relevant \(x\).  The proof must instead be a global one-dimensional oscillation
+argument for the Riccati recurrence (5)--(7).
+
+The symmetric-pencil formulation gives the same obstruction from another angle.
+Let \(R_n\) be the reversal matrix and define
+\[
+H_n(x):=R_nM_n(x).
+\]
+Then \(H_n(x)\) is real symmetric and
+\[
+H_n(x)^2=M_n(x)^TM_n(x),
+\]
+so
+\[
+\mu_n(x;a)=\min_{\eta\in\sigma(H_n(x))}|\eta|.
+\tag{17}
+\]
+Moreover \(H_n(x)\) is the affine symmetric pencil
+\[
+H_n(x)=xR_n-R_nA_n(a).
+\tag{18}
+\]
+The zeroes of the eigenvalue branches of this pencil occur exactly at the eigenvalues of
+\(A_n(a)\).  The barrier height in a spectral gap is the largest distance from zero reached
+by the closest eigenvalue branch of \(H_n(x)\) between two consecutive zeroes.  At an
+interior maximizing point \(x_*\), a corresponding normalized eigenvector \(u\) satisfies
+the Hellmann--Feynman stationarity condition
+\[
+u^TR_nu=0.
+\tag{19}
+\]
+Thus every barrier is produced by a neutral vector of the indefinite metric \(R_n\).
+This explains why ordinary Hermitian interlacing after the diagonal similarity
+\(A_n(a)\sim \sqrt a\,\operatorname{tridiag}(1,0,1)\) is insufficient: the metric in
+which the relevant eigenvalue branches move is indefinite.
+
+The cleanest exact reduction is therefore (14).  A complete proof of the proposed
+monotonicity must prove this Riccati comparison.  All preceding identities,
+especially the pivot criterion (9), are unconditional and reduce the original matrix
+problem to a scalar finite-difference comparison with no loss of information.
+
+\paragraph{Continuation: the real bottleneck in the Riccati comparison.}
+
+I will keep the notation from the preceding reduction.  Thus
+\[
+M_n(x):=xI_n-A_n(a),\qquad
+T_n(x,s):=M_n(x)^TM_n(x)-s^2I_n,
+\]
+and
+\[
+\mu_n(x;a)>s
+\quad\Longleftrightarrow\quad
+T_n(x,s)\succ0.
+\tag{1}
+\]
+The leading-pivot recursion was
+\[
+\rho_1=x^2+a^2-s^2,\qquad \gamma_1=-(1+a)x,
+\tag{2}
+\]
+and, for \(j\ge2\),
+\[
+\rho_j
+=
+x^2+a^2+1-s^2
+-\frac{a^2}{\rho_{j-2}}
+-\frac{\gamma_{j-1}^2}{\rho_{j-1}},
+\tag{3}
+\]
+\[
+\gamma_j
+=
+-(1+a)x-\frac{a\gamma_{j-1}}{\rho_{j-1}},
+\tag{4}
+\]
+with the term \(a^2/\rho_{j-2}\) omitted for \(j=2\).  The exact finite-section test is
+\[
+\mu_n(x;a)>s
+\quad\Longleftrightarrow\quad
+\rho_1(x,s)>0,\dots,\rho_{n-1}(x,s)>0,\qquad
+\rho_n(x,s)>a^2.
+\tag{5}
+\]
+
+The proposed Riccati comparison is therefore the following statement:
+\[
+\begin{aligned}
+&\exists x\in[\lambda_{n+1,1},\lambda_{n+1,n+1}]
+\text{ such that }
+\rho_1(x,s)>0,\dots,\rho_n(x,s)>0,\quad \rho_{n+1}(x,s)>a^2
+\\
+&\hspace{1cm}\Longrightarrow
+\exists y\in[\lambda_{n,1},\lambda_{n,n}]
+\text{ such that }
+\rho_1(y,s)>0,\dots,\rho_{n-1}(y,s)>0,\quad \rho_n(y,s)>a^2.
+\end{aligned}
+\tag{6}
+\]
+
+A direct induction on the scalar pivots does \emph{not} prove (6).  The reason is simple and important.  The implication
+\[
+\rho_{n+1}>a^2
+\quad\Longrightarrow\quad
+\rho_n>a^2
+\tag{7}
+\]
+is false pointwise.  In fact, in the central gaps one typically has
+\[
+0<\rho_n(x,s)<a^2
+\quad\text{while}\quad
+\rho_{n+1}(x,s)>a^2.
+\tag{8}
+\]
+Thus the comparison, if true, must be a global oscillation statement in the real variable \(x\), not a pointwise monotonicity statement in the index \(n\).
+
+The clean way to see the hidden structure is to pass from the scalar pivots to the
+self-adjoint singular-value pencil
+\[
+\mathcal H_n(x):=
+\begin{bmatrix}
+0&M_n(x)\\
+M_n(x)^T&0
+\end{bmatrix}.
+\tag{9}
+\]
+Then
+\[
+\sigma(\mathcal H_n(x))
+=
+\{-s_1(M_n(x)),\dots,-s_n(M_n(x)),
+s_n(M_n(x)),\dots,s_1(M_n(x))\},
+\tag{10}
+\]
+and therefore
+\[
+\mu_n(x;a)>s
+\quad\Longleftrightarrow\quad
+\sigma(\mathcal H_n(x))\cap[-s,s]=\varnothing.
+\tag{11}
+\]
+Moreover, \(\mathcal H_n(x)\) is a \(2\times2\) block Jacobi matrix:
+\[
+\mathcal H_n(x)=
+\begin{bmatrix}
+B(x)&C\\
+C^T&B(x)&C\\
+&\ddots&\ddots&\ddots\\
+&&C^T&B(x)
+\end{bmatrix},
+\tag{12}
+\]
+where
+\[
+B(x)=
+\begin{bmatrix}
+0&x\\
+x&0
+\end{bmatrix},
+\qquad
+C=
+\begin{bmatrix}
+0&-1\\
+-a&0
+\end{bmatrix}.
+\tag{13}
+\]
+Thus the problem is a finite-interval gap problem for a self-adjoint block Jacobi pencil.
+
+The level equations
+\[
+\pm s\in\sigma(\mathcal H_n(x))
+\tag{14}
+\]
+are equivalent to
+\[
+\det T_n(x,s)=0.
+\tag{15}
+\]
+The open intervals on which \(T_n(x,s)\succ0\) are precisely the open real gaps between consecutive level-crossing points of the two curves
+\[
++s\in\sigma(\mathcal H_n(x)),
+\qquad
+-s\in\sigma(\mathcal H_n(x)).
+\tag{16}
+\]
+Consequently, the Riccati comparison (6) is exactly the following oscillation statement:
+
+\[
+\boxed{
+\begin{minipage}{0.91\linewidth}
+Whenever the block Jacobi pencil \(\mathcal H_{n+1}(x)\) has a gap around zero of half-width \(s\) at some \(x\) in the spectral hull of \(A_{n+1}(a)\), the preceding block Jacobi pencil \(\mathcal H_n(y)\) has a gap around zero of at least the same half-width at some \(y\) in the spectral hull of \(A_n(a)\).
+\end{minipage}}
+\tag{17}
+\]
+
+This is the nontrivial step.  It is stronger than ordinary Cauchy interlacing.
+Indeed, \(\mathcal H_n(x)\) is a principal \(2n\times2n\) block submatrix of
+\(\mathcal H_{n+1}(x)\), so Cauchy interlacing gives
+\[
+\nu_j^{(n+1)}(x)
+\le
+\nu_j^{(n)}(x)
+\le
+\nu_{j+2}^{(n+1)}(x),
+\qquad j=1,\dots,2n,
+\tag{18}
+\]
+where
+\[
+\nu_1^{(m)}(x)\le\cdots\le\nu_{2m}^{(m)}(x)
+\]
+are the ordered eigenvalues of \(\mathcal H_m(x)\).  If
+\[
+\sigma(\mathcal H_{n+1}(x))\cap[-s,s]=\varnothing,
+\tag{19}
+\]
+then
+\[
+\nu_{n+1}^{(n+1)}(x)\le -s,
+\qquad
+\nu_{n+2}^{(n+1)}(x)\ge s.
+\tag{20}
+\]
+But (18) only implies
+\[
+\nu_n^{(n)}(x)\le \nu_{n+2}^{(n+1)}(x),
+\qquad
+\nu_{n+1}^{(n)}(x)\ge \nu_{n+1}^{(n+1)}(x),
+\tag{21}
+\]
+which permits both central eigenvalues of \(\mathcal H_n(x)\) to lie inside
+\((-s,s)\).  Thus pointwise Hermitian interlacing does not imply (17).
+
+Equivalently, returning to the scalar pivots, positivity of \(T_{n+1}(x,s)\) gives
+\[
+\rho_1(x,s)>0,\dots,\rho_n(x,s)>0,\qquad \rho_{n+1}(x,s)>a^2,
+\tag{22}
+\]
+whereas positivity of \(T_n(x,s)\) would require
+\[
+\rho_1(x,s)>0,\dots,\rho_{n-1}(x,s)>0,\qquad \rho_n(x,s)>a^2.
+\tag{23}
+\]
+The final inequality has shifted from \(\rho_{n+1}>a^2\) to \(\rho_n>a^2\), and this shift cannot be justified at the same point \(x\).
+
+There is, however, an exact identity explaining why this obstruction is the only obstruction.  Write
+\[
+T_{n+1}(x,s)=
+\begin{bmatrix}
+T_n(x,s)+a^2e_ne_n^T & a e_{n-1}-(1+a)x e_n\\
+a e_{n-1}^T-(1+a)x e_n^T & x^2+1-s^2
+\end{bmatrix}.
+\tag{24}
+\]
+Hence
+\[
+T_{n+1}(x,s)\succ0
+\quad\Longrightarrow\quad
+T_n(x,s)+a^2e_ne_n^T\succ0.
+\tag{25}
+\]
+In pivot language this is precisely
+\[
+\rho_1(x,s)>0,\dots,\rho_n(x,s)>0.
+\tag{26}
+\]
+Thus the problem is exactly to remove the final positive rank-one boundary term \(a^2e_ne_n^T\), not pointwise but after sliding \(x\) inside the neighboring spectral gaps of \(A_n(a)\).
+
+This can be summarized as the exact boundary-removal problem:
+\[
+\boxed{
+\begin{minipage}{0.91\linewidth}
+Assume \(T_n(x,s)+a^2e_ne_n^T\succ0\) at a point \(x\) lying between two consecutive eigenvalues of \(A_{n+1}(a)\).  Let \(\lambda_{n,k}(a)\) be the unique eigenvalue of \(A_n(a)\) lying in that interval.  Then one must prove that either
+\[
+T_n(y,s)\succ0
+\quad\text{for some }y\in(\lambda_{n,k-1}(a),\lambda_{n,k}(a)),
+\]
+or
+\[
+T_n(y,s)\succ0
+\quad\text{for some }y\in(\lambda_{n,k}(a),\lambda_{n,k+1}(a)).
+\]
+\end{minipage}}
+\tag{27}
+\]
+This is equivalent to the localized barrier comparison
+\[
+\beta_{n+1,k}(a)
+\le
+\max\{\beta_{n,k-1}(a),\beta_{n,k}(a)\},
+\tag{28}
+\]
+with the conventions \(\beta_{n,0}=\beta_{n,n}=0\).
+
+At this point, I do not have a gap-free proof of the oscillation step (27).  The calculations above show that the missing argument is not a routine Riccati induction: the scalar recursion gives the exact finite-section criterion, but the desired implication requires a genuine global Sturm separation theorem for the \(2\times2\) block Jacobi pencil (12).  A correct proof must establish that boundary removal in (25) can always be compensated by moving \(x\) across the unique interlacing zero \(\lambda_{n,k}(a)\).  Without that separation theorem, the proof would be circular.
+
+\end{document}

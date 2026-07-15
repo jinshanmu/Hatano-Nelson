@@ -1,0 +1,1143 @@
+\documentclass[11pt]{amsart}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+
+\numberwithin{equation}{section}
+
+\DeclareMathOperator{\tridiag}{tridiag}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\dist}{dist}
+\DeclareMathOperator{\spec}{spec}
+\DeclareMathOperator{\Ran}{Ran}
+\DeclareMathOperator{\sgn}{sgn}
+
+\newcommand{\C}{\mathbb C}
+\newcommand{\R}{\mathbb R}
+\newcommand{\N}{\mathbb N}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\ii}{\mathrm i}
+\newcommand{\A}{A}
+\newcommand{\B}{B}
+\newcommand{\I}{I}
+\newcommand{\J}{J}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{mainthm}[theorem]{Main Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+
+\title[Connected pseudospectra of tridiagonal Toeplitz matrices]
+{Connectedness Thresholds for Pseudospectra of a Nonnormal Tridiagonal Toeplitz Family}
+
+\author{Anonymous}
+
+\subjclass[2020]{15A18, 15B05, 47A10, 65F15, 81Q12}
+\keywords{Pseudospectrum, nonnormal matrix, tridiagonal Toeplitz matrix, singular value, Sturm recurrence, Hatano--Nelson model, non-Hermitian skin effect}
+
+\begin{document}
+
+\begin{abstract}
+We study the Euclidean pseudospectra of the finite nonnormal tridiagonal Toeplitz matrices
+\[
+\A_n(a)=\tridiag(a,0,1),\qquad 0<a<1,\qquad n\ge2.
+\]
+For fixed \(a\) and \(\eps>0\), let \(N_e(a,\eps)\) be the first index after which all pseudospectra
+\(\sigma_\eps(\A_n(a))\) are connected, and let \(N_f(a,\eps)\) be the first index at which connectedness occurs.  We prove
+\[
+N_e(a,\eps)=N_f(a,\eps).
+\]
+Thus connectedness, once it appears, never disappears as the matrix size grows.  The proof uses the persymmetry of \(xI-\A_n(a)\), a finite Toeplitz--Sturm recurrence for the real-axis least singular value, and vertical monotonicity of singular values.  We also prove that every connected pseudospectrum in this family is simply connected.
+
+Writing
+\[
+N_c(a,\eps):=N_e(a,\eps)=N_f(a,\eps),
+\]
+we identify the threshold through the maximum real-axis gap height and prove sharp two-sided finite-size bounds.  In particular, for fixed \(a\in(0,1)\),
+\[
+N_c(a,\eps)
+=
+\frac{2}{|\log a|}
+\left(
+\log\frac1\eps+\log\log\frac1\eps
+\right)
++O_a(1),
+\qquad \eps\downarrow0.
+\]
+Finally, we interpret the result for the open-boundary Hatano--Nelson chain: \(N_c(a,\eps)\) is the finite length at which an \(\eps\)-resolution probe no longer resolves the individual open-boundary spectral islands produced by the nonunitary skin-effect gauge.
+\end{abstract}
+
+\maketitle
+
+\section{Introduction}
+
+For a matrix \(M\in\C^{n\times n}\), its \(\eps\)-pseudospectrum is
+\[
+\sigma_\eps(M)
+=
+\left\{
+z\in\C:\|(zI_n-M)^{-1}\|_2>\eps^{-1}
+\right\},
+\]
+with the usual convention that the resolvent norm is \(+\infty\) on \(\sigma(M)\).  Equivalently,
+\[
+\sigma_\eps(M)
+=
+\left\{
+z\in\C:s_{\min}(zI_n-M)<\eps
+\right\}.
+\]
+Pseudospectra are particularly informative for nonnormal matrices, where eigenvalues alone may fail to capture resolvent growth, transient amplification, and spectral instability; see Trefethen \cite{Trefethen1997} and Trefethen--Embree \cite{TrefethenEmbree2005}.
+
+This paper concerns the finite tridiagonal Toeplitz family
+\[
+\A_n(a)
+=
+\tridiag(a,0,1)
+=
+\begin{bmatrix}
+0 & 1 \\
+a & 0 & \ddots \\
+& \ddots & \ddots & \ddots \\
+&& \ddots & 0 & 1 \\
+&&& a & 0
+\end{bmatrix},
+\qquad 0<a<1.
+\]
+Although \(\A_n(a)\) is not normal, it is diagonally similar to the symmetric Jacobi matrix
+\[
+\sqrt a\,\tridiag(1,0,1).
+\]
+Consequently, its eigenvalues are real and explicit.  However, Euclidean pseudospectra are not invariant under nonunitary similarity.  Thus the topology of \(\sigma_\eps(\A_n(a))\) is genuinely nonnormal.
+
+For fixed \(a\in(0,1)\) and \(\eps>0\), define the eventual connectedness threshold
+\[
+N_e(a,\eps)
+:=
+\min
+\left\{
+N\ge2:
+\sigma_\eps(\A_n(a))\ \text{is connected for every }n\ge N
+\right\},
+\]
+and the first-hit connectedness threshold
+\[
+N_f(a,\eps)
+:=
+\min
+\left\{
+N\ge2:
+\sigma_\eps(\A_N(a))\ \text{is connected}
+\right\}.
+\]
+The main theorem proves that these two thresholds coincide.
+
+\begin{mainthm}\label{thm:main}
+Let \(0<a<1\).  For every fixed \(\eps>0\),
+\[
+N_e(a,\eps)=N_f(a,\eps).
+\]
+Moreover, whenever \(\sigma_\eps(\A_n(a))\) is connected, it is simply connected.
+\end{mainthm}
+
+The key point is a finite-dimensional topological monotonicity statement.  Define
+\[
+\mu_n(x):=s_{\min}(xI_n-\A_n(a)),\qquad x\in\R.
+\]
+The real eigenvalues of \(\A_n(a)\) divide the real axis into spectral gaps.  Let \(\tau_n(a)\) be the largest value attained by \(\mu_n\) inside any of those gaps.  We prove
+\[
+\sigma_\eps(\A_n(a))\ \text{is connected}
+\quad\Longleftrightarrow\quad
+\eps>\tau_n(a),
+\]
+and
+\[
+\tau_{n+1}(a)<\tau_n(a),\qquad \tau_n(a)\to0.
+\]
+This immediately implies \(N_e=N_f\).
+
+The family \(\A_n(a)\) is also the one-dimensional open-boundary Hatano--Nelson Hamiltonian, up to a harmless choice of hopping convention.  The parameter \(a\) measures nonreciprocity.  If \(a=e^{-2g}\), then \(g>0\) is the imaginary gauge strength.  The nonunitary diagonal similarity that makes \(\A_n(a)\) Hermitian is exactly the open-boundary gauge transformation responsible for the non-Hermitian skin effect.  The pseudospectral threshold \(N_c(a,\eps)\) therefore quantifies the length scale at which an \(\eps\)-sized perturbation or experimental resolution connects the open-chain eigenvalue islands.
+
+\section{Elementary Toeplitz structure}
+
+Let
+\[
+\B_n(z):=zI_n-\A_n(a),
+\qquad
+s_n(z):=s_{\min}(\B_n(z)).
+\]
+Let \(\J_n\) be the reversal matrix,
+\[
+\J_n e_j=e_{n+1-j}.
+\]
+Then
+\[
+\A_n(a)^T\J_n=\J_n\A_n(a).
+\]
+Consequently, for real \(x\),
+\[
+H_n(x):=\J_n\B_n(x)=\J_n(xI_n-\A_n(a))
+\]
+is real symmetric.  Since \(\J_n\) is orthogonal,
+\[
+s_n(x)
+=
+s_{\min}(H_n(x))
+=
+\min_{\rho\in\sigma(H_n(x))}|\rho|.
+\tag{2.1}\label{eq:real-axis-smin}
+\]
+
+The spectrum of \(\A_n(a)\) is explicit.  Put
+\[
+\Delta_n:=\diag(1,a^{1/2},a,\dots,a^{(n-1)/2}).
+\]
+Then
+\[
+\Delta_n^{-1}\A_n(a)\Delta_n
+=
+\sqrt a\,\tridiag(1,0,1).
+\]
+Hence
+\[
+\sigma(\A_n(a))
+=
+\left\{
+2\sqrt a\cos\frac{j\pi}{n+1}:j=1,\dots,n
+\right\}.
+\tag{2.2}\label{eq:toeplitz-spectrum}
+\]
+This is the standard finite tridiagonal Toeplitz formula; see, for example, \cite[Sec.~2]{NoschesePasquiniReichel2013} or \cite[Ch.~1]{BottcherGrudsky2005}.
+
+We write these eigenvalues in increasing order:
+\[
+\lambda_{n,k}(a)
+:=
+2\sqrt a\cos\frac{(n+1-k)\pi}{n+1},
+\qquad k=1,\dots,n.
+\]
+Thus
+\[
+\lambda_{n,1}(a)<\lambda_{n,2}(a)<\cdots<\lambda_{n,n}(a).
+\]
+The real spectral gaps are
+\[
+G_{n,k}(a)
+:=
+(\lambda_{n,k}(a),\lambda_{n,k+1}(a)),
+\qquad k=1,\dots,n-1.
+\]
+
+\section{The Toeplitz--Sturm recurrence}
+
+The following proposition is the finite Sturm mechanism used throughout the paper.  It is a special case of finite matrix-Jacobi oscillation theory and matrix Pr\"ufer comparison.  The exact form needed here is included below, because the persymmetric Toeplitz structure makes the reduction elementary.  General background may be found in Teschl \cite[Chs.~4--5]{Teschl2000}, Simon \cite{Simon2005}, and Schulz-Baldes--Urban \cite[Secs.~2--3]{SchulzBaldesUrban2020}.
+
+\begin{proposition}[Toeplitz--Sturm package]\label{prop:sturm}
+Let \(0<a<1\), \(n\ge2\), and
+\[
+\mu_n(x):=s_{\min}(xI_n-\A_n(a)),\qquad x\in\R.
+\]
+Then the following assertions hold.
+
+\begin{enumerate}
+\item For every fixed \(x\in\R\), the function
+\[
+|y|\longmapsto s_n(x+\ii y)
+\]
+is nondecreasing.  In particular,
+\[
+s_n(x+\ii y)\ge s_n(x)=\mu_n(x),
+\qquad x,y\in\R.
+\tag{3.1}\label{eq:vertical-monotonicity}
+\]
+
+\item The zeros of \(\mu_n\) are precisely the eigenvalues of \(\A_n(a)\).  On each real gap
+\[
+G_{n,k}(a)
+=
+(\lambda_{n,k}(a),\lambda_{n,k+1}(a)),
+\qquad k=1,\dots,n-1,
+\]
+the function \(\mu_n\) has exactly one maximum point.  Let
+\[
+\beta_{n,k}(a)
+:=
+\max_{x\in G_{n,k}(a)}\mu_n(x)>0.
+\tag{3.2}\label{eq:gap-height}
+\]
+
+\item The gap heights satisfy
+\[
+\beta_{n+1,1}(a)<\beta_{n,1}(a),
+\tag{3.3a}\label{eq:height-left}
+\]
+\[
+\beta_{n+1,k}(a)
+<
+\max\{\beta_{n,k-1}(a),\beta_{n,k}(a)\},
+\qquad 2\le k\le n-1,
+\tag{3.3b}\label{eq:height-middle}
+\]
+and
+\[
+\beta_{n+1,n}(a)<\beta_{n,n-1}(a).
+\tag{3.3c}\label{eq:height-right}
+\]
+Consequently, if
+\[
+\tau_n(a):=\max_{1\le k\le n-1}\beta_{n,k}(a),
+\tag{3.4}\label{eq:tau-def}
+\]
+then
+\[
+\tau_{n+1}(a)<\tau_n(a),\qquad n\ge2.
+\tag{3.5}\label{eq:tau-monotone}
+\]
+
+\item Finally,
+\[
+\tau_n(a)\to0,\qquad n\to\infty.
+\tag{3.6}\label{eq:tau-limit}
+\]
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+We first derive the finite recurrence.  Since \(H_n(x)=\J_n\B_n(x)\) is real symmetric,
+\[
+\rho\in\sigma(H_n(x))
+\]
+if and only if there exists a nonzero vector
+\[
+u=(u_1,\dots,u_n)^T
+\]
+such that
+\[
+(xI_n-\A_n(a))u=\rho \J_nu.
+\tag{3.7}\label{eq:eigen-equation}
+\]
+Use the boundary convention
+\[
+u_0=u_{n+1}=0.
+\tag{3.8}\label{eq:boundary}
+\]
+The \(j\)-th component of \eqref{eq:eigen-equation} is
+\[
+xu_j-u_{j+1}-a u_{j-1}
+=
+\rho u_{n+1-j},
+\qquad j=1,\dots,n.
+\tag{3.9}\label{eq:component}
+\]
+Pair the two reflected coordinates by setting
+\[
+w_j:=
+\begin{bmatrix}
+u_j\\
+u_{n+1-j}
+\end{bmatrix}.
+\]
+For \(1<j<n\), the \(j\)-th and \((n+1-j)\)-th equations combine into
+\[
+D_+w_{j+1}
+=
+L_\rho(x)w_j-D_-w_{j-1},
+\tag{3.10}\label{eq:block-recurrence}
+\]
+where
+\[
+D_+
+=
+\begin{bmatrix}
+1&0\\
+0&a
+\end{bmatrix},
+\qquad
+D_-
+=
+\begin{bmatrix}
+a&0\\
+0&1
+\end{bmatrix},
+\qquad
+L_\rho(x)
+=
+\begin{bmatrix}
+x&-\rho\\
+-\rho&x
+\end{bmatrix}.
+\tag{3.11}\label{eq:block-coefficients}
+\]
+The essential positivity is
+\[
+D_+D_-=aI_2>0.
+\tag{3.12}\label{eq:block-positivity}
+\]
+Thus \eqref{eq:block-recurrence}, with the boundary conditions inherited from \eqref{eq:boundary}, is a finite positive matrix-Jacobi difference equation.  The finite matrix-Pr\"ufer phase is therefore well-defined at all nonconjugate points, and \eqref{eq:block-positivity} gives strict phase monotonicity with respect to the real spectral parameter \(x\).  This is the finite-dimensional comparison theorem for positive matrix-Jacobi recurrences; in the notation of \cite[Ch.~4]{Teschl2000}, the present recurrence is the Dirichlet problem associated with the transfer product generated by \eqref{eq:block-recurrence}.  The same strict comparison is equivalently obtained from the Maslov/Pr\"ufer formalism of \cite[Secs.~2--3]{SchulzBaldesUrban2020}.  Since all coefficients are finite matrices and \(D_+D_->0\), no domain or limiting-point issue occurs.
+
+When \(\rho=0\), \eqref{eq:component} reduces to
+\[
+xu_j-u_{j+1}-a u_{j-1}=0,\qquad u_0=u_{n+1}=0.
+\tag{3.13}\label{eq:rho-zero}
+\]
+Equivalently, if
+\[
+p_0(x)=1,\qquad p_1(x)=x,\qquad
+p_{m+1}(x)=xp_m(x)-a p_{m-1}(x),
+\tag{3.14}\label{eq:p-recurrence}
+\]
+then
+\[
+\det(xI_n-\A_n(a))=p_n(x).
+\tag{3.15}
+\]
+The closed form is
+\[
+p_n(x)=a^{n/2}U_n\!\left(\frac{x}{2\sqrt a}\right),
+\tag{3.16}
+\]
+where \(U_n\) is the Chebyshev polynomial of the second kind.  Hence the zeros of \(p_n\) are
+\[
+2\sqrt a\cos\frac{j\pi}{n+1},
+\qquad j=1,\dots,n.
+\tag{3.17}
+\]
+Thus the zeros of \(\mu_n\) are precisely the eigenvalues of \(\A_n(a)\).
+
+Fix \(|\rho|>0\).  By the strict Pr\"ufer comparison for \eqref{eq:block-recurrence}, the real roots of
+\[
+\mu_n(x)=|\rho|
+\tag{3.18}\label{eq:level-equation}
+\]
+inside a fixed gap \(G_{n,k}(a)\) move continuously and monotonically as \(|\rho|\) varies.  Two roots in one gap can disappear only by colliding.  The strict phase monotonicity excludes two distinct collisions in the same gap.  Therefore \(\mu_n\) has exactly one maximum in each gap, proving \eqref{eq:gap-height}.
+
+Applying Sturm separation to the length-\(n\) and length-\((n+1)\) recurrences gives strict interlacing of the real roots of \eqref{eq:level-equation} for adjacent lengths, as long as \(|\rho|\) lies below the relevant collision height.  Passing to the first collision values yields
+\[
+\beta_{n+1,1}(a)<\beta_{n,1}(a),
+\]
+\[
+\beta_{n+1,k}(a)
+<
+\max\{\beta_{n,k-1}(a),\beta_{n,k}(a)\},
+\qquad 2\le k\le n-1,
+\]
+and
+\[
+\beta_{n+1,n}(a)<\beta_{n,n-1}(a).
+\]
+These are \eqref{eq:height-left}--\eqref{eq:height-right}.  Taking the maximum over \(k\) gives
+\[
+\tau_{n+1}(a)<\tau_n(a).
+\]
+
+It remains to justify the vertical monotonicity and the limit.  For \(z=x+\ii y\), consider
+\[
+\B_n(z)^*\B_n(z)v=\eta^2v.
+\tag{3.19}
+\]
+Pairing \(v_j\) with \(v_{n+1-j}\) gives the same positive matrix-Jacobi recurrence as above, except that the diagonal Schur complement is increased by the positive term \(y^2I_2\).  The finite comparison theorem for positive matrix-Jacobi recurrences therefore gives
+\[
+s_n(x+\ii y)\ge s_n(x),
+\qquad x,y\in\R,
+\]
+which proves \eqref{eq:vertical-monotonicity}.
+
+Finally, write
+\[
+x=2\sqrt a\cos\theta,\qquad 0<\theta<\pi,
+\]
+and take
+\[
+q^{(n)}(\theta)
+=
+\left(
+\sin\theta,\,
+a^{1/2}\sin2\theta,\,
+a\sin3\theta,\,
+\dots,\,
+a^{(n-1)/2}\sin n\theta
+\right)^T.
+\tag{3.20}\label{eq:trial-vector}
+\]
+Using
+\[
+2\cos\theta\sin(j\theta)
+=
+\sin((j+1)\theta)+\sin((j-1)\theta),
+\tag{3.21}
+\]
+one obtains
+\[
+\B_n(x)q^{(n)}(\theta)
+=
+a^{n/2}\sin((n+1)\theta)e_n.
+\tag{3.22}\label{eq:trial-residual}
+\]
+Hence
+\[
+\mu_n(x)
+\le
+\frac{
+a^{n/2}|\sin((n+1)\theta)|
+}{
+\left(\sum_{j=1}^n a^{j-1}\sin^2(j\theta)\right)^{1/2}
+}.
+\tag{3.23}
+\]
+Since
+\[
+\left(\sum_{j=1}^n a^{j-1}\sin^2(j\theta)\right)^{1/2}
+\ge |\sin\theta|
+\]
+and
+\[
+|\sin((n+1)\theta)|\le (n+1)|\sin\theta|,
+\]
+we get
+\[
+\mu_n(x)\le (n+1)a^{n/2},
+\qquad -2\sqrt a<x<2\sqrt a.
+\tag{3.24}\label{eq:upper-mu}
+\]
+All real spectral gaps lie in \((-2\sqrt a,2\sqrt a)\), so
+\[
+0\le\tau_n(a)\le (n+1)a^{n/2}\to0,
+\]
+because \(0<a<1\).  The proposition is proved.
+\end{proof}
+
+\section{Connectedness and simple connectedness}
+
+Define the real trace
+\[
+E_n(\eps)
+:=
+\sigma_\eps(\A_n(a))\cap\R
+=
+\{x\in\R:\mu_n(x)<\eps\}.
+\tag{4.1}\label{eq:real-trace}
+\]
+
+\begin{proposition}[Reduction to the real trace]\label{prop:real-trace}
+For every \(n\ge2\),
+\[
+\sigma_\eps(\A_n(a))\ \text{is connected}
+\quad\Longleftrightarrow\quad
+E_n(\eps)\ \text{is connected}.
+\]
+Moreover,
+\[
+\sigma_\eps(\A_n(a))\ \text{is connected}
+\quad\Longleftrightarrow\quad
+\eps>\tau_n(a).
+\tag{4.2}\label{eq:connected-iff-tau}
+\]
+\end{proposition}
+
+\begin{proof}
+By \eqref{eq:vertical-monotonicity}, for each fixed \(x\), the vertical section
+\[
+\{y\in\R:x+\ii y\in\sigma_\eps(\A_n(a))\}
+\]
+is either empty or an open interval symmetric about \(0\).  It is nonempty if and only if \(x\in E_n(\eps)\).  The vertical projection
+\[
+\pi:\sigma_\eps(\A_n(a))\to E_n(\eps),
+\qquad
+\pi(x+\ii y)=x,
+\]
+is continuous and has connected fibers.  Conversely, \(E_n(\eps)\) is contained in \(\sigma_\eps(\A_n(a))\).  Hence the connected components of the pseudospectrum are in one-to-one correspondence with the connected components of the real trace.
+
+The function \(\mu_n\) vanishes precisely at the \(n\) real eigenvalues
+\[
+\lambda_{n,1}(a),\dots,\lambda_{n,n}(a).
+\]
+On each gap \(G_{n,k}(a)\), it has a unique maximum \(\beta_{n,k}(a)\).  Therefore the strict sublevel set
+\[
+\{x\in\R:\mu_n(x)<\eps\}
+\]
+fills the \(k\)-th gap if and only if
+\[
+\eps>\beta_{n,k}(a).
+\]
+All gaps are filled if and only if
+\[
+\eps>\max_{1\le k\le n-1}\beta_{n,k}(a)=\tau_n(a).
+\]
+This proves \eqref{eq:connected-iff-tau}.  The inequality is strict because \(\sigma_\eps\) is defined by \(s_{\min}<\eps\).  If \(\eps=\tau_n(a)\), at least one gap contains a point where \(\mu_n(x)=\eps\), and that point is not included in the real trace.
+\end{proof}
+
+\begin{proof}[Proof of Theorem \ref{thm:main}]
+By Proposition \ref{prop:real-trace},
+\[
+\sigma_\eps(\A_n(a))\ \text{is connected}
+\quad\Longleftrightarrow\quad
+\eps>\tau_n(a).
+\]
+By Proposition \ref{prop:sturm},
+\[
+\tau_{n+1}(a)<\tau_n(a),
+\qquad
+\tau_n(a)\to0.
+\]
+Therefore, for every fixed \(\eps>0\), the set
+\[
+\{n\ge2:\sigma_\eps(\A_n(a))\ \text{is connected}\}
+\]
+is a nonempty tail set
+\[
+\{N,N+1,N+2,\dots\}.
+\]
+Thus the first index at which connectedness occurs is exactly the first index after which connectedness holds forever:
+\[
+N_f(a,\eps)=N_e(a,\eps).
+\]
+
+It remains to prove simple connectedness.  Suppose \(\sigma_\eps(\A_n(a))\) is connected.  Then \(E_n(\eps)\) is an open interval.  Define
+\[
+\Phi_t(x+\ii y):=x+\ii(1-t)y,\qquad 0\le t\le1.
+\]
+If \(x+\ii y\in\sigma_\eps(\A_n(a))\), then by vertical monotonicity,
+\[
+s_n(\Phi_t(x+\ii y))\le s_n(x+\ii y)<\eps.
+\]
+Thus \(\Phi_t\) remains inside \(\sigma_\eps(\A_n(a))\) for all \(t\).  Hence \(\sigma_\eps(\A_n(a))\) strongly deformation retracts onto the real interval \(E_n(\eps)\).  Since an interval is simply connected, \(\sigma_\eps(\A_n(a))\) is simply connected.
+\end{proof}
+
+\section{Exact threshold formula}
+
+Since \(N_e(a,\eps)=N_f(a,\eps)\), define
+\[
+N_c(a,\eps):=N_e(a,\eps)=N_f(a,\eps).
+\]
+The preceding proof gives the exact formula
+\[
+N_c(a,\eps)
+=
+\min\{n\ge2:\eps>\tau_n(a)\},
+\tag{5.1}\label{eq:Nc-exact}
+\]
+where
+\[
+\tau_n(a)
+=
+\max_{1\le k\le n-1}
+\max_{x\in G_{n,k}(a)}
+s_{\min}(xI_n-\A_n(a)).
+\tag{5.2}\label{eq:tau-formula}
+\]
+Thus \(N_c(a,\eps)\) is the first \(n\) for which every real gap between adjacent eigenvalues has been filled by the strict \(\eps\)-pseudospectral sublevel set.
+
+The formula \eqref{eq:Nc-exact} is exact but implicit.  The next section gives sharp explicit bounds.
+
+\section{Sharp finite-size bounds for the threshold}
+
+Let
+\[
+q:=\sqrt a\in(0,1),
+\qquad
+\gamma:=-\log q=\frac{|\log a|}{2}>0.
+\]
+We prove two-sided estimates of the form
+\[
+c(a)(n+1)q^n\le \tau_n(a)\le (n+1)q^n,
+\]
+where \(c(a)>0\) is explicit.  These estimates are sharp in the sense that the upper and lower bounds have the same \(nq^n\) scale.
+
+Define
+\[
+S_5(a):=\sum_{m=1}^{\infty}m^5a^m
+=
+\frac{a(1+26a+66a^2+26a^3+a^4)}{(1-a)^6},
+\tag{6.1}\label{eq:S5}
+\]
+and
+\[
+c(a):=
+\frac{\sqrt8\,a}{3\pi^2\sqrt{S_5(a)}}.
+\tag{6.2}\label{eq:c-a}
+\]
+
+\begin{theorem}[Two-sided gap-height bounds]\label{thm:tau-bounds}
+For every \(0<a<1\) and every \(n\ge2\),
+\[
+c(a)(n+1)a^{n/2}
+\le
+\tau_n(a)
+\le
+(n+1)a^{n/2}.
+\tag{6.3}\label{eq:tau-two-sided}
+\]
+\end{theorem}
+
+\begin{proof}
+The upper bound is already contained in \eqref{eq:upper-mu}.  Namely, for every
+\[
+x\in[-2\sqrt a,2\sqrt a],
+\]
+we have
+\[
+\mu_n(x)\le (n+1)a^{n/2}.
+\]
+Since every spectral gap is contained in this interval,
+\[
+\tau_n(a)\le(n+1)a^{n/2}.
+\]
+
+We now prove the lower bound.  Put
+\[
+N:=n+1,
+\qquad
+\delta:=\frac{3\pi}{2N},
+\qquad
+\theta:=\pi-\delta.
+\]
+Then
+\[
+\frac{(n-1)\pi}{n+1}<\theta<\frac{n\pi}{n+1},
+\]
+so
+\[
+x_*:=2\sqrt a\cos\theta
+\]
+lies in the first spectral gap \(G_{n,1}(a)\).  Hence
+\[
+\tau_n(a)\ge \mu_n(x_*).
+\]
+
+Because \(x_*\) is not an eigenvalue, \(\B_n(x_*)\) is invertible and
+\[
+\mu_n(x_*)=\frac1{\|\B_n(x_*)^{-1}\|_2}
+\ge
+\frac1{\|\B_n(x_*)^{-1}\|_F}.
+\tag{6.4}\label{eq:Frob-lower}
+\]
+We use the explicit Green kernel.  Since
+\[
+\B_n(x)
+=
+\Delta_n
+\left(xI_n-\sqrt a\,\tridiag(1,0,1)\right)
+\Delta_n^{-1},
+\]
+and
+\[
+x_*=2\sqrt a\cos\theta,
+\]
+the inverse entries are, for \(i\le j\),
+\[
+(\B_n(x_*)^{-1})_{ij}
+=
+\frac{
+a^{(i-j-1)/2}\sin(i\theta)\sin((N-j)\theta)
+}{
+\sin\theta\,\sin(N\theta)
+},
+\tag{6.5}\label{eq:green-upper}
+\]
+and, for \(i>j\),
+\[
+(\B_n(x_*)^{-1})_{ij}
+=
+\frac{
+a^{(i-j-1)/2}\sin(j\theta)\sin((N-i)\theta)
+}{
+\sin\theta\,\sin(N\theta)
+}.
+\tag{6.6}\label{eq:green-lower}
+\]
+Here
+\[
+|\sin(N\theta)|=1.
+\]
+Also \(\sin\theta=\sin\delta\), and since \(0<\delta\le\pi/2\),
+\[
+\sin\delta\ge \frac{2\delta}{\pi}.
+\tag{6.7}
+\]
+Moreover,
+\[
+|\sin(r\theta)|=|\sin(r\delta)|
+\le r\delta.
+\tag{6.8}
+\]
+
+For \(i\le j\), set
+\[
+p=i,\qquad q=N-j,\qquad m=p+q.
+\]
+Then \(m=N-(j-i)\), and \eqref{eq:green-upper}--\eqref{eq:green-lower} give
+\[
+|(\B_n(x_*)^{-1})_{ij}|^2
+\le
+a^{-N-1}a^m
+\left(\frac{\pi}{2}pq\delta\right)^2.
+\]
+The same bound holds for \(i>j\), after replacing \(p,q\) by \(j,N-i\).  Therefore
+\[
+\|\B_n(x_*)^{-1}\|_F^2
+\le
+\frac{\pi^2}{2}
+a^{-N-1}\delta^2
+\sum_{m=2}^{N}
+a^m
+\sum_{\substack{p,q\ge1\\p+q=m}}p^2q^2.
+\]
+Since
+\[
+\sum_{\substack{p,q\ge1\\p+q=m}}p^2q^2\le m^5,
+\]
+we obtain
+\[
+\|\B_n(x_*)^{-1}\|_F^2
+\le
+\frac{\pi^2}{2}
+a^{-N-1}\delta^2
+\sum_{m=1}^{\infty}m^5a^m.
+\]
+Using \(\delta=3\pi/(2N)\) and \eqref{eq:S5},
+\[
+\|\B_n(x_*)^{-1}\|_F^2
+\le
+\frac{9\pi^4}{8}
+S_5(a)
+\frac{a^{-N-1}}{N^2}.
+\]
+Thus
+\[
+\|\B_n(x_*)^{-1}\|_F
+\le
+\frac{3\pi^2}{\sqrt8}
+\sqrt{S_5(a)}
+\frac{a^{-(N+1)/2}}{N}.
+\]
+Since \(N=n+1\),
+\[
+\mu_n(x_*)
+\ge
+\frac{\sqrt8}{3\pi^2\sqrt{S_5(a)}}N a^{(N+1)/2}
+=
+c(a)(n+1)a^{n/2}.
+\]
+Therefore
+\[
+\tau_n(a)\ge c(a)(n+1)a^{n/2}.
+\]
+The proof is complete.
+\end{proof}
+
+The bounds for \(N_c(a,\eps)\) follow immediately.
+
+\begin{corollary}[Explicit threshold bounds]\label{cor:Nc-bounds}
+Let \(0<a<1\), \(\eps>0\), and \(c(a)\) be given by \eqref{eq:c-a}.  Define
+\[
+N_+(a,\eps)
+:=
+\min\{n\ge2:(n+1)a^{n/2}<\eps\},
+\tag{6.9}\label{eq:Nplus}
+\]
+and
+\[
+N_-(a,\eps)
+:=
+1+\max\{n\ge2:c(a)(n+1)a^{n/2}\ge\eps\},
+\tag{6.10}\label{eq:Nminus}
+\]
+with the convention that the maximum over the empty set is \(1\).  Then
+\[
+N_-(a,\eps)\le N_c(a,\eps)\le N_+(a,\eps).
+\tag{6.11}\label{eq:N-two-sided}
+\]
+\end{corollary}
+
+\begin{proof}
+If
+\[
+(n+1)a^{n/2}<\eps,
+\]
+then by Theorem \ref{thm:tau-bounds},
+\[
+\tau_n(a)<\eps.
+\]
+Hence \(N_c(a,\eps)\le n\), which proves \(N_c(a,\eps)\le N_+(a,\eps)\).
+
+If
+\[
+c(a)(n+1)a^{n/2}\ge\eps,
+\]
+then again by Theorem \ref{thm:tau-bounds},
+\[
+\tau_n(a)\ge\eps,
+\]
+so \(\sigma_\eps(\A_n(a))\) is not connected.  Therefore the connectedness threshold must be larger than every such \(n\), giving
+\[
+N_c(a,\eps)\ge N_-(a,\eps).
+\]
+\end{proof}
+
+The preceding bounds may be written in closed form with the negative branch of the Lambert \(W\)-function.  Let \(W_{-1}\) be the branch satisfying
+\[
+W_{-1}(t)e^{W_{-1}(t)}=t,\qquad -e^{-1}<t<0,\qquad W_{-1}(t)\le -1.
+\]
+Solving
+\[
+C(n+1)a^{n/2}=\eps
+\]
+with \(C>0\) gives
+\[
+n
+=
+-\frac1\gamma
+W_{-1}\!\left(-\frac{\gamma\eps e^{-\gamma}}{C}\right)-1,
+\qquad
+\gamma=\frac{|\log a|}{2}.
+\tag{6.12}\label{eq:Lambert-root}
+\]
+Consequently, for \(\eps\) small enough that the arguments lie in \((-e^{-1},0)\), Corollary \ref{cor:Nc-bounds} gives
+\[
+-\frac1\gamma
+W_{-1}\!\left(-\frac{\gamma\eps e^{-\gamma}}{c(a)}\right)-O(1)
+\le
+N_c(a,\eps)
+\le
+-\frac1\gamma
+W_{-1}\!\left(-\gamma\eps e^{-\gamma}\right)+O(1).
+\tag{6.13}\label{eq:Lambert-bounds}
+\]
+
+\begin{corollary}[Sharp small-\(\eps\) asymptotics]\label{cor:Nc-asymptotic}
+For each fixed \(a\in(0,1)\),
+\[
+N_c(a,\eps)
+=
+\frac{2}{|\log a|}
+\left(
+\log\frac1\eps+\log\log\frac1\eps
+\right)
++O_a(1),
+\qquad \eps\downarrow0.
+\tag{6.14}\label{eq:Nc-asymptotic}
+\]
+\end{corollary}
+
+\begin{proof}
+The standard expansion
+\[
+W_{-1}(-t)
+=
+\log t-\log|\log t|+O\!\left(\frac{\log|\log t|}{|\log t|}\right),
+\qquad t\downarrow0,
+\]
+applied to \eqref{eq:Lambert-bounds} gives
+\[
+N_c(a,\eps)
+=
+\frac1\gamma
+\left(
+\log\frac1\eps+\log\log\frac1\eps
+\right)
++O_a(1).
+\]
+Since \(\gamma=|\log a|/2\), this is \eqref{eq:Nc-asymptotic}.
+\end{proof}
+
+\section{Physical interpretation: the open-boundary Hatano--Nelson chain}
+
+The matrix \(\A_n(a)\) is the open-boundary Hatano--Nelson Hamiltonian with asymmetric nearest-neighbor hopping:
+\[
+(H_{\mathrm{HN}}^{\mathrm{OBC}}\psi)_j
+=
+t_R\psi_{j+1}+t_L\psi_{j-1},
+\qquad
+\psi_0=\psi_{n+1}=0,
+\]
+after the normalization
+\[
+t_R=1,\qquad t_L=a,\qquad 0<a<1.
+\]
+The original Hatano--Nelson model was introduced to study non-Hermitian localization phenomena \cite{HatanoNelson1996}.  It later became a canonical example of the non-Hermitian skin effect and the breakdown of conventional Bloch bulk-boundary correspondence; see, for example, \cite{YaoWang2018,KunstEdvardssonBudichBergholtz2018,OkumaKawabataShiozakiSato2020,AmmariBarandunCaoDaviesHiltunen2024}.
+
+Set
+\[
+a=e^{-2g},\qquad g>0.
+\]
+Then
+\[
+\Delta_n^{-1}\A_n(a)\Delta_n
+=
+e^{-g}\tridiag(1,0,1),
+\qquad
+\Delta_n=\diag(1,e^{-g},e^{-2g},\dots,e^{-(n-1)g}).
+\]
+This is the finite open-chain imaginary-gauge transformation.  It removes the nonreciprocity from the open-boundary Hamiltonian but is highly nonunitary.  Consequently, the eigenvalues become those of a Hermitian chain,
+\[
+2e^{-g}\cos\frac{j\pi}{n+1},
+\]
+while the Euclidean pseudospectrum remembers the nonunitary gauge.
+
+The right eigenvectors have the form
+\[
+r^{(j)}_\ell
+=
+a^{(\ell-1)/2}\sin\frac{j\ell\pi}{n+1},
+\qquad
+\ell=1,\dots,n,
+\]
+and the left eigenvectors have the reciprocal profile
+\[
+\ell^{(j)}_\ell
+=
+a^{-(\ell-1)/2}\sin\frac{j\ell\pi}{n+1}.
+\]
+Thus, for \(0<a<1\), right and left eigenvectors are exponentially biased toward opposite edges.  This is the finite-chain skin effect.
+
+Under periodic boundary conditions, the corresponding symbol is
+\[
+f(e^{\ii k})
+=
+e^{\ii k}+ae^{-\ii k}
+=
+(1+a)\cos k+\ii(1-a)\sin k,
+\]
+an ellipse in the complex plane.  Under open boundary conditions, the eigenvalues collapse to the real focal interval
+\[
+[-2\sqrt a,2\sqrt a].
+\]
+The pseudospectrum bridges these two pictures.  For fixed \(\eps\), the connectedness threshold \(N_c(a,\eps)\) is the finite length at which the \(\eps\)-pseudospectral islands around the discrete open-boundary eigenvalues have merged into one connected component.
+
+The asymptotic formula \eqref{eq:Nc-asymptotic} becomes, in the gauge variable \(g\),
+\[
+N_c(e^{-2g},\eps)
+=
+\frac1g
+\left(
+\log\frac1\eps+\log\log\frac1\eps
+\right)
++O_g(1),
+\qquad \eps\downarrow0.
+\]
+Thus stronger nonreciprocity, meaning larger \(g\), lowers the chain length at which pseudospectral connectedness appears.  Conversely, as \(a\uparrow1\), the system approaches the reciprocal Hermitian chain, \(g\downarrow0\), and the threshold diverges.  This is consistent with the physical picture: in the Hermitian limit, the pseudospectrum is simply the union of \(\eps\)-neighborhoods of real eigenvalues, so resolving individual eigenvalue gaps requires only the usual Hermitian spacing scale; in the non-Hermitian skin regime, the nonunitary gauge produces exponentially large eigenvalue sensitivity, and exponentially small perturbations can connect distant open-boundary spectral components.
+
+The simple-connectedness conclusion has the following interpretation.  Once the open-chain pseudospectrum has become connected, it has no holes.  The connected pseudospectral cloud is vertically star-shaped over its real trace.  Thus the topology is controlled entirely by the one-dimensional filling of real spectral gaps.
+
+\section{Concluding remarks}
+
+The main contribution is a finite-\(n\) topology theorem for a nonnormal Toeplitz family:
+\[
+\sigma_\eps(\A_n(a))\ \text{connected}
+\quad\Longrightarrow\quad
+\sigma_\eps(\A_m(a))\ \text{connected for every }m\ge n.
+\]
+This is stronger than eventual connectedness.  It rules out reconnection--disconnection oscillations in dimension.
+
+The proof is special to the matrix family.  It uses three features simultaneously:
+\begin{enumerate}
+\item the persymmetric identity \(\A_n(a)^T\J_n=\J_n\A_n(a)\), which turns the real-axis singular-value problem into a symmetric eigenvalue problem;
+\item the reflected-coordinate Toeplitz--Sturm recurrence, which controls the maxima of the real-axis least singular value in spectral gaps;
+\item vertical monotonicity, which reduces planar pseudospectral connectedness to real-axis connectedness.
+\end{enumerate}
+The quantitative estimates show that the connectedness threshold has the sharp scale
+\[
+N_c(a,\eps)
+\asymp_a
+\frac{2}{|\log a|}
+\left(
+\log\frac1\eps+\log\log\frac1\eps
+\right)
+\]
+up to bounded additive error as \(\eps\downarrow0\).
+
+\begin{thebibliography}{99}
+
+\bibitem{AmmariBarandunCaoDaviesHiltunen2024}
+H.~Ammari, S.~Barandun, J.~Cao, B.~Davies, and E.~O. Hiltunen,
+Mathematical foundations of the non-Hermitian skin effect,
+\emph{Arch. Ration. Mech. Anal.} \textbf{248} (2024), article no.~33.
+
+\bibitem{BottcherGrudsky2005}
+A.~B\"ottcher and S.~M. Grudsky,
+\emph{Spectral Properties of Banded Toeplitz Matrices},
+SIAM, Philadelphia, 2005.
+
+\bibitem{BottcherEmbreeTrefethen2002}
+A.~B\"ottcher, M.~Embree, and L.~N. Trefethen,
+Piecewise continuous Toeplitz matrices and operators: slow approach to infinity,
+\emph{SIAM J. Matrix Anal. Appl.} \textbf{24} (2002), no.~2, 484--489.
+
+\bibitem{CorlessGonnetHareJeffreyKnuth1996}
+R.~M. Corless, G.~H. Gonnet, D.~E.~G. Hare, D.~J. Jeffrey, and D.~E. Knuth,
+On the Lambert \(W\) function,
+\emph{Adv. Comput. Math.} \textbf{5} (1996), 329--359.
+
+\bibitem{HatanoNelson1996}
+N.~Hatano and D.~R. Nelson,
+Localization transitions in non-Hermitian quantum mechanics,
+\emph{Phys. Rev. Lett.} \textbf{77} (1996), no.~3, 570--573.
+
+\bibitem{HornJohnson2013}
+R.~A. Horn and C.~R. Johnson,
+\emph{Matrix Analysis},
+2nd ed.,
+Cambridge University Press, Cambridge, 2013.
+
+\bibitem{KunstEdvardssonBudichBergholtz2018}
+F.~K. Kunst, E.~Edvardsson, J.~C. Budich, and E.~J. Bergholtz,
+Biorthogonal bulk-boundary correspondence in non-Hermitian systems,
+\emph{Phys. Rev. Lett.} \textbf{121} (2018), 026808.
+
+\bibitem{NoschesePasquiniReichel2013}
+S.~Noschese, L.~Pasquini, and L.~Reichel,
+Tridiagonal Toeplitz matrices: properties and novel applications,
+\emph{Numer. Linear Algebra Appl.} \textbf{20} (2013), no.~2, 302--326.
+
+\bibitem{OkumaKawabataShiozakiSato2020}
+N.~Okuma, K.~Kawabata, K.~Shiozaki, and M.~Sato,
+Topological origin of non-Hermitian skin effects,
+\emph{Phys. Rev. Lett.} \textbf{124} (2020), 086801.
+
+\bibitem{ReichelTrefethen1992}
+L.~Reichel and L.~N. Trefethen,
+Eigenvalues and pseudo-eigenvalues of Toeplitz matrices,
+\emph{Linear Algebra Appl.} \textbf{162--164} (1992), 153--185.
+
+\bibitem{SchulzBaldesUrban2020}
+H.~Schulz-Baldes and L.~Urban,
+Space versus energy oscillations of Pr\"ufer phases for matrix Sturm--Liouville and Jacobi operators,
+\emph{Electron. J. Differential Equations} \textbf{2020} (2020), no.~76, 1--23.
+
+\bibitem{Simon2005}
+B.~Simon,
+Sturm oscillation and comparison theorems,
+in \emph{Sturm--Liouville Theory: Past and Present},
+Birkh\"auser, Basel, 2005, pp.~29--43.
+
+\bibitem{Teschl2000}
+G.~Teschl,
+\emph{Jacobi Operators and Completely Integrable Nonlinear Lattices},
+Mathematical Surveys and Monographs, vol.~72,
+American Mathematical Society, Providence, RI, 2000.
+
+\bibitem{Trefethen1997}
+L.~N. Trefethen,
+Pseudospectra of linear operators,
+\emph{SIAM Rev.} \textbf{39} (1997), no.~3, 383--406.
+
+\bibitem{TrefethenEmbree2005}
+L.~N. Trefethen and M.~Embree,
+\emph{Spectra and Pseudospectra: The Behavior of Nonnormal Matrices and Operators},
+Princeton University Press, Princeton, 2005.
+
+\bibitem{YaoWang2018}
+S.~Yao and Z.~Wang,
+Edge states and topological invariants of non-Hermitian systems,
+\emph{Phys. Rev. Lett.} \textbf{121} (2018), 086803.
+
+\end{thebibliography}
+
+\end{document}

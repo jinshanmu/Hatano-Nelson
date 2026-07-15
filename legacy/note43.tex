@@ -1,0 +1,707 @@
+\documentclass[11pt]{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{hyperref}
+
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+
+\DeclareMathOperator{\tridiag}{tridiag}
+
+\title{Monotonicity of the Largest Real-Axis Barrier}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+Fix \(0<a<1\), and put
+\[
+h=1+a,
+\qquad
+\alpha=a+a^{-1}.
+\]
+We prove that
+\[
+\tau_{n+1}(a)\leq \tau_n(a)
+\qquad(n\geq2).
+\]
+
+\section*{1. A symmetric signed singular-value problem}
+
+Let \(J_n\) denote the reversal matrix,
+\[
+J_ne_j=e_{n+1-j}.
+\]
+For
+\[
+B_n(x)=xI_n-A_n(a)
+\]
+define
+\[
+C_n(x)=B_n(x)J_n.
+\]
+Since
+\[
+J_nA_n(a)^TJ_n=A_n(a),
+\]
+the matrix \(C_n(x)\) is real symmetric. Moreover,
+\[
+B_n(x)^TB_n(x)
+ =J_nC_n(x)^2J_n.
+\]
+Consequently, the singular values of \(B_n(x)\) are the absolute values of the
+eigenvalues of \(C_n(x)\).
+
+Introduce
+\[
+F_n(x,t)=\det\bigl(xI_n-A_n(a)-tJ_n\bigr).
+\]
+Because \(C_n(x)-tI_n=(xI_n-A_n(a)-tJ_n)J_n\), the zeros in \(t\) of
+\(F_n(x,t)\) are, up to the harmless constant \(\det J_n\), the eigenvalues of
+\(C_n(x)\). In particular,
+\[
+\det\bigl(B_n(x)^TB_n(x)-t^2I_n\bigr)
+ =F_n(x,t)F_n(x,-t).
+\tag{1}
+\]
+
+We shall use the sign of the eigenvalue of \(C_n(x)\) that vanishes at the two
+ends of a given spectral gap. To determine it, let
+\[
+D_n=\operatorname{diag}(1,\sqrt a,a,\ldots,a^{(n-1)/2})
+\]
+and
+\[
+S_n=\tridiag(\sqrt a,0,\sqrt a).
+\]
+Then
+\[
+A_n(a)=D_nS_nD_n^{-1}
+\]
+and
+\[
+C_n(x)
+ =a^{-(n-1)/2}D_n(xI_n-S_n)J_nD_n.
+\tag{2}
+\]
+Thus \(C_n(x)\) is congruent, up to a positive scalar, to the commuting
+symmetric product \((xI_n-S_n)J_n\).
+
+The eigenvector of \(S_n\) associated with the \(k\)-th eigenvalue in increasing
+order has reversal parity \((-1)^{n-k}\). Hence, on the gap
+\((\lambda_{n,k},\lambda_{n,k+1})\), the two diagonal entries of
+\((xI_n-S_n)J_n\) which change sign at the endpoints have the common sign
+\[
+\sigma_{n,k}=(-1)^{n-k}=(-1)^{n+k}.
+\tag{3}
+\]
+The corresponding eigenvalue of \(C_n(x)\) is therefore
+\(\sigma_{n,k}\mu_n(x;a)\).
+
+We next reduce its level curves to a scalar oscillation problem.
+
+\section*{2. Evaluation of the determinant}
+
+Set
+\[
+c=x^2+(1-a)^2-t^2,
+\qquad
+d=2a^2+2ac-h^2x^2.
+\]
+Define \(R_j=0\) for \(j<1\), \(R_1=1\), and, for \(m\geq2\),
+\[
+R_m
+ =cR_{m-1}+dR_{m-2}+a^2cR_{m-3}-a^4R_{m-4}.
+\tag{4}
+\]
+A continuant expansion after pairing the first and last coordinates, the
+second and penultimate coordinates, and so forth, gives
+\begin{align}
+F_{2m}(x,t)
+ &=R_{m+1}-\bigl(1-a+a^2+ht\bigr)R_m
+   -a\bigl(1-a+a^2+ht\bigr)R_{m-1}+a^3R_{m-2},
+\tag{5}\\
+F_{2m+1}(x,t)
+ &=(x-t)R_{m+1}
+   -\bigl(x(1+a^2)+2at\bigr)R_m
+   +a^2(x-t)R_{m-1}.
+\tag{6}
+\end{align}
+For completeness, these identities may also be verified directly from the
+generating functions
+\begin{align}
+\sum_{m\geq0}F_{2m}(x,t)z^m
+ &=
+ \frac{1-\bigl(1-a+a^2+ht\bigr)z
+       -a\bigl(1-a+a^2+ht\bigr)z^2+a^3z^3}
+ {1-cz-dz^2-a^2cz^3+a^4z^4},
+\tag{7}\\
+\sum_{m\geq0}F_{2m+1}(x,t)z^m
+ &=
+ \frac{(x-t)-\bigl(x(1+a^2)+2at\bigr)z+a^2(x-t)z^2}
+ {1-cz-dz^2-a^2cz^3+a^4z^4}.
+\tag{8}
+\end{align}
+Indeed, expanding the two right-hand sides and comparing coefficients gives
+the folded continuant recurrence and the correct initial determinants
+\(F_0=1\), \(F_1=x-t\), \(F_2=x^2-a-t^2-2t\).
+
+Let \(u,v\) be the roots of
+\[
+z^2-\frac ca z-\left(\frac d{a^2}+2\right)=0,
+\qquad u\geq v.
+\tag{9}
+\]
+The denominator in (7)--(8) factors accordingly. If \(U_j\) denotes the
+Chebyshev polynomial of the second kind, normalized by
+\[
+U_{-1}=0,\qquad U_0=1,\qquad
+U_{j+1}(z/2)=zU_j(z/2)-U_{j-1}(z/2),
+\]
+then
+\[
+R_m
+ =a^{m-1}
+ \frac{U_m(u/2)-U_m(v/2)}{u-v}.
+\tag{10}
+\]
+Put
+\[
+\Phi_m(z)=U_m(z/2)+U_{m-1}(z/2).
+\]
+Substitution of (10) into (5)--(6), followed only by the Chebyshev recurrence,
+gives
+\begin{align}
+F_{2m}(x,t)
+ &=
+ \frac{a^{m-1}}{u-v}
+ \Bigl(
+  [a(u-\alpha)-ht]\Phi_m(u)
+  -[a(v-\alpha)-ht]\Phi_m(v)
+ \Bigr),
+\tag{11}\\
+F_{2m+1}(x,t)
+ &=
+ \frac{a^m}{u-v}
+ \Bigl(
+  [x(u-\alpha)-t(u+2)]U_m(u/2)
+ \notag\\[-2mm]
+ &\hspace{42mm}
+  -[x(v-\alpha)-t(v+2)]U_m(v/2)
+ \Bigr).
+\tag{12}
+\end{align}
+
+Define
+\[
+r(z)=\frac{a(\alpha-z)}h,
+\qquad
+p(z)=\frac{a(z+2)}h=h-r(z).
+\tag{13}
+\]
+Using (9), one obtains
+\[
+x^2=p(u)p(v),
+\qquad
+t^2=r(u)r(v).
+\tag{14}
+\]
+On the branch corresponding to the negative half of the real axis, write
+\[
+r_1=r(u),\qquad r_2=r(v),
+\qquad 0\leq r_1\leq r_2\leq h.
+\]
+Then
+\[
+x=-\sqrt{(h-r_1)(h-r_2)},
+\qquad
+t=\sqrt{r_1r_2}.
+\tag{15}
+\]
+
+For \(z(r)=\alpha-hr/a\), define
+\begin{align}
+Y_{2m}(r)
+ &=\sqrt r\,
+   \bigl(U_m(z(r)/2)+U_{m-1}(z(r)/2)\bigr),
+\tag{16}\\
+Y_{2m+1}(r)
+ &=\sqrt{r(h-r)}\,U_m(z(r)/2).
+\tag{17}
+\end{align}
+Equations (11)--(15) show that
+\[
+F_n\bigl(x,\sigma_{n,k}t\bigr)=0
+\quad\Longleftrightarrow\quad
+Y_n(r_2)=(-1)^kY_n(r_1).
+\tag{18}
+\]
+
+The zeros relevant to the negative eigenvalues are
+\[
+r_{n,j}
+ =\frac{1+a^2-2a\cos\frac{2j\pi}{n+1}}h,
+\qquad
+1\leq j\leq \left\lfloor\frac n2\right\rfloor.
+\tag{19}
+\]
+Indeed, if \(r_1=0\) and \(r_2=r_{n,j}\), then (15) gives
+\[
+x=-2\sqrt a\cos\frac{j\pi}{n+1}.
+\]
+These are precisely the negative eigenvalues of \(A_n(a)\).
+
+The Chebyshev identity
+\[
+U_j(s)^2-U_{j-1}(s)U_{j+1}(s)=1
+\tag{20}
+\]
+implies
+\begin{align}
+\frac haY_{2m-1}(r)Y_{2m+1}(r)&=Y_{2m}(r)^2-r,
+\tag{21}\\
+Y_{2m}(r)Y_{2m+2}(r)&=\frac haY_{2m+1}(r)^2-r.
+\tag{22}
+\end{align}
+Thus the zeros of consecutive functions strictly interlace, and between two
+successive zeros the absolute value has one and only one maximum. It follows
+from (18), first locally at \(t=0\) and then by continuation using
+(21)--(22), that the signed eigenvalue specified in (3) is represented by the
+unique component of
+\[
+Y_n(r_2)=(-1)^kY_n(r_1)
+\tag{23}
+\]
+issuing from
+\[
+(0,r_{n,k})
+\quad\text{and}\quad
+(0,r_{n,k+1}).
+\]
+For the last negative gap, the second endpoint is interpreted as \(r_2=h\)
+when \(n\) is odd. When \(n\) is even, the central half-gap terminates on
+\(r_2=h\). Hence
+\[
+\beta_{n,k}(a)
+ =\max_{\Gamma_{n,k}}\sqrt{r_1r_2},
+\tag{24}
+\]
+where \(\Gamma_{n,k}\) is the corresponding component of (23). The
+interlacing in (21)--(22) also shows that no other component can represent the
+least singular value: every other component lies between two additional
+zeros and therefore belongs to a more distant eigenvalue of \(C_n(x)\).
+
+\section*{3. The scalar oscillation}
+
+Put
+\[
+\kappa=\frac{(1-a)^2}{4a}>0
+\]
+and parametrize
+\[
+r(\theta)=\frac{4a}{h}\bigl(\kappa+\sin^2\theta\bigr),
+\qquad 0\leq\theta\leq\frac{\pi}{2}.
+\tag{25}
+\]
+For \(0\leq r<(1-a)^2/h\), the same formula is used with
+\(\theta=i\eta\). Since
+\[
+z(r(\theta))=2\cos(2\theta),
+\]
+the identities
+\[
+U_m(\cos2\theta)+U_{m-1}(\cos2\theta)
+ =\frac{\sin((2m+1)\theta)}{\sin\theta},
+\]
+and
+\[
+\sin(2\theta)U_m(\cos2\theta)=\sin((2m+2)\theta)
+\]
+show that, after multiplication by a positive constant depending only on the
+parity of \(n\), both (16) and (17) reduce to
+\[
+G_M(\theta)=w(\theta)\sin(M\theta),
+\qquad
+M=n+1,
+\tag{26}
+\]
+where
+\[
+w(\theta)=\sqrt{1+\kappa\csc^2\theta}.
+\tag{27}
+\]
+On the hyperbolic part this means
+\[
+G_M(i\eta)
+ =w_h(\eta)\sinh(M\eta),
+\qquad
+w_h(\eta)=\sqrt{\kappa\operatorname{csch}^2\eta-1}.
+\tag{28}
+\]
+Only absolute values matter in the following argument.
+
+We now prove the comparison of the principal equal-amplitude components for
+successive frequencies.
+
+\begin{lemma}[Nonterminal lobes]
+Let \(M\geq3\), and consider a principal equal-amplitude pair for \(G_M\)
+whose right coordinate lies in a lobe strictly before the terminal central
+lobe. There is an equal-amplitude pair for \(G_{M-1}\) whose two \(r\)-coordinates
+are not smaller. Consequently, its product \(r_1r_2\) is not smaller.
+\end{lemma}
+
+\begin{proof}
+Put
+\[
+c=\frac{M}{M-1}>1.
+\]
+First suppose that both coordinates are trigonometric and are represented by
+\(0<\theta_1<\theta_2<\pi/(2c)\). Map them to
+\[
+\theta'_j=c\theta_j.
+\]
+Then
+\[
+\sin((M-1)\theta'_j)=\sin(M\theta_j).
+\]
+Let
+\[
+Q_c(\theta)=\frac{w(c\theta)}{w(\theta)}.
+\]
+We claim that \(Q_c\) is strictly increasing on
+\((0,\pi/(2c))\). Indeed,
+\[
+\frac{d}{d\theta}\log Q_c(\theta)^2
+ =2\bigl(\delta(\theta)-c\delta(c\theta)\bigr),
+\qquad
+\delta(u)=\frac{\kappa\cot u}{\kappa+\sin^2u}.
+\tag{29}
+\]
+Now
+\[
+u\delta(u)
+ =\frac{u\cot u}{\kappa+\sin^2u}
+\]
+is strictly decreasing: \(u\cot u\) is strictly decreasing, while
+\(\kappa+\sin^2u\) is strictly increasing. Hence
+\(\delta(\theta)>c\delta(c\theta)\), proving the claim.
+
+Because \(\theta_2>\theta_1\), the mapped right amplitude for \(G_{M-1}\) is
+larger than the mapped left amplitude. Moving the right coordinate from
+\(c\theta_2\) toward the right zero of its lobe decreases that amplitude
+continuously to zero. Therefore it assumes the left amplitude at some point
+\(\widehat\theta_2\geq c\theta_2\). Since \(r(\theta)\) is increasing, both
+new \(r\)-coordinates are at least the original ones.
+
+If the first coordinate is hyperbolic, keep its \(r\)-value fixed. On that
+coordinate the ratio of the \((M-1)\)-amplitude to the \(M\)-amplitude is
+\[
+\frac{\sinh((M-1)\eta)}{\sinh(M\eta)}
+ <\frac{M-1}{M}.
+\tag{30}
+\]
+On the mapped trigonometric right coordinate the corresponding ratio is
+\(Q_c(\theta_2)\). Since
+\[
+\lim_{\theta\downarrow0}Q_c(\theta)=\frac1c=\frac{M-1}{M}
+\]
+and \(Q_c\) is increasing, the right amplitude again exceeds the left one.
+The same intermediate-value argument completes the proof.
+\end{proof}
+
+It remains to compare the two possible terminal configurations.
+
+\begin{lemma}[Odd terminal lobe versus even central half-gap]
+Suppose \(M\) is even. The product maximum for the terminal lobe of \(G_M\)
+is no larger than the product maximum for the central half-lobe of
+\(G_{M-1}\).
+\end{lemma}
+
+\begin{proof}
+Put
+\[
+\theta_c=\frac{(M-1)\pi}{2M}.
+\]
+If the right coordinate satisfies \(\theta_2\leq\theta_c\), the preceding
+lemma applies. It remains to consider \(\theta_2\geq\theta_c\).
+
+We need a bound for the amplitude on the first inverse branch. Put
+\[
+R_M=
+\frac{w\bigl(\pi/(M-1)\bigr)}{w(\pi/M)}.
+\tag{31}
+\]
+We claim that, up to and including the first maximum of \(G_M\),
+\[
+\frac{G_{M-1}(u)}{G_M(u)}\leq R_M.
+\tag{32}
+\]
+On the hyperbolic part, the left side is at most \((M-1)/M\), while
+\[
+R_M\geq
+\frac{\sin(\pi/M)}{\sin(\pi/(M-1))}
+\geq\frac{M-1}{M}.
+\tag{33}
+\]
+On the trigonometric part,
+\[
+\frac{G_{M-1}(u)}{G_M(u)}
+ =\frac{\sin((M-1)u)}{\sin(Mu)}
+\]
+is increasing, so it is enough to check the first maximum of \(G_M\). At that
+point set
+\[
+A=\sin^2\frac{\pi}{M},
+\qquad
+B=\sin^2\frac{\pi}{M-1},
+\qquad
+E=\frac{\kappa}{\kappa+\sin^2u}.
+\]
+The stationary equation for \(G_M\) gives
+\[
+E=\frac{M\tan u}{\tan(Mu)}
+\]
+and hence
+\[
+\frac{\sin((M-1)u)}{\sin(Mu)}
+ =\cos u\left(1-\frac EM\right).
+\]
+Therefore
+\[
+1-
+\left(\frac{\sin((M-1)u)}{\sin(Mu)}\right)^2
+ \geq \frac{E(2M-1)}{M^2}.
+\tag{34}
+\]
+On the other hand,
+\[
+R_M^2=\frac{1+\kappa/B}{1+\kappa/A}
+\]
+and, because \(A\geq\sin^2u\),
+\[
+1-R_M^2
+ =\left(1-\frac AB\right)\frac{\kappa}{A+\kappa}
+ \leq E\left(1-\frac AB\right)
+ \leq\frac{E(2M-1)}{M^2}.
+\tag{35}
+\]
+Here the last inequality follows from
+\[
+\frac{\sin(\pi/M)}{\sin(\pi/(M-1))}
+ \geq\frac{M-1}{M}.
+\]
+Equations (34)--(35) prove (32).
+
+The monotonicity of \(Q_c\), applied between \(\pi/M\) and \(\theta_c\),
+also gives
+\[
+R_M\leq\frac{w(\pi/2)}{w(\theta_c)}.
+\tag{36}
+\]
+The amplitude of the terminal \(M\)-lobe for
+\(\theta_2\geq\theta_c\) is at most \(w(\theta_c)\). Hence (32)--(36) imply
+that the \((M-1)\)-amplitude at the same left \(r\)-coordinate is at most
+\(w(\pi/2)\), which is the amplitude at the central boundary \(r=h\).
+Thus the central equal-amplitude pair for \(G_{M-1}\) has left coordinate at
+least as large and right coordinate equal to \(h\). Its product is therefore
+at least the original product.
+
+Finally, the maximum on the even central half-lobe really occurs at its
+boundary. Since \(M-1\) is odd, write
+\[
+\theta=\frac{\pi}{2}-v,
+\qquad
+0\leq v\leq\frac{\pi}{2(M-1)}.
+\]
+Then
+\[
+w(\theta)^2\sin^2((M-1)\theta)
+ =\left(1+\frac{\kappa}{\cos^2v}\right)
+   \cos^2((M-1)v)
+ \leq 1+\kappa=w(\pi/2)^2,
+\]
+because \(\cos((M-1)v)\leq\cos v\). This completes the proof.
+\end{proof}
+
+\begin{lemma}[Even central half-gap versus odd terminal lobe]
+Let \(L\geq2\) be even. The product maximum for the central half-lobe of
+frequency \(L+1\) is no larger than the product maximum for the terminal lobe
+of frequency \(L\).
+\end{lemma}
+
+\begin{proof}
+It is convenient to write
+\[
+C_j(u)=\frac{\sin(ju)}{\sin u},
+\]
+with the usual hyperbolic continuation when \(u=i\eta\), and
+\[
+\rho(u)=\frac{r(u)}h
+       =\frac{\kappa+\sin^2u}{\kappa+1}.
+\tag{37}
+\]
+Let the maximizing central pair for frequency \(L+1\) be \((q,h)\), and let
+\(\zeta\) be the first-sheet parameter corresponding to \(q\). Equality of
+the two amplitudes says
+\[
+\rho(\zeta)C_{L+1}(\zeta)^2=1.
+\tag{38}
+\]
+
+Set
+\[
+\beta=\frac{\pi}{2}-\frac{\pi}{2L},
+\qquad
+B=r(\beta),
+\qquad
+b=\frac Bh=\rho(\beta),
+\qquad
+A=\frac{qh}{B}=\frac qb.
+\tag{39}
+\]
+Thus \(AB=qh\). Let \(\eta\) be the first-sheet parameter corresponding to
+\(A\), and define \(\eta_0\) by
+\[
+\sin^2\eta_0=\frac{\sin^2\zeta}{\sin^2\beta},
+\tag{40}
+\]
+again with hyperbolic continuation when necessary. Direct substitution of
+(37)--(40) gives
+\[
+\sin^2\eta-\sin^2\eta_0
+ =
+ \frac{\kappa\cos^2\beta
+       \bigl(\sin^2\beta-\sin^2\zeta\bigr)}
+      {\sin^2\beta\bigl(\kappa+\sin^2\beta\bigr)}
+ \geq0.
+\tag{41}
+\]
+On the first sheet \(C_L\) decreases as \(r\) increases. Indeed, before its
+first zero the logarithmic derivative of \(\sin(Lu)/\sin u\) is
+\(L\cot(Lu)-\cot u<0\), and the hyperbolic statement follows in the same way.
+Thus
+\[
+C_L(\eta)\leq C_L(\eta_0).
+\tag{42}
+\]
+
+We claim that
+\[
+\frac{C_L(\eta_0)}{C_{L+1}(\zeta)}
+ \leq\sin\beta.
+\tag{43}
+\]
+In the trigonometric case, (38) places
+\(0\leq\zeta\leq\pi/(2(L+1))\). It is enough to show
+\[
+L\eta_0\leq(L+1)\zeta.
+\]
+By (40), this follows from
+\[
+\frac{\sin((L+1)\zeta/L)}{\sin\zeta}
+ \geq\frac1{\sin\beta}.
+\tag{44}
+\]
+The left side decreases in \(\zeta\), so it suffices to check the right
+endpoint. There (44) becomes
+\[
+\frac{\sin(\pi/(2L))}{\sin(\pi/(2(L+1)))}
+ \geq\frac1{\cos(\pi/(2L))},
+\]
+or equivalently
+\[
+\frac12\sin\frac{\pi}{L}
+ \geq\sin\frac{\pi}{2(L+1)}.
+\tag{45}
+\]
+For \(L=2\) this is an equality, and for \(L>2\) it follows from the strict
+concavity of \(\sin\) on \([0,\pi/2]\).
+
+If \(\zeta=i\chi\), then
+\[
+\frac{\sinh((L+1)\chi/L)}{\sinh\chi}
+ \geq\frac{L+1}{L}
+ \geq\frac1{\cos(\pi/(2L))},
+\]
+which proves the hyperbolic version of (43).
+
+At \(B\), since \(|\sin(L\beta)|=1\), the terminal \(L\)-amplitude is
+\[
+\frac{\sqrt B}{\sin\beta}.
+\]
+At \(A\), it is \(\sqrt A\,C_L(\eta)\). From (38)--(39),
+\[
+\sqrt{\frac AB}
+ =\frac1{bC_{L+1}(\zeta)}.
+\]
+Using (42), (43), and \(b\geq\sin^2\beta\), we obtain
+\[
+\frac{\sqrt A\,C_L(\eta)}
+     {\sqrt B/\sin\beta}
+ \leq
+ \frac{\sin\beta}{b}
+ \frac{C_L(\eta_0)}{C_{L+1}(\zeta)}
+ \leq\frac{\sin^2\beta}{b}
+ \leq1.
+\tag{46}
+\]
+Thus, on the fixed-product curve \(r_1r_2=qh\), at \(r_2=B\) the right
+terminal amplitude is at least the left amplitude. At \(r_2=h\), the right
+terminal amplitude is zero while the left amplitude is positive.
+Continuity therefore gives an equal-amplitude terminal pair on the same
+fixed-product curve. Its product is exactly \(qh\), proving the desired
+comparison.
+\end{proof}
+
+\section*{4. Completion of the proof}
+
+The relation
+\[
+J_n(xI_n-A_n(a))J_n=xI_n-A_n(a)^T
+\]
+and invariance of singular values under transposition show that
+\[
+\mu_n(-x;a)=\mu_n(x;a).
+\tag{47}
+\]
+Therefore
+\[
+\beta_{n,k}(a)=\beta_{n,n-k}(a).
+\tag{48}
+\]
+
+Let \(N=n+1\).
+
+If \(N=2m+1\) is odd, every nonterminal negative gap of size \(N\) is
+dominated, by the first lemma, by the corresponding gap of size \(N-1=2m\).
+The last negative gap is dominated, by the second lemma, by the central gap
+of size \(2m\). Hence every negative-half barrier for size \(N\) is at most
+\(\tau_{N-1}(a)\).
+
+If \(N=2m+2\) is even, the noncentral negative gaps are again covered by the
+first lemma. The central gap is dominated, by the third lemma, by the last
+negative gap of size \(N-1=2m+1\). Hence every negative or central barrier for
+size \(N\) is at most \(\tau_{N-1}(a)\).
+
+By the symmetry (48), this covers all gaps. Therefore
+\[
+\beta_{N,k}(a)\leq\tau_{N-1}(a)
+\qquad(1\leq k\leq N-1).
+\]
+Taking the maximum over \(k\) gives
+\[
+\tau_N(a)\leq\tau_{N-1}(a).
+\]
+Replacing \(N\) by \(n+1\), we conclude that
+\[
+\boxed{\tau_{n+1}(a)\leq\tau_n(a)}
+\qquad
+(0<a<1,\ n\geq2).
+\]
+
+\end{document}

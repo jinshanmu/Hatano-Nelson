@@ -1,0 +1,723 @@
+\documentclass[11pt]{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{mathrsfs}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{proposition}[lemma]{Proposition}
+\newtheorem{remark}[lemma]{Remark}
+\newtheorem{definition}[lemma]{Definition}
+
+\newcommand{\C}{\mathbb C}
+\newcommand{\R}{\mathbb R}
+
+\title{Block Jacobi and Riccati Reductions for the Clean OBC Hatano--Nelson Family}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{Setup}
+
+Fix real numbers \(0<a<b\), and let
+\[
+A_n=\operatorname{tridiag}(a,0,b)\in\R^{n\times n}.
+\]
+For \(z=x+iy\in\C\), define
+\[
+M_n(x,y)\coloneqq (zI-A_n)^*(zI-A_n).
+\]
+For a real parameter \(s\), introduce the shifted matrix
+\[
+H_n(s;x,y)\coloneqq M_n(x,y)-(x^2+y^2+s)I_n.
+\]
+Thus
+\[
+\det H_n(s;x,y)=0
+\quad\Longleftrightarrow\quad
+x^2+y^2+s
+\ \text{is an eigenvalue of }M_n(x,y).
+\]
+
+We also fix the abbreviations
+\[
+\eta\coloneqq ab,
+\qquad
+c\coloneqq (a+b)x-i(b-a)y,
+\qquad
+\xi\coloneqq \Re c=(a+b)x,
+\qquad
+\zeta\coloneqq \Im c=-(b-a)y.
+\]
+Then
+\[
+-c=-a(x+iy)-b(x-iy),
+\qquad
+-\bar c=-a(x-iy)-b(x+iy).
+\]
+
+The \(2\times 2\) matrices that will appear repeatedly are
+\[
+A\coloneqq
+\begin{pmatrix}
+\eta & 0\\
+-c & \eta
+\end{pmatrix},
+\]
+\[
+B_L\coloneqq
+\begin{pmatrix}
+a^2-s & -c\\
+-\bar c & a^2+b^2-s
+\end{pmatrix},
+\]
+\[
+B\coloneqq
+\begin{pmatrix}
+a^2+b^2-s & -c\\
+-\bar c & a^2+b^2-s
+\end{pmatrix},
+\qquad
+B_R\coloneqq
+\begin{pmatrix}
+a^2+b^2-s & -c\\
+-\bar c & b^2-s
+\end{pmatrix}.
+\]
+For the odd case we also use
+\[
+d\coloneqq
+\binom{\eta}{-c},
+\qquad
+e\coloneqq b^2-s.
+\]
+
+\section{Block Jacobi forms}
+
+\begin{lemma}[Even case: \(n=2m\)]\label{lem:even-block}
+Let \(m\ge 2\), and set
+\[
+w_k\coloneqq \binom{u_{2k-1}}{u_{2k}},
+\qquad
+1\le k\le m,
+\]
+for a vector \(u=(u_1,\dots,u_{2m})^T\in\C^{2m}\). Then
+\[
+H_{2m}(s;x,y)u=0
+\]
+is equivalent to the \(2\times 2\) block Jacobi system
+\[
+B_L w_1 + A w_2 = 0,
+\]
+\[
+A^* w_{k-1} + B w_k + A w_{k+1} = 0,
+\qquad
+2\le k\le m-1,
+\]
+\[
+A^* w_{m-1} + B_R w_m = 0.
+\]
+\end{lemma}
+
+\begin{proof}
+This is a direct regrouping of the rows of \(H_{2m}(s;x,y)\) into pairs
+\((2k-1,2k)\), using the explicit form of \(H_{2m}(s;x,y)\):
+\[
+H_{2m}(s;x,y)=
+\begin{pmatrix}
+a^2-s & -c & \eta \\
+-\bar c & a^2+b^2-s & -c & \eta \\
+\eta & -\bar c & a^2+b^2-s & -c & \eta \\
+& \eta & -\bar c & \ddots & \ddots & \ddots \\
+&& \ddots & \ddots & a^2+b^2-s & -c & \eta \\
+&&& \eta & -\bar c & a^2+b^2-s & -c \\
+&&&& \eta & -\bar c & b^2-s
+\end{pmatrix}.
+\]
+The first block row gives \(B_L w_1+A w_2=0\), the interior block rows give
+\(A^*w_{k-1}+Bw_k+Aw_{k+1}=0\), and the last block row gives
+\(A^*w_{m-1}+B_Rw_m=0\).
+\end{proof}
+
+\begin{lemma}[Odd case: \(n=2m+1\)]\label{lem:odd-block}
+Let \(m\ge 2\), and set
+\[
+w_k\coloneqq \binom{u_{2k-1}}{u_{2k}},
+\qquad
+1\le k\le m,
+\qquad
+t\coloneqq u_{2m+1},
+\]
+for a vector \(u=(u_1,\dots,u_{2m+1})^T\in\C^{2m+1}\). Then
+\[
+H_{2m+1}(s;x,y)u=0
+\]
+is equivalent to the mixed block/scalar system
+\[
+B_L w_1 + A w_2 = 0,
+\]
+\[
+A^* w_{k-1} + B w_k + A w_{k+1} = 0,
+\qquad
+2\le k\le m-1,
+\]
+\[
+A^* w_{m-1} + B w_m + d\,t = 0,
+\]
+\[
+d^* w_m + e\,t = 0.
+\]
+\end{lemma}
+
+\begin{proof}
+Again this is obtained by grouping the rows of \(H_{2m+1}(s;x,y)\) into pairs
+\((2k-1,2k)\), together with the final scalar row \(2m+1\). The only difference
+from the even case is that the odd chain has one extra site at the right endpoint,
+which appears through the terminal coupling vector \(d=(\eta,-c)^T\) and scalar
+terminal block \(e=b^2-s\).
+\end{proof}
+
+\section{Tail Schur complements and determinant factorizations}
+
+\begin{proposition}[Even tail Schur complements]\label{prop:even-schur}
+Assume \(m\ge 2\). On the Zariski-open set where all inverses below exist, define
+recursively
+\[
+\Sigma_m^{(e)}\coloneqq B_R,
+\qquad
+\Sigma_k^{(e)}\coloneqq B_k-A\bigl(\Sigma_{k+1}^{(e)}\bigr)^{-1}A^*,
+\qquad
+k=m-1,\dots,1,
+\]
+where
+\[
+B_1\coloneqq B_L,
+\qquad
+B_k\coloneqq B
+\quad (2\le k\le m-1).
+\]
+Then
+\[
+\det H_{2m}(s;x,y)=\prod_{k=1}^m \det \Sigma_k^{(e)}.
+\]
+In particular,
+\[
+\det H_{2m}(s;x,y)=0
+\quad\Longleftrightarrow\quad
+\det \Sigma_1^{(e)}(s;x,y)=0
+\]
+whenever \(\det \Sigma_k^{(e)}\neq 0\) for \(2\le k\le m\). The product formula
+extends to all \(s\in\R\) by polynomial continuation.
+\end{proposition}
+
+\begin{proof}
+Apply successive Schur complements starting from the rightmost block of the
+block tridiagonal system in Lemma~\ref{lem:even-block}. Each step replaces the
+tail block \(\Sigma_{k+1}^{(e)}\) by the effective block
+\[
+\Sigma_k^{(e)}=B_k-A(\Sigma_{k+1}^{(e)})^{-1}A^*.
+\]
+At each step, the determinant picks up a factor \(\det \Sigma_{k+1}^{(e)}\).
+This yields
+\[
+\det H_{2m}(s;x,y)=\prod_{k=1}^m \det \Sigma_k^{(e)}
+\]
+on the open set where the recursion is defined. Since both sides are polynomial
+functions of \(s\), the identity extends to all \(s\).
+\end{proof}
+
+\begin{proposition}[Odd tail Schur complements]\label{prop:odd-schur}
+Assume \(m\ge 2\). On the open set \(s\neq b^2\), define
+\[
+\Sigma_m^{(o)}\coloneqq B-d\,e^{-1}d^*,
+\]
+and then recursively
+\[
+\Sigma_k^{(o)}\coloneqq B_k-A\bigl(\Sigma_{k+1}^{(o)}\bigr)^{-1}A^*,
+\qquad
+k=m-1,\dots,1,
+\]
+with
+\[
+B_1\coloneqq B_L,
+\qquad
+B_k\coloneqq B
+\quad (2\le k\le m-1).
+\]
+Then
+\[
+\det H_{2m+1}(s;x,y)
+=
+(b^2-s)\prod_{k=1}^m \det \Sigma_k^{(o)}.
+\]
+In particular,
+\[
+\det H_{2m+1}(s;x,y)=0
+\quad\Longleftrightarrow\quad
+\det \Sigma_1^{(o)}(s;x,y)=0
+\]
+whenever \(b^2-s\neq 0\) and \(\det \Sigma_k^{(o)}\neq 0\) for \(2\le k\le m\).
+The product formula extends to all \(s\in\R\) by polynomial continuation.
+\end{proposition}
+
+\begin{proof}
+By Lemma~\ref{lem:odd-block}, the odd case has a scalar terminal block \(e=b^2-s\).
+On the set \(e\neq 0\), eliminate the scalar tail \(t\) from the last two equations:
+\[
+t=-e^{-1}d^*w_m.
+\]
+Substituting this into the last block equation yields the effective terminal block
+\[
+\Sigma_m^{(o)}=B-d\,e^{-1}d^*.
+\]
+The remaining \(2\times 2\) block chain is then identical in form to the even case,
+so successive Schur complements give
+\[
+\det H_{2m+1}(s;x,y)
+=
+e\prod_{k=1}^m \det \Sigma_k^{(o)}.
+\]
+As before, both sides are polynomial in \(s\), so the identity extends to all \(s\).
+\end{proof}
+
+\section{Scalar Riccati recursions}
+
+\begin{proposition}[Even scalar Riccati recursion]\label{prop:even-scalar}
+Write
+\[
+\Sigma_k^{(e)}=
+\begin{pmatrix}
+u_k^{(e)} & \beta_k^{(e)}\\
+\overline{\beta_k^{(e)}} & v_k^{(e)}
+\end{pmatrix},
+\qquad
+\Delta_k^{(e)}\coloneqq
+u_k^{(e)}v_k^{(e)}-\bigl|\beta_k^{(e)}\bigr|^2.
+\]
+Then the terminal data are
+\[
+u_m^{(e)}=a^2+b^2-s,
+\qquad
+\beta_m^{(e)}=-c,
+\qquad
+v_m^{(e)}=b^2-s,
+\]
+and for \(k=m-1,\dots,1\) one has
+\[
+u_k^{(e)}
+=
+\alpha_k-\frac{\eta^2 v_{k+1}^{(e)}}{\Delta_{k+1}^{(e)}},
+\]
+\[
+\beta_k^{(e)}
+=
+-c+\frac{\eta\bigl(\eta\,\beta_{k+1}^{(e)}+v_{k+1}^{(e)}\bar c\bigr)}
+{\Delta_{k+1}^{(e)}},
+\]
+\[
+v_k^{(e)}
+=
+\delta_k-\frac{
+\eta^2 u_{k+1}^{(e)}
++\eta\bigl(\beta_{k+1}^{(e)}c+\overline{\beta_{k+1}^{(e)}}\,\bar c\bigr)
++|c|^2 v_{k+1}^{(e)}
+}{\Delta_{k+1}^{(e)}},
+\]
+where
+\[
+(\alpha_1,\delta_1)=(a^2-s,\ a^2+b^2-s),
+\qquad
+(\alpha_k,\delta_k)=(a^2+b^2-s,\ a^2+b^2-s)
+\quad (2\le k\le m-1).
+\]
+\end{proposition}
+
+\begin{proof}
+For a Hermitian matrix
+\[
+\Sigma=
+\begin{pmatrix}
+u & \beta\\
+\bar\beta & v
+\end{pmatrix},
+\qquad
+\Delta=uv-|\beta|^2,
+\]
+one has
+\[
+\Sigma^{-1}
+=
+\frac1\Delta
+\begin{pmatrix}
+v & -\beta\\
+-\bar\beta & u
+\end{pmatrix}.
+\]
+Now insert this into
+\[
+\Sigma_k^{(e)}=B_k-A\bigl(\Sigma_{k+1}^{(e)}\bigr)^{-1}A^*,
+\]
+with
+\[
+A=
+\begin{pmatrix}
+\eta & 0\\
+-c & \eta
+\end{pmatrix}.
+\]
+A direct multiplication yields
+\[
+A
+\begin{pmatrix}
+v & -\beta\\
+-\bar\beta & u
+\end{pmatrix}
+A^*
+=
+\begin{pmatrix}
+\eta^2 v &
+-\eta(\eta\beta+v\bar c)\\[0.4ex]
+-\eta(\eta\bar\beta+cv) &
+\eta^2u+\eta(\beta c+\bar\beta\,\bar c)+|c|^2v
+\end{pmatrix}.
+\]
+Subtracting this from \(B_k\) gives the stated formulas.
+\end{proof}
+
+\begin{proposition}[Odd scalar Riccati recursion]\label{prop:odd-scalar}
+Write
+\[
+\Sigma_k^{(o)}=
+\begin{pmatrix}
+u_k^{(o)} & \beta_k^{(o)}\\
+\overline{\beta_k^{(o)}} & v_k^{(o)}
+\end{pmatrix},
+\qquad
+\Delta_k^{(o)}\coloneqq
+u_k^{(o)}v_k^{(o)}-\bigl|\beta_k^{(o)}\bigr|^2.
+\]
+On the set \(s\neq b^2\), the terminal data are
+\[
+u_m^{(o)}
+=
+a^2+b^2-s-\frac{\eta^2}{b^2-s},
+\]
+\[
+\beta_m^{(o)}
+=
+-c+\frac{\eta\,\bar c}{b^2-s},
+\]
+\[
+v_m^{(o)}
+=
+a^2+b^2-s-\frac{|c|^2}{b^2-s},
+\]
+and for \(k=m-1,\dots,1\) one has exactly the same Riccati recursion as in the even case:
+\[
+u_k^{(o)}
+=
+\alpha_k-\frac{\eta^2 v_{k+1}^{(o)}}{\Delta_{k+1}^{(o)}},
+\]
+\[
+\beta_k^{(o)}
+=
+-c+\frac{\eta\bigl(\eta\,\beta_{k+1}^{(o)}+v_{k+1}^{(o)}\bar c\bigr)}
+{\Delta_{k+1}^{(o)}},
+\]
+\[
+v_k^{(o)}
+=
+\delta_k-\frac{
+\eta^2 u_{k+1}^{(o)}
++\eta\bigl(\beta_{k+1}^{(o)}c+\overline{\beta_{k+1}^{(o)}}\,\bar c\bigr)
++|c|^2 v_{k+1}^{(o)}
+}{\Delta_{k+1}^{(o)}},
+\]
+with
+\[
+(\alpha_1,\delta_1)=(a^2-s,\ a^2+b^2-s),
+\qquad
+(\alpha_k,\delta_k)=(a^2+b^2-s,\ a^2+b^2-s)
+\quad (2\le k\le m-1).
+\]
+\end{proposition}
+
+\begin{proof}
+The terminal data come from the explicit matrix
+\[
+\Sigma_m^{(o)}=B-d\,e^{-1}d^*
+=
+\begin{pmatrix}
+a^2+b^2-s-\dfrac{\eta^2}{b^2-s}
+&
+-c+\dfrac{\eta\,\bar c}{b^2-s}\\[2ex]
+-\bar c+\dfrac{\eta\,c}{b^2-s}
+&
+a^2+b^2-s-\dfrac{|c|^2}{b^2-s}
+\end{pmatrix}.
+\]
+Once this terminal block is fixed, the proof is identical to that of
+Proposition~\ref{prop:even-scalar}.
+\end{proof}
+
+\section{Lorentz-cone form}
+
+\begin{definition}[Lorentz parametrization of \(2\times 2\) Hermitian matrices]
+For \(X=(m,\chi,\psi,z)^T\in\R^4\), define
+\[
+\mathscr S(X)\coloneqq
+\begin{pmatrix}
+m+z & \chi-i\psi\\
+\chi+i\psi & m-z
+\end{pmatrix}.
+\]
+Also define the quadratic form
+\[
+Q(X)\coloneqq m^2-\chi^2-\psi^2-z^2,
+\]
+and the involution
+\[
+J\coloneqq \operatorname{diag}(1,-1,-1,-1).
+\]
+Then
+\[
+\det \mathscr S(X)=Q(X),
+\qquad
+\mathscr S(X)^{-1}=\frac{1}{Q(X)}\,\mathscr S(JX)
+\]
+whenever \(Q(X)\neq 0\).
+\end{definition}
+
+\begin{proposition}[Common Lorentz-cone Riccati map]\label{prop:lorentz}
+Define the real \(4\times 4\) matrix
+\[
+\mathcal L_c\coloneqq
+\begin{pmatrix}
+\eta^2+\dfrac{|c|^2}{2} & -\eta \xi & -\eta \zeta & \dfrac{|c|^2}{2}\\[1.2ex]
+-\eta \xi & \eta^2 & 0 & -\eta \xi\\[1.2ex]
+-\eta \zeta & 0 & \eta^2 & -\eta \zeta\\[1.2ex]
+-\dfrac{|c|^2}{2} & \eta \xi & \eta \zeta & \eta^2-\dfrac{|c|^2}{2}
+\end{pmatrix}.
+\]
+Then
+\[
+A\,\mathscr S(X)\,A^*=\mathscr S(\mathcal L_c X)
+\qquad\text{for every }X\in\R^4.
+\]
+
+Now let \(\Sigma_k^{(\#)}=\mathscr S(X_k^{(\#)})\), where \(\#\in\{e,o\}\) denotes the even or odd case.
+Then the Riccati recursions of Propositions~\ref{prop:even-scalar} and \ref{prop:odd-scalar}
+become
+\[
+X_k^{(\#)}
+=
+X_{B_k}-\frac{1}{Q(X_{k+1}^{(\#)})}\,\mathcal L_c\,JX_{k+1}^{(\#)},
+\qquad
+k=m-1,\dots,1,
+\]
+where
+\[
+X_{B_L}=
+\left(
+a^2+\frac{b^2}{2}-s,\ -\xi,\ \zeta,\ -\frac{b^2}{2}
+\right)^T,
+\]
+\[
+X_B=
+\left(
+a^2+b^2-s,\ -\xi,\ \zeta,\ 0
+\right)^T.
+\]
+The terminal data are
+\[
+\Sigma_m^{(e)}=B_R
+\quad\Longleftrightarrow\quad
+X_m^{(e)}=
+\left(
+\frac{a^2+2b^2}{2}-s,\ -\xi,\ \zeta,\ \frac{a^2}{2}
+\right)^T,
+\]
+and, on \(s\neq b^2\),
+\[
+\Sigma_m^{(o)}=B-d\,e^{-1}d^*
+\quad\Longleftrightarrow\quad
+X_m^{(o)}=
+\begin{pmatrix}
+a^2+b^2-s-\dfrac{\eta^2+|c|^2}{2(b^2-s)}\\[0.6ex]
+-\xi+\dfrac{\eta\xi}{b^2-s}\\[0.6ex]
+\zeta+\dfrac{\eta\zeta}{b^2-s}\\[0.6ex]
+\dfrac{|c|^2-\eta^2}{2(b^2-s)}
+\end{pmatrix}.
+\]
+\end{proposition}
+
+\begin{proof}
+The identity
+\[
+A\,\mathscr S(X)\,A^*=\mathscr S(\mathcal L_c X)
+\]
+is a direct computation. Since
+\[
+\mathscr S(X)^{-1}=\frac{1}{Q(X)}\,\mathscr S(JX),
+\]
+one gets
+\[
+A\,\mathscr S(X)^{-1}A^*
+=
+\frac{1}{Q(X)}\,A\,\mathscr S(JX)\,A^*
+=
+\frac{1}{Q(X)}\,\mathscr S(\mathcal L_c JX).
+\]
+Substituting this into
+\[
+\Sigma_k^{(\#)}=B_k-A\bigl(\Sigma_{k+1}^{(\#)}\bigr)^{-1}A^*
+\]
+and identifying both sides via the map \(\mathscr S\) yields the stated Lorentz-cone recursion.
+The terminal vectors are obtained by decomposing the explicit terminal matrices
+\(\Sigma_m^{(e)}\) and \(\Sigma_m^{(o)}\) in the basis \(\mathscr S(\cdot)\).
+\end{proof}
+
+\begin{remark}
+The results above show that, after odd/even blocking, the spectral problem for
+\(H_n(s;x,y)\) is governed by a rational self-map of the Lorentz cone
+\[
+Q(X)>0,\qquad m>0,
+\]
+that is, by a \(4\)-real-dimensional Riccati dynamics on \(2\times 2\) Hermitian
+tail Schur complements. In the even and odd cases, the interior recursion is the
+same; only the terminal data differ.
+\end{remark}
+
+\begin{remark}
+For \(n=2\) and \(n=3\), the above constructions collapse to one-step problems and
+recover the explicit scalar analyses of those dimensions.
+\end{remark}
+
+\begin{proposition}[Closure of the terminal cocycle contribution]
+Let
+\[
+\widehat H_n(\Lambda;x,y)=M_n(x,y)-\Lambda I,
+\qquad
+q=b-a,
+\qquad
+\eta=ab,
+\qquad
+c=(a+b)x-iqy.
+\]
+Let \(\Sigma_k(\Lambda,y)\) be the blocked tail Schur complements, and define
+\[
+S_k:=-\partial_\Lambda\Sigma_k,
+\qquad
+P_k:=2y\,S_k-\partial_y\Sigma_k.
+\]
+Let \(w_1\in\ker\Sigma_1\setminus\{0\}\), and propagate the nullchain by
+\[
+w_{k+1}=-\Sigma_{k+1}^{-1}A^*w_k.
+\]
+Write
+\[
+j_k:=\Im(\overline{w_{k,1}}\,w_{k,2}).
+\]
+Assume \(y>0\). Then the terminal contribution is strictly positive.
+
+\smallskip
+
+\noindent
+\textup{(i) Even case \(n=2m\).} One has
+\[
+\Sigma_m=B_R,
+\qquad
+S_m=I_2,
+\qquad
+P_m=
+\begin{pmatrix}
+0 & -iq\\
+iq & 0
+\end{pmatrix},
+\]
+and therefore
+\[
+w_m^*P_mw_m=2q\,j_m>0.
+\]
+
+\smallskip
+
+\noindent
+\textup{(ii) Odd case \(n=2m+1\).} Set
+\[
+d_0:=\binom{\eta}{-c},
+\qquad
+e:=x^2+y^2+b^2-\Lambda.
+\]
+Then
+\[
+\Sigma_m=B-d_0e^{-1}d_0^*,
+\qquad
+S_m=I_2+e^{-2}d_0d_0^*,
+\]
+and
+\[
+P_m=
+\begin{pmatrix}
+0 & -iq\left(1+\dfrac{\eta}{e}\right)\\[1.2ex]
+iq\left(1+\dfrac{\eta}{e}\right) & \dfrac{2q^2y}{e}
+\end{pmatrix}.
+\]
+Moreover \(e>0\) at \(\Lambda=\lambda_{\min}(M_n(x,y))\), hence
+\[
+w_m^*P_mw_m
+=
+2q\left(1+\frac{\eta}{e}\right)j_m
++
+\frac{2q^2y}{e}|w_{m,2}|^2
+>0.
+\]
+
+\smallskip
+
+Consequently, if
+\[
+P_k=\Pi_k+R_kP_{k+1}R_k^*,
+\qquad
+R_k=A\Sigma_{k+1}^{-1},
+\]
+and the interior terms satisfy \(w_k^*\Pi_kw_k>0\) for \(k=1,\dots,m-1\), then
+\[
+w_1^*P_1w_1
+=
+\sum_{k=1}^{m-1} w_k^*\Pi_kw_k+w_m^*P_mw_m
+>0.
+\]
+\end{proposition}
+
+\begin{proof}
+The even case is immediate from
+\[
+P_m=2yI_2-\partial_yB_R=
+\begin{pmatrix}
+0 & -iq\\
+iq & 0
+\end{pmatrix}.
+\]
+For the odd case, differentiate
+\[
+\Sigma_m=B-d_0e^{-1}d_0^*
+\]
+with respect to \(\Lambda\) and \(y\), using
+\[
+\partial_\Lambda(e^{-1})=e^{-2},
+\qquad
+\partial_y(e^{-1})=-\frac{2y}{e^2},
+\qquad
+\partial_y d_0=\binom{0}{iq},
+\]
+to obtain the stated formulas for \(S_m\) and \(P_m\). The positivity of the
+quadratic forms then follows from \(q>0\), \(y>0\), \(e>0\), and \(j_m>0\).
+\end{proof}
+
+\end{document}

@@ -1,0 +1,61 @@
+\documentclass[11pt]{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{hyperref}
+
+\title{}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+For \(0<a<1\) and \(n\ge2\), consider the matrix
+\[
+A_n(a)
+=
+\operatorname{tridiag}(a,0,1)
+=
+\begin{bmatrix}
+0 & 1 \\
+a & 0 & \ddots \\
+& \ddots & \ddots & \ddots \\
+&& \ddots & 0 & 1 \\
+&&& a & 0
+\end{bmatrix}\in \mathbb{R}^{n\times n}.
+\]
+With fixed \(a\), define the real-axis least singular value
+\[
+\mu_n(x;a)\coloneqq s_{\min}(xI_n-A_n(a)),
+\qquad x\in\mathbb{R}.
+\]
+Let
+\[
+\lambda_{n,k}(a)
+=
+2\sqrt a\cos\frac{(n+1-k)\pi}{n+1},
+\qquad k=1,\dots,n,
+\]
+be the eigenvalues of \(A_n(a)\) in increasing order.
+Define the \(k\)-th gap height by
+\[
+\beta_{n,k}(a)
+\coloneqq
+\max_{\lambda_{n,k}(a)\le x\le\lambda_{n,k+1}(a)}
+\mu_n(x;a),
+\qquad k=1,\dots,n-1,
+\]
+and the largest real-axis barrier by
+\[
+\tau_n(a)\coloneqq\max_{1\le k\le n-1}\beta_{n,k}(a).
+\]
+Then, for every \(0<a<1\) and every \(n\ge2\),
+\[
+\tau_{n+1}(a)\le\tau_n(a).
+\]
+
+\end{document}

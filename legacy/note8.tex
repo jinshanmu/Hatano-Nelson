@@ -1,0 +1,1524 @@
+\documentclass[11pt]{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+
+% Fallback when hyperref is not loaded.
+\providecommand{\texorpdfstring}[2]{#1}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{definition}[theorem]{Definition}
+
+\newcommand{\C}{\mathbb C}
+\newcommand{\R}{\mathbb R}
+\newcommand{\HH}{\mathbb H}
+\newcommand{\eps}{\varepsilon}
+
+\title{A Dual-Tail Local Reduction for the Real-Slice Problem\\
+in the Clean OBC Hatano--Nelson Family}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{Setup}
+
+Fix \(0<a<b\), and let
+\[
+A_n=\operatorname{tridiag}(a,0,b)\in\R^{n\times n}.
+\]
+For \(z=x+iy\in\C\), define
+\[
+B(z)\coloneqq zI-A_n,
+\qquad
+M_n(x,y)\coloneqq B(z)^*B(z),
+\qquad
+\lambda_*(x,y)\coloneqq \lambda_{\min}(M_n(x,y)).
+\]
+At a boundary point of the pseudospectrum,
+\[
+\Lambda=\lambda_*(x,y),
+\]
+one has
+\[
+M_n(x,y)-\Lambda I_n \succeq 0,
+\qquad
+\det(M_n(x,y)-\Lambda I_n)=0.
+\]
+
+We write
+\[
+q\coloneqq b-a>0,
+\qquad
+\eta\coloneqq ab,
+\qquad
+c\coloneqq (a+b)x-iqy,
+\]
+and also
+\[
+\delta\coloneqq x^2+y^2+a^2+b^2-\Lambda,
+\qquad
+\delta_a\coloneqq x^2+y^2+a^2-\Lambda=\delta-b^2,
+\qquad
+\delta_b\coloneqq x^2+y^2+b^2-\Lambda=\delta-a^2.
+\]
+
+A boundary point \((x,y)\) is called \emph{simple} if \(\Lambda\) is a simple eigenvalue of
+\(M_n(x,y)\), equivalently
+\[
+\dim\ker\bigl(M_n(x,y)-\Lambda I_n\bigr)=1.
+\]
+
+The connectedness-equivalence problem is to prove that for every fixed \(x\in\R\) and every
+\(\eps>0\), the vertical section
+\[
+\{y\in\R:\ \lambda_*(x,y)<\eps^2\}
+\]
+is either empty or an interval containing \(0\). At the simple-boundary level, it suffices to
+prove that for every simple boundary point with \(y>0\),
+\[
+\partial_y \lambda_*(x,y)>0.
+\]
+
+\section{Diagonal gauge and weighted metric}
+
+The non-selfadjoint asymmetry can be gauged away at the level of the hopping amplitudes, and the
+corresponding weighted metric will reappear in the exact scalar identities below.
+
+\begin{proposition}[Diagonal gauge, symmetrization, and weighted metric]\label{prop:gauge}
+Set
+\[
+\rho\coloneqq \sqrt{\frac ab}\in(0,1),
+\qquad
+G\coloneqq \operatorname{diag}(1,\rho,\rho^2,\dots,\rho^{n-1}),
+\]
+and
+\[
+W\coloneqq G^{-2}
+=
+\operatorname{diag}(\omega_1,\dots,\omega_n),
+\qquad
+\omega_j\coloneqq \Bigl(\frac ba\Bigr)^{j-1}.
+\]
+Then
+\[
+G^{-1}A_nG=\sqrt{\eta}\,\operatorname{tridiag}(1,0,1),
+\]
+and
+\[
+WA_n=A_n^T W.
+\]
+Moreover,
+\[
+\omega_j\,\omega_{n+1-j}=\Bigl(\frac ba\Bigr)^{n-1}
+\qquad (1\le j\le n).
+\]
+Consequently, if \(u=Gv\), then
+\[
+-\Im(u_j u_{n+1-j})
+=
+\rho^{\,n-1}\bigl(-\Im(v_j v_{n+1-j})\bigr),
+\]
+so the signs of the mirror-pair quantities are invariant under this diagonal gauge.
+\end{proposition}
+
+\begin{proof}
+The superdiagonal entries of \(G^{-1}A_nG\) are
+\[
+\rho^{-(j-1)}\,b\,\rho^{j}=b\rho=\sqrt{ab}=\sqrt{\eta},
+\]
+and the subdiagonal entries are
+\[
+\rho^{-(j-1)}\,a\,\rho^{j-2}=a\rho^{-1}=\sqrt{ab}=\sqrt{\eta}.
+\]
+This proves the symmetrization formula.
+
+For the weighted metric, note that
+\[
+b\,\omega_j=a\,\omega_{j+1},
+\]
+so the \((j,j+1)\)-entry of \(WA_n\) equals the \((j,j+1)\)-entry of \(A_n^T W\), and similarly
+for the \((j+1,j)\)-entry. Thus \(WA_n=A_n^T W\).
+
+Finally,
+\[
+\omega_j\omega_{n+1-j}
+=
+\Bigl(\frac ba\Bigr)^{j-1}\Bigl(\frac ba\Bigr)^{n-j}
+=
+\Bigl(\frac ba\Bigr)^{n-1}.
+\]
+If \(u=Gv\), then
+\[
+u_j u_{n+1-j}
+=
+\rho^{j-1}\rho^{n-j} v_j v_{n+1-j}
+=
+\rho^{n-1} v_j v_{n+1-j},
+\]
+and the sign statement follows.
+\end{proof}
+
+\section{Block form and dual tails}
+
+We record the even case explicitly. The odd case has the same constant-coefficient interior and a
+different terminal seed; all global identities in Sections~\ref{sec:takagi}--\ref{sec:status}
+remain valid for arbitrary \(n\).
+
+\subsection*{Even case \(n=2m\)}
+
+Set
+\[
+w_k\coloneqq \binom{u_{2k-1}}{u_{2k}},
+\qquad
+1\le k\le m.
+\]
+Then
+\[
+\bigl(M_{2m}(x,y)-\Lambda I_{2m}\bigr)u=0
+\]
+is equivalent to the \(2\times2\) block Jacobi system
+\[
+B_L w_1 + A w_2 = 0,
+\]
+\[
+A^* w_{k-1}+Bw_k+Aw_{k+1}=0,
+\qquad
+2\le k\le m-1,
+\]
+\[
+A^*w_{m-1}+B_R w_m=0,
+\]
+where
+\[
+A=
+\begin{pmatrix}
+\eta & 0\\
+-c & \eta
+\end{pmatrix},
+\qquad
+\det A=\eta^2>0,
+\]
+and
+\[
+B_L=
+\begin{pmatrix}
+\delta_a & -c\\
+-\bar c & \delta
+\end{pmatrix},
+\qquad
+B=
+\begin{pmatrix}
+\delta & -c\\
+-\bar c & \delta
+\end{pmatrix},
+\qquad
+B_R=
+\begin{pmatrix}
+\delta & -c\\
+-\bar c & \delta_b
+\end{pmatrix}.
+\]
+
+\begin{lemma}[Proper leading and trailing subchains are positive definite]\label{lem:proper}
+Let
+\[
+H\coloneqq M_{2m}(x,y)-\Lambda I_{2m}\succeq 0.
+\]
+For each \(2\le k\le m\), the trailing block principal submatrix of \(H\) on blocks
+\(k,k+1,\dots,m\) is positive definite. For each \(1\le k\le m-1\), the leading block principal
+submatrix of \(H\) on blocks \(1,2,\dots,k\) is positive definite.
+\end{lemma}
+
+\begin{proof}
+We prove the trailing statement; the leading statement is the same with left and right reversed.
+Let \(T_k\) be the trailing block principal submatrix on blocks \(k,\dots,m\), and suppose
+\(T_k v=0\) for some nonzero block vector
+\[
+v=(\xi_k,\xi_{k+1},\dots,\xi_m)^T.
+\]
+Extend \(v\) by zeros to a block vector
+\[
+\widetilde v=(0,\dots,0,\xi_k,\xi_{k+1},\dots,\xi_m)^T
+\]
+in the full chain. Then
+\[
+\widetilde v^* H \widetilde v=v^*T_k v=0.
+\]
+Since \(H\succeq 0\), this implies \(H\widetilde v=0\). Looking at the \((k-1)\)-st block
+equation of \(H\widetilde v=0\), we get
+\[
+A\xi_k=0.
+\]
+Because \(A\) is invertible, \(\xi_k=0\). Then the \(k\)-th block equation yields
+\[
+A\xi_{k+1}=0,
+\]
+hence \(\xi_{k+1}=0\). Continuing inductively gives \(\xi_j=0\) for all \(j\), contradicting
+\(v\neq 0\). Therefore \(T_k\succ 0\).
+
+The leading statement is identical, using the \((k+1)\)-st block equation and the invertibility
+of \(A^*\).
+\end{proof}
+
+\begin{definition}[Right and left tail Weyl matrices]
+In the even case, define recursively the right tails
+\[
+\Sigma_m\coloneqq B_R,
+\qquad
+\Sigma_k\coloneqq B_k-A\Sigma_{k+1}^{-1}A^*,
+\qquad
+k=m-1,\dots,1,
+\]
+where
+\[
+B_1\coloneqq B_L,
+\qquad
+B_k\coloneqq B
+\quad (2\le k\le m-1),
+\]
+and the left tails
+\[
+\Gamma_1\coloneqq B_L,
+\qquad
+\Gamma_k\coloneqq B_k-A^*\Gamma_{k-1}^{-1}A,
+\qquad
+k=2,\dots,m,
+\]
+where
+\[
+B_k\coloneqq B
+\quad (2\le k\le m-1),
+\qquad
+B_m\coloneqq B_R.
+\]
+\end{definition}
+
+By Lemma~\ref{lem:proper}, all inverses appearing in the recursions are legitimate, and
+\[
+\Sigma_k\succ 0 \quad (2\le k\le m),
+\qquad
+\Gamma_k\succ 0 \quad (1\le k\le m-1).
+\]
+The endpoint tails \(\Sigma_1\) and \(\Gamma_m\) may be singular at the boundary.
+
+\begin{proposition}[Tail action on the block nullchain]\label{prop:tails}
+Let \(w=(w_1,\dots,w_m)\) be a nonzero block solution of the boundary equation
+\[
+\bigl(M_{2m}(x,y)-\Lambda I_{2m}\bigr)u=0.
+\]
+Then
+\[
+\Sigma_k w_k=-A^*w_{k-1},
+\qquad
+\Gamma_k w_k=-Aw_{k+1},
+\]
+for every admissible \(k\), with the endpoint conventions
+\[
+A^*w_0=0,
+\qquad
+Aw_{m+1}=0.
+\]
+\end{proposition}
+
+\begin{proof}
+For the right tails, the identity at \(k=m\) is exactly the terminal equation
+\[
+\Sigma_m w_m=B_R w_m=-A^*w_{m-1}.
+\]
+Assume \(\Sigma_{k+1}w_{k+1}=-A^*w_k\). Since \(\Sigma_{k+1}\) is invertible for \(k+1\ge 2\),
+\[
+w_{k+1}=-\Sigma_{k+1}^{-1}A^*w_k.
+\]
+Substituting into the \(k\)-th block equation gives
+\[
+A^*w_{k-1}+\bigl(B_k-A\Sigma_{k+1}^{-1}A^*\bigr)w_k=0,
+\]
+that is,
+\[
+\Sigma_k w_k=-A^*w_{k-1}.
+\]
+Backward induction proves the right-tail identity for all \(k\). The left-tail identity is
+proved similarly, starting from
+\[
+\Gamma_1 w_1=B_L w_1=-Aw_2.
+\]
+\end{proof}
+
+\begin{lemma}[No block of the nullchain vanishes]\label{lem:blocknonzero}
+If \(w=(w_1,\dots,w_m)\) is a nonzero block solution of the boundary equation, then
+\[
+w_k\neq 0
+\qquad
+(1\le k\le m).
+\]
+\end{lemma}
+
+\begin{proof}
+If \(w_k=0\), then Proposition~\ref{prop:tails} gives
+\[
+A^*w_{k-1}=0,
+\qquad
+Aw_{k+1}=0,
+\]
+hence
+\[
+w_{k-1}=0,
+\qquad
+w_{k+1}=0,
+\]
+because \(A\) is invertible. Iterating in both directions yields \(w_j=0\) for all \(j\), a
+contradiction.
+\end{proof}
+
+\begin{definition}[Local effective block]
+For \(1\le k\le m\), define
+\[
+K_k\coloneqq \Sigma_k+\Gamma_k-B_k,
+\]
+where \(B_1=B_L\), \(B_m=B_R\), and \(B_k=B\) for \(2\le k\le m-1\).
+\end{definition}
+
+\begin{proposition}[Exact local invariant]\label{prop:K}
+At a simple boundary point \(\Lambda=\lambda_*(x,y)\), one has
+\[
+K_k\succeq 0,
+\qquad
+\operatorname{rank}K_k=1,
+\qquad
+K_k w_k=0
+\]
+for every \(k\). Therefore
+\[
+K_k=
+\begin{pmatrix}
+A_k & \zeta_k+i t_k\\
+\zeta_k-i t_k & D_k
+\end{pmatrix},
+\]
+with
+\[
+A_k\ge 0,\qquad D_k\ge 0,\qquad \zeta_k,t_k\in\R,
+\qquad
+A_kD_k=\zeta_k^2+t_k^2.
+\]
+\end{proposition}
+
+\begin{proof}
+Eliminate all blocks except block \(k\) from the positive semidefinite matrix
+\[
+H=M_{2m}(x,y)-\Lambda I_{2m}
+\]
+by Schur complement. Lemma~\ref{lem:proper} shows that the complementary leading/trailing block
+submatrices are positive definite, so this Schur complement is legitimate and equals \(K_k\).
+Hence \(K_k\succeq 0\).
+
+Since \(H\) has one-dimensional kernel and \(w_k\neq 0\) by Lemma~\ref{lem:blocknonzero}, the
+kernel of the local Schur complement is exactly \(\C w_k\). Thus \(\dim\ker K_k=1\), so
+\(\operatorname{rank}K_k=1\), and \(K_k w_k=0\).
+
+The determinant identity
+\[
+A_kD_k=\zeta_k^2+t_k^2
+\]
+is simply \(\det K_k=0\).
+\end{proof}
+
+\section{Tail imaginary parts and orientation of the local current}
+
+Write
+\[
+\Sigma_k=
+\begin{pmatrix}
+u_k^R & \beta_k^R\\
+\overline{\beta_k^R} & v_k^R
+\end{pmatrix},
+\qquad
+\beta_k^R=b_k^R+i\tau_k^R,
+\qquad
+\Delta_k^R\coloneqq u_k^R v_k^R-\bigl|\beta_k^R\bigr|^2,
+\]
+and
+\[
+\Gamma_k=
+\begin{pmatrix}
+U_k^L & \gamma_k^L\\
+\overline{\gamma_k^L} & V_k^L
+\end{pmatrix},
+\qquad
+\gamma_k^L=g_k^L+i\tau_k^L,
+\qquad
+\Delta_k^L\coloneqq U_k^L V_k^L-\bigl|\gamma_k^L\bigr|^2.
+\]
+
+\begin{proposition}[Right and left tail recurrences]\label{prop:taurec}
+For \(1\le k\le m-1\), one has
+\[
+u_k^R
+=
+\delta-\frac{\eta^2 v_{k+1}^R}{\Delta_{k+1}^R},
+\]
+and
+\[
+\beta_k^R
+=
+-c+\frac{\eta(\eta\beta_{k+1}^R+v_{k+1}^R\bar c)}{\Delta_{k+1}^R}.
+\]
+In particular,
+\[
+\tau_k^R
+=
+qy+\frac{\eta(\eta\tau_{k+1}^R+qy\,v_{k+1}^R)}{\Delta_{k+1}^R}.
+\]
+Similarly, for \(2\le k\le m\), one has
+\[
+V_k^L
+=
+\delta-\frac{\eta^2 U_{k-1}^L}{\Delta_{k-1}^L},
+\]
+and
+\[
+\gamma_k^L
+=
+-c+\frac{\eta(\eta\gamma_{k-1}^L+U_{k-1}^L\bar c)}{\Delta_{k-1}^L}.
+\]
+In particular,
+\[
+\tau_k^L
+=
+qy+\frac{\eta(\eta\tau_{k-1}^L+qy\,U_{k-1}^L)}{\Delta_{k-1}^L}.
+\]
+\end{proposition}
+
+\begin{proof}
+For the right tails,
+\[
+\Sigma_k=B_k-A\Sigma_{k+1}^{-1}A^*,
+\qquad
+\Sigma_{k+1}^{-1}
+=
+\frac1{\Delta_{k+1}^R}
+\begin{pmatrix}
+v_{k+1}^R & -\beta_{k+1}^R\\
+-\overline{\beta_{k+1}^R} & u_{k+1}^R
+\end{pmatrix}.
+\]
+A direct multiplication gives
+\[
+A\Sigma_{k+1}^{-1}A^*
+=
+\frac1{\Delta_{k+1}^R}
+\begin{pmatrix}
+\eta^2 v_{k+1}^R &
+-\eta\bigl(\eta\beta_{k+1}^R+v_{k+1}^R\bar c\bigr)
+\\[1ex]
+-\eta\bigl(\eta\overline{\beta_{k+1}^R}+v_{k+1}^R c\bigr) &
+*
+\end{pmatrix}.
+\]
+Subtracting from \(B_k\) yields the claimed formulas for \(u_k^R\) and \(\beta_k^R\), and
+taking imaginary parts gives the recurrence for \(\tau_k^R\).
+
+The left-tail formulas are identical, starting from
+\[
+\Gamma_k=B_k-A^*\Gamma_{k-1}^{-1}A,
+\qquad
+\Gamma_{k-1}^{-1}
+=
+\frac1{\Delta_{k-1}^L}
+\begin{pmatrix}
+V_{k-1}^L & -\gamma_{k-1}^L\\
+-\overline{\gamma_{k-1}^L} & U_{k-1}^L
+\end{pmatrix}.
+\]
+One obtains
+\[
+A^*\Gamma_{k-1}^{-1}A
+=
+\frac1{\Delta_{k-1}^L}
+\begin{pmatrix}
+* &
+-\eta\bigl(\eta\gamma_{k-1}^L+U_{k-1}^L\bar c\bigr)
+\\[1ex]
+-\eta\bigl(\eta\overline{\gamma_{k-1}^L}+U_{k-1}^L c\bigr) &
+\eta^2 U_{k-1}^L
+\end{pmatrix},
+\]
+and the conclusions follow.
+\end{proof}
+
+\begin{corollary}[Strict positivity of the tail imaginary parts]\label{cor:taupos}
+One has
+\[
+\tau_m^R=qy,
+\qquad
+\tau_k^R>qy
+\quad (1\le k\le m-1),
+\]
+and
+\[
+\tau_1^L=qy,
+\qquad
+\tau_k^L>qy
+\quad (2\le k\le m).
+\]
+\end{corollary}
+
+\begin{proof}
+The seeds are
+\[
+\Sigma_m=B_R,
+\qquad
+\Gamma_1=B_L,
+\]
+so
+\[
+\tau_m^R=\tau_1^L=\Im(-c)=qy.
+\]
+For \(k\le m-1\), Proposition~\ref{prop:taurec} gives
+\[
+\tau_k^R
+=
+qy+\frac{\eta(\eta\tau_{k+1}^R+qy\,v_{k+1}^R)}{\Delta_{k+1}^R}.
+\]
+Since \(\Sigma_{k+1}\succ 0\), one has
+\[
+v_{k+1}^R>0,
+\qquad
+\Delta_{k+1}^R>0,
+\]
+and the extra term is strictly positive. Hence \(\tau_k^R>qy\). The left-tail statement is
+proved identically using \(\Gamma_{k-1}\succ 0\).
+\end{proof}
+
+\begin{proposition}[Orientation of the local effective block]\label{prop:orientation}
+For every \(1\le k\le m\), the off-diagonal imaginary part of \(K_k\) is
+\[
+t_k=\tau_k^R+\tau_k^L-qy,
+\]
+and in particular
+\[
+t_k>0.
+\]
+Consequently,
+\[
+A_k>0,
+\qquad
+D_k>0.
+\]
+Moreover, if
+\[
+r_k\coloneqq \frac{w_{k,2}}{w_{k,1}},
+\]
+then \(r_k\) is well defined and
+\[
+r_k\in\HH:=\{z\in\C:\Im z>0\}.
+\]
+Finally, the within-block current
+\[
+j_k\coloneqq \Im(\overline{w_{k,1}}\,w_{k,2})
+\]
+satisfies
+\[
+j_k=\frac{t_k}{D_k}|w_{k,1}|^2=\frac{t_k}{A_k}|w_{k,2}|^2>0.
+\]
+\end{proposition}
+
+\begin{proof}
+The off-diagonal entry of every \(B_k\) is \(-c\), whose imaginary part is \(qy\). Hence
+\[
+t_k=\Im\bigl((K_k)_{12}\bigr)=\tau_k^R+\tau_k^L-qy.
+\]
+By Corollary~\ref{cor:taupos}, at least one of the two terms \(\tau_k^R,\tau_k^L\) is strictly
+larger than \(qy\), while the other is at least \(qy\). Therefore \(t_k>0\).
+
+Since \(K_k\succeq 0\), \(\operatorname{rank}K_k=1\), and its off-diagonal entry has nonzero
+imaginary part, both diagonal entries must be strictly positive:
+\[
+A_k>0,\qquad D_k>0.
+\]
+Indeed, if one diagonal entry vanished, positivity would force the entire corresponding row and
+column to vanish, contradicting \(t_k>0\).
+
+Now \(K_k w_k=0\) and \(t_k>0\) imply that neither component of \(w_k\) can vanish. Thus
+\(r_k\) is well defined. From the second row of \(K_k w_k=0\),
+\[
+(\zeta_k-i t_k)w_{k,1}+D_k w_{k,2}=0,
+\]
+so
+\[
+r_k=-\frac{\zeta_k-i t_k}{D_k},
+\qquad
+\Im r_k=\frac{t_k}{D_k}>0.
+\]
+This proves \(r_k\in\HH\). Finally,
+\[
+j_k=\Im(\overline{w_{k,1}}\,w_{k,2})
+=\Im(r_k)|w_{k,1}|^2
+=\frac{t_k}{D_k}|w_{k,1}|^2>0.
+\]
+Using the first row of \(K_k w_k=0\),
+\[
+A_k w_{k,1}+(\zeta_k+i t_k)w_{k,2}=0,
+\]
+one similarly gets
+\[
+\frac{1}{r_k}=-\frac{\zeta_k+i t_k}{A_k},
+\qquad
+j_k=\frac{t_k}{A_k}|w_{k,2}|^2.
+\]
+\end{proof}
+
+\section{Cross-block currents and local mirror criteria}
+
+Define the cross-block currents
+\[
+h_k\coloneqq \Im(\overline{w_{k,2}}\,w_{k+1,1}),
+\qquad
+1\le k\le m-1.
+\]
+
+\begin{proposition}[Exact formulas for the adjacent cross-currents]\label{prop:h}
+For every \(1\le k\le m-1\), one has
+\[
+h_k
+=
+\frac{
+\eta v_{k+1}^R\,j_k
++
+(\eta\tau_{k+1}^R+qy\,v_{k+1}^R)\,|w_{k,2}|^2
+}{
+\Delta_{k+1}^R
+}.
+\]
+For every \(2\le k\le m\), one has
+\[
+h_{k-1}
+=
+\frac{
+\eta U_{k-1}^L\,j_k
++
+(\eta\tau_{k-1}^L+qy\,U_{k-1}^L)\,|w_{k,1}|^2
+}{
+\Delta_{k-1}^L
+}.
+\]
+In particular,
+\[
+h_k>0
+\qquad
+(1\le k\le m-1).
+\]
+\end{proposition}
+
+\begin{proof}
+From the right-tail identity
+\[
+w_{k+1}=-\Sigma_{k+1}^{-1}A^*w_k,
+\]
+with
+\[
+\Sigma_{k+1}^{-1}
+=
+\frac1{\Delta_{k+1}^R}
+\begin{pmatrix}
+v_{k+1}^R & -\beta_{k+1}^R\\
+-\overline{\beta_{k+1}^R} & u_{k+1}^R
+\end{pmatrix},
+\qquad
+A^*=
+\begin{pmatrix}
+\eta & -\bar c\\
+0 & \eta
+\end{pmatrix},
+\]
+we obtain
+\[
+w_{k+1,1}
+=
+-\frac{
+\eta v_{k+1}^R\,w_{k,1}
+-(v_{k+1}^R\bar c+\eta\beta_{k+1}^R)w_{k,2}
+}{
+\Delta_{k+1}^R
+}.
+\]
+Therefore
+\[
+\overline{w_{k,2}}\,w_{k+1,1}
+=
+-\frac{
+\eta v_{k+1}^R\,\overline{w_{k,2}}\,w_{k,1}
+-(v_{k+1}^R\bar c+\eta\beta_{k+1}^R)|w_{k,2}|^2
+}{
+\Delta_{k+1}^R
+}.
+\]
+Taking imaginary parts and using
+\[
+\Im(\overline{w_{k,2}}\,w_{k,1})=-j_k,
+\qquad
+\Im(\bar c)=qy,
+\qquad
+\Im(\beta_{k+1}^R)=\tau_{k+1}^R,
+\]
+yields
+\[
+h_k
+=
+\frac{
+\eta v_{k+1}^R\,j_k
++
+(\eta\tau_{k+1}^R+qy\,v_{k+1}^R)|w_{k,2}|^2
+}{
+\Delta_{k+1}^R
+}.
+\]
+
+Similarly, from the left-tail identity
+\[
+w_{k-1}=-(\Gamma_{k-1}^{-1}A)w_k,
+\]
+with
+\[
+\Gamma_{k-1}^{-1}
+=
+\frac1{\Delta_{k-1}^L}
+\begin{pmatrix}
+V_{k-1}^L & -\gamma_{k-1}^L\\
+-\overline{\gamma_{k-1}^L} & U_{k-1}^L
+\end{pmatrix},
+\qquad
+A=
+\begin{pmatrix}
+\eta & 0\\
+-c & \eta
+\end{pmatrix},
+\]
+we obtain
+\[
+w_{k-1,2}
+=
+-\frac{
+(-\eta\overline{\gamma_{k-1}^L}-U_{k-1}^L c)\,w_{k,1}
++\eta U_{k-1}^L\,w_{k,2}
+}{
+\Delta_{k-1}^L
+}.
+\]
+Hence
+\[
+\overline{w_{k-1,2}}\,w_{k,1}
+=
+\frac{
+(\eta\gamma_{k-1}^L+U_{k-1}^L\bar c)|w_{k,1}|^2
+-\eta U_{k-1}^L\,\overline{w_{k,2}}\,w_{k,1}
+}{
+\Delta_{k-1}^L
+}.
+\]
+Taking imaginary parts gives
+\[
+h_{k-1}
+=
+\frac{
+(\eta\tau_{k-1}^L+qy\,U_{k-1}^L)|w_{k,1}|^2
++\eta U_{k-1}^L\,j_k
+}{
+\Delta_{k-1}^L
+}.
+\]
+
+Finally, the positivity follows from Proposition~\ref{prop:orientation},
+Corollary~\ref{cor:taupos}, and the positive definiteness of the tails:
+\[
+j_k>0,\qquad
+v_{k+1}^R>0,\qquad
+U_{k-1}^L>0,\qquad
+\Delta_{k+1}^R>0,\qquad
+\Delta_{k-1}^L>0.
+\]
+\end{proof}
+
+\begin{corollary}[Positivity of all site currents in the even case]\label{cor:sitecurr}
+Define the site currents
+\[
+I_{2k-1}\coloneqq j_k
+\qquad (1\le k\le m),
+\qquad
+I_{2k}\coloneqq h_k
+\qquad (1\le k\le m-1).
+\]
+Then
+\[
+I_j>0
+\qquad
+(1\le j\le 2m-1).
+\]
+Consequently,
+\[
+s\,p_{2m}=y|u_{2m}|^2+aI_{2m-1}>0,
+\]
+and therefore
+\[
+p_1=p_{2m}>0.
+\]
+\end{corollary}
+
+\begin{proof}
+The positivity of \(j_k\) is Proposition~\ref{prop:orientation}, and the positivity of \(h_k\) is
+Proposition~\ref{prop:h}. The endpoint identity is the \(j=2m\) case of the Takagi site
+identity from Proposition~\ref{prop:Takagi} below:
+\[
+s\,p_{2m}=y|u_{2m}|^2+aI_{2m-1}-bI_{2m},
+\qquad
+I_{2m}=0.
+\]
+\end{proof}
+
+\begin{proposition}[Local criteria for mirror-pair positivity]\label{prop:localcriteria}
+For every interior block \(2\le k\le m-1\), define
+\[
+p_j\coloneqq -\Im(u_j u_{2m+1-j}),
+\qquad
+s\coloneqq \sigma_{\min}(x+iy-A_{2m}).
+\]
+Then
+\[
+s\,p_{2k-1}
+=
+y|w_{k,1}|^2+a h_{k-1}-b j_k,
+\]
+\[
+s\,p_{2k}
+=
+y|w_{k,2}|^2+a j_k-b h_k.
+\]
+Consequently,
+\[
+s\,p_{2k-1}=|w_{k,1}|^2\,\Psi_k^-,
+\qquad
+s\,p_{2k}=|w_{k,2}|^2\,\Psi_k^+,
+\]
+where
+\[
+\Psi_k^-
+=
+y
++
+\frac{a(\eta\tau_{k-1}^L+qy\,U_{k-1}^L)}{\Delta_{k-1}^L}
++
+\left(
+\frac{a\eta U_{k-1}^L}{\Delta_{k-1}^L}-b
+\right)\frac{t_k}{D_k},
+\]
+and
+\[
+\Psi_k^+
+=
+y
+-
+\frac{b(\eta\tau_{k+1}^R+qy\,v_{k+1}^R)}{\Delta_{k+1}^R}
++
+\left(
+a-\frac{b\eta v_{k+1}^R}{\Delta_{k+1}^R}
+\right)\frac{t_k}{A_k}.
+\]
+Equivalently,
+\[
+p_{2k-1}>0 \iff \Psi_k^- >0,
+\qquad
+p_{2k}>0 \iff \Psi_k^+ >0.
+\]
+\end{proposition}
+
+\begin{proof}
+The Takagi site identities from Proposition~\ref{prop:Takagi} give
+\[
+s\,p_j
+=
+y|u_j|^2+a I_{j-1}-b I_j.
+\]
+For \(j=2k-1\), this becomes
+\[
+s\,p_{2k-1}
+=
+y|w_{k,1}|^2+a h_{k-1}-b j_k.
+\]
+For \(j=2k\), it becomes
+\[
+s\,p_{2k}
+=
+y|w_{k,2}|^2+a j_k-b h_k.
+\]
+Now substitute the formulas for \(h_{k-1}\) and \(h_k\) from Proposition~\ref{prop:h}, and use
+Proposition~\ref{prop:orientation}:
+\[
+j_k=\frac{t_k}{D_k}|w_{k,1}|^2=\frac{t_k}{A_k}|w_{k,2}|^2.
+\]
+Factoring out \(|w_{k,1}|^2\) and \(|w_{k,2}|^2\) yields the displayed formulas for
+\(\Psi_k^\pm\).
+\end{proof}
+
+\begin{proposition}[Same-level rewrite of \(\Psi_k^\pm\)]\label{prop:samelevel}
+For every interior block \(2\le k\le m-1\), one has
+\[
+aA_k\,\Psi_k^+
+=
+\bigl(u_k^R-\delta_b\bigr)\bigl(ay+\tau_k^L\bigr)
++
+\bigl(by-\tau_k^R\bigr)\bigl(U_k^L-a^2\bigr),
+\]
+and
+\[
+bD_k\,\Psi_k^-
+=
+\bigl(by-\tau_k^R\bigr)\bigl(V_k^L-\delta_a\bigr)
++
+\bigl(ay+\tau_k^L\bigr)\bigl(v_k^R-b^2\bigr).
+\]
+Equivalently,
+\[
+\Psi_k^+>0
+\iff
+\bigl(u_k^R-\delta_b\bigr)\bigl(ay+\tau_k^L\bigr)
++
+\bigl(by-\tau_k^R\bigr)\bigl(U_k^L-a^2\bigr)>0,
+\]
+and
+\[
+\Psi_k^->0
+\iff
+\bigl(by-\tau_k^R\bigr)\bigl(V_k^L-\delta_a\bigr)
++
+\bigl(ay+\tau_k^L\bigr)\bigl(v_k^R-b^2\bigr)>0.
+\]
+\end{proposition}
+
+\begin{proof}
+From Proposition~\ref{prop:taurec},
+\[
+u_k^R-\delta_b
+=
+a^2-\frac{\eta^2 v_{k+1}^R}{\Delta_{k+1}^R}
+=
+a\left(a-\frac{b\eta v_{k+1}^R}{\Delta_{k+1}^R}\right),
+\]
+and
+\[
+by-\tau_k^R
+=
+by-qy-\frac{\eta(\eta\tau_{k+1}^R+qy\,v_{k+1}^R)}{\Delta_{k+1}^R}
+=
+a\left(
+y-\frac{b(\eta\tau_{k+1}^R+qy\,v_{k+1}^R)}{\Delta_{k+1}^R}
+\right).
+\]
+Also,
+\[
+A_k
+=
+u_k^R+U_k^L-\delta
+=
+\bigl(u_k^R-\delta_b\bigr)+\bigl(U_k^L-a^2\bigr),
+\]
+and by Proposition~\ref{prop:orientation},
+\[
+t_k
+=
+\tau_k^R+\tau_k^L-qy
+=
+\bigl(ay+\tau_k^L\bigr)-\bigl(by-\tau_k^R\bigr).
+\]
+Hence
+\[
+a\Psi_k^+
+=
+\bigl(by-\tau_k^R\bigr)
++
+\frac{u_k^R-\delta_b}{A_k}\,t_k,
+\]
+so
+\[
+aA_k\,\Psi_k^+
+=
+A_k\bigl(by-\tau_k^R\bigr)+\bigl(u_k^R-\delta_b\bigr)t_k.
+\]
+Substituting the expressions for \(A_k\) and \(t_k\) gives
+\[
+aA_k\,\Psi_k^+
+=
+\bigl(u_k^R-\delta_b\bigr)\bigl(ay+\tau_k^L\bigr)
++
+\bigl(by-\tau_k^R\bigr)\bigl(U_k^L-a^2\bigr).
+\]
+
+Similarly, Proposition~\ref{prop:taurec} gives
+\[
+V_k^L-\delta_a
+=
+b^2-\frac{\eta^2 U_{k-1}^L}{\Delta_{k-1}^L}
+=
+b\left(b-\frac{a\eta U_{k-1}^L}{\Delta_{k-1}^L}\right),
+\]
+and
+\[
+ay+\tau_k^L
+=
+ay+qy+\frac{\eta(\eta\tau_{k-1}^L+qy\,U_{k-1}^L)}{\Delta_{k-1}^L}
+=
+b\left(
+y+\frac{a(\eta\tau_{k-1}^L+qy\,U_{k-1}^L)}{\Delta_{k-1}^L}
+\right).
+\]
+Moreover,
+\[
+D_k
+=
+v_k^R+V_k^L-\delta
+=
+\bigl(v_k^R-b^2\bigr)+\bigl(V_k^L-\delta_a\bigr),
+\]
+and
+\[
+t_k
+=
+\bigl(ay+\tau_k^L\bigr)-\bigl(by-\tau_k^R\bigr).
+\]
+Therefore
+\[
+b\Psi_k^-
+=
+\bigl(ay+\tau_k^L\bigr)
+-
+\frac{V_k^L-\delta_a}{D_k}\,t_k,
+\]
+hence
+\[
+bD_k\,\Psi_k^-
+=
+D_k\bigl(ay+\tau_k^L\bigr)-\bigl(V_k^L-\delta_a\bigr)t_k.
+\]
+Substituting the expressions for \(D_k\) and \(t_k\) yields
+\[
+bD_k\,\Psi_k^-
+=
+\bigl(by-\tau_k^R\bigr)\bigl(V_k^L-\delta_a\bigr)
++
+\bigl(ay+\tau_k^L\bigr)\bigl(v_k^R-b^2\bigr).
+\]
+\end{proof}
+
+\begin{remark}
+The local mirror-pair sign problem has therefore been reduced to a same-level pairing of the
+left and right tails. In this form, the quantities \(t_k/A_k\) and \(t_k/D_k\) disappear, and
+the remaining gap becomes a cone-pairing problem for the dual Weyl data at a single block.
+\end{remark}
+
+\section{Global Takagi identities and the weighted exact invariant}\label{sec:takagi}
+
+We now record the cleanest global scalar reductions.
+
+\begin{proposition}[Takagi form and exact current identities]\label{prop:Takagi}
+Let
+\[
+B(z)\coloneqq zI-A_n,
+\qquad
+z=x+iy,
+\qquad
+y>0.
+\]
+Choose a right singular vector \(u=(u_1,\dots,u_n)^T\neq 0\) in Takagi form:
+\[
+B(z)u=s\,J\overline{u},
+\qquad
+s=\sigma_{\min}(B(z)),
+\]
+where \(J\) is the reversal matrix.
+
+Define
+\[
+I_j\coloneqq \Im(\overline{u_j}u_{j+1}),
+\qquad
+1\le j\le n-1,
+\qquad
+I_0=I_n=0,
+\]
+and
+\[
+p_j\coloneqq -\Im(u_j u_{n+1-j}),
+\qquad
+1\le j\le n.
+\]
+Then for every \(j=1,\dots,n\),
+\[
+s\,p_j
+=
+y|u_j|^2+a I_{j-1}-b I_j.
+\]
+If moreover \(\|u\|=1\), then
+\[
+s\sum_{j=1}^n p_j
+=
+y-q\sum_{j=1}^{n-1} I_j.
+\]
+Consequently,
+\[
+\partial_y \lambda_*(x,y)
+=
+2y-2q\sum_{j=1}^{n-1} I_j
+=
+2s\sum_{j=1}^n p_j.
+\]
+\end{proposition}
+
+\begin{proof}
+The Takagi equation is
+\[
+(x+iy)u_j-a u_{j-1}-b u_{j+1}=s\,\overline{u_{n+1-j}},
+\qquad
+u_0=u_{n+1}=0.
+\]
+Multiplying by \(\overline{u_j}\) and taking imaginary parts gives
+\[
+s\,p_j=y|u_j|^2+a I_{j-1}-b I_j.
+\]
+Summing over \(j\) gives
+\[
+s\sum_{j=1}^n p_j
+=
+y\sum_{j=1}^n |u_j|^2
++a\sum_{j=1}^n I_{j-1}
+-b\sum_{j=1}^n I_j
+=
+y-q\sum_{j=1}^{n-1} I_j.
+\]
+For normalized \(u\), the Hellmann--Feynman formula yields
+\[
+\partial_y \lambda_*(x,y)=2y-2q\sum_{j=1}^{n-1} I_j,
+\]
+hence
+\[
+\partial_y \lambda_*(x,y)=2s\sum_{j=1}^n p_j.
+\]
+\end{proof}
+
+\begin{proposition}[Weighted exact invariant]\label{prop:weighted}
+Let
+\[
+\omega_j\coloneqq \Bigl(\frac ba\Bigr)^{j-1},
+\qquad
+1\le j\le n,
+\]
+so that \(\omega_j=W_{jj}\) are the diagonal entries of the weighted metric \(W\) from
+Proposition~\ref{prop:gauge}. Then for every \(1\le \ell\le r\le n\),
+\[
+s\sum_{j=\ell}^r \omega_j p_j
+=
+y\sum_{j=\ell}^r \omega_j |u_j|^2
++
+a\omega_\ell I_{\ell-1}
+-
+b\omega_r I_r.
+\]
+In particular,
+\[
+s\sum_{j=1}^n \omega_j p_j
+=
+y\sum_{j=1}^n \omega_j |u_j|^2
+>0.
+\]
+\end{proposition}
+
+\begin{proof}
+Multiply the site identity from Proposition~\ref{prop:Takagi} by \(\omega_j\):
+\[
+s\,\omega_j p_j
+=
+y\omega_j |u_j|^2
++
+a\omega_j I_{j-1}
+-
+b\omega_j I_j.
+\]
+Since
+\[
+a\omega_j=b\omega_{j-1}
+\qquad (j\ge 2),
+\]
+the sum over \(j=\ell,\dots,r\) telescopes:
+\[
+a\sum_{j=\ell}^r \omega_j I_{j-1}
+-
+b\sum_{j=\ell}^r \omega_j I_j
+=
+a\omega_\ell I_{\ell-1}
+-
+b\omega_r I_r.
+\]
+This gives the first identity. Setting \(\ell=1\) and \(r=n\), and using \(I_0=I_n=0\), gives
+\[
+s\sum_{j=1}^n \omega_j p_j
+=
+y\sum_{j=1}^n \omega_j |u_j|^2,
+\]
+which is strictly positive because \(y>0\) and \(u\neq 0\).
+\end{proof}
+
+\begin{corollary}[Positive weighted suffix sums in the even case]\label{cor:weightsuffix}
+Assume \(n=2m\). Then for every \(1\le \ell\le 2m\),
+\[
+s\sum_{j=\ell}^{2m} \omega_j p_j
+=
+y\sum_{j=\ell}^{2m}\omega_j |u_j|^2
++
+a\omega_\ell I_{\ell-1}
+>0.
+\]
+\end{corollary}
+
+\begin{proof}
+This is Proposition~\ref{prop:weighted} with \(r=2m\), together with
+\[
+I_{2m}=0
+\]
+and the positivity of all site currents \(I_1,\dots,I_{2m-1}\) from
+Corollary~\ref{cor:sitecurr}.
+\end{proof}
+
+\section{Connectedness equivalence: exact reduction and remaining gap}
+
+\begin{lemma}[Topological vertical-slice criterion]\label{lem:topological}
+Let \(\Omega\subset\C\) be open. If every vertical slice
+\[
+\{y\in\R:\ x+iy\in\Omega\}
+\]
+is either empty or an interval containing \(0\), then
+\[
+\Omega\ \text{is connected}
+\quad\Longleftrightarrow\quad
+\Omega\cap\R\ \text{is connected}.
+\]
+\end{lemma}
+
+\begin{conjecture}[Mirror-pair positivity]\label{conj:mirror}
+At every simple boundary point \(\Lambda=\lambda_*(x,y)\) with \(y>0\), one has
+\[
+p_j>0
+\qquad (1\le j\le n).
+\]
+\end{conjecture}
+
+\begin{conjecture}[Even-\(n\) local tail-pair positivity]\label{conj:tailpair}
+Assume \(n=2m\). At every simple boundary point with \(y>0\), for each interior block
+\(2\le k\le m-1\),
+\[
+\bigl(u_k^R-\delta_b\bigr)\bigl(ay+\tau_k^L\bigr)
++
+\bigl(by-\tau_k^R\bigr)\bigl(U_k^L-a^2\bigr)>0,
+\]
+and
+\[
+\bigl(by-\tau_k^R\bigr)\bigl(V_k^L-\delta_a\bigr)
++
+\bigl(ay+\tau_k^L\bigr)\bigl(v_k^R-b^2\bigr)>0.
+\]
+\end{conjecture}
+
+\begin{remark}
+By Propositions~\ref{prop:localcriteria} and \ref{prop:samelevel}, the even-\(n\) conjecture is
+equivalent to
+\[
+\Psi_k^- >0,
+\qquad
+\Psi_k^+ >0
+\qquad
+(2\le k\le m-1),
+\]
+and hence to positivity of the interior mirror pairs
+\[
+p_{2k-1},\quad p_{2k}.
+\]
+The endpoint pair is already positive in the even case by Corollary~\ref{cor:sitecurr}.
+\end{remark}
+
+\begin{theorem}[Conditional simple-boundary completion]\label{thm:conditional}
+Assume Conjecture~\ref{conj:mirror}. Then at every simple boundary point with \(y>0\),
+\[
+\partial_y \lambda_*(x,y)>0.
+\]
+Consequently, if all positive boundary points on the level \(\lambda_*=\eps^2\) are simple
+(for example, on generic levels), then every vertical slice of \(\sigma_\eps(A_n)\) is either
+empty or an interval containing \(0\). In that case,
+\[
+\sigma_\eps(A_n)\ \text{is connected}
+\quad\Longleftrightarrow\quad
+\sigma_\eps(A_n)\cap\R\ \text{is connected}.
+\]
+\end{theorem}
+
+\begin{proof}
+Let \((x,y)\) be a simple boundary point with \(y>0\), and let \(u\) be a normalized Takagi
+singular vector. Proposition~\ref{prop:Takagi} gives
+\[
+\partial_y \lambda_*(x,y)=2s\sum_{j=1}^n p_j.
+\]
+Under Conjecture~\ref{conj:mirror}, the sum on the right is strictly positive, so
+\[
+\partial_y \lambda_*(x,y)>0.
+\]
+
+Now fix \(x\in\R\) and define
+\[
+F(y)\coloneqq \lambda_*(x,y)-\eps^2.
+\]
+Then \(F\) is even, continuous, and \(F(y)\to+\infty\) as \(|y|\to\infty\). If every positive
+boundary point \(F(y)=0\) is simple, then each positive root is crossed with positive derivative.
+Hence
+\[
+\{y\ge 0:\ F(y)<0\}
+\]
+is either empty or an interval of the form \([0,y_*)\). By evenness,
+\[
+\{y\in\R:\ F(y)<0\}
+\]
+is either empty or an interval containing \(0\). Thus every vertical slice of
+\(\sigma_\eps(A_n)\) has the required form, and Lemma~\ref{lem:topological} proves the
+connectedness equivalence.
+\end{proof}
+
+\begin{remark}
+The theorem only needs positivity of the unweighted mirror sum
+\[
+\sum_{j=1}^n p_j.
+\]
+The stronger pointwise conjecture is one sufficient route. By contrast, the weighted exact
+invariant already proves
+\[
+\sum_{j=1}^n \omega_j p_j>0
+\]
+without further work. Thus an alternative route to connectedness would be to compare the
+weighted and unweighted mirror sums, using the positivity of the site currents and the local
+tail-pair structure.
+\end{remark}
+
+\section{Current status}\label{sec:status}
+
+\begin{remark}
+The exact progress is now the following.
+
+\smallskip
+\noindent
+\textup{(1)} The non-selfadjoint hopping is controlled by the diagonal gauge
+\[
+G^{-1}A_nG=\sqrt{\eta}\,\operatorname{tridiag}(1,0,1),
+\]
+and by the weighted metric
+\[
+W=\operatorname{diag}\Bigl(1,\frac ba,\Bigl(\frac ba\Bigr)^2,\dots,
+\Bigl(\frac ba\Bigr)^{n-1}\Bigr),
+\qquad
+WA_n=A_n^T W.
+\]
+The mirror-pair signs are invariant under this gauge.
+
+\smallskip
+\noindent
+\textup{(2)} In the even block reduction, every proper leading or trailing principal block
+submatrix is positive definite. Hence the parity tails \(\Sigma_k\) and \(\Gamma_k\) are
+well-defined by genuine Schur complementation.
+
+\smallskip
+\noindent
+\textup{(3)} The local Schur complement
+\[
+K_k=\Sigma_k+\Gamma_k-B_k
+\]
+is positive semidefinite of rank \(1\), annihilates the local block \(w_k\), and has
+off-diagonal imaginary part
+\[
+t_k=\tau_k^R+\tau_k^L-qy.
+\]
+The exact tail recurrences imply
+\[
+t_k>0,
+\]
+so
+\[
+A_k>0,\qquad D_k>0,\qquad r_k\in\HH,\qquad j_k>0.
+\]
+
+\smallskip
+\noindent
+\textup{(4)} The adjacent cross-currents \(h_k\) are explicit affine functions of the local
+current \(j_k\) and the neighboring tails, and are strictly positive. Thus in the even case all
+site currents
+\[
+I_j=\Im(\overline{u_j}u_{j+1})
+\]
+are positive.
+
+\smallskip
+\noindent
+\textup{(5)} The mirror-pair sign problem has been reduced to the local inequalities
+\[
+\Psi_k^- >0,\qquad \Psi_k^+>0,
+\]
+and then further rewritten as the same-level tail pairings
+\[
+\bigl(u_k^R-\delta_b\bigr)\bigl(ay+\tau_k^L\bigr)
++
+\bigl(by-\tau_k^R\bigr)\bigl(U_k^L-a^2\bigr)>0,
+\]
+\[
+\bigl(by-\tau_k^R\bigr)\bigl(V_k^L-\delta_a\bigr)
++
+\bigl(ay+\tau_k^L\bigr)\bigl(v_k^R-b^2\bigr)>0.
+\]
+So the remaining local gap is no longer a question about the ratio \(r_k\); it is a cone-pairing
+problem for the dual Weyl tails at the same block.
+
+\smallskip
+\noindent
+\textup{(6)} Globally, the boundary slope is exactly
+\[
+\partial_y\lambda_*(x,y)=2s\sum_{j=1}^n p_j.
+\]
+At the same time, the weighted exact invariant gives
+\[
+s\sum_{j=1}^n \omega_j p_j
+=
+y\sum_{j=1}^n \omega_j |u_j|^2
+>0.
+\]
+In the even case, all weighted suffix sums are also positive:
+\[
+s\sum_{j=\ell}^{2m}\omega_j p_j>0.
+\]
+
+\smallskip
+\noindent
+\textup{(7)} Therefore there are now two natural routes left:
+either prove the local same-level tail pairings above, which would imply pointwise mirror-pair
+positivity, or exploit the already-positive weighted mirror functional together with the local
+current positivity to prove the weaker but sufficient inequality
+\[
+\sum_{j=1}^n p_j>0.
+\]
+
+\smallskip
+\noindent
+Thus the main unresolved issue has become genuinely local and finite-dimensional in the parity
+Weyl variables, with a parallel global fallback through the weighted metric \(W\).
+\end{remark}
+
+\end{document}

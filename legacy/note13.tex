@@ -1,0 +1,375 @@
+\documentclass[11pt]{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{hyperref}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{remark}[theorem]{Remark}
+
+\DeclareMathOperator{\diag}{diag}
+
+\title{A Componentwise Proof of Simple Connectedness\\
+for the Open-Boundary Clean Hatano--Nelson Family}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{Normalized family and previously established input}
+
+Fix \(n\ge 2\).  For \(0<\eta\le 1\) and \(\delta>0\), define
+\[
+B_\eta:=\operatorname{tridiag}(\eta,0,1)
+=
+\begin{bmatrix}
+0&1\\
+\eta&0&\ddots\\
+&\ddots&\ddots&1\\
+&&\eta&0
+\end{bmatrix}\in\mathbb C^{n\times n},
+\]
+and write
+\[
+P_{\eta,\delta}:=\sigma_\delta(B_\eta).
+\]
+If \(A_n=\operatorname{tridiag}(a,0,b)\) with \(0<a<b\), then
+\[
+A_n=b\,B_\eta,\qquad \eta=\frac ab,\qquad \delta=\frac{\varepsilon}{b},
+\]
+and therefore
+\[
+\sigma_\varepsilon(A_n)=b\,P_{\eta,\delta}.
+\]
+Thus simple connectedness of the connected components of \(\sigma_\varepsilon(A_n)\) is equivalent to simple connectedness of the connected components of \(P_{\eta,\delta}\).
+
+We now record the input already established earlier.
+
+\begin{proposition}[Previously established input]\label{prop:input}
+Fix \(n\ge 2\) and \(\delta>0\). Then there exist numbers
+\[
+0<\eta_-<\widehat\eta_n<\eta_g:=\frac{3-\sqrt5}{2}<1
+\]
+such that the following hold.
+
+\begin{enumerate}
+\item For every \(0<\eta<\eta_-\), the set \(P_{\eta,\delta}\) is a single star-shaped Jordan domain. In particular, every connected component of \(P_{\eta,\delta}\) is simply connected.
+
+\item For every \(\widehat\eta_n<\eta\le 1\), every connected component of \(P_{\eta,\delta}\) is simply connected.
+
+\item Set
+\[
+I:=[\eta_-,\widehat\eta_n].
+\]
+Then for every \(\eta\in I\), every boundary point of \(P_{\eta,\delta}\) lies in the regular complex-root sector. In particular, on \(I\) there are no real-root boundary points, no fault points, and no exceptional even points.
+\end{enumerate}
+\end{proposition}
+
+\begin{remark}
+The point of Proposition~\ref{prop:input} is that the only remaining work is the compact strip \(I\), and on \(I\) the boundary is entirely described by the regular complex-root chart below.
+\end{remark}
+
+\section{The regular complex-root chart}
+
+Fix \(\eta\in I\). Put
+\[
+\tau:=1-\eta.
+\]
+On the complex-root sector, introduce
+\[
+u:=x^2,\qquad v:=y^2,
+\]
+and the scalar functions
+\[
+\beta(u,v):=\frac{u+v-\delta^2+\tau^2}{\eta},
+\qquad
+t(u,v):=\frac{(1+\eta)^2u+\tau^2 v}{4\eta^2}.
+\]
+Let \(J_n:=\operatorname{tridiag}(1,0,1)\) and let \(E_{nn}\) denote the rank-one matrix with a single \(1\) in the \((n,n)\)-entry.  Define
+\[
+N_\eta(t,\beta):=
+J_n^2-2\sqrt{t}\,J_n+\beta I_n+\tau E_{nn}
+=
+(J_n-\sqrt t\,I_n)^2+(\beta-t)I_n+\tau E_{nn}.
+\]
+On the regular complex-root sector one has \(N_\eta(t,\beta)\succ0\). Define
+\[
+m_n(t,\beta;\eta):=e_1^{\mathsf T}N_\eta(t,\beta)^{-1}e_1.
+\]
+The boundary equation on the upper half-plane chart is
+\[
+F_\eta(u,v):=m_n\bigl(t(u,v),\beta(u,v);\eta\bigr)-\frac{\eta}{\tau}=0.
+\]
+
+The following monotonicities were established earlier:
+
+\begin{proposition}[Monotonicities on the regular complex-root chart]\label{prop:monotone-m}
+For every \(\eta\in I\) and every regular complex-root point,
+\[
+\partial_t m_n(t,\beta;\eta)>0,
+\qquad
+\partial_\beta m_n(t,\beta;\eta)<0.
+\]
+Moreover,
+\[
+\partial_\beta m_n(t,\beta;\eta)
+=
+-\,e_1^{\mathsf T}N_\eta(t,\beta)^{-2}e_1<0.
+\]
+\end{proposition}
+
+For later use, define the \((x,v)\)-chart function
+\[
+\widetilde F_\eta(x,v):=F_\eta(x^2,v),
+\qquad v\ge0.
+\]
+
+\section{Local geometry of the remaining strip}
+
+\begin{lemma}[Derivative identity]\label{lem:derivative-identity}
+For every \(\eta\in I\),
+\[
+\partial_u F_\eta
+=
+\frac1\eta\,\partial_\beta m_n
++\frac{(1+\eta)^2}{4\eta^2}\,\partial_t m_n,
+\]
+\[
+\partial_v F_\eta
+=
+\frac1\eta\,\partial_\beta m_n
++\frac{\tau^2}{4\eta^2}\,\partial_t m_n.
+\]
+Hence
+\[
+\partial_u F_\eta-\partial_v F_\eta
+=
+\frac1\eta\,\partial_t m_n
+>0.
+\]
+\end{lemma}
+
+\begin{proof}
+This is a direct chain-rule computation, using
+\[
+\partial_u \beta=\partial_v \beta=\frac1\eta,
+\]
+and
+\[
+\partial_u t=\frac{(1+\eta)^2}{4\eta^2},
+\qquad
+\partial_v t=\frac{\tau^2}{4\eta^2}.
+\]
+Subtracting the two identities gives
+\[
+\partial_u F_\eta-\partial_v F_\eta
+=
+\frac{(1+\eta)^2-\tau^2}{4\eta^2}\,\partial_t m_n
+=
+\frac{4\eta}{4\eta^2}\,\partial_t m_n
+=
+\frac1\eta\,\partial_t m_n,
+\]
+and Proposition~\ref{prop:monotone-m} gives positivity.
+\end{proof}
+
+\begin{lemma}[No off-axis critical points]\label{lem:no-off-axis-critical}
+Fix \(\eta\in I\).  Let \(x\neq0\) and \(v>0\).  If
+\[
+\widetilde F_\eta(x,v)=0,
+\]
+then \(\nabla \widetilde F_\eta(x,v)\neq0\).
+\end{lemma}
+
+\begin{proof}
+We have
+\[
+\partial_x \widetilde F_\eta(x,v)=2x\,\partial_u F_\eta(x^2,v),
+\qquad
+\partial_v \widetilde F_\eta(x,v)=\partial_v F_\eta(x^2,v).
+\]
+If both partial derivatives vanished, then \(x\neq0\) would force
+\[
+\partial_u F_\eta(x^2,v)=0,
+\qquad
+\partial_v F_\eta(x^2,v)=0,
+\]
+contradicting Lemma~\ref{lem:derivative-identity}.  Hence \(\nabla\widetilde F_\eta(x,v)\neq0\).
+\end{proof}
+
+\begin{lemma}[Real-axis critical points are minimum-type]\label{lem:real-axis-minimum}
+Fix \(\eta\in I\), and let \(x_0\neq0\). Suppose
+\[
+\widetilde F_\eta(x_0,0)=0,
+\qquad
+\partial_x\widetilde F_\eta(x_0,0)=0.
+\]
+Then
+\[
+\partial_v \widetilde F_\eta(x_0,0)<0.
+\]
+Consequently, near \((x_0,0)\), the boundary is the graph
+\[
+v=\psi(x),
+\qquad
+\psi(x_0)=0,\qquad \psi'(x_0)=0,
+\]
+and \(x_0\) is a strict local minimum of \(\psi\).
+\end{lemma}
+
+\begin{proof}
+Since \(x_0\neq0\),
+\[
+0=\partial_x\widetilde F_\eta(x_0,0)=2x_0\,\partial_uF_\eta(x_0^2,0),
+\]
+so \(\partial_uF_\eta(x_0^2,0)=0\). By Lemma~\ref{lem:derivative-identity},
+\[
+0<\partial_uF_\eta(x_0^2,0)-\partial_vF_\eta(x_0^2,0)
+\]
+and therefore
+\[
+\partial_vF_\eta(x_0^2,0)<0.
+\]
+Since \(\partial_v\widetilde F_\eta=\partial_vF_\eta\), we get
+\[
+\partial_v\widetilde F_\eta(x_0,0)<0.
+\]
+The implicit-function theorem now gives a unique local graph \(v=\psi(x)\) through \((x_0,0)\). Because \(v\ge0\) and \(\psi(x_0)=0\), the point \(x_0\) is a strict local minimum of \(\psi\); in particular \(\psi'(x_0)=0\).
+\end{proof}
+
+\begin{lemma}[Imaginary-axis critical points are minimum-type]\label{lem:imag-axis-minimum}
+Fix \(\eta\in I\), and let \(v_0>0\). Suppose
+\[
+\widetilde F_\eta(0,v_0)=0,
+\qquad
+\partial_v\widetilde F_\eta(0,v_0)=0.
+\]
+Then
+\[
+\partial_u F_\eta(0,v_0)>0.
+\]
+Consequently, near \((0,v_0)\), the boundary is the graph
+\[
+u=\phi(v),
+\qquad
+\phi(v_0)=0,\qquad \phi'(v_0)=0,
+\]
+and \(v_0\) is a strict local minimum of \(\phi\). Equivalently, in \((x,v)\)-coordinates the boundary is locally of the form
+\[
+x^2=\phi(v)
+\]
+with a strict minimum at \(v=v_0\).
+\end{lemma}
+
+\begin{proof}
+At \(x=0\), we automatically have \(\partial_x\widetilde F_\eta(0,v)=0\).  The hypothesis gives
+\[
+0=\partial_v\widetilde F_\eta(0,v_0)=\partial_vF_\eta(0,v_0).
+\]
+By Lemma~\ref{lem:derivative-identity},
+\[
+\partial_uF_\eta(0,v_0)
+>
+\partial_vF_\eta(0,v_0)=0,
+\]
+so \(\partial_uF_\eta(0,v_0)>0\). The implicit-function theorem then yields a unique local graph \(u=\phi(v)\) through \((0,v_0)\). Since \(u=x^2\ge0\) and \(\phi(v_0)=0\), the point \(v_0\) is a strict local minimum of \(\phi\), hence \(\phi'(v_0)=0\).
+\end{proof}
+
+\begin{remark}[Why minimum-type contacts are harmless]
+The local germs described in Lemmas~\ref{lem:real-axis-minimum} and \ref{lem:imag-axis-minimum} are bounded by a \emph{single} smooth branch tangent to the corresponding symmetry axis. Such a local model can merge or split components across the axis, but it cannot create a new bounded complementary component of a connected component, i.e. it cannot create a hole.
+\end{remark}
+
+\section{Final componentwise argument}
+
+\begin{theorem}\label{thm:main}
+For every \(n\ge2\), every \(0<\eta\le1\), and every \(\delta>0\), every connected component of \(P_{\eta,\delta}=\sigma_\delta(B_\eta)\) is simply connected.
+
+Consequently, for every \(n>1\), every \(0<a<b\), and every \(\varepsilon>0\), every connected component of \(\sigma_\varepsilon(\operatorname{tridiag}(a,0,b))\) is simply connected.
+\end{theorem}
+
+\begin{proof}
+By Proposition~\ref{prop:input}, the theorem is already known for
+\[
+0<\eta<\eta_-
+\qquad\text{and}\qquad
+\widehat\eta_n<\eta\le 1.
+\]
+So it remains to treat the compact strip
+\[
+I=[\eta_-,\widehat\eta_n].
+\]
+
+Define the semialgebraic set
+\[
+\mathcal X:=
+\{(x,y,\eta)\in\mathbb R^2\times I:\ x+iy\in P_{\eta,\delta}\}.
+\]
+Since \(P_{\eta,\delta}\) is given by the inequality
+\[
+s_{\min}(x+iy-B_\eta)<\delta,
+\]
+equivalently by negativity of the smallest eigenvalue of the Hermitian matrix
+\[
+(x+iy-B_\eta)^*(x+iy-B_\eta)-\delta^2I,
+\]
+the set \(\mathcal X\) is semialgebraic. By Hardt's semialgebraic triviality theorem, the projection
+\[
+\pi:\mathcal X\to I,\qquad (x,y,\eta)\mapsto\eta,
+\]
+has only finitely many topology-changing values. Thus, if the theorem were false on \(I\), there would exist a first parameter value
+\[
+\eta_*\in I
+\]
+at which some connected component of \(P_{\eta,\delta}\) ceases to be simply connected.
+
+By Proposition~\ref{prop:input}, every boundary point at \(\eta=\eta_*\) lies on the regular complex-root chart. Hence any topology-changing event at \(\eta_*\) must occur on the chart
+\[
+\widetilde F_{\eta_*}(x,v)=0,\qquad v=y^2\ge0.
+\]
+
+By Lemma~\ref{lem:no-off-axis-critical}, no such event can occur at a point with \(x\neq0\) and \(v>0\). Therefore every possible critical event lies on one of the symmetry axes.
+
+\smallskip
+
+\noindent
+\textbf{Real axis.}
+If a critical event occurs at \((x_0,0)\) with \(x_0\neq0\), then Lemma~\ref{lem:real-axis-minimum} shows that the boundary is locally a single smooth graph
+\[
+v=\psi(x)
+\]
+with a strict local minimum at \(x_0\). This local model can only attach or detach a cap along the real axis; it cannot create a new bounded complementary component of a connected component. Hence it cannot be the first birth of a hole.
+
+\smallskip
+
+\noindent
+\textbf{Imaginary axis.}
+If a critical event occurs at \((0,v_0)\) with \(v_0>0\), then Lemma~\ref{lem:imag-axis-minimum} shows that the boundary is locally of the form
+\[
+x^2=\phi(v)
+\]
+with a strict local minimum at \(v_0\). This local model can only merge or split the pair of \(x\mapsto -x\) reflected branches across the imaginary axis; again it cannot create a new bounded complementary component of a connected component.
+
+\smallskip
+
+Thus no topology-changing event at \(\eta_*\) can create a hole. This contradicts the definition of \(\eta_*\) as the first parameter at which some connected component ceases to be simply connected.
+
+Therefore every connected component of \(P_{\eta,\delta}\) is simply connected for every \(\eta\in I\). Combining this with the endpoint regimes from Proposition~\ref{prop:input}, we conclude that every connected component of \(P_{\eta,\delta}\) is simply connected for every \(\eta\in(0,1]\).
+
+Finally, if \(A_n=\operatorname{tridiag}(a,0,b)=b\,B_\eta\) with \(\eta=a/b\) and \(\delta=\varepsilon/b\), then
+\[
+\sigma_\varepsilon(A_n)=b\,P_{\eta,\delta}.
+\]
+Scalar dilation preserves connected components and simple connectedness, so every connected component of \(\sigma_\varepsilon(A_n)\) is simply connected.
+\end{proof}
+
+\begin{remark}
+The proof is componentwise, not global. Multiple disconnected pseudospectral components are allowed (and occur already at the symmetric anchor for small \(\delta\)); what the argument excludes is the birth of a \emph{hole} in any individual component.
+\end{remark}
+
+\end{document}

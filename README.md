@@ -60,8 +60,9 @@ lake env lean AxiomAudit.lean
   of the SIAM standard macro distribution dated 2025-12-16.
 - `lean/`: canonical Lean sources, pinned build configuration, formalization
   map, manuscript audit, axiom audit, and current validation status.
-- `legacy/`: preserved earlier research notes; these are not current manuscript
-  or formalization sources.
+- The local working copy may contain an ignored `legacy/` directory of earlier
+  research notes. It is not part of the GitHub repository and is not a current
+  manuscript or formalization source.
 
 ## SIAM files and licensing
 

@@ -43,8 +43,8 @@ tmp_docsiamart_*.tex
 tmp_minimal_*.tex
 missfont.log
 
-# Generated legacy PDFs; retain the legacy TeX sources
-legacy/*.pdf
+# Local-only legacy research notes; never publish
+legacy/
 
 # Local reference library, not project source
 literature/

@@ -149,8 +149,9 @@ escapes explicit.
   historical version alongside the current 2026-07-16 artifacts.
 - Removed the transitory Lean `Scratch/` and `scripts/` trees, temporary render
   output, caches, editor/OS debris, and active TeX build intermediates.
-- Removed 327 generated artifacts (19,879,313 bytes) from the preserved
-  `legacy/` area while retaining its 49 tracked `.tex` sources.
+- Removed 327 generated artifacts (19,879,313 bytes) from the preserved local
+  `legacy/` area while retaining its 49 `.tex` sources locally. The directory
+  is ignored and excluded from the GitHub repository.
 - Preserved `.lake`, the current manuscript/PDF, bibliography and SIAM support
   files, all figure assets, and the figure-generation source needed for
   reproducibility.

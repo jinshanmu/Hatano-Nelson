@@ -2,9 +2,9 @@
 
 Source: `SIMAX_submission_bundle/final_connected_pseudospectrum_proof_2026-07-16.tex`
 
-Source SHA-256: `6b98b0feacea447775145c06706294be785a1c4b2901788396c0edf1a3e5de5f`
+Source SHA-256: `8dc0b050c25b12d22c795d882f2f1c25872f3d5479c5c2250fcab737c0c13356`
 
-Source size: 2,731 lines; 101,861 bytes.
+Source size: 2,802 lines; 105,090 bytes.
 
 Last full scope audit: 2026-07-16.
 
@@ -26,6 +26,13 @@ dependency graph of `thm:main` are kernel formalized.  This is not a claim that
 every physical, bibliographic, numerical, or other unnumbered expository
 display in the article is a Lean theorem.
 
+The final editorial follow-up refines the fixed-`epsilon` and novelty
+comparison prose and replaces the former supplementary-snapshot availability
+wording with public availability at
+`https://github.com/jinshanmu/Hatano-Nelson`.  These are unlabelled expository
+changes: all 90 labelled mathematical items retain the same content and
+hypotheses, and no Lean source file changed.
+
 Here “one-to-one” means exact labelwise coverage: every mathematical source
 label occurs in the detailed map and is matched to kernel-checked declarations
 or explicitly identified checked facts with the same hypotheses and content.
@@ -42,9 +49,9 @@ displays remain outside the Lean scope:
 |---|---|
 | Dimensionless logarithmic parametrization (`eq:physical-scaling`) | Exact Lean-backed support: `pathLogParameter`, `pathLogParameter_pos`, `pathParameter_eq_exp_neg_two_mul`, and `pathRate_eq_exp_neg_pathLogParameter`; `HyperbolicParameter`.  It is deliberately not counted among the manuscript's mathematical labels. |
 | Dimensionless gauge similarity (`eq:imaginary-gauge`) | Exact Lean-backed support: `diagonalGauge`, `diagonalGaugeInv`, `diagonalGauge_mul_inv`, `diagonalGaugeInv_mul`, `diagonalGauge_mul_symmetricPath`, and `pathMatrix_eq_gauge_symmetricPath_mul_inv`; `PathSpectrum`.  It is deliberately not counted among the manuscript's mathematical labels. |
-| `eq:pbc-symbol-intro` | The PBC Bloch ellipse is audited physical exposition; no PBC/Bloch declaration is present in Lean. |
-| `eq:physical-modes` | The dimensionless path spectrum and right-eigenvector core are formalized; the full `t_0`-scaled energy and left/right physical-mode display is not. |
-| `eq:skin-depth` | The logarithmic parameter and the same leading coefficient in the threshold asymptotic are formalized; the physical skin-depth identity is not a standalone declaration. |
+| `eq:pbc-symbol-intro` | The continuous PBC Bloch ellipse and its finite-ring sampling are audited physical exposition; no PBC/Bloch declaration is present in Lean. |
+| `eq:physical-modes` | The dimensionless path spectrum and right-eigenvector core are formalized; the full `t_0`-scaled energy, right modes, and column eigenvectors of the adjoint displayed as left modes are not. |
+| `eq:skin-depth` | The logarithmic parameter and the same leading coefficient in the threshold asymptotic are formalized; the physical amplitude/intensity skin-depth distinction and biorthogonal cancellation are not standalone declarations. |
 
 The structural labels are the seven sections `sec:introduction`,
 `sec:main-results`, `sec:vertical`, `sec:mesh`, `sec:topology-bounds`,
@@ -167,17 +174,18 @@ that are not already represented by the 90 mathematical labels above.
 |---|---|
 | Union-of-perturbed-spectra characterization of the pseudospectrum | Audited-only.  Lean proves the spectrum/resolvent/least-singular-value equality, but not the existential perturbation-union characterization. |
 | The diagonal similarity is nonunitary and therefore does not preserve Euclidean pseudospectra | Audited-only as prose.  The exact diagonal similarity is formalized; nonunitarity and the general non-preservation assertion are not separate declarations. |
-| Dimensional OBC identification `H_n=t_L A_n(a)`, `a=t_R/t_L`, and the PBC Bloch ellipse | Audited-only physical formulation.  The dimensionless path family, logarithmic parametrization, and gauge similarity are formalized; the dimensional model and PBC curve are not Lean declarations. |
-| Open-boundary eigenmode envelope and skin localization interpretation | Audited-only physical interpretation; the dimensionless gauged right-eigenvector identity is formalized. |
+| Dimensional OBC identification `H_n=t_L A_n(a)`, `a=t_R/t_L`, and the PBC Bloch ellipse and finite-ring sampling | Audited-only physical formulation.  The dimensionless path family, logarithmic parametrization, and gauge similarity are formalized; the dimensional model and PBC statements are not Lean declarations. |
+| Exclusion of `a=0`, singular gauge, and noncommuting small-`a`/small-uncertainty limits | Audited physical endpoint qualification.  Lean assumes `0<a<1` throughout the main theorem and does not formalize the singular endpoint limit. |
+| Open-boundary right/adjoint eigenmodes, amplitude and intensity decay lengths, and biorthogonal cancellation | Audited-only physical interpretation; the dimensionless gauged right-eigenvector identity is formalized. |
 | Convention `U_{-1}=0` | The primary Lean Chebyshev index is natural; the same zero boundary value is built into the checked recurrence and half-angle interfaces rather than a globally integer-indexed definition. |
 | Standard lower-branch expansion `-W_{-1}(-u)=log(1/u)+log log(1/u)+O(1)` | Literal bounded-error formalization: `lowerLambertLogScale` and `lowerLambertW_lower_branch_boundedErrorAtZero`; `LambertWThreshold`.  The proof derives the expansion from the exact floor identity and the independently checked elementary inversion. |
-| Numerical values, grid enclosures, and topology labels | Reproducible floating-point check conditional on computed samples, not a validated numerical, interval, or kernel certificate.  Both the manuscript and this audit now state explicitly that the `h/2` Lipschitz enclosure is rigorous only for exact sampled singular values and that the supplied NumPy/SciPy float64 implementation does not enclose floating-point SVD/eigenvalue error. |
+| Numerical values, grid enclosures, and topology labels | Reproducible floating-point check conditional on computed samples, not a validated numerical, interval, or kernel certificate.  Both the manuscript and this audit state explicitly that the `Delta x/2` Lipschitz enclosure is rigorous only for exact sampled singular values and that the supplied NumPy/SciPy float64 implementation does not enclose floating-point SVD/eigenvalue error. |
 | Second-quantized Hamiltonian, one-particle identification, sign conjugation, physical `t₀,h`, modes, and skin depth | Audited-only physical formulation.  Lean starts from the dimensionless one-particle matrices and does not formalize creation/annihilation operators, their one-particle reduction, the dimensional modes, or skin depth as literal declarations. |
 | Gauge condition number and `γ_n⁻¹ asymp_a e^(hn)/(n+1)` | Audited consequence/interpretation, not a literal Lean theorem.  The underlying barrier-order bounds and logarithmic parameter are formalized separately. |
-| Resolvent maximum-over-forcing ratio | Proof ingredients—finite-dimensional inverse norm and norm attainment—are formalized, but this exact ratio display is not a standalone declaration. |
-| Least-singular-value backward error and the physical last-bridge criterion | Audited physical consequence, not a standalone Lean declaration.  Lean proves the attained Euclidean least singular value, determinant/spectrum characterization, dimensional-free connectedness criterion, and strict threshold; the norm-minimizing perturbation identity and multiplication by `t_L` are audited outside the kernel. |
-| Dimensional merger scaling and skin-depth reformulation of `N_c` | Audited physical rescaling, not a literal Lean theorem.  The exact dimensionless gap bounds and fixed-`a` bounded-error asymptotic are formalized, and the displayed `t_L`, `t_0`, and skin-depth forms are algebraically equivalent. |
-| Physical dimer cancellation and equality case | Audited physical realization of literal Lean results `gapBarrier_two` and `criticalThreshold_eq_two_iff`.  The displayed rank-one perturbation has norm `t_R`, cancels the weaker hopping, and produces the claimed defective double eigenvalue; creation/annihilation and dimensional perturbation notation remain outside Lean. |
+| Resolvent maximum-over-forcing ratio, pointwise amplification, and physical units | Proof ingredients—finite-dimensional inverse norm and norm attainment—are formalized, but the displayed ratio, frequency-domain interpretation, and inverse-energy units are not standalone declarations. |
+| Least-singular-value backward error and the physical barrier criterion | Audited physical consequence, not a standalone Lean declaration.  Lean proves the attained Euclidean least singular value, determinant/spectrum characterization, dimensional-free connectedness criterion, and strict threshold; the norm-minimizing perturbation identity and multiplication by `t_L` are audited outside the kernel. |
+| Dimensional merger scaling, site count versus physical length, and skin-depth reformulation of `N_c` | Audited physical rescaling, not a literal Lean theorem.  The exact dimensionless gap bounds and fixed-`a` bounded-error asymptotic are formalized, and the displayed `t_L`, `t_0`, skin-depth, and lattice-spacing forms are algebraically equivalent. |
+| Physical dimer cancellation and equality case | Audited physical realization of literal Lean results `gapBarrier_two` and `criticalThreshold_eq_two_iff`.  The special displayed rank-one hopping perturbation has norm `t_R`, cancels the weaker hopping, and produces the claimed defective double eigenvalue; the theorem makes no generic-disorder claim. |
 | Component-based spectral-resolution classes under perturbation paths | Audited interpretation.  Lean proves the pseudospectral component topology and contractibility, but the pathwise eigenvalue-label/count narrative is not a standalone kernel theorem and is not used by `thm:main`. |
 | Bibliographic, historical, and qualitative physics claims | Outside the kernel scope; they are not used by `thm:main`. |
 

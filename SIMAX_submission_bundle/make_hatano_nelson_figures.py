@@ -213,7 +213,7 @@ def figure_topology(
         else:
             raise RuntimeError(f"float64 grid check is inconclusive for n={n}")
         if state == "disconnected":
-            regime = f"{n} spectral islands"
+            regime = f"{n} components"
         else:
             regime = "one uncertainty cloud"
         ax.set_title(
@@ -344,9 +344,9 @@ def figure_physical_interpretation() -> None:
         )
         ax.plot(eig, np.zeros(n), "x", color=noise_color, ms=3.3, mew=0.9)
         if n == 6:
-            title = r"(a) $n=6<N_c$: separated islands"
+            title = r"(a) $n=6<N_c$: multiple components"
         else:
-            title = r"(b) $n=7=N_c$: every gap is bridged"
+            title = r"(b) $n=7=N_c$: one component"
         ax.set_title(title, pad=2.0)
         ax.set_xlim(real_x[0], real_x[-1])
         ax.set_ylim(-2.0e-4, 1.72e-2)

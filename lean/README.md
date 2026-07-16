@@ -15,10 +15,21 @@ SIMAX_submission_bundle/final_connected_pseudospectrum_proof_2026-07-16.tex
 Its SHA-256 is:
 
 ```text
-6b98b0feacea447775145c06706294be785a1c4b2901788396c0edf1a3e5de5f
+8dc0b050c25b12d22c795d882f2f1c25872f3d5479c5c2250fcab737c0c13356
 ```
 
-The source has 2,731 lines and 101,861 bytes.
+The source has 2,802 lines and 105,090 bytes.
+
+## Public availability
+
+The manuscript source and PDF, Python figure-generation script and
+reproduction instructions, and this complete pinned Lean project with its
+formalization map and audit documentation are available in the public GitHub
+repository `https://github.com/jinshanmu/Hatano-Nelson`.
+
+The final public-availability, fixed-`epsilon`, and novelty-positioning edits
+are unlabelled manuscript prose.  They do not change any of the 90 labelled
+mathematical items, and no Lean source file changed.
 
 ## Exact scope
 
@@ -40,7 +51,7 @@ dimensionless parameter/gauge identities used by the proof remain checked in
 Lean, while the dimensional Hatano--Nelson Hamiltonian, PBC Bloch ellipse,
 physical modes, skin depth, and dimensional rescalings remain audited physical
 exposition outside the kernel scope.  The expanded backward-error,
-last-bridge, dimer, and spectral-resolution interpretation is likewise
+barrier, dimer, and spectral-resolution interpretation is likewise
 unnumbered audited physics exposition assembled from the formalized
 dimensionless results.  This scope statement also does not promote
 bibliographic discussion or floating-point numerical illustrations to kernel

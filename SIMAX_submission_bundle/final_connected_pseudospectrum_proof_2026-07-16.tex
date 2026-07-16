@@ -23,7 +23,7 @@
 \newcommand{\R}{\mathbb R}
 \newcommand{\ii}{\mathrm i}
 
-\headers{Connected Pseudospectra of the Open Hatano--Nelson Chain}{S. Jin}
+\headers{Connected Pseudospectra: Open Hatano--Nelson Chain}{S. Jin}
 \title{Connected Pseudospectra of a Nonnormal Toeplitz Path:
 The Open Hatano--Nelson Chain\thanks{{\bfseries Funding:} None.
 {\bfseries Conflicts of Interest:} None.
@@ -57,12 +57,12 @@ $\gamma_n\asymp_a(n+1)a^{n/2}$.  Consequently, the first connected
 matrix size is also the eventual connectedness threshold, and, for fixed
 $a$, it equals $2(\log(1/\varepsilon)+\log\!\log(1/\varepsilon))/
 \log(1/a)+O_a(1)$ as $\varepsilon$ tends to zero.  In the open-boundary
-Hatano--Nelson model, the coefficient $2/\log(1/a)$ is the right-eigenmode
-amplitude skin depth, in lattice-spacing units.  The threshold is the finite
-length at which a fixed perturbation budget overwhelms every
-inter-eigenvalue barrier: below it, disconnected components provide
-perturbation-stable spectral labels, whereas at and above it those labels
-belong to one worst-case uncertainty cloud.
+Hatano--Nelson model, the coefficient $2/\log(1/a)$ is the amplitude skin
+depth of the right eigenmodes, in lattice-spacing units.  The threshold is
+the site count at which fixed unstructured uncertainty exceeds every
+inter-eigenvalue barrier: below it, disconnected components retain
+perturbation-stable spectral labels, whereas at and above it they form one
+worst-case uncertainty cloud.
 \end{abstract}
 
 \begin{keywords}
@@ -146,35 +146,58 @@ dimensionless similarity
 \]
 Multiplying by \(t_L\) and using \(t_Lr=\sqrt{t_Lt_R}\) recovers the
 usual physical imaginary-gauge formula for \(H_n^{\rm OBC}\).
-Thus the open-boundary eigenvalues are real, while the right eigenmodes
+
+The endpoint \(a=0\) is excluded.  There \(A_n(0)=V_n\) is the
+unidirectional Jordan-block limit, the diagonal gauge is singular, and the
+limits \(a\downarrow0\) and \(\delta\downarrow0\), where \(\delta\) is the
+normalized uncertainty level used below, need not commute.  In particular,
+the fixed-\(a\) small-\(\delta\) asymptotic is not extrapolated through
+\(a=0\).
+
+The open-boundary eigenvalues are real, while the right eigenmodes
 have the envelope $e^{-h(j-1)}$ and accumulate at the left edge.  This
 is the non-Hermitian skin effect
 \cite{OkumaEtAl2020,YaoWang2018,YokomizoMurakami2019}; see
 \cite{ZhangEtAl2022} for a review.  Under periodic boundary conditions
-the Bloch curve is the ellipse
+the Bloch dispersion traces the continuous ellipse
 \[
  \mathcal E_{\rm PBC}(k)=t_Le^{\ii k}+t_Re^{-\ii k}
  =(t_L+t_R)\cos k+\ii(t_L-t_R)\sin k.
 \]
+A finite periodic ring samples this curve at \(k=2\pi q/n\),
+\(q=0,\ldots,n-1\), whereas the displayed ellipse is obtained as \(k\)
+traverses the Brillouin zone.
+
 Early work connecting Hatano--Nelson--type localization with
 pseudospectra treated random bidiagonal and Toeplitz models
 \cite{TrefethenContediniEmbree2001}.  Direct pseudospectral
 interpretations of nonnormal boundary sensitivity appear in
 \cite{OkumaSato2020,OkumaSato2021}.  Mathematical foundations for the
 skin effect were developed in \cite{AmmariEtAl2024}, while spectra and
-pseudospectra of tridiagonal $k$-Toeplitz matrices were treated in
-\cite{AmmariEtAl2025,AmmariCorrigendum2026}.  For asymmetric lattices,
+pseudospectra of tridiagonal $k$-Toeplitz matrices were treated in the
+original article \cite{AmmariEtAl2025}; the affected finite-section
+pseudospectral statements were corrected in the corrigendum
+\cite{AmmariCorrigendum2026}.
+
+For asymmetric lattices,
 Kiorpelidis and Makris \cite{KiorpelidisMakris2025} observed that
 eigenvalue-centered pseudospectral clouds expand with the lattice size and
 merge, beyond a critical size denoted by \(\widetilde N\), into a single
 cloud.  In their description the pseudospectral abscissa grows
 exponentially up to that crossover, whereas long-time dynamical
-amplification need not stop there.  The present \(N_c\) is a rigorous
-realization of this cloud-merger scale for the clean open Hatano--Nelson
-chain with the Euclidean unstructured pseudospectrum: we identify the exact
-finite-size criterion, rule out re-entrant splitting, and determine the
-asymptotic scale.  See also the preprint \cite{Sirker2026} for a closely
-related pseudospectral analysis of the open Hatano--Nelson chain.
+amplification need not stop there.  We write \(N_c\) informally for the first
+site count at which the clean-chain Euclidean pseudospectrum is connected;
+\cref{thm:main} gives the precise definition.  For this clean chain, \(N_c\)
+is a rigorous finite-dimensional analogue of their cloud-merger scale: we
+identify the exact finite-size criterion, rule out re-entrant splitting, and
+determine the asymptotic scale.  Sirker \cite{Sirker2026} analyzes spectral
+instability and Toeplitz-index structure through exponentially small singular
+values of \(H_n^{\rm OBC}-EI_n\) at fixed values of the spectral parameter
+\(E\) for the same open Hatano--Nelson chain.  The present work instead treats
+the global finite-dimensional barrier obtained by optimizing over all
+inter-eigenvalue gaps; it determines the topology of the full Euclidean
+pseudospectrum and the barrier's strict decrease from dimension \(n\) to
+\(n+1\).
 
 For general matrices, the geometry and coalescence of pseudospectral
 components have been studied by variational and distance-to-defectivity
@@ -190,10 +213,11 @@ barrier problem and shows, more strongly, that every pseudospectral
 component is contractible.  Second, a signed persymmetric pencil and a
 folded Chebyshev parametrization give the strict comparison of the
 largest barrier in consecutive dimensions.  Third, rectangular
-factorizations give sharp-order two-sided bounds and the resulting
-Lambert-$W$ finite-size law.  Connectedness concerns the union over all
+factorizations give sharp-order two-sided bounds, explicit Lambert-$W$
+bounds for the comparison-envelope threshold, and the resulting asymptotic
+finite-size law.  Connectedness concerns the union over all
 \emph{unstructured} perturbations: it does not imply that any single
-perturbation supplies eigenvalues throughout a connecting bridge, nor
+perturbation supplies eigenvalues throughout a connecting region, nor
 does it describe the attainable set for a prescribed structured
 perturbation family.  Its physical content is instead the loss of a
 component-wise, perturbation-independent spectral label at the prescribed
@@ -229,13 +253,14 @@ Define
  N_f(a,\varepsilon)=\min\{N\geq2:
  \sigma_\varepsilon(A_N)\text{ is connected}\}.
 \]
+The following theorem proves that both defining sets are nonempty.
 
-Throughout the remainder of the article, put
+For the remainder of the article, put
 \[
  r=\sqrt a,\qquad
  J_n=[\boldsymbol 1_{\{i+j=n+1\}}]_{i,j=1}^n.
 \]
-Thus \(A_n=V_n+aV_n^T\).  Throughout, \(\mathbf e_j\) denotes a Euclidean
+Thus \(A_n=V_n+aV_n^T\).  Here, \(\mathbf e_j\) denotes a Euclidean
 coordinate vector of the ambient dimension, and \(U_j(t)\) denotes the
 Chebyshev polynomial of the second kind, with \(U_{-1}=0\).
 
@@ -269,7 +294,7 @@ $\gamma_{n+1}<\gamma_n$, tends to zero, and
  \sigma_\varepsilon(A_n(a))\text{ is connected}
  \quad\Longleftrightarrow\quad \varepsilon>\gamma_n.
 \]
-\item The first-hit and eventual connectedness thresholds coincide:
+\item The first-connectedness and eventual thresholds coincide:
 \[
  N_c(a,\varepsilon):=N_f(a,\varepsilon)=N_e(a,\varepsilon).
 \]
@@ -684,6 +709,17 @@ values, which proves the assertion.
 \end{proof}
 
 \begin{proof}[Proof of \cref{lem:mesh}]
+The proof proceeds in five stages: (i) derivation of parity-unified
+folded-continuant formulas; (ii) conversion to the half-angle chord
+parametrization; (iii) comparison of all noncentral gaps in consecutive
+dimensions; (iv) separate treatment of the central gaps by interlacing; and
+(v) assembly of the global strict barrier inequality.  For orientation,
+\(F_n\) denotes the determinant from the vertical argument, whereas
+\(\mathcal F_h\) below is an angular factor; the decorated
+\(\mathcal C,\mathcal D,\mathcal R_{\rm bd}\) are local objects; and
+\(\mathfrak c_h,\mathfrak d_h\) are hyperbolic or angular quantities, unlike
+the central gap heights \(c_m,d_m\).
+
 \medskip\noindent\emph{Folded continuants.}\quad
 Put
 \[
@@ -1259,22 +1295,22 @@ continuous, while the sheet inequalities are strict.  Thus \(\mathcal C\)
 is relatively open in the gap.
 
 It is also relatively closed.  At a relative closure point the chord
-identity and all sheet inequalities persist weakly.  If the weak limit had
-\(\Delta_*(x)=0\), then its two reconstructed half variables would coincide.
-This is impossible because
+identity and all sheet inequalities persist weakly.  The possible closure
+cases are as follows.  (1) If \(\Delta_*(x)=0\), then the reconstructed half
+variables coincide, which is impossible because
 \[
  z\geq u_K^{\max}>\cos\frac{\pi}{K}
  \geq\cos\frac{j\pi}{K}\geq y.
 \]
-The signs of the half variables cannot change in a noncentral positive gap:
-\(z>0\) throughout, while \(y=0\) would force \(x=0\), outside such a gap.
-Moreover, \(z\) cannot reach \(\mathfrak c_h\) in the interior, because
-\eqref{eq:channel-xs} would then give \(s=0\).  The inner variable cannot
+(2) Neither half variable can change sign in a noncentral positive gap:
+\(z>0\), while \(y=0\) would force \(x=0\), outside the gap.  (3) The outer
+variable cannot reach \(\mathfrak c_h\) in the interior, because
+\eqref{eq:channel-xs} would then give \(s=0\).  (4) The inner variable cannot
 reach a nodal endpoint: the common level would be zero, the endpoint-side
 solution would be \(\mathfrak c_h\), and \eqref{eq:channel-xs} would give
-\(s=0\), whereas the middle root has no zero inside a spectral gap.  The
-outer variable cannot leave its endpoint-side component, since its first
-such point would be \(u_K^{\max}\), contradicting
+\(s=0\), whereas the middle root has no zero inside a spectral gap.  (5) The
+outer variable cannot leave its endpoint-side component, since
+its first such point would be \(u_K^{\max}\), contradicting
 \eqref{eq:outer-level-dominates}.  Passage through \(z=1\) is harmless; only
 its coordinate changes.  Hence every relative closure point remains in
 \(\mathcal C\).  Since the open gap is an interval, \(\mathcal C\) is the
@@ -1444,7 +1480,7 @@ of \eqref{eq:channel-xs} have increased, at least one strictly, and hence
  >\mathfrak s_{\rm ell}(\theta,\phi).
 \end{equation}
 
-\medskip\noindent\emph{Central gaps.}\quad
+\medskip\noindent\emph{Central-gap interlacing.}\quad
 It remains to compare the central sheets.  We do this in the next
 calculation.
 
@@ -1496,9 +1532,14 @@ equations \eqref{eq:rho-central} and \eqref{eq:c-determinant} give
 \end{equation}
 
 We shall also use that \(c_m\) is exactly the height of the central gap
-of \(A_{2m}\).  A permutation separating odd and even coordinates gives
+of \(A_{2m}\).  Let
 \[
- A_{2m}\sim
+ P_{\rm oe}=[\mathbf e_1,\mathbf e_3,\ldots,\mathbf e_{2m-1},
+ \mathbf e_2,\mathbf e_4,\ldots,\mathbf e_{2m}]
+\]
+be the permutation matrix that places odd coordinates first.  Then
+\[
+ P_{\rm oe}^T A_{2m}P_{\rm oe}=
  \begin{bmatrix}0&I_m+aV_m^T\\aI_m+V_m&0\end{bmatrix}.
 \]
 Moreover,
@@ -1559,7 +1600,8 @@ endpoint-side solution satisfies \(z>z_0\).  Equations
 Reflection handles the negative half of the gap.  Thus its height is
 exactly \(c_m\), attained only at \(x=0\).
 
-We first prove \(d_m<c_m\).  Set
+\medskip\noindent\emph{The upper comparison \(d_m<c_m\).}\quad
+Set
 \[
  \omega_m^{\rm e}=\cos\frac{\pi}{m+1},\qquad
  \mathcal V_m(t)=\sqrt{(\zeta-t)(1+t)}\,U_m(t).
@@ -1651,7 +1693,8 @@ inequality strict:
 \]
 This holds along the whole central sheet, so \(d_m<c_m\).
 
-We now prove \(d_m>c_{m+1}\).  Put \(L=m+1\geq2\), and abbreviate
+\medskip\noindent\emph{The lower comparison \(d_m>c_{m+1}\).}\quad
+Put \(L=m+1\geq2\), and abbreviate
 \[
  \rho=\rho_L,\quad u_-=U_{L-1}(\rho),\quad u_+=U_L(\rho),\quad
  \omega_L=\cos\frac{\pi}{2L},\quad \Delta_\omega=1-\omega_L,
@@ -1660,8 +1703,10 @@ We now prove \(d_m>c_{m+1}\).  Put \(L=m+1\geq2\), and abbreviate
  \mathfrak D_L=1+2(\rho+\omega_L)u_-u_+,\qquad
  \xi=\rho-\frac{\Delta_\omega}{\mathfrak D_L}.
 \end{equation}
-Thus \(a=u_-/u_+\) and \(c_L=1/u_+\).  We first establish the scalar
-inequality
+Thus \(a=u_-/u_+\) and \(c_L=1/u_+\).
+
+\medskip\noindent\emph{The decisive scalar estimate.}\quad
+We first establish
 \begin{equation}\label{eq:central-target}
  (1+\omega_L)(1+\xi)^2U_{L-1}(\xi)^2
  <(\rho+\omega_L)\mathfrak D_L.
@@ -1807,9 +1852,9 @@ This is a concave quadratic.  Moreover,
  -2\Delta_\omega^2
  -4\Delta_\omega L(2-\upsilon-\Delta_\omega)\bigr].
 \]
-The elementary bounds, the second following from
+The following elementary bounds hold; the second follows from
 \(\rho>\rho_{\rm ref}\) and
-\(1-\rho_{\rm ref}<\pi^2/[2(2L+1)^2]<5/(2L+1)^2\),
+\(1-\rho_{\rm ref}<\pi^2/[2(2L+1)^2]<5/(2L+1)^2\):
 \begin{equation}\label{eq:Delta-upsilon-bounds}
  \Delta_\omega<\frac5{4L^2},\qquad
  \upsilon<\frac5{(2L+1)^2}\leq\frac15.
@@ -1851,8 +1896,8 @@ while the negative terms have magnitudes less than
 \(\mathfrak q(u)>0\), proving \eqref{eq:N-positive-target}, and hence
 \eqref{eq:central-target}, in all cases.
 
-It remains to certify that the scalar comparison concerns the least singular
-value.  Since \(a>0\), \(\Delta_\omega>0\), \(\rho+\omega_L>0\), and
+\medskip\noindent\emph{Certification of the least singular value.}\quad
+Since \(a>0\), \(\Delta_\omega>0\), \(\rho+\omega_L>0\), and
 \(\zeta+\omega_L>0\), let \(x_*>0\) be the positive square root determined
 by
 \begin{equation}\label{eq:x-star-central}
@@ -2042,7 +2087,7 @@ zero, and nonvanishing of the product excludes equality.  Hence
 central gap, and \(d_{L-1}>c_L\).  This completes the proof of
 \eqref{eq:central-interlace}.
 
-\medskip\noindent\emph{Completion of the comparison.}\quad
+\medskip\noindent\emph{Assembly of the global barrier inequality.}\quad
 We finish the index comparison.  Put \(M=N+1\), so the larger and
 smaller matrices have orders \(M-1\) and \(N-1\), respectively.  If
 \(\Sigma=\diag(1,-1,1,-1,\ldots)\), then
@@ -2078,13 +2123,13 @@ Since \(M-1=n+1\) and \(N-1=n\), this proves
 \section{Topology, quantitative bounds, and the transition scale}
 \label{sec:topology-bounds}
 
-We begin with the standard component property that reduces the planar
+We begin with the standard component property for arbitrary matrices
+\cite{BurkeLewisOverton2003}.  In the present setting it reduces the planar
 topology to the real spectral interval.
 
 \begin{lemma}\label{lem:component}
 Every connected component of \(\sigma_\varepsilon(A_n)\) contains an
-eigenvalue of \(A_n\); this standard component property holds for
-arbitrary matrices \cite{BurkeLewisOverton2003}.
+eigenvalue of \(A_n\).
 \end{lemma}
 
 \begin{proof}
@@ -2165,7 +2210,7 @@ any other component.  Compactness of \(I_n^{\mathrm{sp}}\) now gives
  \gamma_n<\varepsilon.
 \end{equation}
 The strict inequality reflects the open definition of the
-pseudospectrum; equality leaves at least one real bridge point outside.
+pseudospectrum; equality leaves at least one real barrier point outside.
 
 We now give quantitative estimates.  Put \(N=n+1\) and recall
 \(\mathcal L_n(a)\) and \(\mathcal U_n(a)\) from
@@ -2312,7 +2357,8 @@ is disconnected.  If \(\mathcal U_n(a)<\varepsilon\), then
 \(\gamma_n<\varepsilon\), so it is connected.  Strict decrease of
 \(\gamma_n\) now gives \eqref{eq:N-two-sided-main}.
 
-The scale in \eqref{eq:N-two-sided-main} can be displayed in closed form.
+The comparison-envelope threshold, rather than \(N_c\) itself, can be
+inverted in closed form.
 Put
 \[
  \Theta_n=(n+1)r^n,\qquad
@@ -2338,7 +2384,8 @@ at \(N_c\).  Conversely, \(\Theta_m<2\varepsilon\) for every
 Thus the polynomial factor \(n+1\), as well as the exponential factor
 \(a^{n/2}\), is sharp on both sides.
 
-For completeness, let
+\medskip\noindent\emph{Lambert-\(W\) inversion of the envelope threshold.}\quad
+Let
 \[
  \beta=-\log r=\frac12\log(1/a).
 \]
@@ -2379,7 +2426,9 @@ combined with \eqref{eq:tail-threshold-bounds} proves, for each fixed
        \log\!\log(1/\varepsilon)\right)+O_a(1).}
 \end{equation}
 The remainder is not asserted to be uniform as \(a\uparrow1\).
-Finally, for $|x|\leq r$,
+
+\medskip\noindent\emph{Exact two-site endpoint.}\quad
+For $|x|\leq r$,
 \[
  \det\bigl((xI_2-A_2)^*(xI_2-A_2)-a^2I_2\bigr)
  =x^2(x^2-2a-2a^2)\leq0.
@@ -2399,18 +2448,18 @@ This proves all assertions.
 
 The computations in this section illustrate the theorem but are not used in
 its proof.  The complete script
-\texttt{make\_hatano\_nelson\_figures.py}, supplied with the manuscript,
-uses NumPy, SciPy, and Matplotlib.  It constructs \(A_n(a)\) directly,
-computes Cartesian pseudospectral contours by singular value
-decomposition, and obtains gapwise estimates of \(\gamma_n\) by bounded
-scalar optimization.  As a separate check, let \(M_h\) be the largest exact
-least singular value sampled on uniform real-gap grids of maximum spacing
-\(h\).  The 1-Lipschitz property of
+\texttt{make\_hatano\_nelson\_figures.py}, available in the public repository
+cited in the Declarations, uses NumPy, SciPy, and Matplotlib.  It constructs
+\(A_n(a)\) directly, computes Cartesian pseudospectral contours by singular
+value decomposition, and obtains gapwise estimates of \(\gamma_n\) by bounded
+scalar optimization.  As a separate check, let \(M_{\Delta x}\) be the largest
+exact least singular value sampled on uniform real-gap grids of maximum
+spacing \(\Delta x\).  The 1-Lipschitz property of
 \(x\mapsto s_{\min}(xI_n-A_n)\) gives the rigorous implication
 \[
- M_h\leq\gamma_n\leq M_h+\frac h2
+ M_{\Delta x}\leq\gamma_n\leq M_{\Delta x}+\frac{\Delta x}{2}
 \]
-for exact samples.  The supplied implementation applies this test to
+for exact samples.  The repository implementation applies this test to
 NumPy/SciPy float64 SVD values, but it does not enclose SVD or eigenvalue
 roundoff.  Its topology labels are therefore reproducible floating-point
 checks, conditional on the computed samples, rather than validated interval
@@ -2420,47 +2469,39 @@ optimizer and are unused in every proof.
 \begin{figure}[t]
  \centering
  \includegraphics[width=\textwidth]{fig1_connectedness_transition}
- \caption{Topology change indicated by the float64 computation at
- \(a=1/4\) and \(\varepsilon=10^{-2}\).  Shading depicts
- \(\{z:s_{\min}(zI_n-A_n)<\varepsilon\}\), and crosses are
- open-boundary eigenvalues.  Gapwise SVD estimates give
- \((\widehat\gamma_5,\ldots,\widehat\gamma_9)=
- (0.02909836,0.01465829,0.007364219,0.003820033,0.001992747)\).
- Applying the grid/Lipschitz check to the float64 samples places the computed
- margins for \(n=5,6\) above \(\varepsilon\) and those for \(n=7,8,9\)
- below it, yielding the reported numerical threshold \(N_c=7\).  As
- explained in the text, these checks are not interval certificates.  In the
- two displayed pre-threshold cases every component contains one eigenvalue,
- so the components are mode-resolved uncertainty islands.  At \(n=7\) the
- last separator is lost and all eigenvalues belong to one uncertainty cloud.
- The merger is a perturbation-level-dependent pseudospectral event, not the
- onset of skin localization.}
+ \caption{Computed pseudospectral transition for \(a=1/4\) and
+ \(\varepsilon=10^{-2}\).  Shading denotes the strict pseudospectrum, and
+ crosses mark open-boundary eigenvalues.  The float64 barriers give the
+ reported threshold \(N_c=7\); these checks are illustrative rather than
+ interval certificates.}
  \label{fig:transition}
 \end{figure}
 
-The five panels of \cref{fig:transition} illustrate the computed
-classification: two mode-resolved cases, the first single-cloud case, and two
-subsequent single-cloud cases.  This is the clean Hatano--Nelson realization
-of the \(\widetilde N\) crossover described schematically by Kiorpelidis and
-Makris \cite{KiorpelidisMakris2025}.  As proved above, whenever the true
-pseudospectrum is connected it has no hole: every vertical section is an
-interval, and the real trace contains the full open-boundary spectral
-segment.
+The gapwise estimates are
+\[
+\begin{aligned}
+ (\widehat\gamma_5,\widehat\gamma_6,\widehat\gamma_7)
+ &=(0.02909836,0.01465829,0.007364219),\\
+ (\widehat\gamma_8,\widehat\gamma_9)
+ &=(0.003820033,0.001992747).
+\end{aligned}
+\]
+The grid/Lipschitz check puts the computed values for \(n=5,6\) above
+\(\varepsilon\) and those for \(n=7,8,9\) below it.  Thus the first two panels
+are mode-resolved, and the remaining three form a single cloud.  This is a
+clean-chain realization of the \(\widetilde N\) crossover described by
+Kiorpelidis and Makris \cite{KiorpelidisMakris2025}.  Whenever the true
+pseudospectrum is connected, every vertical section is an interval and the
+real trace contains the full open-boundary spectral segment.
 
 \begin{figure}[t]
  \centering
  \includegraphics[width=.76\textwidth]{fig2_gap_barrier_bounds}
- \caption{Finite-size crossing of the perturbation budget.  Gapwise float64
- SVD estimates \(\widehat\gamma_n\) of the strictly decreasing barriers and
- the exact analytic enclosure
+ \caption{Gapwise float64 barrier estimates and the analytic enclosure
  \(\mathcal L_n(a)\leq\gamma_n\leq\mathcal U_n(a)\) for \(a=1/4\).
- The plotted estimates first cross below \(\varepsilon=10^{-2}\) at \(n=7\),
- again indicating the reported numerical threshold.  Independently, the
- exact analytic bounds in \eqref{eq:N-two-sided-main} give
- \(6\leq N_c\leq9\).  To the left of the crossing at least one component
- separator survives; from the crossing onward there is one component.  The
- nearly parallel log-scale curves display the common
- \((n+1)a^{n/2}\) scale.}
+ The estimates first fall below \(\varepsilon=10^{-2}\) at \(n=7\); the
+ exact bounds give \(6\leq N_c\leq9\), and all curves share the scale
+ \((n+1)a^{n/2}\).}
  \label{fig:barriers}
 \end{figure}
 
@@ -2473,29 +2514,23 @@ the maximizing gap.
 \begin{figure}[t]
  \centering
  \includegraphics[width=\textwidth]{fig3_hatano_nelson_physics}
- \caption{Why the uncertainty clouds merge, for \(a=1/4\) and
- \(\varepsilon=10^{-2}\).  In (a)--(b), the blue curves are
- \(g_n(x)=s_{\min}(xI_n-A_n)\), the red line is the perturbation budget, and
- the teal portions are the real pseudospectrum.  At \(n=6\), peaks above the
- budget separate the six eigenvalue islands; at \(n=7=N_c\), every
- inter-eigenvalue location lies below the budget and the real trace is one
- interval.  Panel (c) shows the common exponential envelope of right skin
- modes at \(n=20\).  Its amplitude decay length is
- \(\ell_{\rm skin}=2/\log(1/a)\), the coefficient in the asymptotic law for
- \(N_c\).  Reversing the site convention reverses the edge but not the
- merger criterion.}
+ \caption{Real-axis barrier mechanism and skin-mode envelope for
+ \(a=1/4\) and \(\varepsilon=10^{-2}\).  Panels (a)--(b) show \(g_n(x)\),
+ the level \(\varepsilon\), and the real pseudospectrum for \(n=6,7\);
+ panel (c) shows right eigenmodes for \(n=20\), with amplitude decay length
+ \(\ell_{\rm skin}=2/\log(1/a)\).}
  \label{fig:physics}
 \end{figure}
 
 \Cref{fig:physics} places the topological criterion and its nonnormal
-mechanism side by side.  The left panels show the last real-axis separator
-being submerged below the fixed uncertainty floor; the right panel shows
+mechanism side by side.  The left panels show the final real-axis barrier
+crossing the fixed uncertainty level; the right panel shows
 the imaginary-gauge envelope responsible for the exponentially small
-barrier scale.  Skin localization already exists on both sides of the
-crossing.
+barrier scale.  Reversing the site convention reverses the localization edge
+but not the connectedness criterion.
 
 \clearpage
-\section{Hatano--Nelson interpretation: a finite spectral-resolution length}
+\section{Hatano--Nelson interpretation: a spectral-resolution site count}
 \label{sec:physical-conclusion}
 
 To connect the dimensionless matrix to the usual second-quantized
@@ -2516,22 +2551,28 @@ conventional minus sign is immaterial here because
  =\frac12\log(1/a).
 \]
 For the unitarily equivalent positive-sign representative
-\(t_LA_n(a)\), multiplying the dimensionless gauge relation by \(t_L\)
-gives the eigenvalues and
-unnormalized right and left modes
+\(H_n=t_LA_n(a)\), multiplying the dimensionless gauge relation by \(t_L\)
+gives the eigenvalues, unnormalized right eigenvectors \(\psi_m^R\) of
+\(H_n\), and unnormalized column eigenvectors \(\psi_m^L\) of
+\(H_n^\dagger\):
 \begin{align*}
  E_m&=2t_0\cos\frac{m\pi}{n+1},\\
  \psi_m^R(j)&=e^{-h(j-1)}\sin\frac{jm\pi}{n+1},\\
  \psi_m^L(j)&=e^{h(j-1)}\sin\frac{jm\pi}{n+1},
  \qquad 1\leq j,m\leq n.
 \end{align*}
+With this normalization,
+\((\psi_m^L)^\dagger\psi_{m'}^R=(n+1)\delta_{mm'}/2\).
 These mode profiles are closely related to the original Hatano--Nelson
 eigenfunction analysis \cite{HatanoNelson1998}.
-Thus the right-mode amplitude skin depth is
+Thus the amplitude skin depth of the right eigenmodes is
 \[
  \ell_{\rm skin}=h^{-1}=\frac{2}{\log(1/a)},
 \]
-whereas the gauge condition number is
+the amplitude e-folding length.  The intensity or probability envelope has
+e-folding length \((2h)^{-1}=\ell_{\rm skin}/2\), while the exponential gauge
+factors cancel in the corresponding biorthogonal left--right product.  The
+gauge condition number is
 \(\kappa_2(\mathcal G_n(e^{-h}))
 =e^{h(n-1)}=a^{-(n-1)/2}\).
 
@@ -2546,11 +2587,11 @@ The least singular value has the backward-error interpretation
 Consequently, \(\gamma_n\) is not merely an auxiliary quantity from the
 proof.  It is the largest, over the real interval between the extreme
 open-boundary eigenvalues, of the minimum perturbation required to place an
-eigenvalue at the specified point.  In other words, it is the cost of the
-last and most expensive bridge between spectral islands.
+eigenvalue at the specified point.  It is therefore the final barrier that
+the uncertainty level must exceed to make the pseudospectrum connected.
 
 For the dimensional positive-sign Hamiltonian \(H_n=t_LA_n(a)\), define
-the final-bridge budget
+the dimensional barrier
 \[
  \varepsilon_*(n)=t_L\gamma_n.
 \]
@@ -2562,19 +2603,23 @@ Then the exact physical form of the connectedness criterion is
 \]
 The strict decrease \(\gamma_{n+1}<\gamma_n\), together with
 \(\gamma_n\to0\), explains why there is one finite threshold: a fixed
-horizontal uncertainty budget crosses the last-bridge scale once, and after
-that crossing the clouds cannot separate again.  Equivalently, if
+uncertainty level exceeds the decreasing barrier sequence once, after which
+the cloud remains connected.  Equivalently, if
 \(E_{\min}\) and \(E_{\max}\) are the extreme eigenvalues of \(H_n\), then
 \[
  \varepsilon_*(n)^{-1}
  =\min_{x\in[E_{\min},E_{\max}]}
  \lVert(xI_n-H_n)^{-1}\rVert_2,
 \]
-with the resolvent norm interpreted as infinite at an eigenvalue.  Thus at
-and beyond \(N_c\), even the deepest inter-resonance valley has worst-case
-gain above \(\varepsilon_{\rm phys}^{-1}\).
+with the resolvent norm interpreted as infinite at an eigenvalue.  At each
+\(z\), this norm is the pointwise worst-case frequency-domain amplification
+from forcing to response; for \(H_n\) it has physical units of inverse
+energy.  Thus \(\varepsilon_*(n)^{-1}\) is the minimum pointwise amplification
+over the spectral interval, while \(\gamma_n^{-1}\) is the corresponding
+dimensionless minimum for \(A_n\).  At and beyond \(N_c\), this minimum
+exceeds \(\varepsilon_{\rm phys}^{-1}\).
 
-The Hatano--Nelson content lies in the rate at which this bridge collapses.
+The Hatano--Nelson content lies in the rate at which this barrier collapses.
 From \cref{prop:gap-bounds},
 \[
  \varepsilon_*(n)
@@ -2591,24 +2636,27 @@ Accordingly,
 so gauge conditioning and worst-case spectral sensitivity have the same
 exponential rate \(h\), up to fixed-\(a\) constants and the displayed
 polynomial factor.  Skin localization and barrier collapse are parallel
-consequences of the same imaginary gauge; the cloud merger is not the onset
-of the skin effect.
+consequences of the same imaginary gauge.
 
 Let \(\delta=\varepsilon_{\rm phys}/t_L\).  Balancing the fixed uncertainty
-level with the bridge scale above gives, as \(\delta\downarrow0\),
+level with the barrier scale above gives, as \(\delta\downarrow0\),
 \[
  N_c(a,\delta)=\ell_{\rm skin}
- \left(\log(1/\delta)+\log\!\log(1/\delta)\right)+O_a(1).
+\left(\log(1/\delta)+\log\!\log(1/\delta)\right)+O_a(1).
 \]
-Thus \(N_c\) is a spectral-resolution length.  Measured in amplitude skin
-depths, its leading value is
+Here \(N_c\) is a number of sites.  If the lattice spacing is \(d\), the
+corresponding end-to-end chain length is approximately \((N_c-1)d\); only in
+lattice-spacing units is it convenient to call \(N_c\) a
+spectral-resolution length.  Measured in amplitude skin depths, its leading
+value is
 \(N_c/\ell_{\rm skin}=\log(1/\delta)+\log\!\log(1/\delta)+O_a(1)\): this is
-the length needed for a fixed uncertainty floor to submerge the last robust
-gap.  Improving the resolution by a factor \(q\) increases the leading
-resolvable length by \(\ell_{\rm skin}\log q\).  Stronger nonreciprocity shortens
-\(\ell_{\rm skin}\) and hence lowers the leading small-\(\delta\) threshold;
-this is an asymptotic statement, not a claim that \(N_c\) is monotone in
-\(a\) at every finite perturbation level.
+the site count needed for a fixed uncertainty level to exceed the final
+barrier.  Improving the resolution by a factor \(q\) increases the leading
+resolvable site count by \(\ell_{\rm skin}\log q\).  At fixed
+\(\delta=\varepsilon_{\rm phys}/t_L\), stronger nonreciprocity shortens
+\(\ell_{\rm skin}\) and hence lowers the leading small-\(\delta\) threshold.
+This is an asymptotic statement, not a finite-parameter monotonicity theorem
+in \(a\).
 
 The exact two-site endpoint makes the same interpretation especially
 transparent.  Since \(\gamma_2=a\),
@@ -2629,21 +2677,27 @@ Indeed, for the positive-sign dimer,
 \]
 The norm-\(t_R\) perturbation cancels the weaker directed hopping and
 produces a defective double eigenvalue at zero.  Hence, if the uncertainty
-budget exceeds \(t_R\), mode resolution is lost already in the shortest
+level exceeds \(t_R\), mode resolution is lost already in the shortest
 nontrivial chain; no long-chain buildup is needed.  At exact equality the
 needed perturbation is excluded by the strict convention
 \(\lVert\Delta H\rVert_2<\varepsilon_{\rm phys}\): the component closures
 touch at zero but the strict pseudospectrum is disconnected (indeed,
 \(N_c(a,a)=3\)).
+Here loss of mode resolution means loss of component-based resolution under
+unstructured worst-case spectral-norm uncertainty.  The displayed rank-one
+hopping perturbation is a special structured realization; the theorem does
+not assert that generic onsite or hopping disorder realizes it.
 
 Kiorpelidis and Makris \cite{KiorpelidisMakris2025} denoted by
-\(\widetilde N\) the observed fixed-perturbation crossover from separate
+\(\widetilde N\) the observed fixed-\(\varepsilon\) crossover from separate
 eigenvalue-centered clouds to a single cloud, and associated it with the end
 of exponential growth of the pseudospectral abscissa.  For the clean open
-Hatano--Nelson chain, \(N_c\) is the exact finite-dimensional counterpart of
-that cloud-merger scale: the physical connectedness criterion above supplies the exact
-bridge criterion, and strict barrier decrease proves that the single cloud
-cannot split again at larger sizes.  Their convention \(A=-\ii H\) rotates
+Hatano--Nelson chain, \(N_c\) is the rigorous clean-chain analogue of that
+crossover.  Here \(N_c\) is defined by strict connectedness of the open
+Euclidean pseudospectrum, whereas \(\widetilde N\) is their observed
+cloud-merger crossover; the exact barrier criterion and strict barrier
+decrease additionally rule out re-entrant splitting.  Their convention
+\(A=-\ii H\) rotates
 the pseudospectrum by ninety degrees and does not change connectedness.
 
 \subsection{What is lost at the threshold}
@@ -2660,23 +2714,22 @@ coarse label.  Define two unperturbed eigenvalues to be in the same
 \(\Delta A(s)\) satisfying \(\lVert\Delta A(s)\rVert_2<\varepsilon\), every
 continuous eigenvalue branch of \(A_n+\Delta A(s)\) remains inside
 \(\sigma_\varepsilon(A_n)\) and therefore cannot pass between two distinct
-components.  Equivalently, each component carries a fixed algebraic number
-of perturbed eigenvalues along such a path.
+components.  Equivalently, each component carries a constant total algebraic
+multiplicity of perturbed eigenvalues along such a path.
 
 When a component contains one unperturbed eigenvalue, this class gives an
 individual-mode label.  Partial mergers can combine some labels before the
 full threshold, so \(N_c\) need not be the first size at which one pair of
 eigenvalues becomes ambiguous.  Rather, \(N_c\) is the \emph{last} merger:
 for \(n<N_c\) at least two robust spectral classes remain, whereas for
-\(n\geq N_c\) the sole component contains all \(n\) eigenvalues.  At that
-resolution there is no longer a perturbation-independent, topologically
-protected answer to ``which open-boundary spectral cluster did this
-location come from?''  If the actual perturbation or its continuation path
-is known, eigenvalue branches may still be tracked; connectedness says that
-the location alone no longer supplies the label.
+\(n\geq N_c\) the sole component contains all \(n\) eigenvalues.  The
+location alone then no longer determines a perturbation-independent,
+topologically protected open-boundary spectral cluster.  If the actual
+perturbation or its continuation path is known, eigenvalue branches may
+still be tracked.
 
 This statement concerns a union over perturbations.  It does not assert that
-one perturbation places eigenvalues at every point of a connecting bridge.
+one perturbation places eigenvalues at every point of a connecting region.
 Nor does it describe probabilities of observing different locations.  In
 resolvent language, for \(z\notin\sigma(A)\),
 \[
@@ -2685,7 +2738,7 @@ resolvent language, for \(z\notin\sigma(A)\),
  \frac{\lVert\boldsymbol u\rVert_2}{\lVert\boldsymbol f\rVert_2},
  \qquad (zI_n-A)\boldsymbol u=\boldsymbol f,
 \]
-so the single cloud is a collective high-gain region at the specified
+so the single cloud is a region of large pointwise resolvent amplification at the specified
 worst-case resolution, rather than the spectrum of one noisy sample.
 
 \subsection{Scope and conclusion}
@@ -2693,11 +2746,12 @@ worst-case resolution, rather than the spectrum of one noisy sample.
 The finite-size existence of a merger is not exclusive to the skin effect.
 At the normal endpoint \(a=1\), increasingly dense Hermitian eigenvalues also
 merge at fixed \(\varepsilon\), but on the algebraic level-spacing scale.
-What is specifically Hatano--Nelson is the exponential collapse
-\((n+1)a^{n/2}\), the resulting logarithmic dependence of \(N_c\) on
-\(1/\varepsilon\), and the appearance of \(\ell_{\rm skin}\) as its leading
-coefficient.  This also explains why the limit \(a\uparrow1\) in the
-physical threshold asymptotic above is not uniform.
+What is specific to this Hatano--Nelson family is the precise barrier scale
+\((n+1)a^{n/2}\), up to fixed-\(a\) constants, its exact connectedness
+consequence and resulting logarithmic plus log-log threshold law, and the
+appearance of \(\ell_{\rm skin}\) as the leading coefficient.  This also
+explains why the limit \(a\uparrow1\) in the physical threshold asymptotic
+above is not uniform.
 
 Restricting perturbations to onsite, hopping, boundary, or Toeplitz
 structure can produce a smaller attainable set and a different merger
@@ -2715,13 +2769,30 @@ that long-time dynamical amplification can persist beyond their
 
 In summary, vertical monotonicity reduces planar connectedness to a
 backward-error barrier on the real axis, and strict barrier decrease makes
-its crossing with a fixed uncertainty budget unique.  The imaginary gauge
+its crossing with a fixed uncertainty level unique.  The imaginary gauge
 sets the exponentially small scale of that barrier, while the skin depth
-sets the leading finite-size resolution length.  For the clean open
+sets the leading finite-size resolution site count.  For the clean open
 Hatano--Nelson chain, \(N_c\) therefore marks the global loss of robust
 spectral-cluster separation under unstructured worst-case uncertainty,
 without conflating that loss with the skin effect itself, a particular
 structured perturbation, or dynamical amplification.
+
+\section*{Declarations}
+
+\textbf{Use of generative AI.}
+Generative AI tools were used to assist with manuscript drafting and editing,
+proof auditing, Lean formalization, writing and checking the reproducibility
+code used to generate the numerical figures, and literature and citation
+checking.  The author independently verified the mathematical statements,
+computations, code, figures, and references.  The author assumes
+responsibility for all content.
+
+\textbf{Manuscript, code, and formalization availability.}
+The source and compiled PDF of this manuscript, the Python figure-generation
+script and its reproduction instructions, and the complete pinned Lean~4
+formalization with its manuscript-to-formalization map and audit
+documentation are available in the public GitHub repository
+\url{https://github.com/jinshanmu/Hatano-Nelson}.
 
 \phantomsection
 \raggedbottom

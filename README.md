@@ -1,5 +1,9 @@
 # Connected Pseudospectra of the Open Hatano–Nelson Chain
 
+**Author:** Shanmu Jin
+
+**Public repository:** https://github.com/jinshanmu/Hatano-Nelson
+
 This repository accompanies the manuscript *Connected Pseudospectra of a
 Nonnormal Toeplitz Path: The Open Hatano–Nelson Chain*. It contains the current
 SIAM submission source, its reproducible figures, and a Lean 4 formalization of

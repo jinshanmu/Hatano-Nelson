@@ -35,14 +35,14 @@ axiom or compiler-trust escape appears.
 
 - Source:
   `SIMAX_submission_bundle/final_connected_pseudospectrum_proof_2026-07-16.tex`
-- Source size: 2,731 lines; 101,861 bytes.
+- Source size: 2,802 lines; 105,090 bytes.
 - Source SHA-256:
-  `6b98b0feacea447775145c06706294be785a1c4b2901788396c0edf1a3e5de5f`.
+  `8dc0b050c25b12d22c795d882f2f1c25872f3d5479c5c2250fcab737c0c13356`.
 - Compiled PDF:
   `SIMAX_submission_bundle/final_connected_pseudospectrum_proof_2026-07-16.pdf`
-- PDF size: 37 pages; 853,541 bytes.
+- PDF size: 37 pages; 845,564 bytes.
 - PDF SHA-256:
-  `63931465ef2f1f0e7eb337a1ac52169c90c573b70fc88ddfb9d6294c928b95a9`.
+  `2f5d7f654b41083d04f089728824529be722daf0f70b851e11d1e0986cfa92ba`.
 
 The final `latexmk` compilation exited successfully.  The final log scan found
 no TeX error, LaTeX/package warning, undefined reference, rerun request,
@@ -52,10 +52,19 @@ regenerated figures, and the expanded physical interpretation; no clipping,
 overlap, or malformed display was found.  The figure generator was replayed in
 the `wirtinger_calculus` Conda environment and reproduced the stated
 float64 threshold and analytic bracket.
+The shortened running title renders as 49 characters.  The final source has
+100 labels, all unique: 90 mathematical, seven section, and three figure
+labels.  It uses all 29 unique bibliography entries, with no missing or unused
+key, and all 61 unique reference targets resolve.  The primary labels written
+to the auxiliary file agree exactly with the source.
 The 2026-07-16 `.tex` and compiled `.pdf` are the current audited manuscript
 artifacts.  The complete 2026-07-13 `.tex`/`.pdf` snapshot is also retained
 unchanged as a historical manuscript version.  Regenerated TeX intermediates
 were removed after verification.
+
+The manuscript source and PDF, Python figure-generation script and
+reproduction instructions, and complete pinned Lean project are available in
+the public GitHub repository `https://github.com/jinshanmu/Hatano-Nelson`.
 
 ## Mathematical and labelwise scope
 
@@ -64,6 +73,13 @@ lemmas, one theorem, and one proposition), seven section labels, and three
 figure labels.  Every one of the 90 mathematical labels has an exact kernel
 counterpart with the same mathematical content and hypotheses.  Thus the final
 classification is 90 literal, zero proof-sufficient, and zero audited-only.
+All 90 labelled mathematical environments retain the content and hypotheses
+of the previous audited source.  The Lambert-`W`, asymptotic, and exact
+two-site labelled items are likewise unchanged.  The final follow-up modifies
+only unlabelled public-availability, fixed-`epsilon`, novelty-positioning, and
+AI-disclosure prose.  The editorial proof roadmap, numbered closure cases,
+explicit permutation equality, and grammatical repair do not alter any
+inference.  No Lean source file changed.
 
 “One-to-one” is labelwise coverage, not an injective declaration count: every
 mathematical label has an exact mapped Lean witness, while one displayed item
@@ -93,7 +109,7 @@ All physics-facing formulas in the manuscript are unnumbered.  Their signs,
 scalings, domains, mode conventions, skin-depth interpretation, condition
 number, resolvent expression, and dimensional threshold rescaling were checked
 algebraically and numerically where appropriate.  The expanded backward-error,
-physical last-bridge threshold, bridge-scale, two-site cancellation, and
+physical barrier threshold, barrier scale, two-site cancellation, and
 spectral-resolution interpretations were checked against the formalized
 dimensionless statements.  The positive-sign one-particle representative and
 its relation to the opposite sign convention are stated explicitly.
@@ -147,6 +163,11 @@ escapes explicit.
   the mathematical or build issue, and no active validation step depends on it.
 - Preserved the complete tracked 2026-07-13 manuscript/PDF byte-for-byte as a
   historical version alongside the current 2026-07-16 artifacts.
+- Safely removed the transitory 20-page short source and PDF; the full 07-16
+  manuscript and its 37-page PDF are the sole canonical current artifacts.
+- Removed the superseded reproducibility ZIP, checksum, supplement index, and
+  37-page cover-letter note after selecting the public-GitHub availability
+  route.
 - Removed the transitory Lean `Scratch/` and `scripts/` trees, temporary render
   output, caches, editor/OS debris, and active TeX build intermediates.
 - Removed 327 generated artifacts (19,879,313 bytes) from the preserved local
@@ -158,8 +179,8 @@ escapes explicit.
 
 The current documentation set is:
 
-- `README.md`: project scope, pinned environment, canonical commands, and
-  reproducibility snapshot;
+- `README.md`: project scope, submission artifacts, pinned environment, and
+  canonical reproduction commands;
 - `FORMALIZATION_MAP.md`: complete 90-label literal map and important
   unnumbered-scope inventory;
 - `LATEX_AUDIT.md`: manuscript repairs, threshold-proof closure, physics audit,

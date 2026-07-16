@@ -4,9 +4,9 @@ Audited source:
 `SIMAX_submission_bundle/final_connected_pseudospectrum_proof_2026-07-16.tex`
 
 SHA-256:
-`6b98b0feacea447775145c06706294be785a1c4b2901788396c0edf1a3e5de5f`
+`8dc0b050c25b12d22c795d882f2f1c25872f3d5479c5c2250fcab737c0c13356`
 
-Source size: 2,731 lines; 101,861 bytes.
+Source size: 2,802 lines; 105,090 bytes.
 
 Last full source review: 2026-07-16.
 
@@ -23,6 +23,33 @@ mathematical labels as literal kernel counterparts: zero are proof-sufficient
 and zero are audited-only.  It separately inventories important unnumbered
 physical, numerical, and expository claims outside the kernel scope.  The
 latest default build and source-safety evidence is recorded in `STATUS.md`.
+
+## Five-referee editorial revision
+
+The final 2026-07-16 submission revision changes no labelled mathematical
+statement, hypothesis, equation, or proof inference.  It adds the five-stage
+roadmap to the proof of `lem:mesh`, numbers the already-checked
+chord-closure cases, and marks the central substeps without changing their
+content.  The former ambiguous permutation-similarity symbol is replaced by
+an explicit equality using `P_oe`; this is the same odd/even coordinate
+permutation already used by the argument.  The fragment before
+`eq:Delta-upsilon-bounds` is repaired grammatically, and the numerical
+grid spacing is renamed from `h` to `Delta x` without changing its
+Lipschitz enclosure.
+
+The revision also adds the required AI-use declaration and code/formalization
+availability statement, shortens the running head and figure captions, and
+qualifies the physics and literature discussion.  A final editorial follow-up
+clarifies that the comparison with Sirker concerns fixed spectral parameter
+values versus the present global gap-optimized barrier, describes the
+Kiorpelidis--Makris crossover at fixed `epsilon` without overstating identity
+of definitions, and makes the manuscript, Python script, and Lean project
+available in the public GitHub repository
+`https://github.com/jinshanmu/Hatano-Nelson`.  All of these follow-up changes
+are unlabelled prose.  All physics-only formulas remain unlabelled and outside
+Lean.  The source still has exactly 100 unique labels, including the same 90
+mathematical labels mapped below, so no Lean statement or source file required
+modification.
 
 ## Current manuscript-to-Lean alignment
 
@@ -72,22 +99,32 @@ Their signs and scalings have been checked against
 
 - `H_n^OBC=t_L A_n(t_R/t_L)` has superdiagonal `t_L` and subdiagonal `t_R`;
 - the periodic symbol is
-  `t_L exp(ik)+t_R exp(-ik)=(t_L+t_R)cos k+i(t_L-t_R)sin k`;
+  `t_L exp(ik)+t_R exp(-ik)=(t_L+t_R)cos k+i(t_L-t_R)sin k`, with a
+  finite ring sampling the continuous curve at the displayed discrete
+  momenta;
+- the excluded endpoint `a=0` is the unidirectional Jordan-block limit,
+  where the diagonal gauge is singular and the two small-parameter limits
+  need not commute;
 - the alternating-sign unitary conjugates `A_n` to `-A_n`, and the displayed
-  positive-sign energies and left/right modes follow from the diagonal gauge;
-- the amplitude skin depth is `h^(-1)=2/log(1/a)`, while the gauge condition
-  number and reciprocal barrier have the stated common exponential rate; and
+  positive-sign energies, right modes, and adjoint column eigenvectors follow
+  from the diagonal gauge with the stated biorthogonal normalization;
+- the amplitude skin depth is `h^(-1)=2/log(1/a)`; the intensity length
+  is half as large, the exponential factors cancel in the biorthogonal
+  product, and the gauge condition number and reciprocal barrier have the
+  stated common exponential rate;
 - the least-singular-value backward-error identity gives the exact cost of
-  placing an eigenvalue at `z`, homogeneity gives the last-bridge budget
+  placing an eigenvalue at `z`, homogeneity gives the dimensional barrier
   `epsilon_*(n)=t_L gamma_n`, and the physical connectedness criterion follows
   with the same strict inequality;
-- the bridge scale
+- the barrier scale
   `epsilon_*(n) asymp_a t_L (n+1) exp(-hn)` agrees exactly with its `t_0` and
   skin-depth rewritings, and its inversion states the required limit
-  `delta -> 0` explicitly; and
+  `delta -> 0` explicitly, with `N_c` distinguished from the physical
+  end-to-end length `(N_c-1)d`; and
 - at `n=2`, `gamma_2=a` gives `epsilon_*(2)=t_R`; cancelling the weaker hopping
   by the displayed rank-one perturbation has norm `t_R`, produces the stated
-  defective dimer, and preserves the strict equality-case distinction.
+  defective dimer, and preserves the strict equality-case distinction without
+  asserting that generic disorder realizes this special perturbation.
 
 The two unnumbered dimensionless parameter/gauge identities are still checked
 in Lean because they support the mathematical proof.  The dimensional,
@@ -113,8 +150,9 @@ these results with only `0<a<1` and `epsilon>0`.
 
 The numerical discussion in `sec:numerics`, including the qualifications
 attached to `fig:transition` and `fig:barriers`, now makes the status explicit.
-For a uniform grid of maximum spacing `h`, the 1-Lipschitz property gives
-`M_h ≤ gamma_n ≤ M_h + h/2` when `M_h` is formed from exact sampled least
+For a uniform grid of maximum spacing `Delta x`, the 1-Lipschitz property gives
+`M_(Delta x) ≤ gamma_n ≤ M_(Delta x) + Delta x/2` when `M_(Delta x)`
+is formed from exact sampled least
 singular values.  The manuscript separately states that the supplied
 NumPy/SciPy implementation uses float64 SVD and eigenvalue values without an
 enclosure of their roundoff.  It therefore calls the reported margins and

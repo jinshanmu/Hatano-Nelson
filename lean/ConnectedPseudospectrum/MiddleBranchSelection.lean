@@ -2100,6 +2100,80 @@ def oddFoldedSignedMiddleMatrix (m : ℕ) (a x : ℝ) :
   (signedMiddleMatrix (2 * m + 1) a x).submatrix
     (oddFoldPerm m) (oddFoldPerm m)
 
+/-- The coupling vector `w=[-eₘ;-a eₘ]` in `eq:odd-dilation`.
+The last-coordinate test makes this definition valid when `m = 0`, where
+both summands are empty. -/
+def oddDilationCoupling (m : ℕ) (a : ℝ) : Fin m ⊕ Fin m → ℝ
+  | Sum.inl i => if i.1 + 1 = m then -1 else 0
+  | Sum.inr i => if i.1 + 1 = m then -a else 0
+
+/-- The last folded coordinate is the original middle coordinate. -/
+@[simp] theorem oddFoldPerm_last_val (m : ℕ) :
+    (oddFoldPerm m (Fin.last (2 * m))).1 = m := by
+  rw [oddFoldPerm_val_of_le]
+  · simp
+    omega
+  · change m ≤ 2 * m
+    omega
+
+/-- Reversal fixes the original middle coordinate selected by the last
+folded coordinate. -/
+@[simp] theorem oddFoldPerm_last_rev_val (m : ℕ) :
+    ((oddFoldPerm m (Fin.last (2 * m))).rev).1 = m := by
+  rw [Fin.val_rev, oddFoldPerm_last_val]
+  omega
+
+/-- Exact last column of the bordered odd dilation. -/
+theorem oddFoldedSignedMiddleMatrix_last_column
+    (m : ℕ) (a x : ℝ) (i : Fin m ⊕ Fin m) :
+    oddFoldedSignedMiddleMatrix m a x
+        ((twoBlockFinEquiv m i).castSucc) (Fin.last (2 * m)) =
+      oddDilationCoupling m a i := by
+  rcases i with i | i
+  · simp only [oddFoldedSignedMiddleMatrix, Matrix.submatrix_apply,
+      signedMiddleMatrix, mul_reversal_apply, oddFoldPerm_inl_val,
+      oddFoldPerm_last_rev_val, Matrix.sub_apply, Matrix.smul_apply,
+      Matrix.one_apply, pathMatrix_apply, oddDilationCoupling,
+      Fin.ext_iff, smul_eq_mul]
+    split_ifs <;> (first | omega | norm_num)
+  · simp only [oddFoldedSignedMiddleMatrix, Matrix.submatrix_apply,
+      signedMiddleMatrix, mul_reversal_apply, oddFoldPerm_inr_val,
+      oddFoldPerm_last_rev_val, Matrix.sub_apply, Matrix.smul_apply,
+      Matrix.one_apply, pathMatrix_apply, oddDilationCoupling,
+      Fin.ext_iff, smul_eq_mul]
+    split_ifs <;> (first | omega | norm_num)
+
+/-- Exact last row of the bordered odd dilation. -/
+theorem oddFoldedSignedMiddleMatrix_last_row
+    (m : ℕ) (a x : ℝ) (i : Fin m ⊕ Fin m) :
+    oddFoldedSignedMiddleMatrix m a x
+        (Fin.last (2 * m)) ((twoBlockFinEquiv m i).castSucc) =
+      oddDilationCoupling m a i := by
+  rcases i with i | i
+  · simp only [oddFoldedSignedMiddleMatrix, Matrix.submatrix_apply,
+      signedMiddleMatrix, mul_reversal_apply, oddFoldPerm_last_val,
+      oddFoldPerm_inl_rev_val, Matrix.sub_apply, Matrix.smul_apply,
+      Matrix.one_apply, pathMatrix_apply, oddDilationCoupling,
+      Fin.ext_iff, smul_eq_mul]
+    split_ifs <;> (first | omega | norm_num)
+  · simp only [oddFoldedSignedMiddleMatrix, Matrix.submatrix_apply,
+      signedMiddleMatrix, mul_reversal_apply, oddFoldPerm_last_val,
+      oddFoldPerm_inr_rev_val, Matrix.sub_apply, Matrix.smul_apply,
+      Matrix.one_apply, pathMatrix_apply, oddDilationCoupling,
+      Fin.ext_iff, smul_eq_mul]
+    split_ifs <;> (first | omega | norm_num)
+
+/-- Exact bottom-right scalar of the bordered odd dilation. -/
+@[simp] theorem oddFoldedSignedMiddleMatrix_bottom_right
+    (m : ℕ) (a x : ℝ) :
+    oddFoldedSignedMiddleMatrix m a x
+        (Fin.last (2 * m)) (Fin.last (2 * m)) = x := by
+  simp only [oddFoldedSignedMiddleMatrix, Matrix.submatrix_apply,
+    signedMiddleMatrix, mul_reversal_apply, oddFoldPerm_last_val,
+    oddFoldPerm_last_rev_val, Matrix.sub_apply, Matrix.smul_apply,
+    Matrix.one_apply, pathMatrix_apply, Fin.ext_iff, smul_eq_mul]
+  split_ifs <;> (first | omega | norm_num)
+
 /-- The leading `2m × 2m` block in the odd folding is exactly the
 off-diagonal dilation `widehat P_m(x)`. -/
 theorem oddLeadingPrincipal_submatrix_eq_evenPathDilation

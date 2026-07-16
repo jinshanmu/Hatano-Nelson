@@ -1,49 +1,56 @@
 # Connected pseudospectrum formalization
 
-This Lean project kernel-checks the complete theorem and proof dependency graph
-of the main mathematical result in
-`final_connected_pseudospectrum_proof_2026-07-13.tex`.
+This Lean project kernel-checks all 92 labelled mathematical items and the
+complete theorem and proof dependency graph of the main mathematical result in
+`SIMAX_submission_bundle/final_connected_pseudospectrum_proof_2026-07-16.tex`.
 
 ## Locked manuscript
 
 The audited source is:
 
 ```text
-/Users/shanmujin/Documents/Hatano-Nelson/SIMAX_submission_bundle/final_connected_pseudospectrum_proof_2026-07-13.tex
+SIMAX_submission_bundle/final_connected_pseudospectrum_proof_2026-07-16.tex
 ```
 
 Its SHA-256 is:
 
 ```text
-b4828ea18c0386e0a694c91af065c523c948ef4cf003a7ee1d823d19a8c72223
+84e0021272c9a9eb5cbfba3f6c82c4219bc2d64382232ebe68084bc9febe29b6
 ```
 
-The source has 2,449 lines.  Its pre-rename checksum was
-`7cf4fc9fa4b019f6185560f38b20d8f1901d793b36e068d002c272bdeeed7a6f`;
-the only byte-level change was the dated filename in the line-2 compilation
-comment, so the mathematical text and line numbering are unchanged.
+The source has 2,477 lines and 89,709 bytes.
 
 ## Exact scope
 
-The formalization claim is deliberately narrower than “every mathematical
-sentence in the article is a Lean theorem.”  The article has 95 mathematical
-theorem/lemma/proposition/equation labels:
-
-- 80 have literal kernel counterparts;
-- 12 have proof-sufficient conditional, strengthened, corrected, partial, or
-  alternative counterparts; and
-- three physical-exposition labels are audited but not kernel formalized.
-
-All six theorem-like environments and every dependency needed for `thm:main`
-are kernel formalized.  The final assembly is
-`ConnectedPseudospectrum.main_theorem` in
+The manuscript has 102 labels: 92 mathematical labels (86 equations, four
+lemmas, one theorem, and one proposition), seven section labels, and three
+figure labels.  All 92 mathematical labels have literal kernel counterparts;
+zero are proof-sufficient and zero are audited-only.  All six theorem-like
+environments and every dependency needed for `thm:main` are kernel formalized.
+The final assembly is `ConnectedPseudospectrum.main_theorem` in
 `ConnectedPseudospectrum/MainTheorem.lean`.
 
-`FORMALIZATION_MAP.md` gives the complete 95-label classification and maps the
-kernel-backed content to current declarations.  It also inventories important
-unlabeled physical, numerical, and global complex-root claims outside the
-kernel scope.  `LATEX_AUDIT.md` records source ambiguities, the corrected
-strictness error, proof-expansion repairs, and numerical-certification limits.
+The physical material is intentionally outside the Lean scope.  In particular,
+the dimensional Hatano--Nelson Hamiltonian, PBC Bloch ellipse, physical modes,
+and skin-depth interpretation are unnumbered exposition in the revised source.
+This scope statement also does not promote bibliographic discussion or the
+floating-point numerical illustrations to kernel theorems.
+
+`FORMALIZATION_MAP.md` gives the complete 92-label map and separately inventories
+important unnumbered physical, numerical, and expository claims.  `LATEX_AUDIT.md`
+records the statement-level repairs that made the current labelled mathematics
+literal, along with the remaining source caveats.
+
+## Lower Lambert branch
+
+The pinned Mathlib revision does not provide the real lower Lambert branch used
+by the manuscript.  `ConnectedPseudospectrum/LambertWThreshold.lean` therefore
+constructs a local `W_{-1}`-equivalent function from existence and uniqueness of
+the inverse of `x * exp x` on the lower real branch.  It proves the natural
+argument-domain facts, the exact strict discrete threshold and floor identity,
+and the logarithmic--logarithmic bounded-error expansion used in the source.
+The function is totalized outside its natural domain, while every theorem that
+identifies it with the lower branch carries the appropriate domain hypothesis.
 
 ## Pinned environment
 
@@ -56,31 +63,33 @@ strictness error, proof-expansion repairs, and numerical-certification limits.
 The acceptance command is exactly:
 
 ```sh
-cd /Users/shanmujin/Documents/Hatano-Nelson/lean
+cd lean
 lake build
 ```
 
 There are no command-line Lean options in this build.  `lakefile.toml` has no
 `[leanOptions]` section, linter driver, linter arguments, warning override, or
-heartbeat override.  The recorded acceptance environment has no `LEAN*` or
-`LAKE*` option variables.  Consequently Lean 4.28.0's defaults apply,
-including its default heartbeat budget.
+heartbeat override.  The acceptance environment must contain no `LEAN*` or
+`LAKE*` option variables.  Consequently Lean 4.28.0's defaults apply, including
+its default heartbeat budget.
 
 The default target is the umbrella module `ConnectedPseudospectrum.lean`.  It
-imports every one of the 102 canonical modules in `ConnectedPseudospectrum/`;
-there are no unimported library modules.
+imports all 103 modules in `ConnectedPseudospectrum/`; the canonical library
+closure therefore contains 104 files, with no unimported library modules.
 
 ## Project hygiene
 
-The repository now contains 104 project-owned `.lean` files: the 103-file
-canonical library closure plus `AxiomAudit.lean`.  Transitory `Scratch/` and
-`scripts/` content and the standalone linter audit were removed.  No linter
+The repository contains 105 project-owned `.lean` files: the 104-file canonical
+library closure plus `AxiomAudit.lean`.  Transitory `Scratch/` and `scripts/`
+content and the standalone linter audit have been removed.  No linter
 configuration or suppression is part of the project.
 
 The following scans cover every remaining project-owned Lean source.  Each is
 expected to produce no matches:
 
 ```sh
+cd lean
+
 ! rg -n --glob '*.lean' \
   '^\s*(?:local\s+|scoped\s+)?set_option\b|^\s*#lint|@\[[^]]*nolint' \
   .
@@ -95,40 +104,44 @@ expected to produce no matches:
 ```
 
 The second and third scans target the canonical library.  `AxiomAudit.lean`
-contains only imports and diagnostic `#print axioms` commands; its comments
-name forbidden trust mechanisms so that the acceptance criterion is explicit.
+contains only imports, comments, and diagnostic `#print axioms` commands; its
+comments name forbidden trust mechanisms so that the acceptance criterion is
+explicit.
 
 ## Kernel-axiom audit
 
-The separate trust audit uses default Lean options:
+The separate trust audit also uses default Lean options:
 
 ```sh
+cd lean
 lake env lean AxiomAudit.lean
 ```
 
-`AxiomAudit.lean` contains 211 selected `#print axioms` commands, including the
-final theorem and major mapped endpoints.  `main_theorem`'s own output covers
-its dependency closure.  The only accepted foundational dependencies are
-`propext`, `Classical.choice`, and `Quot.sound`; project-specific axioms or
-compiler-trust escapes are failures.  See `AXIOM_AUDIT.md`.
+`AxiomAudit.lean` contains 229 selected `#print axioms` commands, including the
+final theorem, the declarations corresponding to the formerly nonliteral
+labels, the exact collision formulas, and the local lower-Lambert-branch
+endpoints.  `main_theorem`'s own output covers its dependency closure.  The only
+accepted foundational dependencies are `propext`, `Classical.choice`, and
+`Quot.sound`; project-specific axioms or compiler-trust escapes are failures.
+See `AXIOM_AUDIT.md`.
 
 ## Reproducible source snapshot
 
-The canonical library closure consists of 103 files, 40,860 lines, and
-1,681,754 bytes.  Its length-prefixed path-and-content SHA-256 is:
+The current canonical library closure consists of 104 files, 41,474 lines, and
+1,707,190 bytes.  Its length-prefixed path-and-content SHA-256 is:
 
 ```text
-9c5810d61e561dbfc9ec874acb43570838cf3bb9b04d1ce9c918e98ddeb8924e
+b6cbd8b510d243a16401520f93acfcdaa6689806f56c80de6cd9747ce8e6a86d
 ```
 
-The exact computation is:
+The exact computation, run from the repository root, is:
 
 ```sh
 python3 - <<'PY'
 from pathlib import Path
 import hashlib
 
-root = Path('/Users/shanmujin/Documents/Hatano-Nelson/lean')
+root = Path('lean')
 files = [root / 'ConnectedPseudospectrum.lean'] + sorted(
     (root / 'ConnectedPseudospectrum').glob('*.lean'))
 h = hashlib.sha256()
@@ -143,5 +156,5 @@ print(h.hexdigest())
 PY
 ```
 
-`STATUS.md` records the latest clean default build, diagnostics, option scans,
-source hashes, cleanup, and remaining scope limitations.
+`STATUS.md` records the final exact-build and axiom-audit evidence, source and
+configuration hashes, cleanup state, and the deliberately excluded scope.

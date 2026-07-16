@@ -47,6 +47,7 @@ import ConnectedPseudospectrum.FoldedReconstruction
 import ConnectedPseudospectrum.HalfChordEvenReduction
 import ConnectedPseudospectrum.HalfChordOddReduction
 import ConnectedPseudospectrum.HalfChordSigned
+import ConnectedPseudospectrum.LambertWThreshold
 import ConnectedPseudospectrum.PathTopologyFinal
 import ConnectedPseudospectrum.VerticalGenerating
 import ConnectedPseudospectrum.VerticalRatio
@@ -67,6 +68,8 @@ open ConnectedPseudospectrum
 #print axioms ConnectedPseudospectrum.foldOddSequence_eq_chebyshevDividedDifference
 #print axioms ConnectedPseudospectrum.foldEvenSequence_eq_deriv_at_foldXi_collision
 #print axioms ConnectedPseudospectrum.foldOddSequence_eq_deriv_at_foldXi_collision
+#print axioms ConnectedPseudospectrum.foldEvenSequence_eq_collisionCandidate
+#print axioms ConnectedPseudospectrum.foldOddSequence_eq_collisionCandidate
 #print axioms ConnectedPseudospectrum.exposedFoldMinorState_extension
 #print axioms ConnectedPseudospectrum.foldedEvenActualState_succ
 #print axioms ConnectedPseudospectrum.foldedOddActualState_succ
@@ -241,6 +244,25 @@ open ConnectedPseudospectrum
 #print axioms ConnectedPseudospectrum.criticalThreshold_hasCriticalSizeAsymptotic
 #print axioms ConnectedPseudospectrum.criticalThreshold_eq_two_iff
 
+/-! Exact endpoints for the labels made literal in the 2026-07-16 manuscript. -/
+
+#print axioms ConnectedPseudospectrum.pathLogParameter_pos
+#print axioms ConnectedPseudospectrum.pathParameter_eq_exp_neg_two_mul
+#print axioms ConnectedPseudospectrum.pathRate_eq_exp_neg_pathLogParameter
+#print axioms ConnectedPseudospectrum.oddLeadingPrincipal_submatrix_eq_evenPathDilation
+#print axioms ConnectedPseudospectrum.oddFoldedSignedMiddleMatrix_last_column
+#print axioms ConnectedPseudospectrum.oddFoldedSignedMiddleMatrix_last_row
+#print axioms ConnectedPseudospectrum.oddFoldedSignedMiddleMatrix_bottom_right
+#print axioms ConnectedPseudospectrum.foldRecurrenceSeries_eq_mul_foldQuadraticSeries
+#print axioms ConnectedPseudospectrum.det_sub_foldTransfer_eq_foldCharacteristicValue
+#print axioms ConnectedPseudospectrum.foldEvenPowerSeries_eq_mul_inv_recurrence
+#print axioms ConnectedPseudospectrum.foldOddPowerSeries_eq_mul_inv_recurrence
+#print axioms ConnectedPseudospectrum.rectangularPrincipalSine_eq_sine_quotient
+#print axioms ConnectedPseudospectrum.lowerLambertW_spec
+#print axioms ConnectedPseudospectrum.eq_lowerLambertW
+#print axioms ConnectedPseudospectrum.tailThreshold_eq_floor_lowerLambertW_explicit
+#print axioms ConnectedPseudospectrum.lowerLambertW_lower_branch_boundedErrorAtZero
+
 /-! Foundational public endpoints used throughout the final assembly. -/
 
 #print axioms ConnectedPseudospectrum.exists_leastSingularVector
@@ -262,7 +284,7 @@ open ConnectedPseudospectrum
 
 /-! The five finite permutation facts are printed directly so that the audit
 detects any accidental reintroduction of native reflection or
-`Lean.ofReduceBool`. -/
+kernel-bypassing reduction helpers. -/
 
 #print axioms ConnectedPseudospectrum.evenPairedPermutation_one_zero
 #print axioms ConnectedPseudospectrum.evenPairedPermutation_one_one

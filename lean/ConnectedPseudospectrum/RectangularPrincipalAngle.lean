@@ -919,6 +919,90 @@ theorem pathRootPlus_sub_pathRootMinus (r θ : ℝ) :
   simp
   ring
 
+/-- Difference of the two characteristic-root powers at an arbitrary
+angle. -/
+theorem pathRootPlus_pow_sub_pathRootMinus_pow (n : ℕ) (r θ : ℝ) :
+    pathRootPlus r θ ^ (n + 1) - pathRootMinus r θ ^ (n + 1) =
+      ((2 * r ^ (n + 1) *
+        Real.sin (((n + 1 : ℕ) : ℝ) * θ) : ℝ) : ℂ) * Complex.I := by
+  rw [pathRootPlus, pathRootMinus, mul_pow, mul_pow,
+    ← Complex.exp_nat_mul, ← Complex.exp_nat_mul]
+  have hplus :
+      ((n + 1 : ℕ) : ℂ) * ((θ : ℂ) * Complex.I) =
+        (((((n + 1 : ℕ) : ℝ) * θ : ℝ) : ℂ) * Complex.I) := by
+    push_cast
+    ring
+  have hminus :
+      ((n + 1 : ℕ) : ℂ) * (-(θ : ℂ) * Complex.I) =
+        (((-(((n + 1 : ℕ) : ℝ) * θ) : ℝ) : ℂ) * Complex.I) := by
+    push_cast
+    ring
+  rw [hplus, hminus, Complex.exp_mul_I, Complex.exp_mul_I]
+  simp
+  ring
+
+/-- Exact modulus of the homogeneous geometric sum at every angle in
+`(0,π)`. -/
+theorem rectangularHomogeneousSum_norm_sine_quotient
+    (n : ℕ) {r θ : ℝ} (hr : 0 < r) (hθ0 : 0 < θ) (hθπ : θ < Real.pi) :
+    ‖rectangularHomogeneousSum n r θ‖ =
+      r ^ n *
+        |Real.sin (((n + 1 : ℕ) : ℝ) * θ) / Real.sin θ| := by
+  have hsin : 0 < Real.sin θ := Real.sin_pos_of_pos_of_lt_pi hθ0 hθπ
+  have hden :
+      ‖pathRootPlus r θ - pathRootMinus r θ‖ =
+        2 * r * Real.sin θ := by
+    rw [pathRootPlus_sub_pathRootMinus, norm_mul,
+      Complex.norm_real, Real.norm_of_nonneg
+        (mul_nonneg (mul_nonneg (by norm_num) hr.le) hsin.le)]
+    norm_num
+  have hnum :
+      ‖pathRootPlus r θ ^ (n + 1) - pathRootMinus r θ ^ (n + 1)‖ =
+        2 * r ^ (n + 1) *
+          |Real.sin (((n + 1 : ℕ) : ℝ) * θ)| := by
+    rw [pathRootPlus_pow_sub_pathRootMinus_pow, norm_mul,
+      Complex.norm_real, Real.norm_eq_abs, abs_mul, abs_mul,
+      abs_of_nonneg (by norm_num : (0 : ℝ) ≤ 2),
+      abs_of_nonneg (pow_nonneg hr.le (n + 1))]
+    norm_num
+  have hnorm := congrArg norm (rectangularHomogeneousSum_mul_sub n r θ)
+  rw [norm_mul, hden, hnum] at hnorm
+  have hcancel :
+      Real.sin θ * ‖rectangularHomogeneousSum n r θ‖ =
+        r ^ n * |Real.sin (((n + 1 : ℕ) : ℝ) * θ)| := by
+    apply mul_left_cancel₀ (show 2 * r ≠ 0 by positivity)
+    calc
+      (2 * r) * (Real.sin θ * ‖rectangularHomogeneousSum n r θ‖) =
+          (2 * r * Real.sin θ) *
+            ‖rectangularHomogeneousSum n r θ‖ := by ring
+      _ = 2 * r ^ (n + 1) *
+          |Real.sin (((n + 1 : ℕ) : ℝ) * θ)| := hnorm
+      _ = (2 * r) *
+          (r ^ n * |Real.sin (((n + 1 : ℕ) : ℝ) * θ)|) := by
+        rw [pow_succ]
+        ring
+  rw [abs_div, abs_of_pos hsin]
+  rw [← mul_div_assoc]
+  apply (eq_div_iff hsin.ne').2
+  simpa [mul_comm] using hcancel
+
+/-- The all-angle normalized sine-quotient formula for the remaining
+principal angle between the two rectangular-factor ranges. -/
+theorem rectangularPrincipalSine_eq_sine_quotient
+    (n : ℕ) {r θ : ℝ} (hr : 0 < r) (hr1 : r < 1)
+    (hθ0 : 0 < θ) (hθπ : θ < Real.pi) :
+    rectangularPrincipalSine n r θ =
+      r ^ n * (1 - r ^ 2) / (1 - r ^ (2 * (n + 1))) *
+        |Real.sin (((n + 1 : ℕ) : ℝ) * θ) / Real.sin θ| := by
+  rw [rectangularPrincipalSine, rectangularNormalFunctional_overlap_eq,
+    norm_mul, norm_inv, Complex.norm_real, Real.norm_of_nonneg
+      (rectangularNormalSq_pos n r).le,
+    rectangularHomogeneousSum_norm_sine_quotient n hr hθ0 hθπ,
+    rectangularNormalSq_eq_closed n hr1 hr.le]
+  have hden : 1 - r ^ 2 ≠ 0 := by
+    nlinarith [sq_nonneg r]
+  field_simp [hden]
+
 /-- Exact modulus of the homogeneous geometric sum at the selected first-gap
 point. -/
 theorem rectangularHomogeneousSum_norm_special (n : ℕ) (hn : 2 ≤ n)

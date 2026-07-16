@@ -6,6 +6,18 @@
 *.bak
 *.orig
 *.rej
+*.temp
+.idea/
+.vscode/
+
+# Local environment and private-key material
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.p12
+*.pfx
 
 # Python caches
 __pycache__/

@@ -37,12 +37,12 @@ axiom or compiler-trust escape appears.
   `SIMAX_submission_bundle/final_connected_pseudospectrum_proof_2026-07-16.tex`
 - Source size: 2,802 lines; 105,090 bytes.
 - Source SHA-256:
-  `8dc0b050c25b12d22c795d882f2f1c25872f3d5479c5c2250fcab737c0c13356`.
+  `a7b3d51eb9ef2cd3b33ef6f85857f243df7fffeb7472e6bef4cfffbdc23e5ede`.
 - Compiled PDF:
   `SIMAX_submission_bundle/final_connected_pseudospectrum_proof_2026-07-16.pdf`
-- PDF size: 37 pages; 845,564 bytes.
+- PDF size: 37 pages; 845,570 bytes.
 - PDF SHA-256:
-  `2f5d7f654b41083d04f089728824529be722daf0f70b851e11d1e0986cfa92ba`.
+  `6f5f9e45f2afc1497609b686c5a92eafde8e0ebb0c34cf0285c06d87226dd6e3`.
 
 The final `latexmk` compilation exited successfully.  The final log scan found
 no TeX error, LaTeX/package warning, undefined reference, rerun request,
@@ -77,9 +77,11 @@ All 90 labelled mathematical environments retain the content and hypotheses
 of the previous audited source.  The Lambert-`W`, asymptotic, and exact
 two-site labelled items are likewise unchanged.  The final follow-up modifies
 only unlabelled public-availability, fixed-`epsilon`, novelty-positioning, and
-AI-disclosure prose.  The editorial proof roadmap, numbered closure cases,
-explicit permutation equality, and grammatical repair do not alter any
-inference.  No Lean source file changed.
+AI-disclosure prose, together with regrouping the numerical estimates as
+dimensions 5--6 and 7--9 to reflect the connectedness split at `N_c=7`.
+The editorial proof roadmap, numbered closure cases, explicit permutation
+equality, and grammatical repair do not alter any inference.  No Lean source
+file changed.
 
 “One-to-one” is labelwise coverage, not an injective declaration count: every
 mathematical label has an exact mapped Lean witness, while one displayed item

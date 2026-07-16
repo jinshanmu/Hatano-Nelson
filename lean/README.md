@@ -15,7 +15,7 @@ SIMAX_submission_bundle/final_connected_pseudospectrum_proof_2026-07-16.tex
 Its SHA-256 is:
 
 ```text
-8dc0b050c25b12d22c795d882f2f1c25872f3d5479c5c2250fcab737c0c13356
+a7b3d51eb9ef2cd3b33ef6f85857f243df7fffeb7472e6bef4cfffbdc23e5ede
 ```
 
 The source has 2,802 lines and 105,090 bytes.
@@ -27,9 +27,10 @@ reproduction instructions, and this complete pinned Lean project with its
 formalization map and audit documentation are available in the public GitHub
 repository `https://github.com/jinshanmu/Hatano-Nelson`.
 
-The final public-availability, fixed-`epsilon`, and novelty-positioning edits
-are unlabelled manuscript prose.  They do not change any of the 90 labelled
-mathematical items, and no Lean source file changed.
+The final public-availability, fixed-`epsilon`, novelty-positioning, and
+numerical connectedness-grouping edits are unlabelled manuscript exposition.
+They do not change any of the 90 labelled mathematical items, and no Lean
+source file changed.
 
 ## Exact scope
 

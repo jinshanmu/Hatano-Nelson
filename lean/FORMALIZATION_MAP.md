@@ -2,7 +2,7 @@
 
 Source: `SIMAX_submission_bundle/final_connected_pseudospectrum_proof_2026-07-16.tex`
 
-Source SHA-256: `8dc0b050c25b12d22c795d882f2f1c25872f3d5479c5c2250fcab737c0c13356`
+Source SHA-256: `a7b3d51eb9ef2cd3b33ef6f85857f243df7fffeb7472e6bef4cfffbdc23e5ede`
 
 Source size: 2,802 lines; 105,090 bytes.
 
@@ -27,9 +27,11 @@ every physical, bibliographic, numerical, or other unnumbered expository
 display in the article is a Lean theorem.
 
 The final editorial follow-up refines the fixed-`epsilon` and novelty
-comparison prose and replaces the former supplementary-snapshot availability
+comparison prose, replaces the former supplementary-snapshot availability
 wording with public availability at
-`https://github.com/jinshanmu/Hatano-Nelson`.  These are unlabelled expository
+`https://github.com/jinshanmu/Hatano-Nelson`, and groups the numerical barrier
+estimates as `(gamma_5,gamma_6)` and `(gamma_7,gamma_8,gamma_9)` to match the
+reported connectedness split at `N_c=7`.  These are unlabelled expository
 changes: all 90 labelled mathematical items retain the same content and
 hypotheses, and no Lean source file changed.
 

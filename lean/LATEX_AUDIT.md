@@ -4,7 +4,7 @@ Audited source:
 `SIMAX_submission_bundle/final_connected_pseudospectrum_proof_2026-07-16.tex`
 
 SHA-256:
-`8dc0b050c25b12d22c795d882f2f1c25872f3d5479c5c2250fcab737c0c13356`
+`a7b3d51eb9ef2cd3b33ef6f85857f243df7fffeb7472e6bef4cfffbdc23e5ede`
 
 Source size: 2,802 lines; 105,090 bytes.
 
@@ -45,11 +45,13 @@ values versus the present global gap-optimized barrier, describes the
 Kiorpelidis--Makris crossover at fixed `epsilon` without overstating identity
 of definitions, and makes the manuscript, Python script, and Lean project
 available in the public GitHub repository
-`https://github.com/jinshanmu/Hatano-Nelson`.  All of these follow-up changes
-are unlabelled prose.  All physics-only formulas remain unlabelled and outside
-Lean.  The source still has exactly 100 unique labels, including the same 90
-mathematical labels mapped below, so no Lean statement or source file required
-modification.
+`https://github.com/jinshanmu/Hatano-Nelson`.  The numerical barrier display
+now groups dimensions 5--6 above the fixed threshold and dimensions 7--9 below
+it, consistently with the reported connectedness transition at `N_c=7`.
+All of these follow-up changes are unlabelled exposition.  All physics-only
+formulas remain unlabelled and outside Lean.  The source still has exactly 100
+unique labels, including the same 90 mathematical labels mapped below, so no
+Lean statement or source file required modification.
 
 ## Current manuscript-to-Lean alignment
 

@@ -1,0 +1,11 @@
+# Preserve the official SIAM distribution byte-for-byte. Its upstream TeX,
+# data, and EPS files contain whitespace that must not be normalized as if it
+# were project-authored source.
+SIAM_template/siamart_251216/* -text -whitespace
+SIMAX_submission_bundle/data.dat -text -whitespace
+SIMAX_submission_bundle/docsiamart.* -text -whitespace
+SIMAX_submission_bundle/ex_article.* -text -whitespace
+SIMAX_submission_bundle/ex_shared.tex -text -whitespace
+SIMAX_submission_bundle/ex_supplement.* -text -whitespace
+SIMAX_submission_bundle/lexample_fig*.eps -text -whitespace
+SIMAX_submission_bundle/references.bib -text -whitespace

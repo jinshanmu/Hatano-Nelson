@@ -1,0 +1,56 @@
+Hatano-Nelson repository licensing
+==================================
+
+Copyright (c) 2026 Shanmu Jin
+
+1. MIT-covered original software
+--------------------------------
+
+The MIT License below applies only to the original software and software
+documentation authored for this repository, namely:
+
+- the Lean source and project configuration under `lean/`, including the audit
+  and status documentation there;
+- `SIMAX_submission_bundle/make_hatano_nelson_figures.py`; and
+- the root `README.md`, `CITATION.cff`, and `THIRD_PARTY_NOTICES.md`.
+
+2. Manuscript and research artifacts
+------------------------------------
+
+The manuscript TeX and PDF files, bibliography, generated figures, and legacy
+research notes are copyright (c) 2026 Shanmu Jin. All rights are reserved for
+those materials pending their publication and any later explicit license.
+They are not licensed under the MIT License by this file.
+
+3. Third-party material
+-----------------------
+
+The SIAM LaTeX class, bibliography style, documentation, templates, examples,
+and style guide are third-party materials. They are not licensed under the MIT
+License by this repository. Their original notices and terms control. In
+particular, `siamart251216.cls` contains mandatory bundle-redistribution terms.
+See `THIRD_PARTY_NOTICES.md` for the inventory and provenance.
+
+Other third-party dependencies retain their own licenses. Nothing in this file
+changes or supersedes those licenses.
+
+MIT License (applies only to the material identified in section 1)
+------------------------------------------------------------------
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

@@ -37,6 +37,11 @@ lean/.lake/
 *.synctex.gz
 *.thm
 *.toc
+*.listing
+*-eps-converted-to.pdf
+tmp_docsiamart_*.tex
+tmp_minimal_*.tex
+missfont.log
 
 # Generated legacy PDFs; retain the legacy TeX sources
 legacy/*.pdf

@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+message: "If you use this manuscript, formalization, or reproducibility material, please cite the article described below."
+title: "Connected Pseudospectra of a Nonnormal Toeplitz Path: The Open Hatano–Nelson Chain"
+type: software
+authors:
+  - family-names: Jin
+    given-names: Shanmu
+    email: jinshanmu1129@pku.edu.cn
+    affiliation: "Department of Neurosurgery, Peking Union Medical College Hospital, No. 1 Shuaifuyuan, Dongcheng District, Beijing 100730, China"
+repository-code: "https://github.com/jinshanmu/Hatano-Nelson"
+url: "https://github.com/jinshanmu/Hatano-Nelson"
+keywords:
+  - pseudospectrum
+  - nonnormal Toeplitz matrix
+  - Hatano–Nelson model
+  - Lean 4
+  - formal verification
+preferred-citation:
+  type: article
+  authors:
+    - family-names: Jin
+      given-names: Shanmu
+  title: "Connected Pseudospectra of a Nonnormal Toeplitz Path: The Open Hatano–Nelson Chain"
+  year: 2026
+  url: "https://github.com/jinshanmu/Hatano-Nelson"

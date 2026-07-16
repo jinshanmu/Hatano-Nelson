@@ -15,10 +15,10 @@ SIMAX_submission_bundle/final_connected_pseudospectrum_proof_2026-07-16.tex
 Its SHA-256 is:
 
 ```text
-9884b17a78b6905840fb0dc3589725babadc8bd3604351720b6cffff77eaede9
+6b98b0feacea447775145c06706294be785a1c4b2901788396c0edf1a3e5de5f
 ```
 
-The source has 2,580 lines and 94,160 bytes.
+The source has 2,731 lines and 101,861 bytes.
 
 ## Exact scope
 
@@ -39,9 +39,12 @@ All physics-facing formulas are unnumbered in the revised source.  The two
 dimensionless parameter/gauge identities used by the proof remain checked in
 Lean, while the dimensional Hatano--Nelson Hamiltonian, PBC Bloch ellipse,
 physical modes, skin depth, and dimensional rescalings remain audited physical
-exposition outside the kernel scope.  This scope statement also does not
-promote bibliographic discussion or floating-point numerical illustrations to
-kernel theorems.
+exposition outside the kernel scope.  The expanded backward-error,
+last-bridge, dimer, and spectral-resolution interpretation is likewise
+unnumbered audited physics exposition assembled from the formalized
+dimensionless results.  This scope statement also does not promote
+bibliographic discussion or floating-point numerical illustrations to kernel
+theorems.
 
 `FORMALIZATION_MAP.md` gives the complete 90-label map and separately inventories
 important unnumbered physical, numerical, and expository claims.  `LATEX_AUDIT.md`

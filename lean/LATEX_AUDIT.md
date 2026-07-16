@@ -4,9 +4,9 @@ Audited source:
 `SIMAX_submission_bundle/final_connected_pseudospectrum_proof_2026-07-16.tex`
 
 SHA-256:
-`9884b17a78b6905840fb0dc3589725babadc8bd3604351720b6cffff77eaede9`
+`6b98b0feacea447775145c06706294be785a1c4b2901788396c0edf1a3e5de5f`
 
-Source size: 2,580 lines; 94,160 bytes.
+Source size: 2,731 lines; 101,861 bytes.
 
 Last full source review: 2026-07-16.
 
@@ -77,13 +77,24 @@ Their signs and scalings have been checked against
   positive-sign energies and left/right modes follow from the diagonal gauge;
 - the amplitude skin depth is `h^(-1)=2/log(1/a)`, while the gauge condition
   number and reciprocal barrier have the stated common exponential rate; and
-- homogeneity gives the physical merger level `t_L gamma_n`; the final
-  threshold display now states its required limit `delta -> 0` explicitly.
+- the least-singular-value backward-error identity gives the exact cost of
+  placing an eigenvalue at `z`, homogeneity gives the last-bridge budget
+  `epsilon_*(n)=t_L gamma_n`, and the physical connectedness criterion follows
+  with the same strict inequality;
+- the bridge scale
+  `epsilon_*(n) asymp_a t_L (n+1) exp(-hn)` agrees exactly with its `t_0` and
+  skin-depth rewritings, and its inversion states the required limit
+  `delta -> 0` explicitly; and
+- at `n=2`, `gamma_2=a` gives `epsilon_*(2)=t_R`; cancelling the weaker hopping
+  by the displayed rank-one perturbation has norm `t_R`, produces the stated
+  defective dimer, and preserves the strict equality-case distinction.
 
 The two unnumbered dimensionless parameter/gauge identities are still checked
 in Lean because they support the mathematical proof.  The dimensional,
 second-quantized, PBC, mode, skin-depth, and interpretive formulas remain
-deliberately outside the kernel scope.
+deliberately outside the kernel scope.  The component-based resolution-class
+discussion and comparison with the published crossover notation are also
+audited interpretation rather than new Lean claims.
 
 ## Connectedness-threshold proof closure
 
@@ -110,7 +121,10 @@ enclosure of their roundoff.  It therefore calls the reported margins and
 threshold reproducible floating-point checks conditional on those samples,
 not validated interval certificates.  The figures distinguish those computed
 estimates from the exact analytic bounds, and none of the numerics is used in
-`thm:main`.
+`thm:main`.  The current six figure assets were regenerated successfully with
+the supplied script in the `wirtinger_calculus` Conda environment; it again
+reported `N_c=7`, the exact-bound bracket `6 <= N_c <= 9`, and conclusive
+sample/Lipschitz classifications for the displayed sizes.
 
 ## Dimension-one endpoint correction in `lem:vertical` (resolved in 2026-07-16)
 

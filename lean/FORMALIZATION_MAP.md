@@ -2,9 +2,9 @@
 
 Source: `SIMAX_submission_bundle/final_connected_pseudospectrum_proof_2026-07-16.tex`
 
-Source SHA-256: `9884b17a78b6905840fb0dc3589725babadc8bd3604351720b6cffff77eaede9`
+Source SHA-256: `6b98b0feacea447775145c06706294be785a1c4b2901788396c0edf1a3e5de5f`
 
-Source size: 2,580 lines; 94,160 bytes.
+Source size: 2,731 lines; 101,861 bytes.
 
 Last full scope audit: 2026-07-16.
 
@@ -175,7 +175,10 @@ that are not already represented by the 90 mathematical labels above.
 | Second-quantized Hamiltonian, one-particle identification, sign conjugation, physical `t₀,h`, modes, and skin depth | Audited-only physical formulation.  Lean starts from the dimensionless one-particle matrices and does not formalize creation/annihilation operators, their one-particle reduction, the dimensional modes, or skin depth as literal declarations. |
 | Gauge condition number and `γ_n⁻¹ asymp_a e^(hn)/(n+1)` | Audited consequence/interpretation, not a literal Lean theorem.  The underlying barrier-order bounds and logarithmic parameter are formalized separately. |
 | Resolvent maximum-over-forcing ratio | Proof ingredients—finite-dimensional inverse norm and norm attainment—are formalized, but this exact ratio display is not a standalone declaration. |
-| Dimensional merger scaling and skin-depth reformulation of `N_c` | Audited physical rescaling, not a literal Lean theorem.  The dimensionless fixed-`a` bounded-error asymptotic is formalized. |
+| Least-singular-value backward error and the physical last-bridge criterion | Audited physical consequence, not a standalone Lean declaration.  Lean proves the attained Euclidean least singular value, determinant/spectrum characterization, dimensional-free connectedness criterion, and strict threshold; the norm-minimizing perturbation identity and multiplication by `t_L` are audited outside the kernel. |
+| Dimensional merger scaling and skin-depth reformulation of `N_c` | Audited physical rescaling, not a literal Lean theorem.  The exact dimensionless gap bounds and fixed-`a` bounded-error asymptotic are formalized, and the displayed `t_L`, `t_0`, and skin-depth forms are algebraically equivalent. |
+| Physical dimer cancellation and equality case | Audited physical realization of literal Lean results `gapBarrier_two` and `criticalThreshold_eq_two_iff`.  The displayed rank-one perturbation has norm `t_R`, cancels the weaker hopping, and produces the claimed defective double eigenvalue; creation/annihilation and dimensional perturbation notation remain outside Lean. |
+| Component-based spectral-resolution classes under perturbation paths | Audited interpretation.  Lean proves the pseudospectral component topology and contractibility, but the pathwise eigenvalue-label/count narrative is not a standalone kernel theorem and is not used by `thm:main`. |
 | Bibliographic, historical, and qualitative physics claims | Outside the kernel scope; they are not used by `thm:main`. |
 
 The source's intermediate unlabeled algebra inside the six formal proofs is

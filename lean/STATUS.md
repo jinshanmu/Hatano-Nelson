@@ -35,20 +35,23 @@ axiom or compiler-trust escape appears.
 
 - Source:
   `SIMAX_submission_bundle/final_connected_pseudospectrum_proof_2026-07-16.tex`
-- Source size: 2,580 lines; 94,160 bytes.
+- Source size: 2,731 lines; 101,861 bytes.
 - Source SHA-256:
-  `9884b17a78b6905840fb0dc3589725babadc8bd3604351720b6cffff77eaede9`.
+  `6b98b0feacea447775145c06706294be785a1c4b2901788396c0edf1a3e5de5f`.
 - Compiled PDF:
   `SIMAX_submission_bundle/final_connected_pseudospectrum_proof_2026-07-16.pdf`
-- PDF size: 34 pages; 841,217 bytes.
+- PDF size: 37 pages; 853,541 bytes.
 - PDF SHA-256:
-  `8728f7e02e19efe5436079cdee8e92c37c715aa1f4afc89ca6b80cbd378bea1f`.
+  `63931465ef2f1f0e7eb337a1ac52169c90c573b70fc88ddfb9d6294c928b95a9`.
 
 The final `latexmk` compilation exited successfully.  The final log scan found
 no TeX error, LaTeX/package warning, undefined reference, rerun request,
-overfull box, or underfull box.  All 34 rendered pages were visually inspected,
-including the repaired rectangular bound, the Lambert-`W_{-1}` discussion, and
-the physical discussion; no clipping, overlap, or malformed display was found.
+overfull box, or underfull box.  All 37 rendered pages were visually inspected,
+including the repaired rectangular bound, the Lambert-`W_{-1}` discussion, the
+regenerated figures, and the expanded physical interpretation; no clipping,
+overlap, or malformed display was found.  The figure generator was replayed in
+the `wirtinger_calculus` Conda environment and reproduced the stated
+float64 threshold and analytic bracket.
 The 2026-07-16 `.tex` and compiled `.pdf` are the current audited manuscript
 artifacts.  The complete 2026-07-13 `.tex`/`.pdf` snapshot is also retained
 unchanged as a historical manuscript version.  Regenerated TeX intermediates
@@ -89,9 +92,11 @@ logarithmic--logarithmic bounded-error asymptotic used by the manuscript.
 All physics-facing formulas in the manuscript are unnumbered.  Their signs,
 scalings, domains, mode conventions, skin-depth interpretation, condition
 number, resolvent expression, and dimensional threshold rescaling were checked
-algebraically and numerically where appropriate.  The positive-sign
-one-particle representative and its relation to the opposite sign convention
-are stated explicitly.
+algebraically and numerically where appropriate.  The expanded backward-error,
+physical last-bridge threshold, bridge-scale, two-site cancellation, and
+spectral-resolution interpretations were checked against the formalized
+dimensionless statements.  The positive-sign one-particle representative and
+its relation to the opposite sign convention are stated explicitly.
 
 The two dimensionless parameter/gauge identities needed by the proof are also
 checked in Lean.  The dimensional Hatano--Nelson Hamiltonian, PBC Bloch ellipse,

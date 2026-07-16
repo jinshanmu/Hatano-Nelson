@@ -58,9 +58,11 @@ matrix size is also the eventual connectedness threshold, and, for fixed
 $a$, it equals $2(\log(1/\varepsilon)+\log\!\log(1/\varepsilon))/
 \log(1/a)+O_a(1)$ as $\varepsilon$ tends to zero.  In the open-boundary
 Hatano--Nelson model, the coefficient $2/\log(1/a)$ is the right-eigenmode
-amplitude skin depth, in lattice-spacing units; the threshold describes
-merger of worst-case spectral-uncertainty clouds at a prescribed
-perturbation level.
+amplitude skin depth, in lattice-spacing units.  The threshold is the finite
+length at which a fixed perturbation budget overwhelms every
+inter-eigenvalue barrier: below it, disconnected components provide
+perturbation-stable spectral labels, whereas at and above it those labels
+belong to one worst-case uncertainty cloud.
 \end{abstract}
 
 \begin{keywords}
@@ -161,10 +163,18 @@ interpretations of nonnormal boundary sensitivity appear in
 \cite{OkumaSato2020,OkumaSato2021}.  Mathematical foundations for the
 skin effect were developed in \cite{AmmariEtAl2024}, while spectra and
 pseudospectra of tridiagonal $k$-Toeplitz matrices were treated in
-\cite{AmmariEtAl2025,AmmariCorrigendum2026}.  Pseudospectral scaling in
-asymmetric lattices was studied in \cite{KiorpelidisMakris2025}; see
-also the preprint \cite{Sirker2026} for a closely related
-pseudospectral analysis of the open Hatano--Nelson chain.
+\cite{AmmariEtAl2025,AmmariCorrigendum2026}.  For asymmetric lattices,
+Kiorpelidis and Makris \cite{KiorpelidisMakris2025} observed that
+eigenvalue-centered pseudospectral clouds expand with the lattice size and
+merge, beyond a critical size denoted by \(\widetilde N\), into a single
+cloud.  In their description the pseudospectral abscissa grows
+exponentially up to that crossover, whereas long-time dynamical
+amplification need not stop there.  The present \(N_c\) is a rigorous
+realization of this cloud-merger scale for the clean open Hatano--Nelson
+chain with the Euclidean unstructured pseudospectrum: we identify the exact
+finite-size criterion, rule out re-entrant splitting, and determine the
+asymptotic scale.  See also the preprint \cite{Sirker2026} for a closely
+related pseudospectral analysis of the open Hatano--Nelson chain.
 
 For general matrices, the geometry and coalescence of pseudospectral
 components have been studied by variational and distance-to-defectivity
@@ -185,8 +195,10 @@ Lambert-$W$ finite-size law.  Connectedness concerns the union over all
 \emph{unstructured} perturbations: it does not imply that any single
 perturbation supplies eigenvalues throughout a connecting bridge, nor
 does it describe the attainable set for a prescribed structured
-perturbation family.  The transition is also not the onset of the skin
-effect, which is already present in the dimensionless gauge similarity above.
+perturbation family.  Its physical content is instead the loss of a
+component-wise, perturbation-independent spectral label at the prescribed
+resolution.  The transition is also not the onset of the skin effect, which
+is already present in the dimensionless gauge similarity above.
 
 The paper is organized as follows.  \Cref{sec:main-results} states the
 main result.  Vertical monotonicity is proved in
@@ -2417,15 +2429,20 @@ optimizer and are unused in every proof.
  Applying the grid/Lipschitz check to the float64 samples places the computed
  margins for \(n=5,6\) above \(\varepsilon\) and those for \(n=7,8,9\)
  below it, yielding the reported numerical threshold \(N_c=7\).  As
- explained in the text, these checks are not interval certificates.  The
- merger is a perturbation-level-dependent pseudospectral event, not the onset
- of skin localization.}
+ explained in the text, these checks are not interval certificates.  In the
+ two displayed pre-threshold cases every component contains one eigenvalue,
+ so the components are mode-resolved uncertainty islands.  At \(n=7\) the
+ last separator is lost and all eigenvalues belong to one uncertainty cloud.
+ The merger is a perturbation-level-dependent pseudospectral event, not the
+ onset of skin localization.}
  \label{fig:transition}
 \end{figure}
 
 The five panels of \cref{fig:transition} illustrate the computed
-classification: two disconnected cases, the first connected case, and two
-subsequent connected cases.  As proved above, whenever the true
+classification: two mode-resolved cases, the first single-cloud case, and two
+subsequent single-cloud cases.  This is the clean Hatano--Nelson realization
+of the \(\widetilde N\) crossover described schematically by Kiorpelidis and
+Makris \cite{KiorpelidisMakris2025}.  As proved above, whenever the true
 pseudospectrum is connected it has no hole: every vertical section is an
 interval, and the real trace contains the full open-boundary spectral
 segment.
@@ -2433,14 +2450,17 @@ segment.
 \begin{figure}[t]
  \centering
  \includegraphics[width=.76\textwidth]{fig2_gap_barrier_bounds}
- \caption{Gapwise float64 SVD estimates \(\widehat\gamma_n\) of the strictly
- decreasing barriers and the exact analytic enclosure
+ \caption{Finite-size crossing of the perturbation budget.  Gapwise float64
+ SVD estimates \(\widehat\gamma_n\) of the strictly decreasing barriers and
+ the exact analytic enclosure
  \(\mathcal L_n(a)\leq\gamma_n\leq\mathcal U_n(a)\) for \(a=1/4\).
  The plotted estimates first cross below \(\varepsilon=10^{-2}\) at \(n=7\),
  again indicating the reported numerical threshold.  Independently, the
  exact analytic bounds in \eqref{eq:N-two-sided-main} give
- \(6\leq N_c\leq9\).  The nearly parallel log-scale curves display the
- common \((n+1)a^{n/2}\) scale.}
+ \(6\leq N_c\leq9\).  To the left of the crossing at least one component
+ separator survives; from the crossing onward there is one component.  The
+ nearly parallel log-scale curves display the common
+ \((n+1)a^{n/2}\) scale.}
  \label{fig:barriers}
 \end{figure}
 
@@ -2453,26 +2473,29 @@ the maximizing gap.
 \begin{figure}[t]
  \centering
  \includegraphics[width=\textwidth]{fig3_hatano_nelson_physics}
- \caption{Hatano--Nelson interpretation for \(a=1/4\) and \(n=20\).
- (a) The open-boundary eigenvalues lie in the real segment
- \([-2\sqrt a,2\sqrt a]\), whereas the periodic symbol
- \(e^{\ii k}+ae^{-\ii k}\) traces an ellipse.  The nested contours are
- boundaries of strict pseudospectra.  (b) Right eigenvectors
- \(\psi_m^R(j)\propto a^{(j-1)/2}\sin\frac{m\pi j}{n+1}\) accumulate at the
- left edge.  Reversing the site convention reverses the edge but not
- the pseudospectral conclusions.}
+ \caption{Why the uncertainty clouds merge, for \(a=1/4\) and
+ \(\varepsilon=10^{-2}\).  In (a)--(b), the blue curves are
+ \(g_n(x)=s_{\min}(xI_n-A_n)\), the red line is the perturbation budget, and
+ the teal portions are the real pseudospectrum.  At \(n=6\), peaks above the
+ budget separate the six eigenvalue islands; at \(n=7=N_c\), every
+ inter-eigenvalue location lies below the budget and the real trace is one
+ interval.  Panel (c) shows the common exponential envelope of right skin
+ modes at \(n=20\).  Its amplitude decay length is
+ \(\ell_{\rm skin}=2/\log(1/a)\), the coefficient in the asymptotic law for
+ \(N_c\).  Reversing the site convention reverses the edge but not the
+ merger criterion.}
  \label{fig:physics}
 \end{figure}
 
-\Cref{fig:physics} displays the two complementary manifestations of
-the imaginary gauge: the periodic/open spectral contrast and the
-open-boundary skin profile.  Although all open-boundary eigenvalues are
-real, the displayed pseudospectral contours elongate rapidly toward the
-periodic ellipse.  The ellipse is a reference curve, not a large-level
-limit: for sufficiently large perturbation levels the pseudospectra
-extend beyond it.
+\Cref{fig:physics} places the topological criterion and its nonnormal
+mechanism side by side.  The left panels show the last real-axis separator
+being submerged below the fixed uncertainty floor; the right panel shows
+the imaginary-gauge envelope responsible for the exponentially small
+barrier scale.  Skin localization already exists on both sides of the
+crossing.
 
-\section{Hatano--Nelson interpretation and conclusions}
+\clearpage
+\section{Hatano--Nelson interpretation: a finite spectral-resolution length}
 \label{sec:physical-conclusion}
 
 To connect the dimensionless matrix to the usual second-quantized
@@ -2510,70 +2533,198 @@ Thus the right-mode amplitude skin depth is
 \]
 whereas the gauge condition number is
 \(\kappa_2(\mathcal G_n(e^{-h}))
-=e^{h(n-1)}=a^{-(n-1)/2}\).  The quantitative bounds in
-\cref{prop:gap-bounds} give, more precisely,
-\[
- \gamma_n^{-1}\asymp_a\frac{e^{hn}}{n+1}.
-\]
-Thus gauge conditioning and worst-case spectral sensitivity have the
-same exponential rate \(h\), up to fixed-\(a\) constants and the displayed
-polynomial factor.
+=e^{h(n-1)}=a^{-(n-1)/2}\).
 
-The perturbational characterization following
-\eqref{eq:intro-pseudospectrum}
-clarifies the meaning of connectedness.  It says that the \emph{union}
-of eigenvalue locations attainable under all unstructured perturbations
-of norm below \(\varepsilon\) has merged into one uncertainty region;
-it does not identify a single perturbation whose eigenvalues populate
-all of the connecting bridges.  Equivalently, for
-\(A\in\C^{n\times n}\) and \(z\notin\sigma(A)\),
+\subsection{Why a finite threshold exists}
+
+The least singular value has the backward-error interpretation
+\[
+ s_{\min}(zI_n-A_n)
+ =\min\{\lVert\Delta A\rVert_2:
+ z\in\sigma(A_n+\Delta A)\}.
+\]
+Consequently, \(\gamma_n\) is not merely an auxiliary quantity from the
+proof.  It is the largest, over the real interval between the extreme
+open-boundary eigenvalues, of the minimum perturbation required to place an
+eigenvalue at the specified point.  In other words, it is the cost of the
+last and most expensive bridge between spectral islands.
+
+For the dimensional positive-sign Hamiltonian \(H_n=t_LA_n(a)\), define
+the final-bridge budget
+\[
+ \varepsilon_*(n)=t_L\gamma_n.
+\]
+Then the exact physical form of the connectedness criterion is
+\[
+ \sigma_{\varepsilon_{\rm phys}}(H_n)\text{ is connected}
+ \quad\Longleftrightarrow\quad
+ \varepsilon_{\rm phys}>\varepsilon_*(n).
+\]
+The strict decrease \(\gamma_{n+1}<\gamma_n\), together with
+\(\gamma_n\to0\), explains why there is one finite threshold: a fixed
+horizontal uncertainty budget crosses the last-bridge scale once, and after
+that crossing the clouds cannot separate again.  Equivalently, if
+\(E_{\min}\) and \(E_{\max}\) are the extreme eigenvalues of \(H_n\), then
+\[
+ \varepsilon_*(n)^{-1}
+ =\min_{x\in[E_{\min},E_{\max}]}
+ \lVert(xI_n-H_n)^{-1}\rVert_2,
+\]
+with the resolvent norm interpreted as infinite at an eigenvalue.  Thus at
+and beyond \(N_c\), even the deepest inter-resonance valley has worst-case
+gain above \(\varepsilon_{\rm phys}^{-1}\).
+
+The Hatano--Nelson content lies in the rate at which this bridge collapses.
+From \cref{prop:gap-bounds},
+\[
+ \varepsilon_*(n)
+ \asymp_a t_L(n+1)e^{-hn}
+ =t_0(n+1)e^{-h(n-1)}
+ =t_0(n+1)e^{-(n-1)/\ell_{\rm skin}}.
+\]
+The nonunitary imaginary gauge becomes exponentially ill-conditioned across
+the chain, and right and left skin modes accumulate at opposite edges.
+Accordingly,
+\[
+ \gamma_n^{-1}\asymp_a\frac{e^{hn}}{n+1},
+\]
+so gauge conditioning and worst-case spectral sensitivity have the same
+exponential rate \(h\), up to fixed-\(a\) constants and the displayed
+polynomial factor.  Skin localization and barrier collapse are parallel
+consequences of the same imaginary gauge; the cloud merger is not the onset
+of the skin effect.
+
+Let \(\delta=\varepsilon_{\rm phys}/t_L\).  Balancing the fixed uncertainty
+level with the bridge scale above gives, as \(\delta\downarrow0\),
+\[
+ N_c(a,\delta)=\ell_{\rm skin}
+ \left(\log(1/\delta)+\log\!\log(1/\delta)\right)+O_a(1).
+\]
+Thus \(N_c\) is a spectral-resolution length.  Measured in amplitude skin
+depths, its leading value is
+\(N_c/\ell_{\rm skin}=\log(1/\delta)+\log\!\log(1/\delta)+O_a(1)\): this is
+the length needed for a fixed uncertainty floor to submerge the last robust
+gap.  Improving the resolution by a factor \(q\) increases the leading
+resolvable length by \(\ell_{\rm skin}\log q\).  Stronger nonreciprocity shortens
+\(\ell_{\rm skin}\) and hence lowers the leading small-\(\delta\) threshold;
+this is an asymptotic statement, not a claim that \(N_c\) is monotone in
+\(a\) at every finite perturbation level.
+
+The exact two-site endpoint makes the same interpretation especially
+transparent.  Since \(\gamma_2=a\),
+\[
+ \varepsilon_*(2)=t_La=t_R,
+ \qquad
+ N_c(a,\varepsilon_{\rm phys}/t_L)=2
+ \quad\Longleftrightarrow\quad
+ \varepsilon_{\rm phys}>t_R.
+\]
+Indeed, for the positive-sign dimer,
+\[
+ H_2=\begin{bmatrix}0&t_L\\t_R&0\end{bmatrix},
+ \qquad
+ \Delta H=-t_R\mathbf e_2\mathbf e_1^T,
+ \qquad
+ H_2+\Delta H=\begin{bmatrix}0&t_L\\0&0\end{bmatrix}.
+\]
+The norm-\(t_R\) perturbation cancels the weaker directed hopping and
+produces a defective double eigenvalue at zero.  Hence, if the uncertainty
+budget exceeds \(t_R\), mode resolution is lost already in the shortest
+nontrivial chain; no long-chain buildup is needed.  At exact equality the
+needed perturbation is excluded by the strict convention
+\(\lVert\Delta H\rVert_2<\varepsilon_{\rm phys}\): the component closures
+touch at zero but the strict pseudospectrum is disconnected (indeed,
+\(N_c(a,a)=3\)).
+
+Kiorpelidis and Makris \cite{KiorpelidisMakris2025} denoted by
+\(\widetilde N\) the observed fixed-perturbation crossover from separate
+eigenvalue-centered clouds to a single cloud, and associated it with the end
+of exponential growth of the pseudospectral abscissa.  For the clean open
+Hatano--Nelson chain, \(N_c\) is the exact finite-dimensional counterpart of
+that cloud-merger scale: the physical connectedness criterion above supplies the exact
+bridge criterion, and strict barrier decrease proves that the single cloud
+cannot split again at larger sizes.  Their convention \(A=-\ii H\) rotates
+the pseudospectrum by ninety degrees and does not change connectedness.
+
+\subsection{What is lost at the threshold}
+
+The relevant uncertainty is deterministic worst-case Hamiltonian or model
+uncertainty, not a quantum uncertainty principle.  A point
+\(z\in\sigma_\varepsilon(A_n)\) records only that \emph{some} perturbation of
+norm below \(\varepsilon\) can place an eigenvalue at \(z\); the point does
+not come tagged with that perturbation or with a parent eigenvalue.
+Connected components nevertheless give a precise, perturbation-stable
+coarse label.  Define two unperturbed eigenvalues to be in the same
+\(\varepsilon\)-resolution class when they lie in the same component of
+\(\sigma_\varepsilon(A_n)\).  For any continuous perturbation path
+\(\Delta A(s)\) satisfying \(\lVert\Delta A(s)\rVert_2<\varepsilon\), every
+continuous eigenvalue branch of \(A_n+\Delta A(s)\) remains inside
+\(\sigma_\varepsilon(A_n)\) and therefore cannot pass between two distinct
+components.  Equivalently, each component carries a fixed algebraic number
+of perturbed eigenvalues along such a path.
+
+When a component contains one unperturbed eigenvalue, this class gives an
+individual-mode label.  Partial mergers can combine some labels before the
+full threshold, so \(N_c\) need not be the first size at which one pair of
+eigenvalues becomes ambiguous.  Rather, \(N_c\) is the \emph{last} merger:
+for \(n<N_c\) at least two robust spectral classes remain, whereas for
+\(n\geq N_c\) the sole component contains all \(n\) eigenvalues.  At that
+resolution there is no longer a perturbation-independent, topologically
+protected answer to ``which open-boundary spectral cluster did this
+location come from?''  If the actual perturbation or its continuation path
+is known, eigenvalue branches may still be tracked; connectedness says that
+the location alone no longer supplies the label.
+
+This statement concerns a union over perturbations.  It does not assert that
+one perturbation places eigenvalues at every point of a connecting bridge.
+Nor does it describe probabilities of observing different locations.  In
+resolvent language, for \(z\notin\sigma(A)\),
 \[
  \lVert(zI_n-A)^{-1}\rVert_2
  =\max_{\boldsymbol f\neq0}
  \frac{\lVert\boldsymbol u\rVert_2}{\lVert\boldsymbol f\rVert_2},
  \qquad (zI_n-A)\boldsymbol u=\boldsymbol f,
 \]
-so the pseudospectrum is the region of worst-case resolvent gain larger
-than \(\varepsilon^{-1}\); at a spectral point the gain is interpreted as
-infinite.  The quantity \(\gamma_n\) is the hardest
-real-axis bridge between adjacent open-boundary spectral islands.
+so the single cloud is a collective high-gain region at the specified
+worst-case resolution, rather than the spectrum of one noisy sample.
 
-For the dimensional Hamiltonian \(t_LA_n(a)\), the merger level is
-\(t_L\gamma_n\).  If \(\varepsilon_{\rm phys}\) is a perturbation
-level with energy units and
-\(\delta=\varepsilon_{\rm phys}/t_L\) is its dimensionless strength,
-then, as \(\delta\downarrow0\), \eqref{eq:N-asymptotic-main} becomes
-\[
- N_c(a,\delta)=\ell_{\rm skin}
- \left(\log(1/\delta)+\log\!\log(1/\delta)\right)+O_a(1).
-\]
-The leading coefficient is exactly the amplitude skin depth.  At fixed
-dimensionless \(\delta\), its leading small-\(\delta\) value decreases as
-\(a\) decreases; this is an asymptotic comparison, not a claim that
-\(N_c\) is monotone in \(a\) at every finite perturbation level.  The
-limit \(a\uparrow1\)
-is not uniform: at \(a=1\) the matrix is normal and the connectedness
-scale is governed by ordinary Hermitian eigenvalue spacing.  Likewise,
-restricting perturbations to onsite, hopping, boundary, or Toeplitz
-structure can produce a smaller attainable set and requires a
-structured-pseudospectral analysis.  Toeplitz-structured
-pseudospectra are treated in \cite{BottcherGrudsky2005} and
-\cite{ButtaGuglielmiNoschese2012}.  Robustness under random imperfections
-is studied in \cite{AmmariEtAl2024Stability}; pseudospectral boundary
-sensitivity in correlated or disordered systems in
-\cite{OkumaSato2021}; and complex and structured-pseudospectral scaling
-in asymmetric lattices in \cite{KiorpelidisMakris2025}.
+\subsection{Scope and conclusion}
 
-In summary, the planar topology is controlled by a one-dimensional
-barrier sequence: vertical monotonicity makes every component
-contractible, persymmetry and folded Chebyshev coordinates make that
-sequence strictly decreasing with size, and rectangular factorizations
-identify its sharp scale.  For the clean open Hatano--Nelson chain this
-provides an exact finite-size merger criterion, while keeping distinct
-the skin effect itself, worst-case spectral uncertainty, and
-perturbation-structured physical response.
+The finite-size existence of a merger is not exclusive to the skin effect.
+At the normal endpoint \(a=1\), increasingly dense Hermitian eigenvalues also
+merge at fixed \(\varepsilon\), but on the algebraic level-spacing scale.
+What is specifically Hatano--Nelson is the exponential collapse
+\((n+1)a^{n/2}\), the resulting logarithmic dependence of \(N_c\) on
+\(1/\varepsilon\), and the appearance of \(\ell_{\rm skin}\) as its leading
+coefficient.  This also explains why the limit \(a\uparrow1\) in the
+physical threshold asymptotic above is not uniform.
+
+Restricting perturbations to onsite, hopping, boundary, or Toeplitz
+structure can produce a smaller attainable set and a different merger
+threshold, and requires a structured-pseudospectral analysis.
+Toeplitz-structured pseudospectra are treated in
+\cite{BottcherGrudsky2005,ButtaGuglielmiNoschese2012}.  Robustness under
+random imperfections is studied in \cite{AmmariEtAl2024Stability};
+pseudospectral boundary sensitivity in correlated or disordered systems in
+\cite{OkumaSato2021}; and complex and structured-pseudospectral scaling in
+asymmetric lattices in \cite{KiorpelidisMakris2025}.  Likewise, the
+single-cloud threshold is a spectral-resolution crossover, not the end of
+dynamical exponential sensitivity; Kiorpelidis and Makris explicitly show
+that long-time dynamical amplification can persist beyond their
+\(\widetilde N\).
+
+In summary, vertical monotonicity reduces planar connectedness to a
+backward-error barrier on the real axis, and strict barrier decrease makes
+its crossing with a fixed uncertainty budget unique.  The imaginary gauge
+sets the exponentially small scale of that barrier, while the skin depth
+sets the leading finite-size resolution length.  For the clean open
+Hatano--Nelson chain, \(N_c\) therefore marks the global loss of robust
+spectral-cluster separation under unstructured worst-case uncertainty,
+without conflating that loss with the skin effect itself, a particular
+structured perturbation, or dynamical amplification.
 
 \phantomsection
+\raggedbottom
 \bibliographystyle{siamplain}
 \bibliography{final_connected_pseudospectrum_proof}
 

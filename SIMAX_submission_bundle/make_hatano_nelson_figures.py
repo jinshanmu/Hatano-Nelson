@@ -9,7 +9,8 @@ Run with
 The script writes vector PDF and 300 dpi PNG files to ``figures/``.  All
 singular values are computed directly with LAPACK through NumPy.  The maxima
 defining gamma_n are estimated gap by gap with bounded scalar optimization;
-independent Lipschitz grid bounds certify the displayed topology labels.
+an independent Lipschitz grid check supports the displayed topology labels,
+conditional on the float64 singular-value samples.
 """
 
 from pathlib import Path
@@ -17,7 +18,6 @@ from pathlib import Path
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np
-from matplotlib.lines import Line2D
 from scipy.optimize import minimize_scalar
 
 
@@ -122,11 +122,12 @@ def gamma(n: int, a: float) -> tuple[float, float]:
 def gamma_certificate(
     n: int, a: float, points_per_gap: int = 1001
 ) -> tuple[float, float]:
-    """Enclose gamma_n using the 1-Lipschitz property of the least singular value.
+    """Form a sample/Lipschitz bracket, exact only for exact input samples.
 
     On a uniform gap grid of spacing h, the sampled maximum is a lower bound
     and the sampled maximum plus h/2 is an upper bound.  Taking the largest
-    lower and upper bounds over all real spectral gaps encloses gamma_n.
+    lower and upper values over all real spectral gaps gives the bracket.
+    Floating-point SVD and eigenvalue errors are not enclosed here.
     """
     if points_per_gap < 2:
         raise ValueError("points_per_gap must be at least 2")
@@ -170,7 +171,7 @@ def figure_topology(
     gamma_cache: dict[int, tuple[float, float]],
     certificate_cache: dict[int, tuple[float, float]],
 ) -> None:
-    """Five-panel view of the transition at the exact threshold N_c=7."""
+    """Five-panel view of the computed transition at N_c=7."""
     ns = (5, 6, 7, 8, 9)
     xs = np.linspace(-1.12, 1.12, 561)
     ys = np.linspace(-0.30, 0.30, 361)
@@ -210,9 +211,13 @@ def figure_topology(
             relation = "<"
             state = "connected"
         else:
-            raise RuntimeError(f"topology is not certified for n={n}")
+            raise RuntimeError(f"float64 grid check is inconclusive for n={n}")
+        if state == "disconnected":
+            regime = f"{n} spectral islands"
+        else:
+            regime = "one uncertainty cloud"
         ax.set_title(
-            rf"({chr(97 + panel)}) $n={n}$: {state}"
+            rf"({chr(97 + panel)}) $n={n}$: {regime}"
             + "\n"
             + rf"$\widehat{{\gamma}}_n={g:.4f}\ {relation}\ \varepsilon$",
             pad=3,
@@ -233,7 +238,7 @@ def figure_topology(
 
 
 def figure_barrier_bounds(gamma_cache: dict[int, tuple[float, float]]) -> None:
-    """Exact barrier sequence and the sharp-order theoretical enclosure."""
+    """Computed barrier sequence and the exact theoretical enclosure."""
     ns = np.arange(2, 19)
     gammas = np.array([gamma_cache[int(n)][0] for n in ns])
     bounds = np.array([analytic_bounds(int(n), A_VALUE) for n in ns])
@@ -255,10 +260,27 @@ def figure_barrier_bounds(gamma_cache: dict[int, tuple[float, float]]) -> None:
         label=r"SVD estimate $\widehat{\gamma}_n$",
         zorder=3,
     )
-    ax.axhline(EPSILON, color="#b23a48", lw=1.0, label=r"$\varepsilon=10^{-2}$")
+    ax.axhline(
+        EPSILON,
+        color="#b23a48",
+        lw=1.0,
+        label=r"uncertainty level $\varepsilon=10^{-2}$",
+    )
+    ax.axvspan(ns[0] - 0.5, nc, color="#d1495b", alpha=0.07, lw=0)
+    ax.axvspan(nc, ns[-1] + 0.5, color="#9bd8d6", alpha=0.15, lw=0)
     ax.axvline(nc, color="0.25", lw=0.75)
     ax.text(nc + 0.25, 2.0e-1, rf"$N_c={nc}$", ha="left", va="center")
-    ax.axvspan(nc, ns[-1] + 0.5, color="#9bd8d6", alpha=0.15, lw=0)
+    ax.annotate(
+        r"$\gamma_2=a$",
+        xy=(2, gammas[0]),
+        xytext=(2.9, 4.2e-1),
+        arrowprops={"arrowstyle": "->", "color": "0.35", "lw": 0.7},
+        ha="left",
+        va="center",
+        fontsize=8.0,
+    )
+    ax.text(3.9, 4.0e-6, r"$\geq 2$ components", ha="center", va="bottom", fontsize=8.0)
+    ax.text(12.5, 4.0e-6, "one component", ha="center", va="bottom", fontsize=8.0)
     ax.set_xlim(ns[0] - 0.4, ns[-1] + 0.4)
     ax.set_ylim(2.0e-6, 8.0e-1)
     ax.set_xticks(np.arange(2, 19, 2))
@@ -282,125 +304,115 @@ def figure_barrier_bounds(gamma_cache: dict[int, tuple[float, float]]) -> None:
 
 
 def figure_physical_interpretation() -> None:
-    """PBC/OBC spectral geometry and the right-eigenvector skin effect."""
+    """Real-axis resolution barriers and their Hatano--Nelson origin."""
     a = A_VALUE
+    fill = "#9bd8d6"
+    curve_color = "#213b70"
+    noise_color = "#b23a48"
+
+    fig = plt.figure(figsize=(7.15, 3.45))
+    grid = fig.add_gridspec(2, 2, width_ratios=(1.08, 1.0))
+    axes = [
+        fig.add_subplot(grid[0, 0]),
+        fig.add_subplot(grid[1, 0]),
+    ]
+    bx = fig.add_subplot(grid[:, 1])
+
+    real_x = np.linspace(-1.04, 1.04, 1601)
+    for panel, (ax, n) in enumerate(zip(axes, (6, 7))):
+        A = matrix(n, a)
+        eye = np.eye(n)
+        values = np.array(
+            [np.linalg.svd(x * eye - A, compute_uv=False)[-1] for x in real_x]
+        )
+        eig = obc_eigenvalues(n, a)
+        ax.fill_between(
+            real_x,
+            0.0,
+            EPSILON,
+            where=values < EPSILON,
+            color=fill,
+            alpha=0.62,
+            linewidth=0,
+        )
+        ax.plot(real_x, values, color=curve_color, lw=1.15, label=r"$g_n(x)$")
+        ax.axhline(
+            EPSILON,
+            color=noise_color,
+            lw=0.95,
+            label=r"uncertainty level $\varepsilon$",
+        )
+        ax.plot(eig, np.zeros(n), "x", color=noise_color, ms=3.3, mew=0.9)
+        if n == 6:
+            title = r"(a) $n=6<N_c$: separated islands"
+        else:
+            title = r"(b) $n=7=N_c$: every gap is bridged"
+        ax.set_title(title, pad=2.0)
+        ax.set_xlim(real_x[0], real_x[-1])
+        ax.set_ylim(-2.0e-4, 1.72e-2)
+        ax.set_yticks([0.0, 0.005, 0.010, 0.015])
+        ax.set_ylabel(r"$g_n(x)$")
+        ax.spines["top"].set_visible(False)
+        ax.spines["right"].set_visible(False)
+        if panel == 0:
+            ax.tick_params(labelbottom=False)
+            ax.legend(
+                loc="upper center",
+                bbox_to_anchor=(0.5, 1.47),
+                frameon=False,
+                ncol=2,
+                handlelength=1.7,
+                columnspacing=0.9,
+            )
+        else:
+            ax.set_xlabel(r"real energy $x$")
+
     n = 20
-    xs = np.linspace(-1.40, 1.40, 501)
-    ys = np.linspace(-0.90, 0.90, 361)
-    vals = smin_grid(n, a, xs, ys)
-    contour_levels = (1.0e-6, 1.0e-4, 1.0e-2)
-    contour_colors = ("#3b4cc0", "#168aad", "#d1495b")
-    contour_styles = ("-", ":", "-.")
-
-    fig, (ax, bx) = plt.subplots(1, 2, figsize=(7.15, 3.40))
-
-    ax.contour(
-        xs,
-        ys,
-        vals,
-        levels=contour_levels,
-        colors=contour_colors,
-        linestyles=contour_styles,
-        linewidths=(1.0, 1.1, 1.2),
-    )
-    theta = np.linspace(0.0, 2.0 * np.pi, 801)
-    symbol = np.exp(1j * theta) + a * np.exp(-1j * theta)
-    ax.plot(symbol.real, symbol.imag, "--", color="0.20", lw=1.0)
-    eig = obc_eigenvalues(n, a)
-    ax.plot(eig, np.zeros(n), "x", color="#222222", ms=2.8, mew=0.75)
-    ax.axhline(0.0, color="0.7", lw=0.45, zorder=0)
-    ax.axvline(0.0, color="0.7", lw=0.45, zorder=0)
-    ax.set_aspect("equal", adjustable="box")
-    ax.set_xlim(xs[0], xs[-1])
-    ax.set_ylim(ys[0], ys[-1])
-    ax.set_xlabel(r"$\operatorname{Re}z$")
-    ax.set_ylabel(r"$\operatorname{Im}z$")
-    ax.set_title(r"(a) OBC pseudospectra and PBC symbol")
-    handles = [
-        Line2D(
-            [0],
-            [0],
-            color=color,
-            ls=style,
-            lw=1.2,
-            label=rf"$\varepsilon=10^{{{int(np.log10(level))}}}$",
-        )
-        for level, color, style in zip(
-            contour_levels, contour_colors, contour_styles
-        )
-    ]
-    handles += [
-        Line2D([0], [0], color="0.20", lw=1.0, ls="--", label="PBC ellipse"),
-        Line2D([0], [0], color="#222222", marker="x", lw=0, ms=3, label="OBC eigenvalues"),
-    ]
-    ax.spines["top"].set_visible(False)
-    ax.spines["right"].set_visible(False)
-
     sites = np.arange(1, n + 1)
-    r = np.sqrt(a)
+    h = -0.5 * np.log(a)
+    ell_skin = 1.0 / h
+    envelope = np.exp(-h * (sites - 1))
     modes = (1, 5, 10)
     mode_colors = ("#3b4cc0", "#168aad", "#d1495b")
     mode_styles = (("-", "o"), ("--", "s"), (":", "^"))
-    all_density = []
-    for m in range(1, n + 1):
-        vector = r ** (sites - 1) * np.sin(m * np.pi * sites / (n + 1))
-        density = np.abs(vector) ** 2
-        density /= density.sum()
-        all_density.append(density)
-        if m in modes:
-            mode_position = modes.index(m)
-            color = mode_colors[mode_position]
-            line_style, marker = mode_styles[mode_position]
-            bx.semilogy(
-                sites,
-                density,
-                marker=marker,
-                linestyle=line_style,
-                color=color,
-                ms=2.5,
-                lw=0.9,
-                label=rf"mode $m={m}$",
-            )
-    mean_density = np.mean(np.asarray(all_density), axis=0)
-    bx.semilogy(sites, mean_density, color="#222222", lw=1.6, label="mode average")
-    bx.axhline(1.0 / n, color="0.45", ls="--", lw=0.9, label=r"reciprocal mean $1/n$")
+    for m, color, (line_style, marker) in zip(modes, mode_colors, mode_styles):
+        oscillation = np.abs(np.sin(m * np.pi * sites / (n + 1)))
+        amplitude = envelope * oscillation / oscillation.max()
+        bx.semilogy(
+            sites,
+            amplitude,
+            marker=marker,
+            linestyle=line_style,
+            color=color,
+            ms=2.5,
+            lw=0.9,
+            label=rf"mode $m={m}$",
+        )
+    bx.semilogy(
+        sites,
+        envelope,
+        color="#222222",
+        lw=1.55,
+        label=r"gauge envelope $e^{-(j-1)/\ell_{\rm skin}}$",
+    )
     bx.set_xlim(0.5, n + 0.5)
-    bx.set_ylim(1.0e-12, 1.2)
+    bx.set_ylim(8.0e-7, 1.25)
     bx.set_xticks([1, 5, 10, 15, 20])
     bx.set_xlabel(r"site $j$")
-    bx.set_ylabel(r"normalized $|\psi_m^R(j)|^2$")
-    bx.set_title(r"(b) OBC right-eigenvector skin modes")
-    bx.set_box_aspect((ys[-1] - ys[0]) / (xs[-1] - xs[0]))
-    right_handles, right_labels = bx.get_legend_handles_labels()
+    bx.set_ylabel(r"relative right-mode amplitude")
+    bx.set_title(r"(c) exponential skin envelope", pad=2.0)
     bx.spines["top"].set_visible(False)
     bx.spines["right"].set_visible(False)
-    fig.subplots_adjust(wspace=0.38, bottom=0.36, top=0.89)
-    fig.canvas.draw()
-    left_box = ax.get_position()
-    right_box = bx.get_position()
-    legend_y = 0.255
-    legend_style = {
-        "loc": "upper left",
-        "frameon": False,
-        "ncol": 2,
-        "mode": "expand",
-        "borderaxespad": 0.0,
-        "columnspacing": 1.0,
-        "handlelength": 2.0,
-        "handleheight": 1.5,
-        "labelspacing": 0.35,
-    }
-    fig.legend(
-        handles=handles,
-        bbox_to_anchor=(left_box.x0, legend_y, left_box.width, 0.0),
-        **legend_style,
+    bx.legend(
+        loc="lower center",
+        bbox_to_anchor=(0.5, 1.03),
+        frameon=False,
+        ncol=2,
+        columnspacing=0.8,
+        handlelength=1.8,
+        fontsize=7.8,
     )
-    fig.legend(
-        handles=right_handles,
-        labels=right_labels,
-        bbox_to_anchor=(right_box.x0 - 0.02, legend_y, right_box.width + 0.02, 0.0),
-        **legend_style,
-    )
+    fig.subplots_adjust(wspace=0.34, hspace=0.34, top=0.79, bottom=0.16)
     save_both(fig, "fig3_hatano_nelson_physics")
 
 
@@ -425,7 +437,7 @@ def main() -> None:
         if lower < EPSILON <= upper
     ]
     if ambiguous:
-        raise RuntimeError(f"uncertified topology at n={ambiguous}")
+        raise RuntimeError(f"float64 grid check inconclusive at n={ambiguous}")
     nc = next(n for n in range(2, 19) if certificate_cache[n][1] < EPSILON)
     lower_threshold = 1 + max(
         [n for n in range(2, 100) if analytic_bounds(n, A_VALUE)[0] >= EPSILON],

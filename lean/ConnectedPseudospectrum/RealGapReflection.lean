@@ -10,7 +10,7 @@ After scalar extension to the complex Euclidean space it is unitary, so
 conjugating a shifted path matrix and multiplying by the scalar `-1` do not
 change its actual least singular value.  This proves the exact symmetry
 `g_n(-x) = g_n(x)` used to reflect every positive-gap comparison to the
-corresponding negative gap in lines 1925--1938 of the immutable source.
+corresponding negative gap in `lem:mesh`.
 -/
 
 namespace ConnectedPseudospectrum

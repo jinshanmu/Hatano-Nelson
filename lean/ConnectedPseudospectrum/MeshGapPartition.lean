@@ -4,8 +4,8 @@ import ConnectedPseudospectrum.SpectralInterval
 /-!
 # Partition of the real spectral mesh into noncentral and central gaps
 
-This module is the combinatorial bridge used in lines 1925--1954 of the
-immutable source.  It first partitions the convex hull of the simple path
+This module is the combinatorial bridge used in the final assembly of
+`lem:mesh`.  It first partitions the convex hull of the simple path
 spectrum into its open adjacent-node gaps.  For a successor matrix of order
 `N >= 3`, those gap indices split into four disjoint arithmetic regions:
 

@@ -6,13 +6,14 @@ import ConnectedPseudospectrum.NoncentralEllipticComparison
 
 This module assembles the hyperbolic and elliptic comparisons for an
 arbitrary point of a positive noncentral successor gap.  It implements the
-common part of lines 1235--1367 and the preparatory chord-level part of lines
-1925--1938 of the immutable source: the successor point is put in canonical chord
+common chord argument surrounding `eq:hyper-height-increase` and
+`eq:elliptic-height-increase` and the noncentral part of `lem:mesh`: the
+successor point is put in canonical chord
 coordinates, its inner angle is unscaled to the predecessor nodal interval,
 and the endpoint-side outer coordinate is split into its hyperbolic and
 elliptic charts.
 
-The angular exhaustion theorem from lines 1218--1225 then turns the
+The chord-family exhaustion theorem then turns the
 constructed predecessor chord into an actual point of the predecessor
 spectral gap, where its chord height is the finite-dimensional Euclidean
 least singular value.

@@ -4,8 +4,9 @@ import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
 /-!
 # The analytic core of the noncentral elliptic comparison
 
-This module starts the elliptic case of lines 1310--1367 in the immutable
-source.  It isolates the strict rescaled chord-factor monotonicity and gives
+This module supplies the elliptic case culminating in
+`eq:elliptic-height-increase`.  It isolates the strict rescaled chord-factor
+monotonicity and gives
 the level-generic rightmost-inner-solution theorem needed by both outer
 coordinate charts.
 -/

@@ -1,6 +1,6 @@
 # Connected pseudospectrum formalization
 
-This Lean project kernel-checks all 92 labelled mathematical items and the
+This Lean project kernel-checks all 90 labelled mathematical items and the
 complete theorem and proof dependency graph of the main mathematical result in
 `SIMAX_submission_bundle/final_connected_pseudospectrum_proof_2026-07-16.tex`.
 
@@ -15,28 +15,35 @@ SIMAX_submission_bundle/final_connected_pseudospectrum_proof_2026-07-16.tex
 Its SHA-256 is:
 
 ```text
-280945bf9f0e0952bfb0eca719754ab6493490d4cbfe6c18bb9a61bdf3744b75
+9884b17a78b6905840fb0dc3589725babadc8bd3604351720b6cffff77eaede9
 ```
 
-The source has 2,571 lines and 93,912 bytes.
+The source has 2,580 lines and 94,160 bytes.
 
 ## Exact scope
 
-The manuscript has 102 labels: 92 mathematical labels (86 equations, four
+The manuscript has 100 labels: 90 mathematical labels (84 equations, four
 lemmas, one theorem, and one proposition), seven section labels, and three
-figure labels.  All 92 mathematical labels have literal kernel counterparts;
+figure labels.  All 90 mathematical labels have literal kernel counterparts;
 zero are proof-sufficient and zero are audited-only.  All six theorem-like
 environments and every dependency needed for `thm:main` are kernel formalized.
 The final assembly is `ConnectedPseudospectrum.main_theorem` in
 `ConnectedPseudospectrum/MainTheorem.lean`.
 
-The physical material is intentionally outside the Lean scope.  In particular,
-the dimensional Hatano--Nelson Hamiltonian, PBC Bloch ellipse, physical modes,
-and skin-depth interpretation are unnumbered exposition in the revised source.
-This scope statement also does not promote bibliographic discussion or the
-floating-point numerical illustrations to kernel theorems.
+“One-to-one” is used labelwise: each mathematical label has an exact mapped
+kernel counterpart with the same content and hypotheses.  It does not assert
+an injective label-to-declaration bijection, because one display can require
+several declarations and repeated displays can share one theorem.
 
-`FORMALIZATION_MAP.md` gives the complete 92-label map and separately inventories
+All physics-facing formulas are unnumbered in the revised source.  The two
+dimensionless parameter/gauge identities used by the proof remain checked in
+Lean, while the dimensional Hatano--Nelson Hamiltonian, PBC Bloch ellipse,
+physical modes, skin depth, and dimensional rescalings remain audited physical
+exposition outside the kernel scope.  This scope statement also does not
+promote bibliographic discussion or floating-point numerical illustrations to
+kernel theorems.
+
+`FORMALIZATION_MAP.md` gives the complete 90-label map and separately inventories
 important unnumbered physical, numerical, and expository claims.  `LATEX_AUDIT.md`
 records the statement-level and proof-expansion repairs now explicit in both the
 manuscript and Lean, together with the deliberate physical and numerical scope
@@ -69,10 +76,9 @@ lake build
 ```
 
 There are no command-line Lean options in this build.  `lakefile.toml` has no
-`[leanOptions]` section, linter driver, linter arguments, warning override, or
-heartbeat override.  The acceptance environment must contain no `LEAN*` or
-`LAKE*` option variables.  Consequently Lean 4.28.0's defaults apply, including
-its default heartbeat budget.
+`[leanOptions]` section, linter driver, linter arguments, or warning override.
+The acceptance environment contains no `LEAN*` or `LAKE*` option variables, so
+Lean 4.28.0's defaults apply.
 
 The default target is the umbrella module `ConnectedPseudospectrum.lean`.  It
 imports all 103 modules in `ConnectedPseudospectrum/`; the canonical library
@@ -81,8 +87,8 @@ closure therefore contains 104 files, with no unimported library modules.
 ## Project hygiene
 
 The repository contains 105 project-owned `.lean` files: the 104-file canonical
-library closure plus `AxiomAudit.lean`.  Transitory `Scratch/` and `scripts/`
-content and the standalone linter audit have been removed.  No linter
+library closure plus `AxiomAudit.lean`.  No transitory `Scratch/`, `scripts/`,
+cache, or TeX-build content remains in the active source tree.  No linter
 configuration or suppression is part of the project.
 
 The following scans cover every remaining project-owned Lean source.  Each is
@@ -118,21 +124,22 @@ cd lean
 lake env lean AxiomAudit.lean
 ```
 
-`AxiomAudit.lean` contains 229 selected `#print axioms` commands, including the
+`AxiomAudit.lean` contains 230 selected `#print axioms` commands, including the
 final theorem, the declarations corresponding to the formerly nonliteral
-labels, the exact collision formulas, and the local lower-Lambert-branch
-endpoints.  `main_theorem`'s own output covers its dependency closure.  The only
+labels, the exact quotient and collision formulas, and the local
+lower-Lambert-branch endpoints.  `main_theorem`'s own output covers its
+dependency closure.  The only
 accepted foundational dependencies are `propext`, `Classical.choice`, and
 `Quot.sound`; project-specific axioms or compiler-trust escapes are failures.
 See `AXIOM_AUDIT.md`.
 
 ## Reproducible source snapshot
 
-The current canonical library closure consists of 104 files, 41,474 lines, and
-1,707,190 bytes.  Its length-prefixed path-and-content SHA-256 is:
+The current canonical library closure consists of 104 files, 41,546 lines, and
+1,710,377 bytes.  Its length-prefixed path-and-content SHA-256 is:
 
 ```text
-b6cbd8b510d243a16401520f93acfcdaa6689806f56c80de6cd9747ce8e6a86d
+746623169ca009b33f2c3b76f24ad2f2bc1a4e6b877a74e8ba1bd2905ff9ecc5
 ```
 
 The exact computation, run from the repository root, is:

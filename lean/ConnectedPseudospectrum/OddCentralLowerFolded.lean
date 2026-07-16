@@ -5,7 +5,8 @@ import ConnectedPseudospectrum.FoldedMinorBridge
 /-!
 # Folded determinant certificate for the odd central lower comparison
 
-This module formalizes LaTeX lines 1758--1823.  It turns the strict scalar
+This module formalizes the folded determinant argument from
+`eq:x-star-central` through `eq:q-product-central`.  It turns the strict scalar
 inequality `lowerCentral_scalar_target` into the literal determinant-product
 statement `eq:q-product-central` for the odd signed pencil of order `2m+1`.
 
@@ -751,7 +752,7 @@ theorem signedPencilDet_lowerCentral_neg_C (d : OddCentralChordData) :
   apply signedPencilDet_lowerCentral d (-d.lowerCentralC)
   ring
 
-/-- Literal `eq:q-product-central` from LaTeX line 1822. -/
+/-- Literal `eq:q-product-central`. -/
 theorem signedPencilDet_lowerCentral_product_pos
     (d : OddCentralChordData) :
     0 <

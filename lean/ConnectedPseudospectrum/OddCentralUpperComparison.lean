@@ -6,7 +6,7 @@ import Mathlib.Analysis.Convex.Deriv
 /-!
 # Transformed chord coordinates for the odd central upper comparison
 
-This module specializes lines 1484--1571 of the immutable source.  For the
+This module specializes the upper inequality in `eq:central-interlace`.  For the
 positive central chord of an odd path of order `2m+1`, it introduces
 
 * `t_in = 2 cos(theta)^2 - 1`,
@@ -907,8 +907,8 @@ theorem transformedCentralLogSlope_eq_chebyshevLogDerivative
 
 /-- The source's quotient formula for `U_m'(rho)/U_m(rho)`.
 
-The guard `rho ≠ 1` is essential.  It is implicit in LaTeX lines
-1539--1541: at `rho=1` both numerator and denominator printed there vanish.
+The guard `rho ≠ 1` is essential: at `rho=1` both numerator and denominator
+in the manuscript's displayed quotient vanish.
 The paper only uses this formula under `rho ≤ a < 1`, and handles
 `rho=1` separately, so the guarded statement is the exact valid dependency.
 -/

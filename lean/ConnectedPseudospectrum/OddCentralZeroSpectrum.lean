@@ -6,7 +6,8 @@ import Mathlib.LinearAlgebra.Matrix.ConjTranspose
 /-!
 # The odd central singular spectrum
 
-This file formalizes lines 1825--1837 of the immutable source.  We write
+This file formalizes the odd central singular-spectrum calculation used after
+`eq:x-c-second-singular`.  We write
 `q = L - 1`, so the odd matrix order is `2*q+1 = 2*L-1`.  Separating the
 zero-based even and odd coordinates gives rectangular blocks of sizes
 `(q+1) x q` and `q x (q+1)`.  Their reduced Gram matrices are the same
@@ -485,7 +486,7 @@ theorem oddCentralSingularSquare_pos
   rw [oddCentralSingularSquare_last q hq] at hmin
   exact (oddCentralSecondSingularSquare_pos q ha₀ ha₁).trans_le hmin
 
-/-- A concise, multiplicity-sensitive certificate for lines 1829--1837.
+/-- A concise, multiplicity-sensitive certificate for the odd central spectrum.
 The characteristic polynomial has one factor `X`, every positive displayed
 square has exponent two, and the displayed squares are pairwise distinct. -/
 theorem oddCentral_singularSquare_spectrum_certificate

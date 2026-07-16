@@ -4,8 +4,8 @@ import ConnectedPseudospectrum.RealGapReflection
 /-!
 # Reflected noncentral gap comparison
 
-This module formalizes the reflection step in lines 1925--1938 of the
-immutable source.  A negative gap is defined literally as the preimage of
+This module formalizes the reflection step in the noncentral part of
+`lem:mesh`.  A negative gap is defined literally as the preimage of
 the corresponding positive gap under `x |-> -x`.  Its endpoints are the
 negatives of the positive endpoints in reverse order.  For a matrix of order
 `n`, reflection sends the descending-eigenvalue gap index `j` to `n-j`.

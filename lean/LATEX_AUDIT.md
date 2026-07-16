@@ -4,9 +4,9 @@ Audited source:
 `SIMAX_submission_bundle/final_connected_pseudospectrum_proof_2026-07-16.tex`
 
 SHA-256:
-`280945bf9f0e0952bfb0eca719754ab6493490d4cbfe6c18bb9a61bdf3744b75`
+`9884b17a78b6905840fb0dc3589725babadc8bd3604351720b6cffff77eaede9`
 
-Source size: 2,571 lines; 93,912 bytes.
+Source size: 2,580 lines; 94,160 bytes.
 
 Last full source review: 2026-07-16.
 
@@ -16,8 +16,9 @@ proof-expansion repairs incorporated in the dated source do not change its
 main mathematical results.
 
 Scope disposition: no unresolved defect is known in `thm:main` or its complete
-kernel dependency graph.  The source has 102 labels: 92 mathematical, seven
-section, and three figure labels.  `FORMALIZATION_MAP.md` classifies all 92
+kernel dependency graph.  The source has 100 labels: 90 mathematical (84
+equations, four lemmas, one theorem, and one proposition), seven section, and
+three figure labels.  `FORMALIZATION_MAP.md` classifies all 90
 mathematical labels as literal kernel counterparts: zero are proof-sufficient
 and zero are audited-only.  It separately inventories important unnumbered
 physical, numerical, and expository claims outside the kernel scope.  The
@@ -28,10 +29,12 @@ latest default build and source-safety evidence is recorded in `STATUS.md`.
 The 2026-07-16 manuscript incorporates the formalization audit's statement-level
 repairs:
 
-- `eq:physical-scaling` and `eq:imaginary-gauge` now contain only the
-  dimensionless logarithmic and gauge identities proved in Lean.  The
+- The dimensionless logarithmic parametrization and gauge similarity in the
+  introduction are intentionally unnumbered.  Their exact identities are
+  nevertheless checked by `HyperbolicParameter` and `PathSpectrum`.  The
   dimensional OBC identification, PBC ellipse, full physical mode display, and
-  skin-depth display are intentionally unnumbered physical exposition.
+  skin-depth display are also intentionally unnumbered, but remain physical
+  exposition outside the Lean scope.
 - `eq:odd-dilation` is literal: Lean proves the leading block, coupling column,
   transposed coupling row, and bottom-right entry of the bordered matrix.
 - The folded section states the global recurrence via `Pi`, uses generic real
@@ -45,6 +48,14 @@ repairs:
   the preceding strict bound.
 - `eq:chi` has a direct all-angle Lean theorem, including the root-power and
   homogeneous-sum modulus identities.
+- `eq:rectangular-min` states the two exact norm inequalities separately: the
+  common sharp factor multiplies `‖u‖` and bounds both `‖C_theta u‖` and
+  `‖D_theta u‖` from below.  `rectangularC_norm_lower_bound` and
+  `rectangularD_norm_lower_bound` prove those literal inequalities with the
+  manuscript's hypotheses.
+- `eq:ratio-cross` now has the exported exact Lean counterpart
+  `vertical_ratio_cross`; its positive denominator conditions are derived from
+  positive definiteness rather than left implicit.
 - `eq:tail-threshold-Lambert` is literal.  `LambertWThreshold` constructs the
   lower real branch, proves the sharp argument-domain bound, identifies the
   strict permanent tail crossing with the displayed floor, and proves the
@@ -53,10 +64,45 @@ repairs:
   uses it as `W_{-1}` either carries the natural-domain hypothesis explicitly
   or derives it from its small-parameter hypotheses.
 
+## Physics formula audit
+
+All physics-facing displays in the introduction and conclusion are unnumbered.
+Their signs and scalings have been checked against
+`A_n(a)=tridiag(a,0,1)` and the stated hopping convention:
+
+- `H_n^OBC=t_L A_n(t_R/t_L)` has superdiagonal `t_L` and subdiagonal `t_R`;
+- the periodic symbol is
+  `t_L exp(ik)+t_R exp(-ik)=(t_L+t_R)cos k+i(t_L-t_R)sin k`;
+- the alternating-sign unitary conjugates `A_n` to `-A_n`, and the displayed
+  positive-sign energies and left/right modes follow from the diagonal gauge;
+- the amplitude skin depth is `h^(-1)=2/log(1/a)`, while the gauge condition
+  number and reciprocal barrier have the stated common exponential rate; and
+- homogeneity gives the physical merger level `t_L gamma_n`; the final
+  threshold display now states its required limit `delta -> 0` explicitly.
+
+The two unnumbered dimensionless parameter/gauge identities are still checked
+in Lean because they support the mathematical proof.  The dimensional,
+second-quantized, PBC, mode, skin-depth, and interpretive formulas remain
+deliberately outside the kernel scope.
+
+## Connectedness-threshold proof closure
+
+The complete chain has been checked from the actual matrix definitions:
+vertical least-singular-value monotonicity gives vertical scaling and the
+strict-open connectedness criterion; the noncentral, reflected, and two
+central comparisons give the strict successor barrier inequality; the exact
+rectangular estimates force barrier convergence and two-sided threshold
+bounds; strict decrease identifies first-hit and eventual thresholds; and the
+constructed lower Lambert branch proves the exact floor inversion and the
+fixed-parameter bounded-error asymptotic.  The dimension-two endpoint is the
+actual equality `gamma_2=a`.  `ConnectedPseudospectrum.main_theorem` assembles
+these results with only `0<a<1` and `epsilon>0`.
+
 ## Numerical certification wording
 
-The source now makes the numerical status explicit at lines 2377–2442.  For a
-uniform grid of maximum spacing `h`, the 1-Lipschitz property gives
+The numerical discussion in `sec:numerics`, including the qualifications
+attached to `fig:transition` and `fig:barriers`, now makes the status explicit.
+For a uniform grid of maximum spacing `h`, the 1-Lipschitz property gives
 `M_h ≤ gamma_n ≤ M_h + h/2` when `M_h` is formed from exact sampled least
 singular values.  The manuscript separately states that the supplied
 NumPy/SciPy implementation uses float64 SVD and eigenvalue values without an
@@ -68,7 +114,8 @@ estimates from the exact analytic bounds, and none of the numerics is used in
 
 ## Dimension-one endpoint correction in `lem:vertical` (resolved in 2026-07-16)
 
-- Source lines: 308–323, especially the diagonal display at 313–316.
+- Source anchor: the pentadiagonal display following
+  `eq:det-derivative-positive` and preceding `eq:D-R-def`.
 - Classification: resolved boundary ambiguity; the proof always used the
   correct formula.
 - The 2026-07-16 source now states that the displayed diagonal
@@ -80,9 +127,10 @@ estimates from the exact analytic bounds, and none of the numerics is used in
   P₁(Y,t) = [d - 1 - a²] = [x² + Y - t²].
   ```
 
-- Why the argument remains valid: the sequential boundary correction at
-  lines 358–366 gives `F₁ = D₁ - a² D₀`, which applies both corrections and
-  is correct.  The derivative is separately handled at lines 470–472.
+- Why the argument remains valid: the sequential boundary correction in the
+  derivation of `eq:D-F-generating` gives `F₁ = D₁ - a² D₀`, which applies both
+  corrections and is correct.  The concluding base-case paragraph in
+  `lem:vertical` separately handles the derivative.
 - Implemented Lean treatment: `VerticalContinuant` and `VerticalToeplitz`
   encode both endpoint corrections and split the determinant base cases at
   `n = 0`, `n = 1`, and `n ≥ 2`; in dimension one the coincident corrections
@@ -100,51 +148,58 @@ The manuscript now contains every corresponding intermediate argument, the
 same obligations are explicit in checked Lean lemmas, and the final `lem:mesh`
 and `thm:main` assemblies have been kernel checked.
 
-- Lines 635–643 identify `spec(A_m)` exactly with the even-indexed eigenvalues
+- In the proof of `lem:middle-branch`, immediately after `eq:odd-dilation`, the
+  manuscript identifies `spec(A_m)` exactly with the even-indexed eigenvalues
   of `A_(2m+1)` before concluding that `xI_m-A_m` is nonsingular in an open gap
   of the larger path.  The same spectral identification and nonsingularity
   implication are explicit in Lean.
-- Lines 787–822 perform the Schur-complement calculation on the stated dense
-  nonsingular set and then invoke polynomial identity to cover singular cases.
-  `FoldedMinorBridge` and `FoldedTransfer` give the complementary Lean proof of
-  the five-minor update by direct determinant identities, without an inverse or
-  dense-set assumption.
-- Lines 1196–1290 spell out both chord-exhaustion directions.  For actual gap
-  points, lines 1222–1269 define the selected sheet as a relatively open and
-  relatively closed subset of the gap and exclude folded-variable collision,
-  `y = 0`, `z = cosh h`, inner nodal endpoints, and `z = u_K^max`.  For the
-  converse, lines 1271–1289 use the continuous reconstructed angle, its exact
-  values at the two spectral endpoints, the intermediate value theorem, and
-  uniqueness of the endpoint-side outer solution to realize every interior
-  chord parameter.  Thus this second exhaustion is not attributed to the
-  relative clopen argument and does not assume monotonicity of `theta -> x`.
-  Lean records the continuation invariants, boundary exclusions, endpoint
-  data, classification, and exhaustion consequences used by this argument.
-- Lines 492–506 prove that every maximum defining a gap height is attained in
-  the open gap: spectral endpoints have height zero, whereas every interior
-  point is nonsingular and has strictly positive least singular value.  Lines
-  2032–2045 invoke this observation when choosing the comparison maximizer.
-  The corresponding interiority fact is explicit in Lean.
-- Lines 1596–1619 use the logarithmic-derivative quotient only under
-  `rho ≤ a < 1`, which implies `rho < 1` and hence `rho² - 1 ≠ 0`; when
-  `rho = 1`, the desired conclusion `rho > a` follows directly from `a < 1`
-  and no quotient is invoked.  The Lean quotient lemma and its callers carry
-  the same guard.
-- Lines 1682–1755 state the direct endpoint calculation.  At `rho = 1`,
-  `b = (L+1)/L`, `Q_b = L⁻²`, and
+- In the folded-minor derivation culminating in `eq:five-minor-update`, the
+  manuscript performs the Schur-complement calculation on the stated dense
+  nonsingular set and then invokes polynomial identity to cover singular
+  cases.  `FoldedMinorBridge` and `FoldedTransfer` give the complementary Lean
+  proof by direct determinant identities, without an inverse or dense-set
+  assumption.
+- The continuation argument between `eq:outer-level-dominates` and
+  `eq:noncentral-domain` spells out both chord-exhaustion directions.  For
+  actual gap points, it defines the selected sheet as a relatively open and
+  relatively closed subset of the gap and excludes folded-variable collision,
+  `y = 0`, `z = cosh h`, inner nodal endpoints, and `z = u_K^max`.  Conversely,
+  it uses the continuous reconstructed angle, its exact values at the two
+  spectral endpoints, the intermediate value theorem, and uniqueness of the
+  endpoint-side outer solution to realize every interior chord parameter.
+  Thus this second exhaustion is not attributed to the relative clopen
+  argument and does not assume monotonicity of `theta -> x`.  Lean records the
+  continuation invariants, boundary exclusions, endpoint data, classification,
+  and exhaustion consequences used by this argument.
+- The compact-gap discussion immediately before `eq:gamma-def` proves that
+  every maximum defining a gap height is attained in the open gap: spectral
+  endpoints have height zero, whereas every interior point is nonsingular and
+  has strictly positive least singular value.  The closing comparison step of
+  `lem:mesh` invokes this observation when choosing the maximizer.  The
+  corresponding interiority fact is explicit in Lean.
+- In the odd-central argument following `eq:central-chord`, the
+  logarithmic-derivative quotient is used only under `rho ≤ a < 1`, which
+  implies `rho < 1` and hence `rho² - 1 ≠ 0`; when `rho = 1`, the desired
+  conclusion `rho > a` follows directly from `a < 1` and no quotient is
+  invoked.  The Lean quotient lemma and its callers carry the same guard.
+- In the direct `rho = 1` case of the proof of `eq:N-positive-target`, the
+  manuscript calculates that `b = (L+1)/L`, `Q_b = L⁻²`, and
   `N = Upsilon(1+omega_L) + 2(1+omega_L)Delta_omega/L² ×
   (2L²+1)/6`; the first term and the displayed correction are both positive.
   This is also the endpoint case used in Lean, with no continuity shortcut.
-- Lines 1937–1973 derive explicitly
+- The test-point estimate from `eq:x-c-second-singular` through
+  `eq:angle-inequality` derives explicitly
   `c < 2a sin(theta_L-Delta_L) < 2 sqrt(a) sin(theta_L-Delta_L)`, including
   the use of `0 < a < 1` in the second inequality.  The same weakening is
   present in the formal proof.
-- Lines 1881–1892 derive positivity of the ratio from `D_L > 1`,
+- In the determinant-product argument between `eq:x-star-central` and
+  `eq:q-product-central`, positivity of the ratio is derived from `D_L > 1`,
   `rho > rho_ref > omega_L`, `omega_L > 1/2`, and hence
   `rho+omega_L > 2omega_L > 1 > 1-omega_L > 0`.  These are also explicit
   inputs to the Lean positivity proof.
-- Lines 1841–1848 establish positivity of the radicand from `a > 0`,
-  `Delta_omega > 0`, `rho+omega_L > 0`, and `zeta+omega_L > 0`, and define
+- At `eq:x-star-central`, the manuscript establishes positivity of the
+  radicand from `a > 0`,
+  `Delta_omega > 0`, `rho+omega_L > 0`, and `zeta+omega_L > 0`, and defines
   `x_* > 0` as its positive square root before displaying its square identity.
   `OddCentralLowerFolded` makes the same branch choice and proves both
   positivity and the square identity.

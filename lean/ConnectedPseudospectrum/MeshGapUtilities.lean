@@ -4,7 +4,7 @@ import ConnectedPseudospectrum.MeshGapPartition
 # Compact gap heights and spectral-mesh utility lemmas
 
 This module supplies the compactness and positivity layer used in
-lines 494--500 and 1925--1954 of the immutable source.  The generic mesh
+`eq:gamma-def` and the final assembly of `lem:mesh`.  The generic mesh
 partition uses open adjacent-node gaps, while the source defines each
 individual gap height on the corresponding closed interval.  Both versions
 are recorded here and related to the global real barrier `gapBarrier`.

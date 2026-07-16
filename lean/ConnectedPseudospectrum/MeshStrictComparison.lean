@@ -6,7 +6,7 @@ import ConnectedPseudospectrum.NoncentralReflectedComparison
 /-!
 # Strict comparison of consecutive real mesh barriers
 
-This module assembles LaTeX lines 1925--1954.  Every nonspectral point of
+This module assembles the final comparison in `lem:mesh`.  Every nonspectral point of
 the order-`N` real spectral interval is first placed in one of the four
 branches of `mem_positive_or_reflected_or_central_meshGap`.  The two
 noncentral branches use the positive or reflected same-origin gap
@@ -170,7 +170,7 @@ theorem exists_predecessorPoint_strict_of_mem_successorInterval_offSpectrum
 
 /-- Every individual compact successor mesh-gap height is strictly below
 the predecessor global barrier.  This is the pointwise max-over-gap form of
-the comparison used at LaTeX lines 1925--1950. -/
+the comparison used to conclude `lem:mesh`. -/
 theorem meshGapHeight_succ_lt_gapBarrier
     (n : Nat) (hn : 2 ≤ n) {a : Real}
     (ha0 : 0 < a) (ha1 : a < 1)

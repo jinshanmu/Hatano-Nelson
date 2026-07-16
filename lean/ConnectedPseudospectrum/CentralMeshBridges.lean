@@ -7,8 +7,8 @@ import ConnectedPseudospectrum.OddCentralHeight
 
 This module identifies the parity-specific central cases in
 `MeshGapPartition` with the exact central intervals used by the even- and
-odd-order height calculations.  Its indices implement the shifts in
-lines 1940--1945 of the immutable source:
+odd-order height calculations.  Its indices implement the shifts in the
+central-gap part of the proof of `lem:mesh`:
 
 * mesh parameter `m` and even order `2 * (m + 1)` correspond to `c_(m+1)`;
 * mesh parameter `m` and odd order `2 * m + 3` correspond to `d_(m+1)`;

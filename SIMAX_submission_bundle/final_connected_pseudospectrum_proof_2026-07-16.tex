@@ -122,25 +122,26 @@ there a unique transition?
 The same family is the clean open-boundary Hatano--Nelson chain
 \cite{HatanoNelson1996,HatanoNelson1997}.  With the site convention in
 which $t_R$ moves a particle from $j$ to $j+1$ and $t_L$ moves it from
-$j+1$ to $j$, assume $0<t_R<t_L$ and write
+$j+1$ to $j$, assume $0<t_R<t_L$ and use the positive-sign one-particle
+representative
 \[
  H_n^{\rm OBC}=t_LA_n(a),\qquad a=\frac{t_R}{t_L}.
 \]
 The dimensionless logarithmic parametrization used in the proof is
-\begin{equation}\label{eq:physical-scaling}
+\[
  h=-\frac12\log a>0,\qquad a=e^{-2h},\qquad
  r=\sqrt a=e^{-h}.
-\end{equation}
+\]
 The diagonal gauge
 \[
  \mathcal G_n(\varrho)=\diag(1,\varrho,\ldots,\varrho^{n-1})
 \]
 and the upper-shift matrix \(V_n=\tridiag(0,0,1)\) give the
 dimensionless similarity
-\begin{equation}\label{eq:imaginary-gauge}
+\[
  A_n(a)=\mathcal G_n(r)\bigl[r(V_n+V_n^T)\bigr]
  \mathcal G_n(r)^{-1}.
-\end{equation}
+\]
 Multiplying by \(t_L\) and using \(t_Lr=\sqrt{t_Lt_R}\) recovers the
 usual physical imaginary-gauge formula for \(H_n^{\rm OBC}\).
 Thus the open-boundary eigenvalues are real, while the right eigenmodes
@@ -185,7 +186,7 @@ Lambert-$W$ finite-size law.  Connectedness concerns the union over all
 perturbation supplies eigenvalues throughout a connecting bridge, nor
 does it describe the attainable set for a prescribed structured
 perturbation family.  The transition is also not the onset of the skin
-effect, which is already present in \eqref{eq:imaginary-gauge}.
+effect, which is already present in the dimensionless gauge similarity above.
 
 The paper is organized as follows.  \Cref{sec:main-results} states the
 main result.  Vertical monotonicity is proved in
@@ -2099,7 +2100,7 @@ component.  The maximum principle gives
 definition of the pseudospectrum.
 \end{proof}
 
-The diagonal gauge introduced in \eqref{eq:imaginary-gauge} gives
+The diagonal gauge introduced in the introduction gives
 \[
  A_n=\mathcal G_n(r)\bigl[r(V_n+V_n^T)\bigr]
  \mathcal G_n(r)^{-1},
@@ -2208,9 +2209,17 @@ Hence
 The two Gram matrices are
 diagonally unitarily similar to the tridiagonal Toeplitz matrix with
 diagonal \(1+r^2\) and off-diagonal \(-r\).  Its eigenvalues are
-\(1+r^2-2r\cos\frac{k\pi}{N}\), \(1\leq k\leq n\), so
+\(1+r^2-2r\cos\frac{k\pi}{N}\), \(1\leq k\leq n\).  Consequently, for
+every \(\boldsymbol u\in\C^n\),
 \begin{equation}\label{eq:rectangular-min}
- \left(1+r^2-2r\cos\frac{\pi}{N}\right)^{1/2}.
+ \begin{aligned}
+  \lVert\mathsf C_\theta\boldsymbol u\rVert_2
+  &\geq \left(1+r^2-2r\cos\frac{\pi}{N}\right)^{1/2}
+    \lVert\boldsymbol u\rVert_2,\\
+  \lVert\mathsf D_\theta\boldsymbol u\rVert_2
+  &\geq \left(1+r^2-2r\cos\frac{\pi}{N}\right)^{1/2}
+    \lVert\boldsymbol u\rVert_2.
+ \end{aligned}
 \end{equation}
 Put
 \[
@@ -2484,8 +2493,8 @@ conventional minus sign is immaterial here because
  =\frac12\log(1/a).
 \]
 For the unitarily equivalent positive-sign representative
-\(t_LA_n(a)\), multiplying the dimensionless relation
-\eqref{eq:imaginary-gauge} by \(t_L\) gives the eigenvalues and
+\(t_LA_n(a)\), multiplying the dimensionless gauge relation by \(t_L\)
+gives the eigenvalues and
 unnormalized right and left modes
 \begin{align*}
  E_m&=2t_0\cos\frac{m\pi}{n+1},\\
@@ -2533,7 +2542,7 @@ For the dimensional Hamiltonian \(t_LA_n(a)\), the merger level is
 \(t_L\gamma_n\).  If \(\varepsilon_{\rm phys}\) is a perturbation
 level with energy units and
 \(\delta=\varepsilon_{\rm phys}/t_L\) is its dimensionless strength,
-then \eqref{eq:N-asymptotic-main} becomes
+then, as \(\delta\downarrow0\), \eqref{eq:N-asymptotic-main} becomes
 \[
  N_c(a,\delta)=\ell_{\rm skin}
  \left(\log(1/\delta)+\log\!\log(1/\delta)\right)+O_a(1).

@@ -5,7 +5,7 @@ import ConnectedPseudospectrum.SignedPencilProductParity
 /-!
 # The strict lower half of the odd central interlacing comparison
 
-This module completes LaTeX lines 1897--1923.  At the centre of the odd
+This module completes the lower inequality in `eq:central-interlace`.  At the centre of the odd
 signed-middle pencil, zero is a simple eigenvalue and every other absolute
 eigenvalue is at least the explicitly attained second singular value.
 Weyl perturbation therefore leaves at most one eigenvalue in `(-c,c)` at

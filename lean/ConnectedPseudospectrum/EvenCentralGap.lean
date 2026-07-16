@@ -5,8 +5,9 @@ import Mathlib.LinearAlgebra.Matrix.Permutation
 /-!
 # The value at the centre of an even spectral gap
 
-This module formalizes the block calculation in lines 1420--1436 of the
-immutable source.  Odd and even path coordinates turn `A_(2m)` into a block
+This module formalizes the block calculation defining the even central height
+`c_m` before `eq:central-interlace`.  Odd and even path coordinates turn
+`A_(2m)` into a block
 off-diagonal matrix.  Its lower-left block is the actual central bidiagonal
 matrix, while a rank-one Gram comparison shows that the other block has no
 smaller least singular value.
@@ -312,7 +313,7 @@ private theorem one_sub_complexUpper_mul_lower_eq_lastProjector (m : ℕ) :
       simp [heq]
   · simp [hij]
 
-/-- The exact Gram rank-one identity on lines 1427--1430. -/
+/-- The exact Gram rank-one identity used to identify the even central height. -/
 theorem complexCentralCompanion_gram_sub_reversed_central_gram
     (m : ℕ) (a : ℝ) :
     (complexCentralCompanion m a)ᴴ * complexCentralCompanion m a -

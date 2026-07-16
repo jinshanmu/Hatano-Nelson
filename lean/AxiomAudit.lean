@@ -104,6 +104,7 @@ open ConnectedPseudospectrum
 #print axioms ConnectedPseudospectrum.centralRho_identities
 #print axioms ConnectedPseudospectrum.hasDerivWithinAt_verticalPencilDet_convolution
 #print axioms ConnectedPseudospectrum.vertical_leading_ratio_product
+#print axioms ConnectedPseudospectrum.vertical_ratio_cross
 #print axioms ConnectedPseudospectrum.hasDerivWithinAt_verticalPencilDet_pos
 #print axioms ConnectedPseudospectrum.verticalHeightMonotone
 #print axioms ConnectedPseudospectrum.isConnected_pathPseudospectrum_iff_gapBarrier_lt
@@ -244,7 +245,7 @@ open ConnectedPseudospectrum
 #print axioms ConnectedPseudospectrum.criticalThreshold_hasCriticalSizeAsymptotic
 #print axioms ConnectedPseudospectrum.criticalThreshold_eq_two_iff
 
-/-! Exact endpoints for the labels made literal in the 2026-07-16 manuscript. -/
+/-! Selected exact endpoints supporting the 2026-07-16 manuscript audit. -/
 
 #print axioms ConnectedPseudospectrum.pathLogParameter_pos
 #print axioms ConnectedPseudospectrum.pathParameter_eq_exp_neg_two_mul

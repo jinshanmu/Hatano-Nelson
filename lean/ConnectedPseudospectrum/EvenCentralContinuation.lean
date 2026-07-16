@@ -6,7 +6,8 @@ import ConnectedPseudospectrum.RealGapReflection
 /-!
 # Continuation and exact height of the even central gap
 
-This module formalizes lines 1472--1482 of the immutable source.  The
+This module formalizes the even central-gap continuation used in
+`eq:central-interlace`.  The
 positive half of the central gap of the order-`2m` path is not a
 `PositiveHalfGap`: its full nodal interval crosses `pi/2`.  We therefore
 carry out the same continuation on the literal half-gap

@@ -14,7 +14,7 @@ are part of this command.
 ## Scope
 
 `AxiomAudit.lean` imports the final theorem and selected supporting modules and
-contains 229 `#print axioms` commands: 215 whose declaration name is on the
+contains 230 `#print axioms` commands: 216 whose declaration name is on the
 command line and 14 whose name continues on the next line.  This is a selected
 endpoint/closure audit, not a claim that every public declaration is printed
 individually.
@@ -27,6 +27,7 @@ The selection includes:
   Euclidean least-singular-value infrastructure;
 - vertical monotonicity, the connectedness criterion, and component
   contractibility;
+- the exact exported quotient inequalities corresponding to `eq:ratio-cross`;
 - the folded determinant, signed branch, chord continuation, central and
   noncentral comparisons, and strict barrier decrease;
 - barrier bounds, threshold equality, the fixed-parameter asymptotic, and the
@@ -59,5 +60,5 @@ dependency would be visible.
 
 The final execution result, diagnostics, unique-record count, and observed
 dependency set for the current 2026-07-16 source state are recorded in
-`STATUS.md`.  The exact command above exited successfully for all 229 distinct
+`STATUS.md`.  The exact command above exited successfully for all 230 distinct
 targets, with only the three accepted foundational dependencies observed.

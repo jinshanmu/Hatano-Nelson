@@ -6,7 +6,8 @@ import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 /-!
 # The angle estimate in the odd central lower comparison
 
-This module formalizes LaTeX lines 1839--1887.  It compares the central
+This module formalizes the angle estimate leading to `eq:angle-inequality`.
+It compares the central
 Chebyshev root with the reference point `cos (pi/(2L+1))`, converts the two
 resulting square estimates into strict sine bounds, proves the source's
 elementary angle inequality, and places the test abscissa strictly inside
@@ -696,7 +697,7 @@ theorem lowerCentralSecondSingularMesh_le_secondSingularValue
   nlinarith [oddCentralSecondSingularSquare_sub_mesh_sq d,
     sq_nonneg (1 - d.a)]
 
-/-- Lines 1839--1887, in the exact two-sided form used downstream. -/
+/-- The `eq:angle-inequality` estimate in the exact two-sided form used downstream. -/
 theorem lowerCentralXStar_add_C_lt_mesh_le_secondSingularValue
     (d : OddCentralChordData) :
     d.lowerCentralXStar + d.lowerCentralC <

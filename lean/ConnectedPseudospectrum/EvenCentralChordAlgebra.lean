@@ -4,14 +4,14 @@ import ConnectedPseudospectrum.FoldedReconstruction
 /-!
 # Algebra on the central half-chord of an even path
 
-This module formalizes the closed algebraic content of lines 1437--1471 of
-the immutable source.  For `K = 2m+1`, it identifies the central inner lobe,
+This module formalizes the closed algebraic content of `eq:even-central-half`
+and `eq:z0-central`.  For `K = 2m+1`, it identifies the central inner lobe,
 proves that its unique maximum is its centre, constructs the distinguished
 outer coordinate `z₀`, and proves the Chebyshev, radical, and lobe identities
 printed in `eq:even-central-half` and `eq:z0-central`.
 
-The endpoint-side assertion in lines 1472--1476 is intentionally not made
-here.  It requires the signed middle-branch continuation and chord-exhaustion
+The endpoint-side assertion following `eq:z0-central` is intentionally not
+made here.  It requires the signed middle-branch continuation and chord-exhaustion
 argument: algebra alone does not distinguish the two points of an outer lobe
 having the same level.  In particular, no hypothesis or declaration below
 assumes that `centralOuterZ0` lies on the endpoint side of the outer-lobe
@@ -236,7 +236,7 @@ theorem evenCentralInnerLobe_maximizer_eq_zero
   (evenCentralInnerLobe_center_and_unique d).2 u hu huMax
 
 /-- The strict comparison `W_K(y)<W_K(0)` on the positive half of the
-central lobe, as printed on lines 1453--1456. -/
+central lobe used in `eq:even-central-half`. -/
 theorem evenCentralInnerLobe_lt_center
     (d : EvenCentralHalfGapData) {y : ℝ}
     (hy0 : 0 < y) (hyEnd : y < d.innerEndpoint) :
@@ -258,7 +258,7 @@ theorem evenCentralInnerLobe_lt_center
 
 /-! ## The distinguished outer coordinate `z₀` -/
 
-/-- The coordinate `z₀=sqrt((1+rho_m)/2)` from line 1460. -/
+/-- The coordinate `z₀=sqrt((1+rho_m)/2)` from `eq:z0-central`. -/
 def centralOuterZ0 (m : ℕ) (a : ℝ) : ℝ :=
   Real.sqrt ((1 + centralRho m a) / 2)
 
@@ -327,7 +327,7 @@ theorem centralZeta_sub_rho_pos
   rw [centralZeta_sub_rho_eq m hm a ha0 ha1]
   exact one_div_pos.mpr (mul_pos (mul_pos (by norm_num) hprev) hU)
 
-/-- The first equality on line 1470, before identifying it with `c_m²`. -/
+/-- The first equality in `eq:z0-central`, before identifying it with `c_m²`. -/
 theorem centralOuterZ0_radical_eq_zeta
     (m : ℕ) (hm : 1 ≤ m) (a : ℝ) (ha0 : 0 < a) (ha1 : a < 1) :
     4 * a *
@@ -347,7 +347,7 @@ theorem centralOuterZ0_radical_eq_zeta
       field_simp [ha0.ne']
       ring
 
-/-- The second equality on line 1470, using the actual least singular
+/-- The second equality in `eq:z0-central`, using the actual least singular
 value `c_m`. -/
 theorem two_mul_a_mul_centralZeta_sub_rho_eq_height_sq
     (m : ℕ) (hm : 1 ≤ m) (a : ℝ) (ha0 : 0 < a) (ha1 : a < 1) :
@@ -558,7 +558,7 @@ theorem evenCentralHalfChord_source_formulas
 /-!
 ## Remaining continuation obligation
 
-To obtain the strict height comparison on lines 1472--1482, a later module
+To obtain the strict height comparison used in `eq:central-interlace`, a later module
 must prove that the actual signed middle root at `x=0` selects
 `centralOuterZ0 m a` on the endpoint side of the outer-lobe maximizer, and
 that every nonzero point of the positive central half-gap selects a strictly

@@ -4,8 +4,8 @@ import ConnectedPseudospectrum.NoncentralHyperbolicScale
 /-!
 # The hyperbolic part of the noncentral gap comparison
 
-This module implements the comparison in lines 1274--1308 of the immutable
-source.  If the endpoint-side outer coordinate for the `(N+1)` problem is
+This module implements the comparison culminating in
+`eq:hyper-height-increase`.  If the endpoint-side outer coordinate for the `(N+1)` problem is
 `cosh eta`, rescaling the inner angle by `N/(N+1)` gives a strictly lower
 level for the `N` problem.  The rightmost return to that lower level is in
 the same nodal interval.  The same hyperbolic outer coordinate is still on
@@ -411,7 +411,7 @@ theorem chordPsi_successor_ratio_strictAntiOn
 /-- If the selected endpoint-side outer variable for size `N+1` is
 `cosh eta`, then a size-`N` inner point at the `Psi_N(eta)` level selects
 the same outer variable.  This is the endpoint-side preservation argument
-of lines 1283--1302. -/
+used in the hyperbolic comparison. -/
 theorem hyperbolicOuterCoordinate_preserved
     (d : PositiveHalfGap)
     (θM : d.successor.Angle) (θN : d.Angle) {η : ℝ}

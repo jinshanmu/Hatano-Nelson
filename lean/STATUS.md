@@ -2,11 +2,13 @@
 
 Last updated: 2026-07-16 (Asia/Shanghai).
 
-## Final acceptance result
+## Acceptance result
 
-The current 2026-07-16 source state has passed its final exact acceptance run.
+The current 2026-07-16 manuscript and Lean source state passed the complete
+acceptance run.
 
-The canonical command is:
+The canonical Lean command was run literally, with no flags, option variables,
+or source changes during the run:
 
 ```sh
 lake build
@@ -14,107 +16,101 @@ lake build
 
 - Exit status: `0`.
 - Final line: `Build completed successfully (8130 jobs).`
-- Full acceptance-run wall time: approximately 8 minutes 29 seconds.
 - Errors, warnings, and linter diagnostics: none.
-- The command was run literally with no flags; no `LEAN*` or `LAKE*` option
-  variables were set, and no Lean source changed during the run.
-- After the manuscript-only repairs, a final literal incremental replay of the
-  same command exited `0` in approximately 8.5 seconds and printed the same
-  8,130-job success line; the Lean source closure was unchanged.
+- `lakefile.toml` contains no Lean option or linter override, and the project
+  contains no `set_option` command or linter suppression.
 
-The separate default-options trust-audit command is:
+The separate default-options trust audit was also run literally:
 
 ```sh
 lake env lean AxiomAudit.lean
 ```
 
-`AxiomAudit.lean` contains 229 selected `#print axioms` commands: 215 whose
-declaration name is on the command line and 14 whose name continues on the next
-line.  All 229 targets are distinct.  The exact command exited `0`, printed one
-record for every target, and produced no error, warning, or linter diagnostic.
-The union of the observed dependency sets is exactly `propext`,
-`Classical.choice`, and `Quot.sound`; no project axiom or compiler-trust escape
-appeared.
+It exited `0` for all 230 distinct `#print axioms` targets (216 one-line and 14
+wrapped commands), with no diagnostic.  The union of the printed dependency
+sets is exactly `propext`, `Classical.choice`, and `Quot.sound`; no project
+axiom or compiler-trust escape appears.
 
-## Locked manuscript and compiled artifact
+## Locked manuscript and PDF
 
-- Audited source:
+- Source:
   `SIMAX_submission_bundle/final_connected_pseudospectrum_proof_2026-07-16.tex`
-- Source size: 2,571 lines; 93,912 bytes.
+- Source size: 2,580 lines; 94,160 bytes.
 - Source SHA-256:
-  `280945bf9f0e0952bfb0eca719754ab6493490d4cbfe6c18bb9a61bdf3744b75`.
-- Last full source/scope review: 2026-07-16.
+  `9884b17a78b6905840fb0dc3589725babadc8bd3604351720b6cffff77eaede9`.
 - Compiled PDF:
-  `SIMAX_submission_bundle/final_connected_pseudospectrum_proof_2026-07-16.pdf`.
-- Final PDF: 34 pages; 841,083 bytes; SHA-256
-  `7cdd4b4047fcae74eb041f609429ee5cbe51e3c9afa21e4c152d8279cc574e36`.
-- The final `latexmk` run exited successfully.  Its log contains no TeX errors,
-  LaTeX/package warnings, undefined references, rerun requests, or overfull
-  boxes.  It contains one benign underfull-vbox layout notice on the
-  bibliography pages.
-- All 34 pages were rendered and visually inspected after the final source
-  edit, including the dimension-one, folded-formula, continuation,
-  central-comparison, numerical-caveat, and Lambert-`W` pages; no clipping,
-  overlap, or malformed display was found.
+  `SIMAX_submission_bundle/final_connected_pseudospectrum_proof_2026-07-16.pdf`
+- PDF size: 34 pages; 841,217 bytes.
+- PDF SHA-256:
+  `8728f7e02e19efe5436079cdee8e92c37c715aa1f4afc89ca6b80cbd378bea1f`.
 
-The dated source preserves the manuscript's Lambert-`W_{-1}` threshold formula
-and lower-branch expansion.  The old bundle name, undated TeX source, and
-undated TeX build artifacts are absent.
+The final `latexmk` compilation exited successfully.  The final log scan found
+no TeX error, LaTeX/package warning, undefined reference, rerun request,
+overfull box, or underfull box.  All 34 rendered pages were visually inspected,
+including the repaired rectangular bound, the Lambert-`W_{-1}` discussion, and
+the physical discussion; no clipping, overlap, or malformed display was found.
+Only the dated `.tex` and compiled `.pdf` are retained as active manuscript
+artifacts; regenerated TeX intermediates were removed after verification.
 
-## Formalization and audit scope
+## Mathematical and labelwise scope
 
-The complete and truthful claim for the current source is:
+The manuscript has 100 labels: 90 mathematical labels (84 equations, four
+lemmas, one theorem, and one proposition), seven section labels, and three
+figure labels.  Every one of the 90 mathematical labels has an exact kernel
+counterpart with the same mathematical content and hypotheses.  Thus the final
+classification is 90 literal, zero proof-sufficient, and zero audited-only.
 
-- the source has 102 labels: 92 mathematical labels, seven section labels, and
-  three figure labels;
-- all 92 mathematical labels have literal kernel counterparts: zero are
-  proof-sufficient and zero are audited-only;
-- all six theorem-like environments and the complete proof dependency graph of
-  `thm:main` are represented in the canonical library; and
-- every mathematical label, plus important unnumbered mathematical and
-  physical claims, is accounted for in `FORMALIZATION_MAP.md`.
+“One-to-one” is labelwise coverage, not an injective declaration count: every
+mathematical label has an exact mapped Lean witness, while one displayed item
+may require several declarations and repeated mathematical content may reuse a
+theorem.  `FORMALIZATION_MAP.md` is the authoritative label-by-label map.
 
-The 2026-07-16 source aligns the formerly nonliteral statements with what is
-proved: it separates dimensionless identities from physical exposition, gives
-the complete bordered odd-dilation matrix, states the folded identities on
-their proved domains including collision, corrects the weak rational endpoint
-bound while retaining the strict consequence, and states the all-angle
-principal-sine formula.  It now also prints every proof-expansion item recorded
-by the audit: the even-indexed spectrum calculation, singular Schur extension,
-both chord-exhaustion directions, gap-maximizer interiority, guarded quotient,
-direct `rho = 1` endpoint calculation, positive-root choice, and the missing
-positivity and weakening steps.
+The complete connectedness-threshold argument is represented in the canonical
+library: the spectral and least-singular-value identities, resolvent and
+vertical monotonicity steps, connectedness criterion and component topology,
+mesh-gap reduction, parity and central/noncentral comparisons, strict
+threshold crossing, endpoint cases, final threshold theorem, and the stated
+asymptotic consequences.  The exact quotient conjunction for
+`eq:ratio-cross`, the two norm inequalities in `eq:rectangular-min`, collision
+formulas, and all proof-expansion items recorded in `LATEX_AUDIT.md` are now
+stated literally.  The final assembly is
+`ConnectedPseudospectrum.main_theorem`.
 
-`ConnectedPseudospectrum/LambertWThreshold.lean` supplies the lower real branch
-that is absent from the pinned Mathlib revision.  It constructs the branch by
-unique real inversion, proves its domain/specification and uniqueness, proves
-the exact strict discrete crossing and explicit floor formula, and proves the
-standard logarithmic--logarithmic bounded-error expansion.  Its totalization
-outside the branch domain is never used as a branch identity without the
-natural-domain hypothesis.
+The Lambert-`W_{-1}` content remains in the manuscript.  Because the pinned
+Mathlib revision lacks the needed lower real branch, the project constructs the
+branch by unique real inversion on its natural domain and proves its
+specification, uniqueness, exact discrete crossing/floor formula, and the
+logarithmic--logarithmic bounded-error asymptotic used by the manuscript.
 
-This remains deliberately narrower than a claim that every physical,
-bibliographic, numerical, or unnumbered expository sentence is a Lean theorem.
-The dimensional Hamiltonian, PBC/Bloch description, physical left/right modes,
-skin-depth interpretation, second-quantized presentation, and dimensional
-rescalings are intentionally outside Lean.  The displayed topology numerics are
-reproducible floating-point checks, not interval or kernel certificates, and
-are not used in `thm:main`.
+## Physics scope
 
-## Default target and source integrity
+All physics-facing formulas in the manuscript are unnumbered.  Their signs,
+scalings, domains, mode conventions, skin-depth interpretation, condition
+number, resolvent expression, and dimensional threshold rescaling were checked
+algebraically and numerically where appropriate.  The positive-sign
+one-particle representative and its relation to the opposite sign convention
+are stated explicitly.
+
+The two dimensionless parameter/gauge identities needed by the proof are also
+checked in Lean.  The dimensional Hatano--Nelson Hamiltonian, PBC Bloch ellipse,
+physical left/right modes, skin depth, and dimensional rescalings are
+intentionally audited exposition outside Lean, as requested.  Bibliographic
+claims and floating-point illustrations likewise are not promoted to kernel
+theorems and are not used in the main proof.
+
+## Environment and source integrity
 
 - Lean: `leanprover/lean4:v4.28.0`.
 - Lake: 5.0.0.
 - Mathlib commit: `8f9d9cff6bd728b17a24e163c9402775d9e6a365`.
 - `ConnectedPseudospectrum.lean` directly imports all 103 modules under
-  `ConnectedPseudospectrum/`; the default target therefore checks the entire
-  104-file canonical library closure.
-- Current canonical closure: 41,474 lines; 1,707,190 bytes.
-- Current length-prefixed path-and-content SHA-256:
-  `b6cbd8b510d243a16401520f93acfcdaa6689806f56c80de6cd9747ce8e6a86d`.
-- Total project-owned Lean sources: 105 files, including `AxiomAudit.lean`.
+  `ConnectedPseudospectrum/`.
+- Canonical library closure: 104 files; 41,546 lines; 1,710,377 bytes.
+- Length-prefixed path-and-content SHA-256:
+  `746623169ca009b33f2c3b76f24ad2f2bc1a4e6b877a74e8ba1bd2905ff9ecc5`.
+- Total project-owned Lean sources: 105, including `AxiomAudit.lean`.
 
-Current configuration hashes:
+Configuration and audit hashes:
 
 - `lakefile.toml`:
   `359183f676b6a7f214b89bac6368d042a590a8d060bac7a74da902086e609b00`;
@@ -123,43 +119,42 @@ Current configuration hashes:
 - `lake-manifest.json`:
   `7ecc5ae5b8b3e864347c44cc9daf70c0c38bbe2d15571260a1b428a80c042777`;
 - `AxiomAudit.lean`:
-  `35506314e88390ab0d90a279a14ccc9a94c6734c0370f2035ed53db0bd972db0`.
+  `5d9df8467a698f73a03386ecbebafac58f77f3fe369253b75524a6399f242dc0`.
 
-A current static scan of all 105 project-owned Lean sources and
-`lakefile.toml` finds:
+Static scans of all project-owned Lean sources and `lakefile.toml` found:
 
-- no `set_option` command;
-- no `#lint`, `@[nolint]`, linter configuration, linter driver, or linter
-  suppression;
-- no project `[leanOptions]` section or option override;
+- no `set_option`, `#lint`, `@[nolint]`, linter configuration, or option
+  override;
 - no `sorry`, `admit`, `sorryAx`, `native_decide`, `Lean.ofReduce*`,
   `Lean.trustCompiler`, or `run_tac` in the canonical library; and
 - no project `axiom`, `constant`, `opaque`, `unsafe`, `extern`, `partial`, or
   `implemented_by` declaration in the canonical library.
 
-These text scans establish the source configuration, while the exact build
-above establishes that the current graph checks with zero diagnostics under
-default options.
+The exact build establishes that the current imported graph checks under all
+default options; the source scans make the absence of overrides and trust
+escapes explicit.
 
-## Cleanup state
+## Cleanup and current documentation
 
-- Removed the transitory Lean `Scratch/` and `scripts/` trees and the standalone
-  `LinterAudit.lean` source.
-- Removed `.DS_Store`, `__pycache__`, bytecode, editor backup, temporary, and
-  empty transitory directories found in the active workspace.
-- Preserved normal `.lake` build output, the dated TeX/PDF, the bibliography,
-  SIAM class/style, all six figure assets, and the figure-generation script
-  needed for reproducibility.
-- The intentionally separate `legacy/` material was not treated as transitory
-  project state.
+- Removed the obsolete `HEARTBEAT_AUDIT.md`; heartbeat limits were not part of
+  the mathematical or build issue, and no active validation step depends on it.
+- Removed the superseded tracked 2026-07-13 manuscript/PDF from the active tree;
+  their history remains recoverable through Git.
+- Removed the transitory Lean `Scratch/` and `scripts/` trees, temporary render
+  output, caches, editor/OS debris, and active TeX build intermediates.
+- Removed 327 generated artifacts (19,879,313 bytes) from the preserved
+  `legacy/` area while retaining its 49 tracked `.tex` sources.
+- Preserved `.lake`, the current manuscript/PDF, bibliography and SIAM support
+  files, all figure assets, and the figure-generation source needed for
+  reproducibility.
 
-## Current documentation
+The current documentation set is:
 
 - `README.md`: project scope, pinned environment, canonical commands, and
-  reproducibility snapshot.
-- `FORMALIZATION_MAP.md`: complete 92-label literal map and important
-  unnumbered-scope inventory.
-- `LATEX_AUDIT.md`: source alignment, proof repairs, scope limits, and
-  numerical-certification caveat.
-- `AXIOM_AUDIT.md`: selected endpoint/closure trust-audit procedure.
-- `HEARTBEAT_AUDIT.md`: exact default-options and default-heartbeat conditions.
+  reproducibility snapshot;
+- `FORMALIZATION_MAP.md`: complete 90-label literal map and important
+  unnumbered-scope inventory;
+- `LATEX_AUDIT.md`: manuscript repairs, threshold-proof closure, physics audit,
+  and deliberate scope limits;
+- `AXIOM_AUDIT.md`: executable endpoint/closure trust-audit procedure; and
+- this `STATUS.md`: final build, PDF, scope, hashes, and cleanup evidence.

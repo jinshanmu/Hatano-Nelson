@@ -5,7 +5,7 @@ import ConnectedPseudospectrum.PathSpectrum
 # Truncated sine pseudoeigenvectors and the upper gap barrier
 
 This module formalizes the upper-bound half of `prop:gap-bounds`, following
-the truncated sine vector calculation in lines 2062--2077 of the source.
+the truncated sine-vector calculation in its proof.
 -/
 
 namespace ConnectedPseudospectrum

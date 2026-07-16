@@ -372,6 +372,71 @@ private theorem complex_eq_coe_re_of_pos {z : ℂ} (hz : 0 < z) :
   · simp
   · simpa using (Complex.pos_iff.mp hz).2.symm
 
+/-- The exact quotient inequalities in `eq:ratio-cross`.  Positivity of the
+four denominators follows from positive definiteness of the full vertical
+pencil. -/
+theorem vertical_ratio_cross (p q : ℕ) (a x Y t : ℝ)
+    (hY : 0 ≤ Y)
+    (hpos : (verticalPencil ((p + 1) + (q + 1) + 1) a x Y t).PosDef) :
+    a ^ 2 <
+        (verticalLeadingMinor (p + 1) a x Y t).re /
+            (verticalLeadingMinor p a x Y t).re *
+          ((verticalTrailingMinor (q + 1) a x Y t).re /
+            (verticalTrailingMinor q a x Y t).re) ∧
+      a ^ 2 <
+        (verticalLeadingMinor (q + 1) a x Y t).re /
+            (verticalLeadingMinor q a x Y t).re *
+          ((verticalTrailingMinor (p + 1) a x Y t).re /
+            (verticalTrailingMinor p a x Y t).re) := by
+  let n := (p + 1) + (q + 1) + 1
+  let D : ℕ → ℝ := fun m => (verticalLeadingMinor m a x Y t).re
+  let R : ℕ → ℝ := fun m => (verticalTrailingMinor m a x Y t).re
+  have hDpos (m : ℕ) (hm : m < n) : 0 < D m :=
+    (Complex.pos_iff.mp
+      (verticalLeadingMinor_pos_of_lt n m hm a x Y t hY hpos)).1
+  have hRpos (m : ℕ) (hm : m < n) : 0 < R m :=
+    (Complex.pos_iff.mp
+      (verticalTrailingMinor_pos_of_lt n m hm a x Y t hY hpos)).1
+  have hDeq (m : ℕ) (hm : m < n) :
+      verticalLeadingMinor m a x Y t = (D m : ℂ) :=
+    complex_eq_coe_re_of_pos
+      (verticalLeadingMinor_pos_of_lt n m hm a x Y t hY hpos)
+  have hReq (m : ℕ) (hm : m < n) :
+      verticalTrailingMinor m a x Y t = (R m : ℂ) :=
+    complex_eq_coe_re_of_pos
+      (verticalTrailingMinor_pos_of_lt n m hm a x Y t hY hpos)
+  have hp : p < n := by dsimp [n]; omega
+  have hp₁ : p + 1 < n := by dsimp [n]; omega
+  have hq : q < n := by dsimp [n]; omega
+  have hq₁ : q + 1 < n := by dsimp [n]; omega
+  have hcross₁C := sub_pos.mp
+    (vertical_deleted_cofactor_pos p q a x Y t hY hpos)
+  have hcross₂C :
+      (a : ℂ) ^ 2 * verticalLeadingMinor q a x Y t *
+          verticalTrailingMinor p a x Y t <
+        verticalLeadingMinor (q + 1) a x Y t *
+          verticalTrailingMinor (p + 1) a x Y t := by
+    have hs :
+        (verticalPencil ((q + 1) + (p + 1) + 1) a x Y t).PosDef := by
+      rw [show (q + 1) + (p + 1) + 1 =
+        (p + 1) + (q + 1) + 1 by omega]
+      exact hpos
+    exact sub_pos.mp (vertical_deleted_cofactor_pos q p a x Y t hY hs)
+  rw [hDeq p hp, hDeq (p + 1) hp₁, hReq q hq,
+    hReq (q + 1) hq₁] at hcross₁C
+  rw [hDeq q hq, hDeq (q + 1) hq₁, hReq p hp,
+    hReq (p + 1) hp₁] at hcross₂C
+  norm_cast at hcross₁C hcross₂C
+  change a ^ 2 < D (p + 1) / D p * (R (q + 1) / R q) ∧
+    a ^ 2 < D (q + 1) / D q * (R (p + 1) / R p)
+  constructor
+  · rw [div_mul_div_comm]
+    exact (lt_div_iff₀ (mul_pos (hDpos p hp) (hRpos q hq))).2 (by
+      simpa only [mul_assoc] using hcross₁C)
+  · rw [div_mul_div_comm]
+    exact (lt_div_iff₀ (mul_pos (hDpos q hq) (hRpos p hp))).2 (by
+      simpa only [mul_assoc] using hcross₂C)
+
 /-- Equation `eq:D-ratio-product`, stated without division.  Its hypotheses
 are exactly positivity of the full vertical pencil and `0<a<1`. -/
 theorem vertical_leading_ratio_product (p q : ℕ) (a x Y t : ℝ)

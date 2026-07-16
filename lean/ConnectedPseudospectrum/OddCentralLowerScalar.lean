@@ -6,7 +6,8 @@ import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
 /-!
 # Scalar inequality for the odd central lower comparison
 
-This module formalizes the scalar part of LaTeX lines 1573--1756.  For the
+This module formalizes the scalar argument from `eq:central-D-xi` through
+`eq:Delta-upsilon-bounds`.  For the
 odd path of order `2m+1` it sets `L=m+1`, introduces the source's quantities
 `rho`, `u_-`, `u_+`, `omega_L`, `Delta_omega`, `D_L`, and `xi`, and proves
 
@@ -557,7 +558,7 @@ theorem lowerCentralReference_one_sub_lt_five_div
     rw [hrewrite, div_lt_div_iff_of_pos_right hden]
     nlinarith)
 
-/-- Corrected version of the second inequality on source line 1721.
+/-- Corrected version of the second inequality in `eq:Delta-upsilon-bounds`.
 It is an equality at `L=2`, so the weak sign is essential. -/
 theorem five_div_reference_den_sq_le_one_fifth
     (d : OddCentralChordData) :
@@ -865,7 +866,7 @@ theorem lowerCentralLogSlope_eq_chebyshevDerivative
     rw [add_div, div_self hUpos.ne']
   exact (hasDerivAt_log_lowerCentralF ht).unique hlog
 
-/-- The guarded quotient on source line 1618.  The guard is necessary:
+/-- The guarded logarithmic-derivative quotient.  The guard is necessary:
 at `rho=1` its printed right-hand side is `0/0`. -/
 theorem lowerCentralSlopeAtRho_eq_quotient
     (d : OddCentralChordData)
@@ -1207,7 +1208,7 @@ def lowerCentralU (d : OddCentralChordData) : Real :=
 def lowerCentralDeltaMinus (d : OddCentralChordData) : Real :=
   d.lowerCentralV * (2 - d.lowerCentralV)
 
-/-- The concave quadratic `q(u)` on source lines 1704--1708. -/
+/-- The concave quadratic `q(u)` used in the proof of `eq:N-positive-target`. -/
 def lowerCentralQuadratic (d : OddCentralChordData) (u : Real) : Real :=
   d.lowerCentralDeltaMinus *
       (2 * (2 - d.lowerCentralOmegaDelta) +
@@ -1691,8 +1692,7 @@ theorem lowerCentralF_scalar_target (d : OddCentralChordData) :
   have hmul := mul_lt_mul_of_pos_left hbound hweight
   exact hmul.trans (lowerCentral_rational_upper_lt_target d)
 
-/-- Literal expanded statement of `eq:central-target` at LaTeX lines
-1584--1587. -/
+/-- Literal expanded statement of `eq:central-target`. -/
 theorem lowerCentral_scalar_target (d : OddCentralChordData) :
     (1 + d.lowerCentralOmega) *
         (1 + d.lowerCentralXi) ^ 2 *

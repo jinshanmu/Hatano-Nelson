@@ -49,8 +49,10 @@ no TeX error, LaTeX/package warning, undefined reference, rerun request,
 overfull box, or underfull box.  All 34 rendered pages were visually inspected,
 including the repaired rectangular bound, the Lambert-`W_{-1}` discussion, and
 the physical discussion; no clipping, overlap, or malformed display was found.
-Only the dated `.tex` and compiled `.pdf` are retained as active manuscript
-artifacts; regenerated TeX intermediates were removed after verification.
+The 2026-07-16 `.tex` and compiled `.pdf` are the current audited manuscript
+artifacts.  The complete 2026-07-13 `.tex`/`.pdf` snapshot is also retained
+unchanged as a historical manuscript version.  Regenerated TeX intermediates
+were removed after verification.
 
 ## Mathematical and labelwise scope
 
@@ -138,8 +140,8 @@ escapes explicit.
 
 - Removed the obsolete `HEARTBEAT_AUDIT.md`; heartbeat limits were not part of
   the mathematical or build issue, and no active validation step depends on it.
-- Removed the superseded tracked 2026-07-13 manuscript/PDF from the active tree;
-  their history remains recoverable through Git.
+- Preserved the complete tracked 2026-07-13 manuscript/PDF byte-for-byte as a
+  historical version alongside the current 2026-07-16 artifacts.
 - Removed the transitory Lean `Scratch/` and `scripts/` trees, temporary render
   output, caches, editor/OS debris, and active TeX build intermediates.
 - Removed 327 generated artifacts (19,879,313 bytes) from the preserved

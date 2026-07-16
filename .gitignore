@@ -49,5 +49,8 @@ legacy/
 # Local reference library, not project source
 literature/
 
+# Private journal-submission correspondence; keep local only
+submission_private/
+
 # Temporary render output
 tmp/

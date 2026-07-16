@@ -15,10 +15,10 @@ SIMAX_submission_bundle/final_connected_pseudospectrum_proof_2026-07-16.tex
 Its SHA-256 is:
 
 ```text
-84e0021272c9a9eb5cbfba3f6c82c4219bc2d64382232ebe68084bc9febe29b6
+280945bf9f0e0952bfb0eca719754ab6493490d4cbfe6c18bb9a61bdf3744b75
 ```
 
-The source has 2,477 lines and 89,709 bytes.
+The source has 2,571 lines and 93,912 bytes.
 
 ## Exact scope
 
@@ -38,8 +38,9 @@ floating-point numerical illustrations to kernel theorems.
 
 `FORMALIZATION_MAP.md` gives the complete 92-label map and separately inventories
 important unnumbered physical, numerical, and expository claims.  `LATEX_AUDIT.md`
-records the statement-level repairs that made the current labelled mathematics
-literal, along with the remaining source caveats.
+records the statement-level and proof-expansion repairs now explicit in both the
+manuscript and Lean, together with the deliberate physical and numerical scope
+qualifications.
 
 ## Lower Lambert branch
 

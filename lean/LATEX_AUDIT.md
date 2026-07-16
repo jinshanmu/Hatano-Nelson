@@ -4,14 +4,15 @@ Audited source:
 `SIMAX_submission_bundle/final_connected_pseudospectrum_proof_2026-07-16.tex`
 
 SHA-256:
-`84e0021272c9a9eb5cbfba3f6c82c4219bc2d64382232ebe68084bc9febe29b6`
+`280945bf9f0e0952bfb0eca719754ab6493490d4cbfe6c18bb9a61bdf3744b75`
 
-Source size: 2,477 lines; 89,709 bytes.
+Source size: 2,571 lines; 93,912 bytes.
 
 Last full source review: 2026-07-16.
 
-This file records formalization-relevant omissions or ambiguities.  The
-statement-level repairs incorporated in the dated source do not change its
+This file records the formalization-relevant omissions or ambiguities found
+during the audit and how they were resolved.  The statement-level and
+proof-expansion repairs incorporated in the dated source do not change its
 main mathematical results.
 
 Scope disposition: no unresolved defect is known in `thm:main` or its complete
@@ -54,13 +55,16 @@ repairs:
 
 ## Numerical certification wording
 
-The displayed numerical values and topology margins reproduce with the
-supplied NumPy/SciPy float64 script.  The grid `h/2` Lipschitz enclosure is
-mathematically valid for exact sampled singular values, but the implementation
-does not enclose floating-point SVD or eigenvalue error.  Consequently the
-manuscript's “certify” language describes a reproducible floating-point check
-conditional on computed samples, not a validated numerical, interval, or
-kernel certificate.  None of these numerics is used in `thm:main`.
+The source now makes the numerical status explicit at lines 2377–2442.  For a
+uniform grid of maximum spacing `h`, the 1-Lipschitz property gives
+`M_h ≤ gamma_n ≤ M_h + h/2` when `M_h` is formed from exact sampled least
+singular values.  The manuscript separately states that the supplied
+NumPy/SciPy implementation uses float64 SVD and eigenvalue values without an
+enclosure of their roundoff.  It therefore calls the reported margins and
+threshold reproducible floating-point checks conditional on those samples,
+not validated interval certificates.  The figures distinguish those computed
+estimates from the exact analytic bounds, and none of the numerics is used in
+`thm:main`.
 
 ## Dimension-one endpoint correction in `lem:vertical` (resolved in 2026-07-16)
 
@@ -89,61 +93,62 @@ kernel certificate.  None of these numerics is used in `thm:main`.
 
 No theorem-level defect was established in the completed audit.
 
-## Implemented repairs for valid implicit steps in `lem:mesh`
+## Absorbed proof-expansion repairs in `lem:mesh`
 
-An independent exact-algebra and small-dimension audit found no false identity,
-and the following prose steps have been made explicit in checked Lean lemmas.
-The final `lem:mesh` and `thm:main` assemblies have also been kernel checked.
+An independent exact-algebra and small-dimension audit found no false identity.
+The manuscript now contains every corresponding intermediate argument, the
+same obligations are explicit in checked Lean lemmas, and the final `lem:mesh`
+and `thm:main` assemblies have been kernel checked.
 
-- Lines 632–633: the formalization proves that the spectrum of `A_m` is
-  precisely the set of the even-indexed eigenvalues of `A_(2m+1)` before
-  deriving nonsingularity of `xI_m - A_m` in the larger path's open gap.
-- Lines 777–810: the Schur-complement computation is first made on a dense
-  nonsingular set and then extended polynomially.  `FoldedMinorBridge` and
-  `FoldedTransfer` instead prove the five-minor update by direct determinant
-  identities, with no nonsingularity assumption or dense-set passage.
-- Lines 1200–1248: the formalization supplies a closed invariant for the
-  maximal continuation interval.  Its possible interior boundary failures—
-  folded-variable collision, `y = 0`, `z = cosh h`, an inner nodal endpoint,
-  or `z = u_K^max`—are excluded by separate lemmas.
-  Formalization also exposes two logically distinct exhaustion directions:
-  every actual gap point must lie on the selected chord sheet, and every
-  interior chord parameter must produce an actual point of that gap with the
-  selected signed middle root.  The first direction follows from a relatively
-  clopen subset of the gap; it does not imply the second unless horizontal
-  monotonicity is assumed.  Since the source explicitly avoids that
-  monotonicity assumption, the second direction is proved by its own
-  open--closed continuation lemma on the angle interval, using the endpoint
-  germ, determinant-root continuation, root nonvanishing, and exclusion of
-  nodal endpoints.  This is a valid omitted intermediate argument, not a
-  change to the stated comparison.
-- Lines 1958–1964: the formalization proves that the chosen gap maximum lies
-  in the open gap: both endpoints have height zero, while every interior point
-  is nonsingular and has strictly positive least singular value.
-- Lines 1562–1564: the displayed logarithmic-derivative quotient has
-  denominator `rho^2-1`, so its literal use requires `rho != 1`.  In the only
-  branch where it is invoked the proof assumes `rho <= a < 1`, which supplies
-  this side condition; the source then treats `rho=1` separately as
-  immediate.  The Lean quotient lemma carries the explicit `rho != 1` guard,
-  and the calling proofs perform the required case split.
-- Lines 1641–1697: the sentence “the case `rho = 1` follows by continuity” can
-  be replaced by a direct endpoint calculation, as it is in Lean.  At `rho = 1`,
-  `b = (L+1)/L = 1+1/L`, and the required quantity is the already positive
-  `Upsilon(1+omega_L)`.
-- Lines 1877–1893: the displayed estimate uses the unstated weakening
-  `c < 2 a sin(theta_L-Delta_L) < 2 sqrt(a) sin(theta_L-Delta_L)`, valid
-  because `0 < a < 1`; the formal proof supplies this weakening explicitly.
-- Lines 1823–1828: positivity of the displayed ratio follows from
-  `D_L > 1`, `rho > rho_ref > omega_L`, and
-  `rho + omega_L > 1 - omega_L`; these inequalities are explicit inputs to
-  the Lean positivity proof.
-- Line 1786 defines only `x_*^2`, but the later membership statement at line
-  1949 needs `x_* > 0`.  `OddCentralLowerFolded` defines `x_*` as the positive
-  square root and proves both its positivity and its square identity.  The
-  radicand is positive from `0 < a`, `0 < 1-omega_L`, and
-  `0 < (rho+omega_L)/(zeta+omega_L)`.  This makes the intended branch choice
-  explicit without changing any displayed identity.
+- Lines 635–643 identify `spec(A_m)` exactly with the even-indexed eigenvalues
+  of `A_(2m+1)` before concluding that `xI_m-A_m` is nonsingular in an open gap
+  of the larger path.  The same spectral identification and nonsingularity
+  implication are explicit in Lean.
+- Lines 787–822 perform the Schur-complement calculation on the stated dense
+  nonsingular set and then invoke polynomial identity to cover singular cases.
+  `FoldedMinorBridge` and `FoldedTransfer` give the complementary Lean proof of
+  the five-minor update by direct determinant identities, without an inverse or
+  dense-set assumption.
+- Lines 1196–1290 spell out both chord-exhaustion directions.  For actual gap
+  points, lines 1222–1269 define the selected sheet as a relatively open and
+  relatively closed subset of the gap and exclude folded-variable collision,
+  `y = 0`, `z = cosh h`, inner nodal endpoints, and `z = u_K^max`.  For the
+  converse, lines 1271–1289 use the continuous reconstructed angle, its exact
+  values at the two spectral endpoints, the intermediate value theorem, and
+  uniqueness of the endpoint-side outer solution to realize every interior
+  chord parameter.  Thus this second exhaustion is not attributed to the
+  relative clopen argument and does not assume monotonicity of `theta -> x`.
+  Lean records the continuation invariants, boundary exclusions, endpoint
+  data, classification, and exhaustion consequences used by this argument.
+- Lines 492–506 prove that every maximum defining a gap height is attained in
+  the open gap: spectral endpoints have height zero, whereas every interior
+  point is nonsingular and has strictly positive least singular value.  Lines
+  2032–2045 invoke this observation when choosing the comparison maximizer.
+  The corresponding interiority fact is explicit in Lean.
+- Lines 1596–1619 use the logarithmic-derivative quotient only under
+  `rho ≤ a < 1`, which implies `rho < 1` and hence `rho² - 1 ≠ 0`; when
+  `rho = 1`, the desired conclusion `rho > a` follows directly from `a < 1`
+  and no quotient is invoked.  The Lean quotient lemma and its callers carry
+  the same guard.
+- Lines 1682–1755 state the direct endpoint calculation.  At `rho = 1`,
+  `b = (L+1)/L`, `Q_b = L⁻²`, and
+  `N = Upsilon(1+omega_L) + 2(1+omega_L)Delta_omega/L² ×
+  (2L²+1)/6`; the first term and the displayed correction are both positive.
+  This is also the endpoint case used in Lean, with no continuity shortcut.
+- Lines 1937–1973 derive explicitly
+  `c < 2a sin(theta_L-Delta_L) < 2 sqrt(a) sin(theta_L-Delta_L)`, including
+  the use of `0 < a < 1` in the second inequality.  The same weakening is
+  present in the formal proof.
+- Lines 1881–1892 derive positivity of the ratio from `D_L > 1`,
+  `rho > rho_ref > omega_L`, `omega_L > 1/2`, and hence
+  `rho+omega_L > 2omega_L > 1 > 1-omega_L > 0`.  These are also explicit
+  inputs to the Lean positivity proof.
+- Lines 1841–1848 establish positivity of the radicand from `a > 0`,
+  `Delta_omega > 0`, `rho+omega_L > 0`, and `zeta+omega_L > 0`, and define
+  `x_* > 0` as its positive square root before displaying its square identity.
+  `OddCentralLowerFolded` makes the same branch choice and proves both
+  positivity and the square identity.
 
-These are implemented, checked proof-expansion repairs, not changes to
+These are absorbed, checked proof-expansion repairs, not changes to
 `lem:mesh` or `thm:main`.  Final validation of both assembled results is
 recorded in `STATUS.md`.

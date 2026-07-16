@@ -499,8 +499,11 @@ and call
  G_{n,k}=[\lambda_{n,k+1},\lambda_{n,k}],\qquad
  \gamma_{n,k}=\max_{x\in G_{n,k}}g_n(x),\qquad 1\leq k<n,
 \]
-the closed spectral gaps and their heights.  Continuity gives existence
-of every maximum, and the spectral endpoints have height zero.  Hence
+the closed spectral gaps and their heights.  Continuity gives existence of
+every maximum, and the spectral endpoints have height zero.  Every interior
+gap point lies outside the spectrum, so \(xI_n-A_n\) is nonsingular there and
+\(g_n(x)>0\).  Consequently every gap height is positive and every point at
+which it is attained lies in the open gap.  Hence
 \begin{equation}\label{eq:gamma-def}
  \gamma_n=\max_{1\leq k<n}\gamma_{n,k}.
 \end{equation}
@@ -629,8 +632,15 @@ above and leave the middle coordinate last.  Then
  \qquad
  \boldsymbol w=\begin{bmatrix}-\mathbf e_m\\-a\mathbf e_m\end{bmatrix}.
 \end{equation}
-In an open spectral gap of \(A_{2m+1}\), \(P_m(x)\) is nonsingular:
-indeed, its zeros are the even-indexed eigenvalues of \(A_{2m+1}\).
+In an open spectral gap of \(A_{2m+1}\), \(P_m(x)\) is nonsingular.  Indeed,
+the explicit path spectrum gives
+\[
+ \operatorname{spec}(A_m)
+ =\left\{2r\cos\frac{\ell\pi}{m+1}:1\leq\ell\leq m\right\}
+ =\left\{\lambda_{2m+1,2\ell}:1\leq\ell\leq m\right\},
+\]
+so its zeros are exactly the even-indexed eigenvalues of \(A_{2m+1}\), none
+of which lies in an open spectral gap.
 The eigenvalues of the principal submatrix \(\widehat P_m(x)\) are
 consequently
 \[
@@ -806,8 +816,10 @@ taking the Schur complement of \(K_m\) in
  \mathfrak r_{m+1}&=\mathfrak d_m.
 \end{aligned}
 \end{equation}
-Both sides are polynomial in \(x\) and \(s\), so these identities hold
-also when one of the Schur complements is singular.
+Both sides are polynomial in \(x\) and \(s\), and the nonsingular set used
+above is dense.  The polynomial identity theorem therefore extends all five
+identities to the singular cases as well; no inverse is assumed in
+\eqref{eq:five-minor-update}.
 
 The five quantities in \eqref{eq:five-minor-update} satisfy one linear
 invariant.  Define
@@ -1207,45 +1219,75 @@ invertible.  The implicit-function theorem therefore gives, near either
 gap endpoint, a real continuation of the middle signed root and real
 half variables \(y=\cos\theta\) and \(z\).
 
-Continue this ordered middle root through the open gap, and let
-\(\mathcal I\) be the maximal subinterval on which
+Continue this ordered middle root \(s_*(x)\) through the open gap.  Write
+\(\Delta_*(x)=\Delta_{\rm fold}(x,s_*(x))\) for its folded discriminant,
+let \(y(x)\leq z(x)\) be the reconstructed nonnegative half variables on
+the real sheet issuing from the endpoint germ, and set
+\(\Theta(x)=\arccos y(x)\).  Let \(\mathcal C\) be the set of gap points for
+which
 \[
- \theta\in(j\pi/K,(j+1)\pi/K),\qquad
- z=z_K(\mathcal W_K(\cos\theta)).
+ \Delta_*(x)>0,\qquad
+ \frac{j\pi}{K}<\Theta(x)<\frac{(j+1)\pi}{K},\qquad
+ u_K^{\max}<z(x)<\mathfrak c_h.
 \]
-The ordered eigenvalues of the continuous real symmetric pencil
-\(B_{K-1}(x)\) are continuous in \(x\), including at an eigenvalue
-crossing, so a multiple least singular value does not interrupt this
-continuation.  The folded pair
-\(u=2z^2-1\), \(v=2y^2-1\) is real and continuous by construction.
-It can collide only when \(z^2=y^2\), which is impossible because
+On \(\mathcal C\), the reversible folded determinant identities give
+\(\mathcal W_K(y(x))=\mathcal W_K(z(x))\); uniqueness on the endpoint-side
+outer lobe then gives
 \[
- z>u_K^{\max}>\cos\frac{\pi}{K}>\cos\theta=y.
+ z(x)=z_K(\mathcal W_K(y(x))).
 \]
-Thus no endpoint of \(\mathcal I\) can arise from a folded-variable
-collision inside the open gap.
-The signs of the half variables cannot change in a noncentral positive
-gap: \(z>0\) throughout, while \(y=0\) would force \(x=0\), outside
-such a gap.  Moreover, \(z\) cannot reach \(\mathfrak c_h\) in the interior,
-because \eqref{eq:channel-xs} would then give \(s=0\).
-The inner variable cannot reach a nodal endpoint: the common level
-would be zero, the endpoint-side solution would be \(\mathfrak c_h\), and
-\eqref{eq:channel-xs} would give \(s=0\), whereas the middle root has no
-zero inside a spectral gap.  The outer variable cannot leave its
-endpoint-side component, since its first such point would be
-\(u_K^{\max}\), contradicting
-\eqref{eq:outer-level-dominates}.  Passage through \(z=1\) is harmless;
-only its coordinate changes.  Therefore \(\mathcal I\) is the entire
-gap.
+Thus \(\mathcal C\) is precisely the selected endpoint-side chord sheet.
+The endpoint germ just constructed makes \(\mathcal C\) nonempty.  The
+ordered eigenvalues of the continuous real symmetric pencil \(B_{K-1}(x)\)
+are continuous in \(x\), including at an eigenvalue crossing, so a multiple
+least singular value does not interrupt the continuation.  The folded pair
+\(u=2z^2-1\), \(v=2y^2-1\) and its reconstructed half variables are
+continuous, while the sheet inequalities are strict.  Thus \(\mathcal C\)
+is relatively open in the gap.
 
-At the two endpoints the inner parameter tends to \(j\pi/K\) and
-\((j+1)\pi/K\).  Continuity and the intermediate value theorem show
-that every parameter in that nodal interval occurs.  Conversely, for a
-fixed inner parameter the endpoint-side outer solution is unique, so
-every $j$-chord is a point of the ordered middle branch.  By
-\cref{lem:middle-branch}, its positive magnitude is
-\(s_{\min}(xI_{K-1}-A_{K-1})\).  This proves both continuation and
-exhaustion without assuming that \(\theta\mapsto x\) is monotone.
+It is also relatively closed.  At a relative closure point the chord
+identity and all sheet inequalities persist weakly.  If the weak limit had
+\(\Delta_*(x)=0\), then its two reconstructed half variables would coincide.
+This is impossible because
+\[
+ z\geq u_K^{\max}>\cos\frac{\pi}{K}
+ \geq\cos\frac{j\pi}{K}\geq y.
+\]
+The signs of the half variables cannot change in a noncentral positive gap:
+\(z>0\) throughout, while \(y=0\) would force \(x=0\), outside such a gap.
+Moreover, \(z\) cannot reach \(\mathfrak c_h\) in the interior, because
+\eqref{eq:channel-xs} would then give \(s=0\).  The inner variable cannot
+reach a nodal endpoint: the common level would be zero, the endpoint-side
+solution would be \(\mathfrak c_h\), and \eqref{eq:channel-xs} would give
+\(s=0\), whereas the middle root has no zero inside a spectral gap.  The
+outer variable cannot leave its endpoint-side component, since its first
+such point would be \(u_K^{\max}\), contradicting
+\eqref{eq:outer-level-dominates}.  Passage through \(z=1\) is harmless; only
+its coordinate changes.  Hence every relative closure point remains in
+\(\mathcal C\).  Since the open gap is an interval, \(\mathcal C\) is the
+entire gap.  This proves the first exhaustion direction: every actual gap
+point lies on the selected endpoint-side chord sheet.
+
+For the converse direction, the reconstructed angle \(\Theta\) extends
+continuously to the closed spectral gap.  The exact folded variables at the
+two endpoints give
+\[
+ \Theta(\lambda_{K-1,j+1})=\frac{(j+1)\pi}{K},\qquad
+ \Theta(\lambda_{K-1,j})=\frac{j\pi}{K}.
+\]
+For every \(\theta_0\in(j\pi/K,(j+1)\pi/K)\), the intermediate value
+theorem therefore supplies an interior gap point \(x\) with
+\(\Theta(x)=\theta_0\).  The classification just proved and uniqueness of
+the endpoint-side outer solution then give
+\[
+ y(x)=\cos\theta_0,\qquad
+ z(x)=z_K(\mathcal W_K(\cos\theta_0)),
+\]
+so the corresponding abscissa and signed root are exactly those of the
+prescribed $j$-chord.  Thus every chord parameter produces an actual point of
+the ordered middle branch.  By \cref{lem:middle-branch}, its positive
+magnitude is \(s_{\min}(xI_{K-1}-A_{K-1})\).  Both exhaustion directions
+have now been proved without assuming that \(\theta\mapsto x\) is monotone.
 
 When \(K\) is odd, the same argument applies to the positive half of
 the single central gap, continuing from the positive spectral endpoint
@@ -1556,8 +1598,9 @@ concave on \((\omega_m^{\rm e},\zeta)\).  If
 \((\log\mathcal V_m)'(\rho)\geq0\), the descending root
 satisfies \(t_{\rm out}\geq\rho\), because \(\rho\) lies at or before the unique
 lobe maximum and the descending root lies at or after it.  Suppose instead that
-\((\log\mathcal V_m)'(\rho)<0\).  Then \(\rho>a\).  Indeed, if
-\(\rho\leq a<1\), the identity
+\((\log\mathcal V_m)'(\rho)<0\).  Then \(\rho>a\).  Indeed, otherwise
+\(\rho\leq a<1\), so \(\rho<1\) and in particular \(\rho^2-1\neq0\).  The
+identity
 \[
  \frac{U_m'(\rho)}{U_m(\rho)}
  =\frac{m\rho-(m+1)a}{\rho^2-1}
@@ -1571,7 +1614,9 @@ would give
  &\geq\frac1{2(1-\rho)}-\frac1{2(\zeta-\rho)}\geq0,
 \end{aligned}
 \]
-a contradiction.  The case \(\rho=1\) is immediate because \(a<1\).
+a contradiction.  Thus the displayed quotient has been used only on its
+valid domain; if \(\rho=1\), the desired conclusion \(\rho>a\) is immediate
+from \(a<1\) and no quotient is invoked.
 Writing \(t_{\rm in}=-\cos\phi_{\rm c}\),
 \(0<\phi_{\rm c}<\pi/(m+1)\), gives
 \[
@@ -1638,9 +1683,14 @@ Therefore \(f_L(x)=(1+x)U_{L-1}(x)\) is positive, strictly increasing,
 and strictly log-concave on \([\xi,\rho]\).  In particular,
 \(\mathfrak d_\rho=(\log f_L)'(\rho)>0\), and
 \[
- \mathfrak d_\rho=\frac{L(b-\rho)-1}{\rho^2-1}
+ \mathfrak d_\rho=
+ \begin{cases}
+  \dfrac{L(b-\rho)-1}{\rho^2-1},&\rho\neq1,\\[6pt]
+  \dfrac{2L^2+1}{6},&\rho=1.
+ \end{cases}
 \]
-with the continuous value at \(\rho=1\), and
+The endpoint value follows directly from \(U_{L-1}(1)=L\) and
+\(U_{L-1}'(1)=L(L^2-1)/3\).  Moreover,
 \[
  \log f_L(\rho)-\log f_L(\xi)>\Delta_\xi\mathfrak d_\rho,
  \qquad
@@ -1693,8 +1743,16 @@ and
  \Upsilon(\omega_+)
  =\omega_+(-2\Delta_\omega+2\omega_+/L+1/L^2)>0.
 \]
-Thus \eqref{eq:N-positive-target} holds.  The case \(\rho=1\) follows
-by continuity.
+Thus \eqref{eq:N-positive-target} holds when \(\rho>1\).  If \(\rho=1\),
+then \(b=(L+1)/L\), \(Q_b=L^{-2}\), and direct substitution, using the
+endpoint value of \(\mathfrak d_\rho\), gives
+\[
+ \mathcal N=\Upsilon(1+\omega_L)
+ +\frac{2(1+\omega_L)\Delta_\omega}{L^2}
+   \frac{2L^2+1}{6}>0.
+\]
+The first term is positive by the preceding calculation, and every factor
+in the correction term is positive.
 
 Suppose next that \(\rho<1\).  Set
 \[
@@ -1780,8 +1838,10 @@ while the negative terms have magnitudes less than
 \(\mathfrak q(u)>0\), proving \eqref{eq:N-positive-target}, and hence
 \eqref{eq:central-target}, in all cases.
 
-It remains to certify that the scalar comparison concerns the least
-singular value.  Define
+It remains to certify that the scalar comparison concerns the least singular
+value.  Since \(a>0\), \(\Delta_\omega>0\), \(\rho+\omega_L>0\), and
+\(\zeta+\omega_L>0\), let \(x_*>0\) be the positive square root determined
+by
 \begin{equation}\label{eq:x-star-central}
  x_*^2=\frac{2a\Delta_\omega(\rho+\omega_L)}{\zeta+\omega_L},
  \qquad c=c_L.
@@ -1818,7 +1878,14 @@ and put
 \]
 give
 \(\mathsf{Y}_\omega\mathsf{Y}_\xi
-=\mathsf{X}_\omega\mathsf{X}_\xi\).  Also
+=\mathsf{X}_\omega\mathsf{X}_\xi\).  The identity \(u_-^2Q_b=1\) gives
+\(Q_b>0\), and \(S_b-Q_b=2b(\rho+\omega_L)>0\), so
+\(\mathfrak D_L=S_b/Q_b>1\).  Moreover, \(L\geq2\) gives
+\(\omega_L>1/2\), while \(\rho>\rho_{\rm ref}>\omega_L\); hence
+\[
+ \rho+\omega_L>2\omega_L>1>1-\omega_L>0.
+\]
+Consequently,
 \[
  \frac{\mathsf{X}_\omega^2}{\mathsf{Y}_\omega^2}
  =\frac{\mathfrak D_L(\rho+\omega_L)}{1-\omega_L}>1,
@@ -1887,11 +1954,23 @@ Put
  \Delta_L=\frac{\theta_L}{2L+1}.
 \]
 Then \(\Delta_\omega=2\sin^2\theta_L\) and
-\(1-\rho_{\rm ref}=2\sin^2(\theta_L-\Delta_L)\), so
+\(1-\rho_{\rm ref}=2\sin^2(\theta_L-\Delta_L)\).  Since all quantities are
+positive, the preceding quotient bound for \(x_*^2\) gives
 \[
- x_*<2\sqrt a\sin\theta_L,
- \qquad c<2\sqrt a\sin(\theta_L-\Delta_L).
+ x_*<2\sqrt a\sin\theta_L.
 \]
+Likewise,
+\[
+ c^2=2a(\zeta-\rho)
+ <2a^2(1-\rho_{\rm ref})
+ =4a^2\sin^2(\theta_L-\Delta_L),
+\]
+and hence
+\[
+ c<2a\sin(\theta_L-\Delta_L)
+ <2\sqrt a\sin(\theta_L-\Delta_L),
+\]
+where the last inequality uses \(0<a<1\), hence \(a<\sqrt a\).
 It remains to prove
 \begin{equation}\label{eq:angle-inequality}
  \sin\theta_L+\sin(\theta_L-\Delta_L)<\sin(2\theta_L).
@@ -1955,8 +2034,9 @@ We finish the index comparison.  Put \(M=N+1\), so the larger and
 smaller matrices have orders \(M-1\) and \(N-1\), respectively.  If
 \(\Sigma=\diag(1,-1,1,-1,\ldots)\), then
 \(\Sigma A_n\Sigma=-A_n\), so reflection reduces every noncentral
-comparison to a positive gap.  Choose a point
-\(x_j\in G_{M-1,j}\) at which its height is attained.  The hyperbolic
+comparison to a positive gap.  By the interiority observation following the
+definition of the gap heights, choose
+\(x_j\in G_{M-1,j}^{\circ}\) at which its height is attained.  The hyperbolic
 or elliptic construction above produces a point
 \(\widehat x_j\in G_{N-1,j}\), and chord exhaustion gives
 \[
@@ -2296,46 +2376,60 @@ This proves all assertions.
 
 \section{Numerical illustrations and reproducibility}\label{sec:numerics}
 
-The computations in this section illustrate the theorem but are not
-used in its proof.  The complete script
+The computations in this section illustrate the theorem but are not used in
+its proof.  The complete script
 \texttt{make\_hatano\_nelson\_figures.py}, supplied with the manuscript,
 uses NumPy, SciPy, and Matplotlib.  It constructs \(A_n(a)\) directly,
 computes Cartesian pseudospectral contours by singular value
 decomposition, and obtains gapwise estimates of \(\gamma_n\) by bounded
-scalar optimization.  Independently, the 1-Lipschitz property of
-\(x\mapsto s_{\min}(xI_n-A_n)\) gives certified lower and upper bounds
-from uniform real-gap grids.  Thus the topology labels do not depend on
-pixel connectivity or an unverified optimizer output.
+scalar optimization.  As a separate check, let \(M_h\) be the largest exact
+least singular value sampled on uniform real-gap grids of maximum spacing
+\(h\).  The 1-Lipschitz property of
+\(x\mapsto s_{\min}(xI_n-A_n)\) gives the rigorous implication
+\[
+ M_h\leq\gamma_n\leq M_h+\frac h2
+\]
+for exact samples.  The supplied implementation applies this test to
+NumPy/SciPy float64 SVD values, but it does not enclose SVD or eigenvalue
+roundoff.  Its topology labels are therefore reproducible floating-point
+checks, conditional on the computed samples, rather than validated interval
+certificates.  They avoid reliance on pixel connectivity or the scalar
+optimizer and are unused in every proof.
 
 \begin{figure}[t]
  \centering
  \includegraphics[width=\textwidth]{fig1_connectedness_transition}
- \caption{Topology change at \(a=1/4\) and \(\varepsilon=10^{-2}\).
- Shading is \(\{z:s_{\min}(zI_n-A_n)<\varepsilon\}\), and crosses are
+ \caption{Topology change indicated by the float64 computation at
+ \(a=1/4\) and \(\varepsilon=10^{-2}\).  Shading depicts
+ \(\{z:s_{\min}(zI_n-A_n)<\varepsilon\}\), and crosses are
  open-boundary eigenvalues.  Gapwise SVD estimates give
  \((\widehat\gamma_5,\ldots,\widehat\gamma_9)=
  (0.02909836,0.01465829,0.007364219,0.003820033,0.001992747)\).
- Independent Lipschitz enclosures certify the two labels above
- \(\varepsilon\) and the three below it, so $N_c=7$.  The merger is a
- perturbation-level-dependent pseudospectral event, not the onset of
- skin localization.}
+ Applying the grid/Lipschitz check to the float64 samples places the computed
+ margins for \(n=5,6\) above \(\varepsilon\) and those for \(n=7,8,9\)
+ below it, yielding the reported numerical threshold \(N_c=7\).  As
+ explained in the text, these checks are not interval certificates.  The
+ merger is a perturbation-level-dependent pseudospectral event, not the onset
+ of skin localization.}
  \label{fig:transition}
 \end{figure}
 
-The five panels of \cref{fig:transition} show two disconnected cases,
-the first connected case, and two subsequent connected cases.  In
-agreement with the deformation retraction, each connected cloud has no
-hole: every vertical section is an interval, and the real trace
-contains the full open-boundary spectral segment.
+The five panels of \cref{fig:transition} illustrate the computed
+classification: two disconnected cases, the first connected case, and two
+subsequent connected cases.  As proved above, whenever the true
+pseudospectrum is connected it has no hole: every vertical section is an
+interval, and the real trace contains the full open-boundary spectral
+segment.
 
 \begin{figure}[t]
  \centering
  \includegraphics[width=.76\textwidth]{fig2_gap_barrier_bounds}
- \caption{Gapwise SVD estimates \(\widehat\gamma_n\) of the strictly
- decreasing barriers and the enclosure
+ \caption{Gapwise float64 SVD estimates \(\widehat\gamma_n\) of the strictly
+ decreasing barriers and the exact analytic enclosure
  \(\mathcal L_n(a)\leq\gamma_n\leq\mathcal U_n(a)\) for \(a=1/4\).
- The horizontal line \(\varepsilon=10^{-2}\) selects \(N_c=7\); the
- explicit bounds in \eqref{eq:N-two-sided-main} certify
+ The plotted estimates first cross below \(\varepsilon=10^{-2}\) at \(n=7\),
+ again indicating the reported numerical threshold.  Independently, the
+ exact analytic bounds in \eqref{eq:N-two-sided-main} give
  \(6\leq N_c\leq9\).  The nearly parallel log-scale curves display the
  common \((n+1)a^{n/2}\) scale.}
  \label{fig:barriers}
@@ -2343,7 +2437,7 @@ contains the full open-boundary spectral segment.
 
 \Cref{fig:barriers} separates the two roles of the analysis.  The
 strict comparison theorem identifies a unique crossing of a fixed
-\(\varepsilon\), while the elementary upper and lower envelopes certify
+\(\varepsilon\), while the elementary upper and lower envelopes prove
 its sharp exponential-polynomial scale without numerically resolving
 the maximizing gap.
 

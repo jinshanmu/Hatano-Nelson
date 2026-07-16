@@ -14,10 +14,13 @@ lake build
 
 - Exit status: `0`.
 - Final line: `Build completed successfully (8130 jobs).`
-- Elapsed wall time: approximately 8 minutes 29 seconds.
+- Full acceptance-run wall time: approximately 8 minutes 29 seconds.
 - Errors, warnings, and linter diagnostics: none.
 - The command was run literally with no flags; no `LEAN*` or `LAKE*` option
   variables were set, and no Lean source changed during the run.
+- After the manuscript-only repairs, a final literal incremental replay of the
+  same command exited `0` in approximately 8.5 seconds and printed the same
+  8,130-job success line; the Lean source closure was unchanged.
 
 The separate default-options trust-audit command is:
 
@@ -37,21 +40,22 @@ appeared.
 
 - Audited source:
   `SIMAX_submission_bundle/final_connected_pseudospectrum_proof_2026-07-16.tex`
-- Source size: 2,477 lines; 89,709 bytes.
+- Source size: 2,571 lines; 93,912 bytes.
 - Source SHA-256:
-  `84e0021272c9a9eb5cbfba3f6c82c4219bc2d64382232ebe68084bc9febe29b6`.
+  `280945bf9f0e0952bfb0eca719754ab6493490d4cbfe6c18bb9a61bdf3744b75`.
 - Last full source/scope review: 2026-07-16.
 - Compiled PDF:
   `SIMAX_submission_bundle/final_connected_pseudospectrum_proof_2026-07-16.pdf`.
-- Final PDF: 33 pages; 832,821 bytes; SHA-256
-  `115b022b5e67a5c06046f12ba4d7b43760ae1ed6898d434ad98900eb498022c0`.
+- Final PDF: 34 pages; 841,083 bytes; SHA-256
+  `7cdd4b4047fcae74eb041f609429ee5cbe51e3c9afa21e4c152d8279cc574e36`.
 - The final `latexmk` run exited successfully.  Its log contains no TeX errors,
   LaTeX/package warnings, undefined references, rerun requests, or overfull
-  boxes.  It contains three benign underfull-vbox layout notices on the
-  figure/bibliography pages.
-- All 33 pages were rendered and visually inspected after the final source
-  edit, including the dimension-one, folded-formula, and Lambert-`W` pages;
-  no clipping, overlap, or malformed display was found.
+  boxes.  It contains one benign underfull-vbox layout notice on the
+  bibliography pages.
+- All 34 pages were rendered and visually inspected after the final source
+  edit, including the dimension-one, folded-formula, continuation,
+  central-comparison, numerical-caveat, and Lambert-`W` pages; no clipping,
+  overlap, or malformed display was found.
 
 The dated source preserves the manuscript's Lambert-`W_{-1}` threshold formula
 and lower-branch expansion.  The old bundle name, undated TeX source, and
@@ -75,7 +79,11 @@ proved: it separates dimensionless identities from physical exposition, gives
 the complete bordered odd-dilation matrix, states the folded identities on
 their proved domains including collision, corrects the weak rational endpoint
 bound while retaining the strict consequence, and states the all-angle
-principal-sine formula.
+principal-sine formula.  It now also prints every proof-expansion item recorded
+by the audit: the even-indexed spectrum calculation, singular Schur extension,
+both chord-exhaustion directions, gap-maximizer interiority, guarded quotient,
+direct `rho = 1` endpoint calculation, positive-root choice, and the missing
+positivity and weakening steps.
 
 `ConnectedPseudospectrum/LambertWThreshold.lean` supplies the lower real branch
 that is absent from the pinned Mathlib revision.  It constructs the branch by

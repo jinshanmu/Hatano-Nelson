@@ -1,0 +1,3110 @@
+% Compile from this directory with the current IOP class on TEXINPUTS:
+%   TEXINPUTS=../ioplatextemplate: latexmk -pdf -interaction=nonstopmode \
+%     -halt-on-error exact_connectedness_threshold_hatano_nelson.tex
+% Regenerate all figures with:
+%   python3 make_hatano_nelson_figures.py
+\ifdefined\JPADoubleAnonymous
+  \documentclass[12pt,anonymous]{iopjournal}
+\else
+  \documentclass[12pt]{iopjournal}
+  \input{jpa_identified_metadata}
+\fi
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amsfonts,amssymb,amsthm,mathtools}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{microtype}
+\usepackage{ragged2e}
+\usepackage{etoolbox}
+\usepackage{aliascnt}
+\usepackage{placeins}
+
+\allowdisplaybreaks
+\DeclareGraphicsExtensions{.pdf,.png,.jpg}
+\numberwithin{equation}{section}
+\setlength{\headheight}{14.5pt}
+
+\newtheorem{theorem}{Theorem}[section]
+\newaliascnt{lemma}{theorem}
+\newtheorem{lemma}[lemma]{Lemma}
+\aliascntresetthe{lemma}
+\newaliascnt{proposition}{theorem}
+\newtheorem{proposition}[proposition]{Proposition}
+\aliascntresetthe{proposition}
+\theoremstyle{remark}
+\newaliascnt{remark}{theorem}
+\newtheorem{remark}[remark]{Remark}
+\aliascntresetthe{remark}
+
+\usepackage[nameinlink,noabbrev]{cleveref}
+\crefname{appendix}{appendix}{appendices}
+\Crefname{appendix}{Appendix}{Appendices}
+
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\tridiag}{tridiag}
+
+\newcommand{\C}{\mathbb C}
+\newcommand{\R}{\mathbb R}
+\newcommand{\ii}{\mathrm i}
+\newcommand{\proofstage}[1]{%
+  \par\medskip\noindent\textit{#1}\par\nobreak\smallskip}
+
+%TC:ignore
+\AtBeginDocument{\justifying}
+\makeatletter
+\patchcmd{\articletype}{Journal Name}
+  {Journal of Physics A: Mathematical and Theoretical}{}
+  {\PackageError{manuscript}{Journal-name patch failed}{}}
+\patchcmd{\title}{\raggedright}{\justifying}{}
+  {\PackageError{manuscript}{Title-justification patch failed}{}}
+\patchcmd{\abstract}{\raggedright}{\justifying\noindent}{}
+  {\PackageError{manuscript}{Abstract-justification patch failed}{}}
+\patchcmd{\@makecaption}{\raggedright}{\justifying\noindent}{}
+  {\PackageError{manuscript}{Caption-justification patch failed}{}}
+\makeatother
+\fancyhead[L]{{\small\sffamily IOP Publishing}\hspace{5mm}
+  \textit{Journal of Physics A: Mathematical and Theoretical}}
+\ifdefined\JPADoubleAnonymous
+  \fancyhead[R]{Anonymous manuscript}
+\else
+  \fancyhead[R]{\JPAHeaderAuthor}
+\fi
+%TC:endignore
+
+\ifdefined\JPADoubleAnonymous
+  \hypersetup{
+    pdftitle={Exact Connectedness Threshold for Pseudospectra of the Open Hatano--Nelson Chain},
+    pdfauthor={}
+  }
+\else
+  \hypersetup{
+    pdftitle={Exact Connectedness Threshold for Pseudospectra of the Open Hatano--Nelson Chain},
+    pdfauthor={\JPAPdfAuthor}
+  }
+\fi
+
+\begin{document}
+
+\reversemarginpar
+\begingroup
+% The generic class's narrow received/revised placeholders create unavoidable
+% underfull diagnostics; confine the tolerance to this class-owned block.
+\hbadness=10000
+\articletype{Paper}
+\endgroup
+
+\title{Exact Connectedness Threshold for Pseudospectra of the Open
+Hatano--Nelson Chain}
+
+\ifdefined\JPADoubleAnonymous
+  \author{}
+\else
+  \JPAIdentifiedFrontMatter
+\fi
+
+\keywords{open Hatano--Nelson chain, Euclidean pseudospectrum,
+non-Hermitian skin effect, connectedness threshold, least singular value,
+backward-error barrier}
+
+\begin{abstract}
+We determine the exact finite-size transition at which the Euclidean
+pseudospectrum of the open Hatano--Nelson chain changes from separated
+mode-resolving components to a single connected uncertainty cloud.  At fixed
+unstructured spectral-norm uncertainty, this merger marks the loss of
+component-based separation between open-boundary spectral labels.  For the
+dimensionless one-particle matrix
+\(A_n(a)=\tridiag(a,0,1)\), \(0<a<1\), the least singular value of
+\((x+\ii y)I_n-A_n(a)\) is nondecreasing in \(\lvert y\rvert\); consequently,
+every pseudospectral component is contractible.  If \(\gamma_n\) is the
+largest real-axis least-singular-value barrier between adjacent open-boundary
+eigenvalues, then
+\(\sigma_\varepsilon(A_n)\) is connected if and only if
+\(\varepsilon>\gamma_n\).  We prove the strict finite-size monotonicity
+\(\gamma_{n+1}<\gamma_n\) and the sharp-order bounds
+\(\gamma_n\asymp_a(n+1)a^{n/2}\).  Thus the first-connected and
+eventual-connected thresholds coincide: once the pseudospectrum becomes
+connected, connectedness persists as the chain grows.  For fixed \(a\), the
+critical site count satisfies
+\[
+ N_c=\frac{2}{\log(1/a)}
+ \left[\log(1/\varepsilon)+\log\!\log(1/\varepsilon)\right]+O_a(1)
+ \qquad(\varepsilon\downarrow0).
+\]
+The leading coefficient \(2/\log(1/a)\) is the amplitude skin depth in
+lattice-spacing units: the same imaginary gauge that localizes the
+open-boundary modes sets the asymptotic finite-size scale for the collapse
+of component-based worst-case spectral resolution.
+\end{abstract}
+
+\section{Introduction}\label{sec:introduction}
+
+In a non-Hermitian open chain, fixed worst-case spectral uncertainty turns
+system size into a control parameter for mode resolution.  The
+Hatano--Nelson model was introduced in
+\cite{HatanoNelson1996,HatanoNelson1997}.  In the open chain considered
+here, a real spectrum coexists with strongly edge-localized eigenmodes.
+For a short clean chain, the Euclidean pseudospectrum consists of separated
+components, each containing one open-boundary eigenvalue.  As the number of
+sites grows, nonnormal sensitivity expands these components until the last
+real-axis gap closes and a single connected uncertainty cloud remains.  The
+finite-size problem is to determine the chain length of this final merger
+and establish whether connectedness persists as sites are added.
+
+Connectedness defines a useful worst-case spectral-resolution transition
+because distinct pseudospectral components provide
+perturbation-independent cluster labels.  Along any continuous perturbation
+path inside a prescribed spectral-norm ball, each eigenvalue branch remains
+confined to its initial component.  After all components merge, spectral
+location alone ceases to supply such a label for the open-boundary modes.
+The pseudospectrum here is the union of spectra over the perturbation ball,
+whereas each fixed perturbation contributes only its own eigenvalues.
+Knowledge of the actual perturbation path may therefore permit branchwise
+tracking beyond the pseudospectral component merger.
+
+With the site convention that \(t_R\) moves a particle from \(j\) to \(j+1\)
+and \(t_L\) moves it from \(j+1\) to \(j\), take \(0<t_R<t_L\).  A
+positive-sign one-particle representative of the open chain is
+\[
+ H_n^{\rm OBC}=t_LA_n(a),\qquad a=\frac{t_R}{t_L},
+\]
+where the dimensionless matrix is the real tridiagonal Toeplitz path
+\begin{equation}\label{eq:A-matrix}
+ A_n(a)=\tridiag(a,0,1)
+ =\begin{bmatrix}
+ 0&1\\
+ a&0&\ddots\\
+ &\ddots&\ddots&1\\
+ &&a&0
+ \end{bmatrix},
+ \qquad n\geq2,\quad 0<a<1,
+\end{equation}
+where the three arguments of $\tridiag$ denote the subdiagonal,
+diagonal, and superdiagonal, respectively.  For a matrix
+\(A\in\C^{n\times n}\), the Euclidean \(\varepsilon\)-pseudospectrum under
+the strict convention used here is
+\begin{equation}\label{eq:intro-pseudospectrum}
+ \sigma_\varepsilon(A)
+ =\sigma(A)\cup
+ \{z\in\C:\lVert(zI_n-A)^{-1}\rVert_2>\varepsilon^{-1}\}
+ =\{z\in\C:s_{\min}(zI_n-A)<\varepsilon\}.
+\end{equation}
+Equivalently, it is the union of the spectra of \(A+\Delta A\) over all
+unstructured complex perturbations with
+\(\lVert\Delta A\rVert_2<\varepsilon\)
+\cite{TrefethenEmbree2005}.  The strict inequalities in this convention are
+important at the merger threshold.  For nonnormal matrices, pseudospectra
+also expose spectral sensitivity and resolvent growth that the eigenvalues
+alone can miss \cite{TrefethenEmbree2005,Trefethen1997}.
+
+The main result is most simply described by a real-axis backward-error
+barrier.  Let \(\gamma_n\) be the largest, over all gaps between adjacent
+open-boundary eigenvalues, of the maximum least singular value
+\(s_{\min}(xI_n-A_n)\) in that gap.  Thus \(\gamma_n\) is the largest
+backward error that must be crossed to remove the final separation between
+adjacent open-boundary spectral labels.  We prove that every
+pseudospectral component is contractible and that
+\(\sigma_\varepsilon(A_n)\) is connected exactly when
+\(\varepsilon>\gamma_n\).  The decisive finite-size result is
+\(\gamma_{n+1}<\gamma_n\) for every \(n\geq2\): a fixed uncertainty has one
+system-size crossing, after which the cloud remains connected.
+The sharp scale
+\(\gamma_n\asymp_a(n+1)a^{n/2}\) yields
+\[
+ N_c(a,\varepsilon)=\frac{2}{\log(1/a)}
+ \left(\log(1/\varepsilon)+\log\!\log(1/\varepsilon)\right)+O_a(1).
+\]
+The coefficient \(2/\log(1/a)\) is the amplitude skin depth; the intensity
+decay length is half as large.  Thus the result is global in spectral
+parameter and exact at finite size: it determines the topology of the
+complete Euclidean pseudospectrum, identifies the final inter-mode barrier,
+proves its strict decrease with system size, and derives the
+skin-depth-controlled site threshold.
+
+The theorem concerns unstructured spectral-norm uncertainty and identifies
+the merger of the complete finite-dimensional Euclidean pseudospectrum into
+one spectral-resolution class.  The non-Hermitian skin effect is already
+present in the eigenmodes at every \(n\).  Single-realization spectra,
+structured-disorder thresholds, and dynamical amplification are
+complementary problems that may be governed by different scales.
+
+The imaginary gauge makes the physical origin of the exponential scale
+transparent.  Put
+\[
+ h=-\frac12\log a>0,\qquad a=e^{-2h},\qquad
+ r=\sqrt a=e^{-h}.
+\]
+The diagonal gauge
+\[
+ \mathcal G_n(\varrho)=\diag(1,\varrho,\ldots,\varrho^{n-1})
+\]
+and the upper-shift matrix \(V_n=\tridiag(0,0,1)\) give the
+dimensionless similarity
+\[
+ A_n(a)=\mathcal G_n(r)\bigl[r(V_n+V_n^T)\bigr]
+ \mathcal G_n(r)^{-1}.
+\]
+Multiplying by \(t_L\) and using \(t_Lr=\sqrt{t_Lt_R}\) recovers the
+usual physical imaginary-gauge formula for \(H_n^{\rm OBC}\).
+The nonunitary similarity changes the singular-value geometry underlying
+the Euclidean pseudospectrum.
+The open-boundary eigenvalues are real, while the right
+eigenmodes carry the envelope \(e^{-h(j-1)}\) and accumulate at the left
+edge.  This is the non-Hermitian skin effect
+\cite{OkumaEtAl2020,YaoWang2018,YokomizoMurakami2019}; see
+\cite{ZhangEtAl2022} for a review.  Under periodic boundary conditions the
+Bloch dispersion traces
+\[
+ \mathcal E_{\rm PBC}(k)=t_Le^{\ii k}+t_Re^{-\ii k}
+ =(t_L+t_R)\cos k+\ii(t_L-t_R)\sin k.
+\]
+A finite periodic ring samples this ellipse at
+\(k=2\pi q/n\), \(q=0,\ldots,n-1\).
+The connectedness transition studied here asks how the same nonreciprocal
+gauge controls the worst-case resolution of the finite open-boundary
+spectrum.
+
+The analysis assumes \(0<a<1\).  At \(a=0\), \(A_n(0)=V_n\) is the
+unidirectional Jordan-block limit, the diagonal gauge is singular, and the
+limits \(a\downarrow0\) and \(\delta\downarrow0\), where \(\delta\) is the
+normalized uncertainty level used below, can depend on their order.
+Accordingly, the fixed-\(a\) small-uncertainty asymptotic is stated for
+\(0<a<1\).
+
+The relevant mathematical literature has several distinct strands.
+Classical limit-set theory for banded Toeplitz matrices was initiated in
+\cite{SchmidtSpitzer1960}; later work developed inverse-norm, spectral, and
+finite-section pseudospectral theory in
+\cite{BottcherGrudskySilbermann1997,ReichelTrefethen1992,
+BottcherEmbreeTrefethen2002,BottcherGrudsky2005}.  Closed-form spectral,
+conditioning, and pseudospectral formulas for tridiagonal Toeplitz matrices
+are surveyed in \cite{NoschesePasquiniReichel2013}.  For general matrices,
+component coalescence and distance to defectivity are linked in
+\cite{AlamEtAl2011}; optimization and variational analyses of
+pseudospectra appear in
+\cite{BurkeLewisOverton2003,LewisPang2008}.  These works provide broad
+spectral and geometric theory.  The consecutive-size comparison of the
+global barrier established here addresses a distinct finite-size problem.
+
+Pseudospectral approaches to Hatano--Nelson-type localization include
+random bidiagonal models \cite{TrefethenContediniEmbree2001} and
+interpretations of nonnormal boundary sensitivity
+\cite{OkumaSato2020,OkumaSato2021}.  Mathematical foundations of the skin
+effect were developed in \cite{AmmariEtAl2024}.  Spectra and
+pseudospectra of tridiagonal \(k\)-Toeplitz matrices were analysed in
+\cite{AmmariEtAl2025}, with the finite-section pseudospectral convergence
+statement and the resulting limiting-spectrum theorems corrected in the
+published corrigendum \cite{AmmariCorrigendum2026}.  These contributions
+concern broader Toeplitz or boundary-sensitivity mechanisms.  The present
+result addresses a separate finite-dimensional connectedness problem.
+
+For asymmetric lattices, Kiorpelidis and Makris
+\cite{KiorpelidisMakris2025} reported numerically an eigenvalue-cloud merger
+crossover, denoted \(\widetilde N\), and distinguished it from the
+persistence of long-time dynamical amplification.  Sirker
+\cite{Sirker2026} analyses open-chain pseudospectral contours and, at a fixed
+reference energy \(E\), the exponentially small singular-value branch tied
+to the Toeplitz index.  Here the object is the topology of the complete
+finite-dimensional Euclidean pseudospectrum at fixed uncertainty.  We
+identify its global inter-eigenvalue barrier and prove that the barrier
+decreases strictly with matrix size, thereby excluding re-entrant splitting.
+The same barrier yields the finite-size threshold and its
+logarithmic-plus-log-log asymptotic.
+
+The proof has three conceptual stages.  Vertical monotonicity first reduces
+the planar connectedness problem to real-axis barriers.  Persymmetry then
+converts singular values into signed eigenvalue branches; folded Chebyshev
+coordinates compare the noncentral gaps, while interlacing resolves the
+parity-changing central gaps.  Finally, the topology argument and sharp
+barrier bounds yield the exact connectedness criterion and the
+skin-depth-controlled threshold law.  The algebraic certificates required
+by these steps are recorded in
+\cref{app:vertical-certificate,app:folded-transfer,app:half-chord,%
+app:chord-exhaustion,app:central-scalar,app:central-certification}.
+The figures in \cref{sec:numerics} illustrate the transition, barrier scale,
+and skin-depth mechanism, and \cref{sec:physical-conclusion} restores the
+dimensional Hatano--Nelson interpretation.
+
+\section{Model and main results}\label{sec:main-results}
+
+This section turns the merger problem into an exact comparison between the
+uncertainty level and the largest real-axis barrier.  The resulting scalar
+quantity retains the global physical content of the pseudospectrum: it
+measures the perturbation needed to remove the final separation between
+adjacent open-boundary spectral labels.
+
+For $n\geq2$ and $0<a<1$, let
+\[
+ A_n(a)=\tridiag(a,0,1).
+\]
+When \(a\) is fixed, we write \(A_n\) for \(A_n(a)\).
+For $\varepsilon>0$, write
+\[
+ \sigma_\varepsilon(A_n)=
+ \{z\in\C:s_{\min}(zI_n-A_n)<\varepsilon\}.
+\]
+Define
+\[
+ N_e(a,\varepsilon)=\min\{N\geq2:
+ \sigma_\varepsilon(A_n)\text{ is connected for every }n\geq N\},
+\]
+\[
+ N_f(a,\varepsilon)=\min\{N\geq2:
+ \sigma_\varepsilon(A_N)\text{ is connected}\}.
+\]
+The following theorem proves that both defining sets are nonempty.
+
+For the remainder of the article, put
+\[
+ r=\sqrt a,\qquad
+ J_n=[\boldsymbol 1_{\{i+j=n+1\}}]_{i,j=1}^n.
+\]
+Thus \(A_n=V_n+aV_n^T\).  Here, \(\mathbf e_j\) denotes a Euclidean
+coordinate vector of the ambient dimension, and \(U_j(t)\) denotes the
+Chebyshev polynomial of the second kind, with \(U_{-1}=0\).
+
+When the dimension is \(n\), write \(N=n+1\) and define
+\begin{equation}\label{eq:main-definitions}
+ I_n^{\mathrm{sp}}=
+ \left[-2r\cos\frac{\pi}{N},2r\cos\frac{\pi}{N}\right],
+ \quad
+ g_n(x)=s_{\min}(xI_n-A_n),
+ \quad
+ \gamma_n=\max_{x\in I_n^{\mathrm{sp}}}g_n(x).
+\end{equation}
+The explicit lower and upper barriers used below are
+\begin{align}
+ \mathcal U_n(a)&=r^n\csc\frac{\pi}{N},\label{eq:main-U-def}\\
+ \mathcal L_n(a)&=
+ \left(1+r^2-2r\cos\frac{\pi}{N}\right)
+ \frac{r^n(1-r^2)}
+ {(1-r^{2N})\sin\frac{3\pi}{2N}}.\label{eq:main-L-def}
+\end{align}
+The quantity \(g_n(x)\) is the minimum unstructured spectral-norm
+perturbation needed to place an eigenvalue at the real point \(x\).
+Accordingly, \(\gamma_n\) will be shown to be the largest backward-error
+barrier separating adjacent open-boundary spectral labels.  It is a global
+quantity: determining it requires examining every real inter-eigenvalue
+gap, whereas one spectral parameter provides only local information.
+
+\begin{theorem}[Main theorem]\label{thm:main}
+For every $0<a<1$ and $\varepsilon>0$, the following assertions hold.
+\begin{enumerate}
+\item For every $n\geq2$, every connected component of
+$\sigma_\varepsilon(A_n(a))$ is
+contractible.
+\item For $n\geq2$, the barrier sequence is strictly decreasing,
+$\gamma_{n+1}<\gamma_n$, tends to zero, and
+\[
+ \sigma_\varepsilon(A_n(a))\text{ is connected}
+ \quad\Longleftrightarrow\quad \varepsilon>\gamma_n.
+\]
+\item The first-connectedness and eventual thresholds coincide:
+\[
+ N_c(a,\varepsilon):=N_f(a,\varepsilon)=N_e(a,\varepsilon).
+\]
+Moreover,
+\begin{equation}\label{eq:N-two-sided-main}
+ 1+\max\{n\geq2:\mathcal L_n(a)\geq\varepsilon\}
+ \leq N_c(a,\varepsilon)\leq
+ \min\{n\geq2:\mathcal U_n(a)<\varepsilon\},
+\end{equation}
+where the maximum of the empty set is understood to be $1$.
+\item For fixed $a$, as $\varepsilon\downarrow0$,
+\begin{equation}\label{eq:N-asymptotic-main}
+ N_c(a,\varepsilon)=\frac{2}{\log(1/a)}
+ \left(\log(1/\varepsilon)+\log\!\log(1/\varepsilon)\right)+O_a(1),
+\end{equation}
+and $N_c(a,\varepsilon)=2$ if and only if $\varepsilon>a$.
+\end{enumerate}
+\end{theorem}
+
+The theorem turns the growth-induced cloud merger into an exact
+size-dependent transition.  Vertical monotonicity makes every component
+connection visible on the real energy axis, where \(\gamma_n\) is the final
+backward-error barrier between open-boundary spectral labels.  Strict
+comparison in consecutive dimensions makes the transition one-way, and the
+sharp-order bounds show that the imaginary gauge controls both skin
+localization and the loss of global spectral-cluster resolution.
+
+\section{Vertical monotonicity}\label{sec:vertical}
+
+The topological reduction rests on a monotonicity property that makes every
+pseudospectral component connection visible on the real axis.
+
+\begin{lemma}[Vertical monotonicity]\label{lem:vertical}
+For every real \(x\),
+\[
+ y\longmapsto s_{\min}((x+\ii y)I_n-A_n),\qquad y\geq0,
+\]
+is nondecreasing.
+\end{lemma}
+
+\begin{proof}
+Put \(Y=y^2\), and, for \(t\geq0\), define
+\[
+ \mathcal P_n(Y,t)=((x+\ii\sqrt Y)I_n-A_n)^*
+ ((x+\ii\sqrt Y)I_n-A_n)-t^2I_n,
+ \qquad F_n(Y,t)=\det \mathcal P_n(Y,t).
+\]
+For each \(k\geq1\), define \(\mathcal P_k(Y,t)\) by replacing \(n\) with
+\(k\), and set \(F_k(Y,t)=\det \mathcal P_k(Y,t)\); also set \(F_0=1\).
+The key finite-dimensional implication is
+\begin{equation}\label{eq:det-derivative-positive}
+ \mathcal P_n(Y,t)>0\quad\Longrightarrow\quad
+ \partial_YF_n(Y,t)>0.
+\end{equation}
+
+The determinant implication \eqref{eq:det-derivative-positive} is the only
+algebraic input needed for the continuation argument.  Its proof is given in
+\cref{prop:vertical-determinant-certificate}.  The endpoint-corrected
+pentadiagonal pencil leads to a convolution of positive principal minors.
+Only one convolution coefficient can be negative, and a strict cofactor
+inequality absorbs it with the positive surplus \(2a^2(1-a)^2\).
+
+Finally fix \(Y_0\geq0\).  When the least singular value at \(Y_0\) equals
+zero, monotonicity follows from nonnegativity of singular values.  Otherwise
+take \(0\leq t<s_{\min}((x+\ii\sqrt{Y_0})I_n-A_n)\).  On the maximal interval
+to the right of \(Y_0\) on which \(\mathcal P_n(Y,t)>0\), implication
+\eqref{eq:det-derivative-positive} makes its determinant strictly increasing.
+At any finite right endpoint, continuity of Hermitian eigenvalues would
+produce a positive-semidefinite singular matrix with determinant zero.
+Strict increase from the positive determinant at \(Y_0\) precludes such an
+endpoint.
+Thus \(\mathcal P_n(Y,t)>0\) for every \(Y\geq Y_0\).  Letting \(t\) increase to
+the least singular value at \(Y_0\) proves the lemma.
+\end{proof}
+
+Consequently, at fixed real part, every vertical section of the strict
+pseudospectrum is an interval symmetric about the real axis.  This is the
+topological reduction used in \cref{sec:topology-bounds}: every component
+connection is visible on the real trace, so real-axis barriers determine
+component separation.
+
+\section{Strict finite-size comparison of real-gap barriers}
+\label{sec:mesh}
+
+The final barrier can occur in any inter-eigenvalue gap, and the identity of
+the central gap changes with parity.  A global finite-size comparison must
+therefore control every gap.  Persymmetry turns singular values into signed
+eigenvalue branches, folded Chebyshev coordinates parametrize those
+branches, scale inequalities compare noncentral gaps, and a separate
+interlacing argument handles the parity-changing central gaps.  We first
+define the local real-gap barriers.
+Write the eigenvalues in decreasing order as
+\[
+ \lambda_{n,k}=2r\cos\frac{k\pi}{n+1},\qquad 1\leq k\leq n,
+\]
+and call
+\[
+ G_{n,k}=[\lambda_{n,k+1},\lambda_{n,k}],\qquad
+ \gamma_{n,k}=\max_{x\in G_{n,k}}g_n(x),\qquad 1\leq k<n,
+\]
+the closed spectral gaps and their heights.  Continuity guarantees that the
+maximum on each compact gap is attained, while the spectral endpoints have
+height zero.  Every
+interior gap point belongs to the resolvent set, so \(xI_n-A_n\) is invertible
+there and \(g_n(x)>0\).  Consequently every gap height is positive and every
+maximizer lies in the open gap.  Hence
+\begin{equation}\label{eq:gamma-def}
+ \gamma_n=\max_{1\leq k<n}\gamma_{n,k}.
+\end{equation}
+Thus \(\gamma_{n,k}\) is the local backward-error barrier between two
+adjacent open-boundary modes, and \(\gamma_n\) is the final such barrier to
+be overcome.  Strict decrease of this maximum makes the connectedness
+transition persistent as the site count grows.
+
+\begin{lemma}[Strict barrier comparison]\label{lem:mesh}
+For every \(n\geq2\),
+\[
+ \gamma_{n+1}<\gamma_n.
+\]
+\end{lemma}
+
+Persymmetry supplies the signed spectral representation needed for the
+finite-size comparison:
+\(A_nJ_n=J_nA_n^T\), so
+\(B_n(x)=(xI_n-A_n)J_n\) is real symmetric.  Moreover,
+\[
+ (xI_n-A_n-sJ_n)J_n=B_n(x)-sI_n.
+\]
+Since \(J_n\) is orthogonal, the absolute eigenvalues of \(B_n(x)\)
+are exactly the singular values of \(xI_n-A_n\), including multiplicity.
+Consequently,
+\begin{equation}\label{eq:signed-pencil}
+ s_{\min}(xI_n-A_n)
+ =\min\{|s|:\det(xI_n-A_n-sJ_n)=0\}.
+\end{equation}
+Let \(q_n(x,s)=\det(xI_n-A_n-sJ_n)\).
+\begin{lemma}[The middle signed branch]\label{lem:middle-branch}
+Write the eigenvalues of the real symmetric matrix
+\[
+ B_n(x)=(xI_n-A_n)J_n
+\]
+in decreasing order as
+\(\alpha_1(x)\geq\cdots\geq\alpha_n(x)\), and abbreviate
+\(\lambda_k=\lambda_{n,k}\).
+If \(\lambda_{j+1}<x<\lambda_j\), then
+\[
+ s_{\min}(xI_n-A_n)=|s_*(x)|,
+ \qquad \operatorname{sgn}(s_*(x))=(-1)^j,
+\]
+where
+\[
+ s_*(x)=
+ \begin{cases}
+  \alpha_m(x),&n=2m,\\
+  \alpha_{m+1}(x),&n=2m+1
+ \end{cases}.
+\]
+\end{lemma}
+
+\begin{proof}
+Let \(A_n^{\rm sym}=r(V_n+V_n^T)\).  Since
+\(A_n=\mathcal G_n(r)A_n^{\rm sym}\mathcal G_n(r)^{-1}\) and
+\(\mathcal G_n(r)^{-1}J_n
+=r^{-(n-1)}J_n\mathcal G_n(r)\),
+\begin{equation}\label{eq:B-congruence}
+ B_n(x)=r^{-(n-1)}\mathcal G_n(r)(xI_n-A_n^{\rm sym})
+ J_n\mathcal G_n(r).
+\end{equation}
+The sine eigenvector of \(A_n^{\rm sym}\) belonging to \(\lambda_k\) is an
+eigenvector of \(J_n\) with eigenvalue \((-1)^{k+1}\).  Hence
+\eqref{eq:B-congruence} and Sylvester's law of inertia show that
+\(B_n(x)\) has the same inertia as the diagonal matrix with entries
+\[
+ (-1)^{k+1}(x-\lambda_k),\qquad 1\leq k\leq n.
+\]
+Counting signs gives
+\begin{equation}\label{eq:middle-inertia}
+ \nu_+(B_{2m}(x))=
+ \begin{cases}m,&j\text{ even},\\m-1,&j\text{ odd},\end{cases}
+ \qquad
+ \nu_+(B_{2m+1}(x))=
+ \begin{cases}m+1,&j\text{ even},\\m,&j\text{ odd}.
+ \end{cases}
+\end{equation}
+
+First let \(n=2m\).  Permute the coordinates into the two groups
+\[
+ (1,\ldots,m),\qquad(2m,2m-1,\ldots,m+1).
+\]
+In these coordinates
+\begin{equation}\label{eq:even-dilation}
+\begin{aligned}
+ B_{2m}(x)&=\widehat P_m(x)-\mathcal R_{\rm bd},\\
+ \widehat P_m(x)&=\begin{bmatrix}0&P_m(x)\\P_m(x)^T&0\end{bmatrix},\\
+ \mathcal R_{\rm bd}
+ &=\begin{bmatrix}\mathbf e_m\mathbf e_m^T&0\\
+ 0&a \mathbf e_m\mathbf e_m^T\end{bmatrix},
+\end{aligned}
+\end{equation}
+where \(P_m(x)=xI_m-A_m\).  Thus \(\mathcal R_{\rm bd}\geq0\) and
+\(\operatorname{rank}\mathcal R_{\rm bd}=2\).  For
+\(\Gamma=\diag(I_m,-I_m)\),
+\[
+ \widetilde B=-\Gamma B_{2m}(x)\Gamma
+ =\widehat P_m(x)+\mathcal R_{\rm bd}
+ =B_{2m}(x)+2\mathcal R_{\rm bd}.
+\]
+If \(\widetilde\alpha_1\geq\cdots\geq\widetilde\alpha_{2m}\) are the
+eigenvalues of
+\(\widetilde B\), then
+\begin{equation}\label{eq:alpha-reflection}
+ \widetilde\alpha_k=-\alpha_{2m+1-k}.
+\end{equation}
+Positive-semidefinite rank-two interlacing gives
+\begin{equation}\label{eq:rank-two-interlace}
+ \widetilde\alpha_k\geq\alpha_k\geq\widetilde\alpha_{k+2},
+ \qquad1\leq k\leq2m-2.
+\end{equation}
+If \(j\) is even, the only candidates for minimum modulus
+have moduli \(\alpha_m\) and
+\(-\alpha_{m+1}=\widetilde\alpha_m\), and
+\(\alpha_m\leq\widetilde\alpha_m\).  If \(j\) is odd and \(m\geq2\), the two
+candidates have moduli \(\alpha_{m-1}\) and
+\(-\alpha_m=\widetilde\alpha_{m+1}\); taking \(k=m-1\) in
+\eqref{eq:rank-two-interlace} gives
+\(\alpha_{m-1}\geq\widetilde\alpha_{m+1}\).  For \(m=1\), both eigenvalues in
+the sole gap are negative, so the larger one \(\alpha_1\) has minimum
+modulus.  Thus \(\alpha_m\) always attains the minimum modulus, and its
+sign follows from \eqref{eq:middle-inertia}.  Equality in an interlacing
+comparison is harmless: it only gives a multiple least singular value.
+
+Now let \(n=2m+1\).  Group the first and last \(m\) coordinates as
+above and leave the middle coordinate last.  Then
+\begin{equation}\label{eq:odd-dilation}
+ B_{2m+1}(x)=
+ \begin{bmatrix}\widehat P_m(x)&\boldsymbol w\\\boldsymbol w^T&x\end{bmatrix},
+ \qquad
+ \boldsymbol w=\begin{bmatrix}-\mathbf e_m\\-a\mathbf e_m\end{bmatrix}.
+\end{equation}
+In an open spectral gap of \(A_{2m+1}\), \(P_m(x)\) is nonsingular.  Indeed,
+the explicit path spectrum gives
+\[
+ \operatorname{spec}(A_m)
+ =\left\{2r\cos\frac{\ell\pi}{m+1}:1\leq\ell\leq m\right\}
+ =\left\{\lambda_{2m+1,2\ell}:1\leq\ell\leq m\right\},
+\]
+so its zeros are exactly the even-indexed eigenvalues of \(A_{2m+1}\), none
+of which lies in an open spectral gap.
+The eigenvalues of the principal submatrix \(\widehat P_m(x)\) are
+consequently
+\[
+ s_1(P_m)\geq\cdots\geq s_m(P_m)>0>
+ -s_m(P_m)\geq\cdots\geq-s_1(P_m).
+\]
+Cauchy interlacing gives
+\[
+ \alpha_m\geq s_m(P_m)\geq\alpha_{m+1}
+ \geq-s_m(P_m)\geq\alpha_{m+2}.
+\]
+If \(j\) is even, \eqref{eq:middle-inertia} and interlacing give
+\[
+ 0<\alpha_{m+1}\leq s_m(P_m)\leq-\alpha_{m+2};
+\]
+if \(j\) is odd, they give
+\[
+ 0<-\alpha_{m+1}\leq s_m(P_m)\leq\alpha_m.
+\]
+Every other eigenvalue is farther from zero.  Hence
+\(\alpha_{m+1}\) attains the minimum modulus, with sign prescribed by
+\eqref{eq:middle-inertia}; equality again only means multiplicity.  At a
+spectral endpoint the zero is simple because \(A_n\) is similar to the
+Jacobi matrix \(A_n^{\rm sym}\), whose eigenvalues are simple.  Thus the selected
+ordered branch extends continuously to zero at both ends of the closed
+gap.  Finally, multiplication by the orthogonal matrix \(J_n\) preserves
+singular values, which proves the assertion.
+\end{proof}
+
+\begin{proof}[Proof of \Cref{lem:mesh}]
+With the signed branch in hand, we introduce folded coordinates.  They
+compare the noncentral gaps, resolve the central pair, and assemble the
+global inequality.
+
+To avoid ambiguity, \(F_n\) continues to denote the determinant from the
+vertical argument, whereas \(\mathcal F_h\) below is an angular factor; the
+fraktur quantities \(\mathfrak c_h,\mathfrak d_h\) are distinct from the
+central gap heights \(c_m,d_m\).
+
+\proofstage{Folded continuants}
+Put
+\[
+ C_0=x^2+(1-a)^2-s^2,\qquad
+ \zeta_s=\frac{1+a^2+(1+a)s}{2a},
+\]
+and define the folded discriminant and recurrence coefficient by
+\[
+ \Delta_{\rm fold}=((1+a-x)^2-s^2)((1+a+x)^2-s^2),
+\]
+\[
+ \mathfrak b=(1+a^2)x^2+2as^2+2a^2-2a-2a^3.
+\]
+The global recurrence polynomial is
+\begin{equation}\label{eq:fold-characteristic}
+\begin{gathered}
+ \Pi(z):=1-C_0z+\mathfrak b z^2-a^2C_0z^3+a^4z^4,\\
+ \left.
+ \begin{aligned}
+  2a(u+v)&=C_0,\\
+  a^2(4uv+2)&=\mathfrak b
+ \end{aligned}
+ \right\}
+ \Longrightarrow
+ \Pi(z)=(1-2auz+a^2z^2)(1-2avz+a^2z^2),
+ \qquad u,v\in\mathbb R.
+\end{gathered}
+\end{equation}
+On a real sheet with \(\Delta_{\rm fold}\geq0\), we additionally put
+\[
+ \xi_\pm=\frac{C_0\pm\sqrt{\Delta_{\rm fold}}}{4a}.
+\]
+Then the pair \((u,v)=(\xi_+,\xi_-)\) satisfies the two symmetric
+relations in \eqref{eq:fold-characteristic}:
+\[
+ \xi_++\xi_-=\frac{C_0}{2a},\qquad
+ \mathfrak b=a^2(4\xi_+\xi_-+2).
+\]
+We use the root presentation on these real sheets and the polynomial
+\(\Pi\) itself for the global transfer and generating identities.
+The complete five-minor transfer, characteristic-polynomial calculation,
+boundary residuals, and generating functions are given in
+\cref{app:folded-transfer}.  Their parity-unified conclusion is the part
+needed in the main argument.  For a differentiable real function \(F\), write
+\[
+ [F]_{u,v}:=
+ \begin{cases}
+  \dfrac{F(u)-F(v)}{u-v},&u\neq v,\\[2mm]
+  F'(u),&u=v
+ \end{cases}.
+\]
+Whenever the real pair \(u,v\) satisfies the two symmetric relations in
+\eqref{eq:fold-characteristic}, the divided-difference calculation in
+\cref{app:half-chord} gives
+\begin{equation}\label{eq:fold-even}
+ q_{2m}(x,s)=a^m[\mathfrak f_m]_{u,v},\qquad
+ \mathfrak f_m(t)=(t-\zeta_s)(U_m(t)+U_{m-1}(t)),
+\end{equation}
+and
+\begin{equation}\label{eq:fold-odd}
+ q_{2m+1}(x,s)=a^m[\mathfrak g_m]_{u,v},\qquad
+ \mathfrak g_m(t)=\left((x-s)t-
+ \frac{x(1+a^2)+2as}{2a}\right)U_m(t).
+\end{equation}
+The recurrence and generating identities are polynomial and therefore
+global.  The real-pair formulas are used only after the two symmetric
+relations have been checked; at \(u=v\), the displayed derivative is the
+collision convention.  For \(\Delta_{\rm fold}<0\), the argument stays at
+the polynomial level and avoids any complex square-root branch.
+
+These formulas replace the singular-value problem by a signed scalar branch
+with parity already resolved.  The next step identifies a geometric
+parametrization of that branch.
+
+\proofstage{Half-angle chord parametrization}
+Recall that \(a=e^{-2h}\), and put
+\[
+ \mathfrak s_h=\sinh h,\qquad \mathfrak c_h=\cosh h.
+\]
+For \(K\geq2\) and \(0\leq\theta\leq\pi\), define
+\begin{equation}\label{eq:Phi-Psi-def}
+ \Phi_K(\theta)=\sqrt{\mathfrak s_h^2+\sin^2\theta}\,
+ \frac{|\sin(K\theta)|}{\sin\theta},
+\end{equation}
+where the quotient is interpreted continuously at \(\theta=0,\pi\),
+and
+\[
+ \Psi_K(\eta)=\sqrt{\mathfrak s_h^2-\sinh^2\eta}\,
+ \frac{\sinh(K\eta)}{\sinh\eta},\qquad0\leq\eta\leq h,
+\]
+with the limiting value at \(\eta=0\).  The following half-angle reduction
+also fixes the sign convention.  Put
+\[
+ y=\cos\theta,\qquad z=\cosh\eta,\qquad
+ \mathfrak p_\theta=\sqrt{\mathfrak c_h^2-y^2},\qquad
+ \mathfrak p_\eta=\sqrt{\mathfrak c_h^2-z^2},
+\]
+and let \(L_0=2r/\mathfrak c_h\).  If
+\(x=L_0yz\), \(s=L_0\mathfrak p_\theta\mathfrak p_\eta>0\), and
+\(\tau=\varsigma s\) with \(\varsigma\in\{-1,1\}\), then direct
+expansion gives
+\begin{equation}\label{eq:half-variable-identities}
+\begin{gathered}
+ (1+a+x)^2-s^2=4a(z+y)^2,\qquad
+ (1+a-x)^2-s^2=4a(z-y)^2,\\
+ u=2z^2-1,\qquad v=2y^2-1,\qquad
+ \zeta_\tau=2\mathfrak c_h^2-1
+ +2\varsigma\mathfrak p_\theta\mathfrak p_\eta.
+\end{gathered}
+\end{equation}
+The real pair \((u,v)\) satisfies the two symmetric relations in
+\eqref{eq:fold-characteristic}.
+For \(K=2m+1\), use
+\[
+ U_m(2t^2-1)+U_{m-1}(2t^2-1)=U_{K-1}(t);
+\]
+for \(K=2m+2\), use
+\[
+ U_m(2t^2-1)=\frac{U_{K-1}(t)}{2t}.
+\]
+Substitution of this pair in \eqref{eq:fold-even} and
+\eqref{eq:fold-odd}, respectively, reduces either equation
+\(q_{K-1}(x,\tau)=0\) to
+\begin{equation}\label{eq:signed-half-chord}
+ \mathfrak p_\theta U_{K-1}(y)
+ =\varsigma\mathfrak p_\eta U_{K-1}(z).
+\end{equation}
+In the even-fold case the intermediate factorization is
+\[
+ (\mathfrak p_\eta+\varsigma\mathfrak p_\theta)
+ \bigl(\mathfrak p_\eta U_{K-1}(z)
+ -\varsigma\mathfrak p_\theta U_{K-1}(y)\bigr)=0.
+\]
+The first factor could vanish only if \(\varsigma=-1\) and
+\(\mathfrak p_\eta=\mathfrak p_\theta\), which would imply
+\(y^2=z^2\); the distinct-variable condition therefore leaves precisely
+\eqref{eq:signed-half-chord}.  In the odd-fold case the reduction also
+contains the factor
+\(\mathfrak p_\eta y+\varsigma\mathfrak p_\theta z\).  On a
+distinct-variable sheet this factor is nonzero: if it vanished, squaring
+would give
+\[
+ (\mathfrak c_h^2-z^2)y^2=(\mathfrak c_h^2-y^2)z^2,
+\]
+and hence \(y^2=z^2\).  Thus the factor is nonzero whenever the folded
+variables are distinct.  On the outer lobe
+\(U_{K-1}(z)>0\), whereas, for
+\(j\pi/K<\theta<(j+1)\pi/K\),
+\[
+ \operatorname{sgn}\bigl(U_{K-1}(\cos\theta)\bigr)
+ =\operatorname{sgn}\bigl(\sin(K\theta)\bigr)=(-1)^j.
+\]
+Moreover,
+\(\mathfrak p_\theta|U_{K-1}(y)|=\Phi_K(\theta)\) and
+\(\mathfrak p_\eta U_{K-1}(z)=\Psi_K(\eta)\).  Thus
+\eqref{eq:signed-half-chord} is equivalent to
+\(\varsigma=(-1)^j\) and
+\begin{equation}\label{eq:chord-equation}
+ \Phi_K(\theta)=\Psi_K(\eta),
+\end{equation}
+with
+\begin{equation}\label{eq:channel-xs}
+ s=\mathfrak s_{\rm hyp}(\theta,\eta)
+ :=\frac{2r}{\mathfrak c_h}
+ \sqrt{(\mathfrak s_h^2+\sin^2\theta)
+       (\mathfrak s_h^2-\sinh^2\eta)},\qquad
+ x=\frac{2r}{\mathfrak c_h}\cos\theta\cosh\eta.
+\end{equation}
+Consequently \(q_{K-1}(x,(-1)^js)=0\).  Conversely, for distinct real
+folded variables, their sum and product determine
+\[
+ x^2=L_0^2y^2z^2,\qquad
+ s^2=L_0^2(\mathfrak c_h^2-y^2)(\mathfrak c_h^2-z^2).
+\]
+Thus, for distinct real variables and a fixed sign of \(x\), the
+preceding steps are reversible, and the two chord relations are
+equivalent to the corresponding signed equation.  The determinant
+identities themselves extend to a folded-variable collision by the
+continuous divided-difference convention, but we invoke the chord
+equivalence only for distinct variables; the selected middle branch is
+proved below to be collision-free.
+Here \(K-1\) is the matrix size.  If the exterior argument has crossed
+through \(1\), write it as \(z=\cos\phi\),
+\(0\leq\phi<\pi/K\).  Then the chord equation is
+\(\Phi_K(\theta)=\Phi_K(\phi)\), and the second factor in the formula
+for \(s\) is \(\mathfrak s_h^2+\sin^2\phi\).  We denote the resulting
+value by
+\[
+ \mathfrak s_{\rm ell}(\theta,\phi)
+ =\frac{2r}{\mathfrak c_h}
+ \sqrt{(\mathfrak s_h^2+\sin^2\theta)
+       (\mathfrak s_h^2+\sin^2\phi)}.
+\]
+
+\proofstage{Branch classification and outer-lobe geometry}
+It remains to identify which chords realize the middle branch of
+\Cref{lem:middle-branch}.  Set
+\begin{equation}\label{eq:Wcal-def}
+ \mathcal W_K(u)=\sqrt{\mathfrak c_h^2-u^2}\,|U_{K-1}(u)|,
+ \qquad |u|\leq\mathfrak c_h.
+\end{equation}
+At \(u=\pm\mathfrak c_h\), this denotes the continuous endpoint value
+\(0\).
+Then
+\[
+ \Phi_K(\theta)=\mathcal W_K(\cos\theta),\qquad
+ \Psi_K(\eta)=\mathcal W_K(\cosh\eta).
+\]
+If \(u_{\ell,K}^{(0)}=\cos\frac{\ell\pi}{K}\), then, away from the zeros,
+\[
+ \frac{d}{du}\log\mathcal W_K(u)
+ =\sum_{\ell=1}^{K-1}\frac1{u-u_{\ell,K}^{(0)}}
+ -\frac{u}{\mathfrak c_h^2-u^2},
+\]
+and its derivative is
+\begin{equation}\label{eq:W-log-concave}
+ -\sum_{\ell=1}^{K-1}\frac1{(u-u_{\ell,K}^{(0)})^2}
+ -\frac{\mathfrak c_h^2+u^2}{(\mathfrak c_h^2-u^2)^2}<0.
+\end{equation}
+At each finite nodal endpoint the logarithmic derivative tends to the
+appropriate signed infinity, and it tends to \(-\infty\) as
+\(u\uparrow\mathfrak c_h\).  Thus there is exactly one lobe maximum in
+every nodal
+interval, including the outer interval
+\(\mathcal J_K^{\rm out}=(\cos\frac{\pi}{K},\mathfrak c_h)\).  Let
+\(u_K^{\max}\) be the unique maximizer on \(\mathcal J_K^{\rm out}\).
+For every
+\(0\leq\ell<\mathcal W_K(u_K^{\max})\), there is a unique solution
+\[
+ z_K(\ell)\in(u_K^{\max},\mathfrak c_h],\qquad
+ \mathcal W_K(z_K(\ell))=\ell;
+\]
+we call it the \emph{endpoint-side outer solution}.  If
+\(z_K(\ell)\geq1\), write it as \(\cosh\eta\),
+\(0\leq\eta\leq h\); if it is at most \(1\), write it as
+\(\cos\phi\), \(0\leq\phi<\pi/K\).  These are two coordinates on the
+same outer lobe, joined at \(z=1\).
+
+For a positive-half gap and
+\(\theta\in(j\pi/K,(j+1)\pi/K)\), \(\theta\leq\pi/2\), a
+\emph{$j$-chord} is the pair
+\[
+ y=\cos\theta,\qquad
+ z=z_K(\mathcal W_K(y)),\qquad
+ \mathcal W_K(y)=\mathcal W_K(z),
+\]
+together with the coordinate-free values
+\[
+ x=L_0yz,\qquad
+ s=L_0\sqrt{(\mathfrak c_h^2-y^2)(\mathfrak c_h^2-z^2)};
+\]
+its signed root is
+\((-1)^js\).  The term endpoint-side always refers to the part of the
+outer lobe adjacent to \(\mathfrak c_h\), independently of whether it is
+described by the hyperbolic or elliptic coordinate.
+
+Reflection reduces the branch classification to a positive-half gap, so
+\(j\geq1\)
+and \(\theta\leq\pi/2\).  Put
+\(\phi_{\rm rem}=\theta-j\pi/K\in(0,\pi/K)\).  Since
+\(|\sin(K\phi_{\rm rem})|=|\sin(K\theta)|\) and
+\[
+ \mathcal F_h(t)=
+ \frac{\sqrt{\mathfrak s_h^2+\sin^2t}}{\sin t}
+\]
+is strictly decreasing on \((0,\pi/2]\),
+\begin{equation}\label{eq:outer-level-dominates}
+ \Phi_K(\theta)<\Phi_K(\phi_{\rm rem})
+ \leq\max_{u\in\mathcal J_K^{\rm out}}\mathcal W_K(u).
+\end{equation}
+Thus the endpoint-side outer solution exists for every inner parameter.
+
+At \(x=\lambda_{K-1,k}=2r\cos\frac{k\pi}{K}\), \(s=0\), the two
+folded variables are \(\cos\frac{2k\pi}{K}\) and
+\(\cosh(2h)\), or, in half variables, \(\cos\frac{k\pi}{K}\) and
+\(\mathfrak c_h\).  Moreover, zero is a simple eigenvalue of
+\(B_{K-1}(\lambda_{K-1,k})\): the matrix
+\(\lambda_{K-1,k}I_{K-1}-A_{K-1}\) has rank \(K-2\), and \(J_{K-1}\) is
+invertible.  The implicit-function theorem therefore gives, near either
+gap endpoint, a real continuation of the middle signed root and real
+half variables \(y=\cos\theta\) and \(z\).
+
+\proofstage{Chord-sheet exhaustion}
+The endpoint germ extends through the whole positive open gap on the
+endpoint-side chord sheet.  More precisely, if
+\[
+ \frac{j\pi}{K}<\theta<\frac{(j+1)\pi}{K},
+ \qquad
+ \frac{(j+1)\pi}{K}\leq\frac{\pi}{2},
+\]
+then every point of the ordered middle branch is represented by the selected
+endpoint-side \(j\)-chord, and every such chord parameter produces a point
+of that branch.  Its signed root is \((-1)^js\), its magnitude is
+\(s_{\min}(xI_{K-1}-A_{K-1})\), and the folded variables remain distinct in
+the open gap.  When \(K\) is odd, the same statement holds on the positive
+half of the single central gap up to \(\theta=\pi/2\), with reflection
+covering the negative half.  The continuation, the five closure exclusions,
+and the converse exhaustion are proved in
+\cref{lem:chord-sheet-exhaustion}.  The proof avoids any monotonicity
+assumption on \(\theta\mapsto x\).
+
+\proofstage{Noncentral gap comparison}
+The chord representation now compares noncentral middle branches directly.
+Let \(N\geq3\), put
+\(M=N+1\), and set \(\kappa=N/M\).  Every positive noncentral gap of
+the \(M\)-problem
+satisfies
+\begin{equation}\label{eq:noncentral-domain}
+ j\geq1,\qquad \frac{(j+1)\pi}{N}\leq\frac{\pi}{2}.
+\end{equation}
+Indeed, such gaps satisfy \(j+1\leq N/2\).  Hence
+\(\theta_0=\theta/\kappa\) belongs to the
+same-indexed \(N\)-nodal interval, and every trigonometric argument
+below lies in \((0,\pi/2]\).  Consider a point of such a branch for the
+matrix of order \(M-1\), with
+\[
+ \theta\in\left(\frac{j\pi}{M},\frac{(j+1)\pi}{M}\right),
+ \qquad \frac{(j+1)\pi}{N}\leq\frac{\pi}{2}.
+\]
+First suppose \(\Phi_M(\theta)=\Psi_M(\eta)\).  Put
+\(\theta_0=\theta/\kappa\).  Then \(\theta_0\) belongs to the
+corresponding \(N\)-nodal interval.  Concavity of sine gives
+\begin{equation}\label{eq:Phi-scale}
+ \frac{\Phi_N(\theta_0)}{\Phi_M(\theta)}
+ =\frac{\mathcal F_h(\theta_0)}{\mathcal F_h(\theta)}>\kappa.
+\end{equation}
+Indeed, \(\theta=\kappa\theta_0\) and strict concavity gives
+\(\sin\theta>\kappa\sin\theta_0\); hence
+\[
+ \mathcal F_h(\theta_0)^2-\kappa^2\mathcal F_h(\theta)^2
+ =(1-\kappa^2)+\mathfrak s_h^2\left(
+ \frac1{\sin^2\theta_0}-\frac{\kappa^2}{\sin^2\theta}
+ \right)>0.
+\]
+On the other hand,
+\begin{equation}\label{eq:Psi-scale}
+ \frac{\Psi_N(\eta)}{\Psi_M(\eta)}
+ =\frac{\sinh(N\eta)}{\sinh(M\eta)}\leq\kappa,
+\end{equation}
+with strict inequality for \(\eta>0\), by convexity of \(\sinh\) on
+the positive half-axis.  Hence
+\(\Phi_N(\theta_0)>\Psi_N(\eta)\).  Since \(\Phi_N\) vanishes at the right
+endpoint \((j+1)\pi/N\), its rightmost solution
+\(\widehat\theta\) of
+\[
+ \Phi_N(\widehat\theta)=\Psi_N(\eta)
+\]
+exists by the intermediate value theorem and satisfies
+\(\widehat\theta>\theta_0>\theta\).  Strict log-concavity of
+\(\mathcal W_N\) makes it the unique solution on the descending half
+of that lobe.  The same exterior
+variable is endpoint-side for the \(N\)-problem as well.  Indeed, for
+\(u=\cosh\eta>1\),
+\[
+ \frac{d}{du}\log\mathcal W_M(u)-
+ \frac{d}{du}\log\mathcal W_N(u)
+ =\frac{M\coth(M\eta)-N\coth(N\eta)}{\sinh\eta}>0.
+\]
+The numerator is positive because, for \(\eta>0\),
+\[
+ \frac{d}{dt}\bigl(t\coth(t\eta)\bigr)
+ =\frac{\sinh(t\eta)\cosh(t\eta)-t\eta}{\sinh^2(t\eta)}>0.
+\]
+The endpoint-side branch is characterized by a nonpositive logarithmic
+derivative.  The displayed difference therefore makes the
+\(N\)-derivative strictly negative.  The case \(\eta=0\) follows by
+continuity.
+The chord classification above says that the constructed value
+\(\mathfrak s_{\rm hyp}(\widehat\theta,\eta)\) is the least singular
+value at its constructed abscissa.  Formula
+\eqref{eq:channel-xs} and the strict increase of sine on the interval
+now give
+\begin{equation}\label{eq:hyper-height-increase}
+ \mathfrak s_{\rm hyp}(\widehat\theta,\eta)
+ >\mathfrak s_{\rm hyp}(\theta,\eta).
+\end{equation}
+
+Suppose next that the exterior endpoint is elliptic, so that
+\(\Phi_M(\theta)=\Phi_M(\phi)\), \(0<\phi<\pi/M\).  (The case
+\(\phi=0\)
+is the limiting hyperbolic case already covered.)  Put
+\[
+ \theta_0=\theta/\kappa,\qquad \phi_0=\phi/\kappa.
+\]
+The ratio
+\[
+ \mathcal A_{N,M}^{\Phi}(t)
+ =\frac{\Phi_N(t/\kappa)}{\Phi_M(t)}
+ =\frac{\mathcal F_h(t/\kappa)}{\mathcal F_h(t)}
+\]
+is strictly increasing while \(0<t<t/\kappa\leq\pi/2\).  Indeed,
+\[
+ \frac{d}{dt}\log\mathcal A_{N,M}^{\Phi}(t)
+ =\mathfrak d_h(t)-\kappa^{-1}\mathfrak d_h(t/\kappa)>0,\qquad
+ \mathfrak d_h(t)=\frac{\mathfrak s_h^2\cot t}
+ {\mathfrak s_h^2+\sin^2t},
+\]
+because
+\[
+ t\mathfrak d_h(t)=(t\cot t)
+ \frac{\mathfrak s_h^2}{\mathfrak s_h^2+\sin^2t}
+\]
+is strictly decreasing: both positive factors decrease on
+\((0,\pi/2)\), and the second decreases strictly.  Since
+\(\theta>\pi/M>\phi\), it follows that
+\(\Phi_N(\theta_0)>\Phi_N(\phi_0)\).  The rightmost solution of
+\[
+ \Phi_N(\widehat\theta)=\Phi_N(\phi_0)
+\]
+therefore has \(\widehat\theta>\theta_0\).  Its exterior variable is
+endpoint-side.  Indeed, if
+\(\Lambda_K(t)=(\log\Phi_K)'(t)\), then on the
+endpoint-side part of the first outer lobe
+\(\Lambda_M(\phi)\geq0\), and differentiation of
+\(\Phi_N(t/\kappa)=\mathcal A_{N,M}^{\Phi}(t)\Phi_M(t)\) gives
+\[
+ \kappa^{-1}\Lambda_N(t/\kappa)
+ =\Lambda_M(t)
+ +\frac{(\mathcal A_{N,M}^{\Phi})'(t)}{\mathcal A_{N,M}^{\Phi}(t)}>0.
+\]
+Because
+\(\Lambda_K(\phi)=-\sin\phi\,(\log\mathcal W_K)'(\cos\phi)\),
+positivity of \(\Lambda_N(\phi_0)\) is exactly the endpoint-side
+condition for the
+\(N\)-outer solution.  The one-maximum property now fixes the label, and the chord
+classification says again that
+\(\mathfrak s_{\rm ell}(\widehat\theta,\phi_0)\) is the least singular
+value at the constructed abscissa.  Here
+\(\widehat\theta>\theta_0>\theta\) and \(\phi_0>\phi\), with all four
+angles below \(\pi/2\).  Thus both sine factors in the elliptic version
+of \eqref{eq:channel-xs} have increased, at least one strictly, and hence
+\begin{equation}\label{eq:elliptic-height-increase}
+ \mathfrak s_{\rm ell}(\widehat\theta,\phi_0)
+ >\mathfrak s_{\rm ell}(\theta,\phi).
+\end{equation}
+Equations \eqref{eq:hyper-height-increase} and
+\eqref{eq:elliptic-height-increase} give the exact conclusion needed from
+the chord construction: every noncentral branch value for the larger matrix
+is strictly dominated by a value in the corresponding gap of the smaller
+matrix.  Only the parity-dependent central gaps remain.
+
+\proofstage{Central-gap interlacing and upper comparison \(d_m<c_m\)}
+The parity change shifts the central-gap indices, so their comparison is
+encoded in two alternating central heights.
+
+For \(m\geq1\), let
+\begin{equation}\label{eq:c-height-def}
+ c_m=s_{\min}(aI_m+V_m).
+\end{equation}
+By reflection, the two gaps adjacent to the zero eigenvalue of
+\(A_{2m+1}\) have the same height; denote it by
+\begin{equation}\label{eq:d-height-def}
+ d_m=\max_{0\leq x\leq2r\sin\frac{\pi}{2m+2}}
+ s_{\min}(xI_{2m+1}-A_{2m+1}).
+\end{equation}
+We claim
+\begin{equation}\label{eq:central-interlace}
+ c_m>d_m>c_{m+1}.
+\end{equation}
+Put
+\[
+ \zeta=\frac{a+a^{-1}}2.
+\]
+For every \(j\geq1\), there is a unique
+\(\rho_j>\cos\frac{\pi}{j+1}\) such that
+\begin{equation}\label{eq:rho-central}
+ aU_j(\rho_j)=U_{j-1}(\rho_j).
+\end{equation}
+Indeed, the Christoffel--Darboux identity gives, above the largest zero
+of \(U_j\),
+\[
+ \frac{d}{dt}\frac{U_{j-1}(t)}{U_j(t)}
+ =-\frac{2\sum_{k=0}^{j-1}U_k(t)^2}{U_j(t)^2}<0.
+\]
+The ratio decreases from \(+\infty\) to \(0\), proving existence and
+uniqueness.  A three-term determinant recurrence gives
+\begin{equation}\label{eq:c-determinant}
+ \det\left((aI_j+V_j)^*(aI_j+V_j)
+ -(1+a^2-2at)I_j\right)
+ =a^j\left(U_j(t)-a^{-1}U_{j-1}(t)\right).
+\end{equation}
+Thus the largest root \(\rho_j\) gives the least eigenvalue.  Together
+with
+\[
+ U_j(t)^2+U_{j-1}(t)^2-2tU_j(t)U_{j-1}(t)=1,
+\]
+equations \eqref{eq:rho-central} and \eqref{eq:c-determinant} give
+\begin{equation}\label{eq:c-rho-identities}
+ c_j^2=1+a^2-2a\rho_j=\frac1{U_j(\rho_j)^2},\qquad
+ \zeta-\rho_j=\frac1{2U_{j-1}(\rho_j)U_j(\rho_j)}.
+\end{equation}
+
+Next we identify \(c_m\) as the exact height of the central gap of
+\(A_{2m}\).  Let
+\[
+ P_{\rm oe}=[\mathbf e_1,\mathbf e_3,\ldots,\mathbf e_{2m-1},
+ \mathbf e_2,\mathbf e_4,\ldots,\mathbf e_{2m}]
+\]
+be the permutation matrix that places odd coordinates first.  Then
+\[
+ P_{\rm oe}^T A_{2m}P_{\rm oe}=
+ \begin{bmatrix}0&I_m+aV_m^T\\aI_m+V_m&0\end{bmatrix}.
+\]
+Moreover,
+\[
+ (I_m+aV_m^T)^*(I_m+aV_m^T)
+ -J_m(aI_m+V_m)^*(aI_m+V_m)J_m
+ =(1-a^2)\mathbf e_m\mathbf e_m^T\geq0.
+\]
+The singular values of the block off-diagonal matrix are the union of
+the singular values of its two off-diagonal blocks.  The Gram
+inequality shows that
+\(s_{\min}(I_m+aV_m^T)\geq s_{\min}(aI_m+V_m)=c_m\), and hence
+\(s_{\min}(A_{2m})=c_m\).  To identify the maximum throughout the central
+gap, put \(K=2m+1\) and use the half
+variables
+\[
+ y=\cos\theta,\qquad
+ z=\cosh\eta\quad\hbox{or}\quad z=\cos\phi.
+\]
+On the positive half of the central middle branch, the preceding chord
+classification gives
+\begin{equation}\label{eq:even-central-half}
+ \mathcal W_K(y)=\mathcal W_K(z),\qquad
+ x=\frac{2r}{\mathfrak c_h}yz,\qquad
+ s^2=\frac{4a}{\mathfrak c_h^2}
+ (\mathfrak c_h^2-y^2)(\mathfrak c_h^2-z^2),
+\end{equation}
+where \(0\leq y<\cos\frac{m\pi}{K}\) is in the central lobe and
+\(z\) is the
+endpoint-side outer solution.  The function \(\mathcal W_K\) is even,
+and strict log-concavity on the central lobe gives
+\[
+ \mathcal W_K(y)<\mathcal W_K(0)=\mathfrak c_h\qquad(y>0).
+\]
+Let
+\[
+ z_0=\sqrt{\frac{1+\rho_m}{2}}.
+\]
+The half-angle identity and \eqref{eq:rho-central} give
+\[
+ U_{2m}(z_0)=U_m(\rho_m)+U_{m-1}(\rho_m)
+ =(1+a)U_m(\rho_m).
+\]
+Together with \eqref{eq:c-rho-identities}, this yields
+\begin{equation}\label{eq:z0-central}
+ \mathcal W_K(z_0)=\mathfrak c_h,\qquad
+ 4a(\mathfrak c_h^2-z_0^2)=2a(\zeta-\rho_m)=c_m^2.
+\end{equation}
+At \(x=0\), \cref{lem:middle-branch} and the chord-exhaustion argument
+identify the nearest root with \(c_m\), so \(z_0\) is the endpoint-side
+outer solution of level \(\mathfrak c_h\).  If \(x\neq0\), the level
+in \eqref{eq:even-central-half} is strictly below \(\mathfrak c_h\), and hence its
+endpoint-side solution satisfies \(z>z_0\).  Equations
+\eqref{eq:even-central-half}--\eqref{eq:z0-central} then give
+\[
+ s^2<4a(\mathfrak c_h^2-z_0^2)=c_m^2.
+\]
+Reflection gives the same strict bound on the other half of the gap.
+Therefore the central-gap height equals \(c_m\) and has the unique maximizer
+\(x=0\).
+
+Set
+\[
+ \omega_m^{\rm e}=\cos\frac{\pi}{m+1},\qquad
+ \mathcal V_m(t)=\sqrt{(\zeta-t)(1+t)}\,U_m(t).
+\]
+For the central specialization, take \(K=2m+2\) and set
+\[
+ t_{\rm in}=2y^2-1=\cos(2\theta),\qquad
+ t_{\rm out}=2z^2-1.
+\]
+On the positive central gap,
+\(-1<t_{\rm in}<-\omega_m^{\rm e}\), while the endpoint-side outer variable
+satisfies
+\(\omega_m^{\rm e}<t_{\rm out}<\zeta\), where
+\(\zeta=2\mathfrak c_h^2-1\).  The identity
+\(U_{2m+1}(t)=2tU_m(2t^2-1)\) gives
+\[
+ \mathcal W_{2m+2}(y)^2
+  = (\zeta-t_{\rm in})(1+t_{\rm in})U_m(t_{\rm in})^2,
+ \qquad
+ \mathcal W_{2m+2}(z)^2
+  = (\zeta-t_{\rm out})(1+t_{\rm out})U_m(t_{\rm out})^2.
+\]
+Because \(\zeta+1=2\mathfrak c_h^2\), the formulas
+\(x=(2r/\mathfrak c_h)yz\) and
+\(s^2=(4a/\mathfrak c_h^2)
+(\mathfrak c_h^2-y^2)(\mathfrak c_h^2-z^2)\) become the following chord
+parametrization:
+\begin{equation}\label{eq:central-chord}
+\begin{gathered}
+ -1<t_{\rm in}<-\omega_m^{\rm e},\qquad
+ \omega_m^{\rm e}<t_{\rm out}<\zeta,\qquad
+ \mathcal V_m(t_{\rm out})=|\mathcal V_m(t_{\rm in})|,\\
+ x^2=\frac{2a(1+t_{\rm out})(1+t_{\rm in})}{\zeta+1},\qquad
+ s^2=\frac{2a(\zeta-t_{\rm out})(\zeta-t_{\rm in})}{\zeta+1},
+\end{gathered}
+\end{equation}
+where \(t_{\rm out}\) is the descending, or largest, solution.  To see this
+from \eqref{eq:chord-equation}, use
+\[
+ \mathfrak s_h^2+\sin^2\theta=\frac{\zeta-t_{\rm in}}{2},\qquad
+ \mathfrak s_h^2-\sinh^2\eta=\frac{\zeta-t_{\rm out}}{2}.
+\]
+Continuation through \(t_{\rm out}=1\) uses the elliptic coordinate
+\(z=\cos\phi\).
+
+Let \(\rho=\rho_m\).  The function \(\log\mathcal V_m\) is strictly
+concave on \((\omega_m^{\rm e},\zeta)\).  If
+\((\log\mathcal V_m)'(\rho)\geq0\), then \(\rho\) lies at or before the
+unique lobe maximum.  The descending root lies at or after that maximum, so
+\(t_{\rm out}\geq\rho\).  Now suppose
+\((\log\mathcal V_m)'(\rho)<0\).  We claim that \(\rho>a\).  If
+\(\rho\leq a<1\), then \(\rho<1\), hence \(\rho^2-1\neq0\), and the
+following quotient is well defined:
+\[
+ \frac{U_m'(\rho)}{U_m(\rho)}
+ =\frac{m\rho-(m+1)a}{\rho^2-1}
+\]
+would give
+\[
+\begin{aligned}
+ (\log\mathcal V_m)'(\rho)
+ &=\frac{(2m+2)a+1-(2m+1)\rho}{2(1-\rho^2)}
+   -\frac1{2(\zeta-\rho)}\\
+ &\geq\frac1{2(1-\rho)}-\frac1{2(\zeta-\rho)}\geq0,
+\end{aligned}
+\]
+which contradicts the assumed negative derivative.  Hence \(\rho>a\).
+Writing \(t_{\rm in}=-\cos\phi_{\rm c}\),
+\(0<\phi_{\rm c}<\pi/(m+1)\), gives
+\[
+\begin{aligned}
+ |\mathcal V_m(t_{\rm in})|^2
+ &=\frac{(\zeta+\cos\phi_{\rm c})
+          \sin^2((m+1)\phi_{\rm c})}{1+\cos\phi_{\rm c}}\\
+ &<\frac{\zeta+\omega_m^{\rm e}}{1+\omega_m^{\rm e}}
+ <\frac{1+a}{2a}<\frac{1+\rho}{2a}=\mathcal V_m(\rho)^2.
+\end{aligned}
+\]
+Now \(\rho\) is on the descending side and
+\(|\mathcal V_m(t_{\rm in})|<\mathcal V_m(\rho)\), so the
+unique descending root again satisfies \(t_{\rm out}>\rho\).  In either case,
+\(t_{\rm out}\geq\rho\), and \(t_{\rm in}>-1\) makes the following
+inequality strict:
+\[
+ s^2<2a(\zeta-\rho)=c_m^2.
+\]
+This holds along the whole central sheet, so \(d_m<c_m\).
+Thus the odd-order central height lies strictly below the preceding
+even-order central height.  To complete the alternating comparison, it
+remains to place it strictly above the next even-order height.
+
+\proofstage{Lower comparison \(d_m>c_{m+1}\): decisive scalar estimate}
+Put \(L=m+1\geq2\), and abbreviate
+\[
+ \rho=\rho_L,\quad u_-=U_{L-1}(\rho),\quad u_+=U_L(\rho),\quad
+ \omega_L=\cos\frac{\pi}{2L},\quad \Delta_\omega=1-\omega_L,
+\]
+\begin{equation}\label{eq:central-D-xi}
+ \mathfrak D_L=1+2(\rho+\omega_L)u_-u_+,\qquad
+ \xi=\rho-\frac{\Delta_\omega}{\mathfrak D_L}.
+\end{equation}
+Thus \(a=u_-/u_+\) and \(c_L=1/u_+\).
+
+The required inequality is
+\begin{equation}\label{eq:central-target}
+ (1+\omega_L)(1+\xi)^2U_{L-1}(\xi)^2
+ <(\rho+\omega_L)\mathfrak D_L.
+\end{equation}
+
+The proof of this strict scalar estimate is isolated in
+\cref{app:central-scalar}.  It combines the Chebyshev identity with strict
+log-concavity on \([\xi,\rho]\), and then treats the three exhaustive cases
+\(\rho>1\), \(\rho=1\), and \(\rho<1\).  In the last case, explicit
+finite-\(L\) bounds close the only delicate endpoint estimate.  This proves
+\eqref{eq:central-target} for every \(L\geq2\) by exact finite-dimensional
+estimates.
+
+The remaining task is to certify that the signed root selected by this
+estimate is the least singular value on the actual central gap.
+
+\proofstage{Certification of the least singular value}
+Since \(a>0\), \(\Delta_\omega>0\), \(\rho+\omega_L>0\), and
+\(\zeta+\omega_L>0\), let \(x_*>0\) be the positive square root determined
+by
+\begin{equation}\label{eq:x-star-central}
+ x_*^2=\frac{2a\Delta_\omega(\rho+\omega_L)}{\zeta+\omega_L},
+ \qquad c=c_L.
+\end{equation}
+The algebraic certification is given in
+\cref{app:central-certification}.  Substitution of the distinct folded pair
+\(u=\xi\), \(v=-\omega_L\) into \eqref{eq:fold-odd}, followed by
+\eqref{eq:central-target}, proves
+\begin{equation}\label{eq:q-product-central}
+ q_{2L-1}(x_*,c)q_{2L-1}(x_*,-c)>0.
+\end{equation}
+At \(x=0\), the second-smallest singular value of \(A_{2L-1}\) is
+\[
+ s_{L,2}^{(0)}
+ =\sqrt{1+a^2-2a\cos\frac{\pi}{L}}.
+\]
+The same appendix proves the strict separation
+\begin{equation}\label{eq:x-c-second-singular}
+ x_*+c<2\sqrt a\sin\frac{\pi}{2L}\leq s_{L,2}^{(0)}.
+\end{equation}
+The product parity and this second-singular-value separation now identify
+the relevant signed root independently of any prior branch choice.
+
+Let \(\mu_1,\ldots,\mu_{2L-1}\) be the eigenvalues of the real symmetric
+matrix
+\[
+ B_{2L-1}(x_*)=(x_*I_{2L-1}-A_{2L-1})J_{2L-1}.
+\]
+Right multiplication by \(J_{2L-1}\) preserves singular values, so the
+numbers \(|\mu_i|\) are precisely the singular values of
+\(x_*I_{2L-1}-A_{2L-1}\).  Moreover,
+\[
+ q_{2L-1}(x_*,c)q_{2L-1}(x_*,-c)
+ =\prod_{i=1}^{2L-1}(\mu_i^2-c^2).
+\]
+Positivity of the product in \eqref{eq:q-product-central} implies that the
+number of indices with \(|\mu_i|<c\) is even.  On the other hand, Weyl's
+singular-value perturbation inequality and
+\eqref{eq:x-c-second-singular} give, for the second-smallest singular value
+\(s_{\rm next}\),
+\[
+ s_{\rm next}(x_*I_{2L-1}-A_{2L-1})
+ \geq s_{L,2}^{(0)}-x_*>c,
+\]
+so at most one index can satisfy \(|\mu_i|<c\).  Parity therefore gives
+\(|\mu_i|\geq c\) for every \(i\), and strict positivity of the product
+rules out equality.  Hence
+\(s_{\min}(x_*I_{2L-1}-A_{2L-1})>c_L\).  Since
+\(0<x_*<2r\sin\frac{\pi}{2L}\), the point lies strictly in the positive
+central gap, and \(d_{L-1}>c_L\).  This completes the proof of
+\eqref{eq:central-interlace}.
+Together with the upper comparison, this proves the strict alternating
+chain \(c_m>d_m>c_{m+1}\), exactly resolving the central-gap obstruction
+left by the noncentral chord comparison.
+
+\proofstage{Assembly of the global barrier inequality}
+Reflection and the central interlacing chain now assemble the local
+comparisons into the global barrier inequality.  Put \(M=N+1\), so the
+larger and smaller matrices have orders \(M-1\) and \(N-1\), respectively.  If
+\(\Sigma=\diag(1,-1,1,-1,\ldots)\), then
+\(\Sigma A_n\Sigma=-A_n\), so reflection reduces every noncentral
+comparison to a positive gap.  By the interiority observation following the
+definition of the gap heights, choose
+\(x_j\in G_{M-1,j}^{\circ}\) at which its height is attained.  The hyperbolic
+or elliptic construction above produces a point
+\(\widehat x_j\in G_{N-1,j}\), and chord exhaustion gives
+\[
+ \gamma_{N-1,j}\geq g_{N-1}(\widehat x_j)
+ >g_{M-1}(x_j)=\gamma_{M-1,j}.
+\]
+Reflection gives the same inequality on the corresponding reflected gap.
+
+If \(M=2\ell_*+1\), the remaining single central height of the larger,
+even-order matrix is \(c_{\ell_*}\), whereas each central height of the
+smaller odd-order matrix is \(d_{\ell_*-1}>c_{\ell_*}\).  If
+\(M=2\ell_*+2\), the two central heights of the larger odd-order matrix
+equal \(d_{\ell_*}<c_{\ell_*}\), where \(c_{\ell_*}\) is the single
+central height of the smaller even-order matrix.
+Thus every height of the larger problem is strictly smaller than at
+least one height of the smaller problem.  Choose \(j_*\) with
+\(\gamma_{M-1,j_*}=\max_j\gamma_{M-1,j}\).  Then
+\[
+ \gamma_{M-1}=\gamma_{M-1,j_*}
+ <\max_k\gamma_{N-1,k}=\gamma_{N-1}.
+\]
+Since \(M-1=n+1\) and \(N-1=n\), this proves
+\(\gamma_{n+1}<\gamma_n\).
+\end{proof}
+
+\section{Topology, quantitative bounds, and the transition scale}
+\label{sec:topology-bounds}
+
+The first topological ingredient is the standard component property for
+arbitrary matrices
+\cite{BurkeLewisOverton2003}.  In the present setting it reduces the planar
+topology to the real spectral interval.
+
+\begin{lemma}\label{lem:component}
+Every connected component of \(\sigma_\varepsilon(A_n)\) contains an
+eigenvalue of \(A_n\).
+\end{lemma}
+
+\begin{proof}
+The estimate
+\[
+ s_{\min}(zI_n-A_n)\geq |z|-\lVert A_n\rVert_2
+\]
+shows that the pseudospectrum is bounded.  Let \(\mathcal C\) be one of its
+components.  Any eigenvalue
+\(\lambda\in\overline{\mathcal C}\) has, by continuity of the least singular
+value, a ball contained in the pseudospectrum.  That ball meets
+\(\mathcal C\), so maximality of connected components places \(\lambda\) in
+\(\mathcal C\).
+
+To prove that \(\mathcal C\) contains an eigenvalue, assume instead that it
+lies entirely in the resolvent set.  The preceding observation then places
+\(\overline{\mathcal C}\) in the resolvent set as well.  On a neighbourhood
+of \(\overline{\mathcal C}\), the function
+\(\mathfrak u(z)=\lVert(zI_n-A_n)^{-1}\rVert_2\) is continuous and
+subharmonic; see
+\cite{TrefethenEmbree2005}.  Moreover,
+\(\mathfrak u\leq\varepsilon^{-1}\) on \(\partial\mathcal C\): a boundary
+point with \(\mathfrak u>\varepsilon^{-1}\) would have a neighbourhood in
+the pseudospectrum that meets \(\mathcal C\), and hence would belong to
+\(\mathcal C\).  The maximum principle gives
+\(\mathfrak u\leq\varepsilon^{-1}\) throughout \(\mathcal C\), whereas the
+definition of the pseudospectrum gives
+\(\mathfrak u>\varepsilon^{-1}\) there, a contradiction.
+\end{proof}
+
+The diagonal gauge introduced in the introduction gives
+\[
+ A_n=\mathcal G_n(r)\bigl[r(V_n+V_n^T)\bigr]
+ \mathcal G_n(r)^{-1},
+\]
+and hence
+\begin{equation}\label{eq:spectrum}
+ \sigma(A_n)=\left\{2r\cos\frac{k\pi}{n+1}:1\leq k\leq n\right\}.
+\end{equation}
+Put
+\[
+ \Omega=\sigma_\varepsilon(A_n),\qquad
+ \Omega_\R=\Omega\cap\R=\{x\in\R:g_n(x)<\varepsilon\}.
+\]
+Because \(A_n\) is real, the least singular value is invariant under
+complex conjugation.  \Cref{lem:vertical} therefore implies that
+\[
+ \mathcal H_t(x+\ii y)=x+\ii(1-t)y,\qquad0\leq t\leq1,
+\]
+maps \(\Omega\) into itself.  If \(\mathcal C\) is a component of
+\(\Omega\), the path \(t\mapsto\mathcal H_t(z)\) starts in
+\(\mathcal C\) and hence remains there.  Thus \(\mathcal H_t\) retracts
+\(\mathcal C\) onto
+\(\mathcal C\cap\R\).
+
+By \Cref{lem:component}, this real intersection is nonempty.  As the
+continuous image \(\mathcal H_1(\mathcal C)\), it is connected and lies in
+an interval component \(\mathcal K\) of \(\Omega_\R\).  Because
+\(\mathcal K\) is connected and meets \(\mathcal C\), maximality gives
+\(\mathcal K\subset\mathcal C\).  Hence
+\(\mathcal C\cap\R=\mathcal K\), so the components of \(\Omega\) correspond
+bijectively to the interval components of \(\Omega_\R\).  The retraction
+therefore makes every component contractible.
+
+If \(\Omega\) is connected, its real intersection is an interval
+containing every eigenvalue, and therefore contains their convex hull
+\(I_n^{\mathrm{sp}}\).  Conversely, if
+\(I_n^{\mathrm{sp}}\subset\Omega\), it lies in a component containing every
+eigenvalue.  \Cref{lem:component} assigns an eigenvalue to every component,
+so this component is all of \(\Omega\).  Compactness of
+\(I_n^{\mathrm{sp}}\) now gives
+\begin{equation}\label{eq:connected-iff-gamma}
+ \Omega\text{ is connected}
+ \quad\Longleftrightarrow\quad
+ I_n^{\mathrm{sp}}\subset\Omega
+ \quad\Longleftrightarrow\quad
+ \max_{x\in I_n^{\mathrm{sp}}}g_n(x)<\varepsilon
+ \quad\Longleftrightarrow\quad
+ \gamma_n<\varepsilon.
+\end{equation}
+The strict inequality reflects the open definition of the pseudospectrum.
+At \(\varepsilon=\gamma_n\), a maximizing barrier point remains excluded.
+
+The connectedness criterion is now exact; the next proposition determines
+the scale of \(\gamma_n\).  Put \(N=n+1\) and recall
+\(\mathcal L_n(a)\) and \(\mathcal U_n(a)\) from
+\eqref{eq:main-U-def}--\eqref{eq:main-L-def}.
+
+\begin{proposition}[Sharp-order gap bounds]\label{prop:gap-bounds}
+For every \(n\geq2\),
+\begin{equation}\label{eq:gamma-LU}
+ \mathcal L_n(a)\leq\gamma_n\leq\mathcal U_n(a).
+\end{equation}
+In particular, both bounds have order \((n+1)a^{n/2}\), with constants
+depending only on \(a\).
+\end{proposition}
+
+\begin{proof}
+For \(x=2r\cos\theta\in I_n^{\mathrm{sp}}\), set
+\[
+ \boldsymbol v=(v_j)_{j=1}^n,\qquad
+ v_j=r^{j-1}\sin(j\theta),\qquad1\leq j\leq n.
+\]
+The residual \((xI_n-A_n)\boldsymbol v\) is supported in its last
+coordinate, where it equals \(r^n\sin(N\theta)\).  Thus
+\[
+ g_n(2r\cos\theta)
+ \leq\frac{r^n|\sin(N\theta)|}
+ {\left(\sum_{j=1}^nr^{2j-2}\sin^2(j\theta)\right)^{1/2}}
+ \leq r^n\frac{|\sin(N\theta)|}{\sin\theta}.
+\]
+Since \(\pi/N\leq\theta\leq(N-1)\pi/N\), this proves the upper bound.
+
+For the lower bound, put
+\(p_\theta=re^{\ii\theta}\), \(q_\theta=re^{-\ii\theta}\), so that
+\(p_\theta+q_\theta=x\) and \(p_\theta q_\theta=a\).  For
+\(\boldsymbol u=(u_j)_{j=1}^n\in\C^n\), put \(u_0=u_{n+1}=0\), and
+define maps from \(\C^n\) to \(\C^{n+1}\) by
+\[
+ (\mathsf{C}_\theta\boldsymbol u)_j=p_\theta u_j-u_{j+1},\qquad
+ (\mathsf{D}_\theta\boldsymbol u)_j=u_j-\overline{q_\theta}u_{j+1},
+ \qquad0\leq j\leq n.
+\]
+For \(1\leq k\leq n\), direct multiplication gives
+\[
+ (\mathsf{D}_\theta^*\mathsf{C}_\theta\boldsymbol u)_k
+ =(\mathsf{C}_\theta\boldsymbol u)_k
+ -q_\theta(\mathsf{C}_\theta\boldsymbol u)_{k-1}
+ =(p_\theta+q_\theta)u_k-u_{k+1}-p_\theta q_\theta u_{k-1}.
+\]
+Hence
+\begin{equation}\label{eq:rectangular-factorization}
+ xI_n-A_n=\mathsf{D}_\theta^*\mathsf{C}_\theta.
+\end{equation}
+The two Gram matrices are
+diagonally unitarily similar to the tridiagonal Toeplitz matrix with
+diagonal \(1+r^2\) and off-diagonal \(-r\).  Its eigenvalues are
+\(1+r^2-2r\cos\frac{k\pi}{N}\), \(1\leq k\leq n\).  Consequently, for
+every \(\boldsymbol u\in\C^n\),
+\begin{equation}\label{eq:rectangular-min}
+ \begin{aligned}
+  \lVert\mathsf C_\theta\boldsymbol u\rVert_2
+  &\geq \left(1+r^2-2r\cos\frac{\pi}{N}\right)^{1/2}
+    \lVert\boldsymbol u\rVert_2,\\
+  \lVert\mathsf D_\theta\boldsymbol u\rVert_2
+  &\geq \left(1+r^2-2r\cos\frac{\pi}{N}\right)^{1/2}
+    \lVert\boldsymbol u\rVert_2.
+ \end{aligned}
+\end{equation}
+Put
+\[
+ \mathcal S_N=\sum_{j=0}^nr^{2j}=\frac{1-r^{2N}}{1-r^2}.
+\]
+Unit normal vectors to the two hyperplane ranges are
+\[
+ \boldsymbol u_C=\mathcal S_N^{-1/2}
+ (\overline{p_\theta}^{\,n},\overline{p_\theta}^{\,n-1},\ldots,1)^T,
+ \qquad
+ \boldsymbol u_D=\mathcal S_N^{-1/2}(1,q_\theta,\ldots,q_\theta^n)^T.
+\]
+In the polar decompositions
+\[
+ \mathsf{C}_\theta=Q_C(\mathsf{C}_\theta^*\mathsf{C}_\theta)^{1/2},
+ \qquad
+ \mathsf{D}_\theta=Q_D(\mathsf{D}_\theta^*\mathsf{D}_\theta)^{1/2},
+\]
+the matrices \(Q_C,Q_D\) are isometries onto these ranges.  Two
+hyperplanes in \(\C^{n+1}\) intersect in dimension \(n-1\), so
+the cross-Gram matrix \(Q_D^*Q_C\) has \(n-1\) singular values equal to
+\(1\); its final singular value is
+\(|\langle\boldsymbol u_D,\boldsymbol u_C\rangle|\), the cosine of the
+nontrivial principal angle.  The
+geometric sum gives
+\begin{align}
+ |\langle\boldsymbol u_D,\boldsymbol u_C\rangle|
+ &=\frac{r^n}{\mathcal S_N}
+ \left|\sum_{j=0}^{N-1}e^{\ii(2j-(N-1))\theta}\right|\notag\\
+ &=
+ \frac{r^n(1-r^2)}{1-r^{2N}}
+ \left|\frac{\sin(N\theta)}{\sin\theta}\right|
+ =:\chi_N(\theta).
+\label{eq:chi}
+\end{align}
+Finally,
+\[
+ xI_n-A_n=(\mathsf{D}_\theta^*\mathsf{D}_\theta)^{1/2}
+ Q_D^*Q_C(\mathsf{C}_\theta^*\mathsf{C}_\theta)^{1/2}.
+\]
+Using \(s_{\min}(XYZ)\geq
+s_{\min}(X)s_{\min}(Y)s_{\min}(Z)\) and
+\eqref{eq:rectangular-min} gives
+\[
+ g_n(2r\cos\theta)\geq
+ \left(1+r^2-2r\cos\frac{\pi}{N}\right)\chi_N(\theta).
+\]
+Putting \(\theta=3\pi/(2N)\), which lies in the first spectral gap,
+proves the lower bound.
+
+Finally,
+\[
+ \mathcal U_n(a)\leq\frac12(n+1)r^n,
+\]
+while
+\begin{equation}\label{eq:L-simple}
+ \mathcal L_n(a)\geq C_{\rm lb}(a)(n+1)r^n,\qquad
+ C_{\rm lb}(a)=\frac{2(1-r)^2(1-r^2)}{3\pi}.
+\end{equation}
+These follow from
+\(\sin\frac{\pi}{N}\geq2/N\),
+\(1+r^2-2r\cos\frac{\pi}{N}\geq(1-r)^2\), and
+\(\sin\frac{3\pi}{2N}\leq3\pi/(2N)\).  This proves the asserted sharp
+order.
+\end{proof}
+
+\begin{proof}[Proof of \Cref{thm:main}]
+By \Cref{prop:gap-bounds},
+\(\gamma_n\leq\mathcal U_n(a)\to0\).  \Cref{lem:mesh} says that
+\(\gamma_n\) is strictly decreasing.  Equation
+\eqref{eq:connected-iff-gamma} therefore shows that, once the
+pseudospectrum is connected, it stays connected in every larger
+dimension.  This proves \(N_e=N_f\).  Contractibility of every component
+was proved immediately before \eqref{eq:connected-iff-gamma}.
+
+If \(\mathcal L_n(a)\geq\varepsilon\), then
+\(\gamma_n\geq\varepsilon\), so the pseudospectrum in dimension \(n\)
+is disconnected.  If \(\mathcal U_n(a)<\varepsilon\), then
+\(\gamma_n<\varepsilon\), so it is connected.  Strict decrease of
+\(\gamma_n\) now gives \eqref{eq:N-two-sided-main}.
+
+A closed-form inversion is available for the comparison envelope that
+brackets \(N_c\).
+Put
+\[
+ \Theta_n=(n+1)r^n,\qquad
+ \mathcal T_r(t)=\min\{N\geq2:\Theta_m<t\text{ for every }m\geq N\}.
+\]
+Equations \eqref{eq:L-simple} and
+\(\mathcal U_n(a)\leq\Theta_n/2\) give
+\begin{equation}\label{eq:tail-threshold-bounds}
+ \boxed{
+ \mathcal T_r(\varepsilon/C_{\rm lb}(a))\leq N_c(a,\varepsilon)
+ \leq\mathcal T_r(2\varepsilon).}
+\end{equation}
+Indeed, \eqref{eq:connected-iff-gamma} gives
+\[
+ N_c(a,\varepsilon)=
+ \min\{N\geq2:\gamma_m<\varepsilon\text{ for every }m\geq N\}.
+\]
+The lower estimate \(C_{\rm lb}(a)\Theta_m\leq\gamma_m\) forces
+\(\Theta_m<\varepsilon/C_{\rm lb}(a)\) throughout the tail beginning
+at \(N_c\).  Conversely, \(\Theta_m<2\varepsilon\) for every
+\(m\geq\mathcal T_r(2\varepsilon)\), together with
+\(\gamma_m\leq\Theta_m/2\), forces connectedness throughout that tail.
+Thus the polynomial factor \(n+1\), as well as the exponential factor
+\(a^{n/2}\), is sharp on both sides.
+
+\proofstage{Lambert-\(W\) inversion of the envelope threshold}
+Let
+\[
+ \beta=-\log r=\frac12\log(1/a).
+\]
+For \(0<t<3r^2=\Theta_2\), let \(x_t>2\) be the solution on the decreasing
+branch of \((x+1)e^{-\beta x}=t\).  This branch exists because
+\[
+ 0<\beta rt<3\beta r^3\leq e^{-1};
+\]
+the last inequality is \(ue^{-u}\leq e^{-1}\) with \(u=3\beta\).
+Moreover, \(t<\Theta_2\) places the descending root strictly beyond
+\(x=2\).
+Putting \(y_t=x_t+1\), the equation becomes
+\((-\beta y_t)e^{-\beta y_t}=-\beta rt\), whence
+\(y_t=-\beta^{-1}W_{-1}(-\beta rt)\).  Therefore
+\begin{equation}\label{eq:tail-threshold-Lambert}
+ \mathcal T_r(t)=\left\lfloor
+ -\frac1\beta W_{-1}(-\beta rt)\right\rfloor,
+\end{equation}
+where \(W_{-1}\) is the lower real branch of the Lambert \(W\)-function.
+Indeed, the continuous function \((x+1)r^x\) is unimodal and, after its
+descending root, is strictly below \(t\).  Hence the integer tail
+condition is \(N>x_t\); its least solution is
+\(\lfloor x_t\rfloor+1=\lfloor x_t+1\rfloor\), including when \(x_t\)
+is an integer.
+
+The standard lower-branch expansion \cite{CorlessEtAl1996}
+\[
+ -W_{-1}(-u)=\log(1/u)+\log\!\log(1/u)+O(1),
+ \qquad u\downarrow0,
+\]
+combined with \eqref{eq:tail-threshold-bounds} proves, for each fixed
+\(a\in(0,1)\), as \(\varepsilon\downarrow0\),
+\begin{equation}\label{eq:N-asymptotic}
+ \boxed{
+ N_c(a,\varepsilon)=
+ \frac{2}{\log(1/a)}
+ \left(\log(1/\varepsilon)+
+       \log\!\log(1/\varepsilon)\right)+O_a(1).}
+\end{equation}
+The remainder is pointwise for fixed \(a\); uniform control as
+\(a\uparrow1\) lies outside this statement.
+
+\proofstage{Exact two-site endpoint}
+For $|x|\leq r$,
+\[
+ \det\bigl((xI_2-A_2)^*(xI_2-A_2)-a^2I_2\bigr)
+ =x^2(x^2-2a-2a^2)\leq0.
+\]
+The matrix inside the determinant is Hermitian, and the nonpositive
+product of its two eigenvalues forces its least eigenvalue to be
+nonpositive.  Thus $s_{\min}(xI_2-A_2)\leq a$.  At $x=0$, the singular
+values of $-A_2$ are $1$ and $a$, so equality is attained and
+$\gamma_2=a$.  Hence, by \eqref{eq:connected-iff-gamma},
+\begin{equation}\label{eq:N-two}
+ N_c(a,\varepsilon)=2\quad\Longleftrightarrow\quad\varepsilon>a.
+\end{equation}
+This proves all assertions.
+\end{proof}
+
+\section{Numerical illustrations}\label{sec:numerics}
+
+\Cref{fig:transition,fig:barriers,fig:physics} show three complementary
+aspects of the finite-size transition: merger of the pseudospectral
+components, decay of the real-axis backward-error barrier with chain length,
+and the imaginary-gauge origin of that decay.  The figures are numerical
+illustrations; every theorem and bound is analytic.
+
+\Cref{fig:transition} shows the final merger at fixed uncertainty.  For
+shorter chains, individual open-boundary eigenvalues retain separate
+pseudospectral components; at the threshold size these components form one
+connected uncertainty cloud.
+
+\begin{figure}[t]
+ \centering
+ \includegraphics[width=\textwidth]{fig1_connectedness_transition}
+ \caption{Numerical illustration of the Euclidean pseudospectral merger for
+ \(A_n(1/4)\) at \(\varepsilon=10^{-2}\).  Shading shows the numerically
+ sampled strict pseudospectrum and crosses mark the exact open-boundary
+ eigenvalues.  Separate gapwise checks support the component counts for
+ \(n=5,6\), while global checks place the illustrated one-cloud transition
+ at \(n=7\).  The shaded sets and component counts are numerical
+ illustrations; the theorem supplies the connectedness criterion and its
+ persistence.}
+ \label{fig:transition}
+\end{figure}
+
+For the plotted samples, the separate gapwise Lipschitz lower checks put
+every real-gap maximum for \(n=5,6\) above
+\(\varepsilon\), while the global upper checks put \(\gamma_n\) below it for
+\(n=7,8,9\).  Thus the first two panels are mode-resolved and the remaining
+three form a single cloud in the numerical illustration.  For the open
+Hatano--Nelson example, this illustrates the \(\widetilde N\) cloud-merger
+crossover reported numerically by Kiorpelidis and Makris
+\cite{KiorpelidisMakris2025}; the theorem here identifies the exact
+connectedness threshold of the full Euclidean pseudospectrum.  Once the true
+pseudospectrum is connected, every vertical section is an interval and the
+real trace contains the full open-boundary spectral segment.
+
+\begin{figure}[t]
+ \centering
+ \includegraphics[width=.84\textwidth]{fig2_gap_barrier_bounds}
+ \caption{Real-axis backward-error barriers for \(a=1/4\).
+ The grey band, bounded by the dotted lower curve \(\mathcal L_n(a)\) and
+ dashed upper curve \(\mathcal U_n(a)\), is the rigorous enclosure of
+ \(\gamma_n\) and proves the scale \((n+1)a^{n/2}\).  Blue circles joined by
+ a solid line are floating-point estimates; the red horizontal line is the
+ fixed uncertainty \(\varepsilon=10^{-2}\), and the black vertical line marks
+ the numerical crossing \(\widehat N_c=7\).  The theorem gives the analytic
+ bracket \(6\leq N_c\leq9\); the proof uses the analytic bounds.}
+ \label{fig:barriers}
+\end{figure}
+
+\Cref{fig:barriers} illustrates the complementary roles of the two analytic
+results.  Strict barrier comparison gives a unique crossing at fixed
+\(\varepsilon\), while the upper and lower envelopes establish its sharp
+exponential-polynomial scale independently of numerical identification of
+the maximizing gap.
+
+\begin{figure}[t]
+ \centering
+ \includegraphics[width=\textwidth]{fig3_hatano_nelson_physics}
+ \caption{Backward-error barrier and skin-mode envelope for
+ \(a=1/4\) and \(\varepsilon=10^{-2}\).
+ Panels (a) and (b) show numerical samples of \(g_n(x)\), the uncertainty
+ level, and the resulting real-axis pseudospectral trace for \(n=6\) and
+ \(n=7\).  Panel (c) evaluates three right-eigenmode profiles from the closed
+ formula at \(n=20\); the black line is their common imaginary-gauge
+ envelope, whose amplitude decay length is
+ \(\ell_{\rm skin}=2/\log(1/a)\).  The numerical evaluations are
+ illustrative; the proof is analytic.}
+ \label{fig:physics}
+\end{figure}
+
+\Cref{fig:physics} places the connectedness criterion and its nonnormal
+mechanism side by side.  The left panels show the final real-axis barrier
+crossing the fixed uncertainty level; the right panel shows the mode
+envelope generated by the same imaginary gauge that sets the exponentially
+small barrier scale.  Reversing the site convention reverses the localization
+edge while leaving the connectedness criterion invariant.
+
+For completeness, the numerical classification uses a rigorous sampling
+implication.  Let \(M_{\Delta x}\) be the largest exact least singular value
+sampled over grids covering every closed gap, each with maximum spacing
+\(\Delta x\).  The 1-Lipschitz property of
+\(x\mapsto s_{\min}(xI_n-A_n)\) gives
+\[
+ M_{\Delta x}\leq\gamma_n\leq
+ M_{\Delta x}+\frac{\Delta x}{2}.
+\]
+The same argument applies to each individual gap.  The plotted inputs use
+ordinary floating-point arithmetic; interval certification lies beyond
+these computations, so the figures serve as numerical illustrations.
+
+\FloatBarrier
+
+\section{Physical interpretation: spectral resolution and skin depth}
+\label{sec:physical-conclusion}
+
+The physical content of the theorem is that skin localization and the
+finite-size loss of worst-case spectral resolution share one controlling
+scale.  The imaginary gauge fixes both the exponential mode envelope and
+the exponentially collapsing backward-error barrier; strict barrier
+comparison turns this scale relation into a unique system-size transition.
+We now restore the hopping amplitudes and physical units.
+
+To connect the dimensionless matrix to the usual second-quantized
+notation, consider
+\[
+ \widehat H_{\rm OBC}=-\sum_{j=1}^{n-1}
+ \left(t_L\widehat c_j^\dagger\widehat c_{j+1}
+ +t_R\widehat c_{j+1}^\dagger\widehat c_j\right),
+ \qquad t_L>t_R>0.
+\]
+Its one-particle matrix is \(-t_LA_n(a)\), \(a=t_R/t_L\).  The
+conventional minus sign is immaterial here because
+\(\Sigma A_n(a)\Sigma=-A_n(a)\) for
+\(\Sigma=\diag(1,-1,\ldots,(-1)^{n-1})\).  Put
+\[
+ t_0=\sqrt{t_Lt_R},\qquad
+ h=\frac12\log(t_L/t_R)
+ =\frac12\log(1/a).
+\]
+For the unitarily equivalent positive-sign representative
+\(H_n=t_LA_n(a)\), multiplying the dimensionless gauge relation by \(t_L\)
+gives the eigenvalues, unnormalized right eigenvectors \(\psi_m^R\) of
+\(H_n\), and unnormalized column eigenvectors \(\psi_m^L\) of
+\(H_n^\dagger\):
+\begin{align*}
+ E_m&=2t_0\cos\frac{m\pi}{n+1},\\
+ \psi_m^R(j)&=e^{-h(j-1)}\sin\frac{jm\pi}{n+1},\\
+ \psi_m^L(j)&=e^{h(j-1)}\sin\frac{jm\pi}{n+1},
+ \qquad 1\leq j,m\leq n.
+\end{align*}
+With this normalization,
+\((\psi_m^L)^\dagger\psi_{m'}^R=(n+1)\delta_{mm'}/2\).
+These mode profiles are closely related to the original Hatano--Nelson
+eigenfunction analysis \cite{HatanoNelson1998}.
+Thus the amplitude skin depth of the right eigenmodes is
+\[
+ \ell_{\rm skin}=h^{-1}=\frac{2}{\log(1/a)},
+\]
+the amplitude e-folding length.  The intensity or probability envelope has
+e-folding length \((2h)^{-1}=\ell_{\rm skin}/2\), while the exponential gauge
+factors cancel in the corresponding biorthogonal left--right product.  The
+gauge condition number is
+\(\kappa_2(\mathcal G_n(e^{-h}))
+=e^{h(n-1)}=a^{-(n-1)/2}\).
+
+\subsection{Why a finite threshold exists}
+
+The least singular value admits the backward-error formula
+\[
+ s_{\min}(zI_n-A_n)
+ =\min\{\lVert\Delta A\rVert_2:
+ z\in\sigma(A_n+\Delta A)\}.
+\]
+Accordingly, \(\gamma_n\) is the largest, over the real interval between
+the extreme open-boundary
+eigenvalues, of the minimum perturbation required to place an eigenvalue at a
+prescribed point.  Hence it is exactly the final barrier that the uncertainty
+level must exceed for connectedness.
+
+For the dimensional positive-sign Hamiltonian \(H_n=t_LA_n(a)\), define
+the dimensional barrier
+\[
+ \varepsilon_*(n)=t_L\gamma_n.
+\]
+Then the exact physical form of the connectedness criterion is
+\[
+ \sigma_{\varepsilon_{\rm phys}}(H_n)\text{ is connected}
+ \quad\Longleftrightarrow\quad
+ \varepsilon_{\rm phys}>\varepsilon_*(n).
+\]
+Because \(\gamma_n\) decreases strictly to zero, a fixed uncertainty crosses
+the barrier sequence at one site count, after which the cloud remains
+connected.  Equivalently, if
+\(E_{\min}\) and \(E_{\max}\) are the extreme eigenvalues of \(H_n\), then
+\[
+ \varepsilon_*(n)^{-1}
+ =\min_{x\in[E_{\min},E_{\max}]}
+ \lVert(xI_n-H_n)^{-1}\rVert_2,
+\]
+with the resolvent norm interpreted as infinite at an eigenvalue.  At each
+\(z\), this norm is the pointwise worst-case frequency-domain amplification
+from forcing to response; for \(H_n\) it has physical units of inverse
+energy.  Thus \(\varepsilon_*(n)^{-1}\) is the minimum pointwise amplification
+over the spectral interval, while \(\gamma_n^{-1}\) is the corresponding
+dimensionless minimum for \(A_n\).  At and beyond \(N_c\), this minimum
+exceeds \(\varepsilon_{\rm phys}^{-1}\).
+
+The exponential collapse of the barrier is the direct link to
+Hatano--Nelson skin physics.  From \Cref{prop:gap-bounds},
+\[
+ \varepsilon_*(n)
+ \asymp_a t_L(n+1)e^{-hn}
+ =t_0(n+1)e^{-h(n-1)}
+ =t_0(n+1)e^{-(n-1)/\ell_{\rm skin}}.
+\]
+The nonunitary imaginary gauge becomes exponentially ill-conditioned across
+the chain, and right and left skin modes accumulate at opposite edges.
+Accordingly,
+\[
+ \gamma_n^{-1}\asymp_a\frac{e^{hn}}{n+1},
+\]
+so gauge conditioning, skin localization, and worst-case spectral
+sensitivity share the exponential rate \(h\), with the barrier carrying the
+additional sharp polynomial factor.  The skin effect and the merger
+transition are distinct phenomena controlled by the same imaginary gauge.
+
+Let \(\delta=\varepsilon_{\rm phys}/t_L\).  Balancing the fixed uncertainty
+level with the barrier scale above gives, as \(\delta\downarrow0\),
+\[
+ N_c(a,\delta)=\ell_{\rm skin}
+\left(\log(1/\delta)+\log\!\log(1/\delta)\right)+O_a(1).
+\]
+Here \(N_c\) counts sites.  For lattice spacing \(d\), the physical
+end-to-end length is approximately \((N_c-1)d\); the term
+spectral-resolution length therefore refers to \(N_c\) measured in
+lattice-spacing units.  In amplitude skin-depth units,
+\[
+ \frac{N_c}{\ell_{\rm skin}}
+ =\log(1/\delta)+\log\!\log(1/\delta)+O_a(1),
+\]
+which is the threshold expressed in amplitude-skin-depth units.  Improving
+the resolution by a factor \(q\) increases the leading
+resolvable site count by \(\ell_{\rm skin}\log q\).  At fixed
+\(\delta=\varepsilon_{\rm phys}/t_L\), stronger nonreciprocity shortens
+\(\ell_{\rm skin}\) and hence lowers the leading small-\(\delta\) threshold.
+This conclusion concerns the stated small-\(\delta\) asymptotic;
+finite-parameter monotonicity in \(a\) lies outside the theorem.
+
+The exact dimer provides a useful endpoint check.  Since \(\gamma_2=a\),
+\[
+ \varepsilon_*(2)=t_La=t_R,
+ \qquad
+ N_c(a,\varepsilon_{\rm phys}/t_L)=2
+ \quad\Longleftrightarrow\quad
+ \varepsilon_{\rm phys}>t_R.
+\]
+Indeed, for the positive-sign dimer,
+\[
+ H_2=\begin{bmatrix}0&t_L\\t_R&0\end{bmatrix},
+ \qquad
+ \Delta H=-t_R\mathbf e_2\mathbf e_1^T,
+ \qquad
+ H_2+\Delta H=\begin{bmatrix}0&t_L\\0&0\end{bmatrix}.
+\]
+This norm-\(t_R\) rank-one perturbation cancels the weaker directed hopping
+and produces a defective double eigenvalue at zero.  It realizes the exact
+endpoint \(\gamma_2=a\): when
+\(\varepsilon_{\rm phys}>t_R\), component-based mode resolution is lost
+already for the dimer.  At equality, the perturbation lies on the boundary
+excluded by the strict convention
+\(\lVert\Delta H\rVert_2<\varepsilon_{\rm phys}\), so the component closures
+touch while the strict pseudospectrum remains disconnected; indeed,
+\(N_c(a,a)=3\).  The rank-one hopping perturbation is an illustrative
+structured realization.  Assessing whether generic onsite or hopping
+disorder realizes this extremal perturbation requires a
+structured-disorder analysis.
+
+Kiorpelidis and Makris \cite{KiorpelidisMakris2025} introduced
+\(\widetilde N\) for the observed fixed-\(\varepsilon\) crossover from
+eigenvalue-centred clouds to a single cloud and related it to the end of
+exponential growth of the pseudospectral abscissa.  For the clean open
+Hatano--Nelson chain, \(N_c\) is the rigorous connectedness counterpart of
+that crossover: it is defined by the strict Euclidean pseudospectrum, and
+strict barrier decrease additionally excludes re-entrant splitting.  Their
+convention \(A=-\ii H\) rotates the pseudospectrum by ninety degrees while
+leaving connectedness invariant.
+
+\subsection{Spectral-resolution classes at the threshold}
+
+The uncertainty considered here is deterministic, worst-case uncertainty in
+the Hamiltonian or model, distinct from a quantum uncertainty principle.
+Membership \(z\in\sigma_\varepsilon(A_n)\) records the existence of at least one
+perturbation of norm below \(\varepsilon\) that places an eigenvalue at
+\(z\); recovering the perturbation identity or a parent-branch label
+requires additional information, in the latter case a specified
+continuation path.  Connected components nevertheless provide a precise,
+perturbation-stable coarse label.  Define two unperturbed eigenvalues to be
+in the same \(\varepsilon\)-resolution class when they lie in the same
+component of \(\sigma_\varepsilon(A_n)\).  Along any continuous path
+\(\Delta A(s)\) satisfying \(\lVert\Delta A(s)\rVert_2<\varepsilon\), each
+continuous eigenvalue branch remains inside the pseudospectrum and, by
+continuity, within its initial component.  Equivalently, each component
+carries a constant total algebraic multiplicity along such a path.
+
+When a component contains one unperturbed eigenvalue, its resolution class
+gives an individual-mode label.  Partial mergers may combine some labels
+earlier; \(N_c\) records the \emph{last} merger.  For \(n<N_c\), at least two
+robust spectral classes remain, whereas for \(n\geq N_c\) the sole component
+contains all \(n\) eigenvalues.  Spectral location then supplies only the
+common component label.  Knowledge of the actual perturbation or its
+continuation path may still permit eigenvalue-branch tracking.
+
+Each fixed perturbation contributes its own \(n\) eigenvalues, while the
+connected pseudospectral region is assembled from points realized by
+different perturbations across the norm ball.  The set therefore describes
+attainable spectral locations; a probability distribution requires an
+additional disorder ensemble.  In resolvent language, for
+\(z\notin\sigma(A)\),
+\[
+ \lVert(zI_n-A)^{-1}\rVert_2
+ =\max_{\boldsymbol f\neq0}
+ \frac{\lVert\boldsymbol u\rVert_2}{\lVert\boldsymbol f\rVert_2},
+ \qquad (zI_n-A)\boldsymbol u=\boldsymbol f.
+\]
+Thus the single cloud identifies a region of large pointwise resolvent
+amplification at the specified worst-case resolution; each fixed noisy
+sample contributes only its own \(n\) spectral points to this union.
+
+\subsection{Scope and consequences}
+
+Finite-size merger also occurs beyond skin-effect settings.  At the normal
+endpoint \(a=1\), increasingly dense Hermitian eigenvalues merge at fixed
+\(\varepsilon\) on the algebraic level-spacing scale.  The exponential
+barrier and amplitude-skin-depth coefficient are distinctive features of
+the Hatano--Nelson family, and the corresponding fixed-\(a\) asymptotic is
+nonuniform as \(a\uparrow1\).
+
+The theorem concerns unstructured spectral-norm perturbations.  Onsite,
+hopping, boundary, or Toeplitz restrictions can produce a different
+attainable set and merger threshold, requiring a structured-pseudospectral
+analysis.  Pseudospectra of banded Toeplitz matrices are treated in
+\cite{BottcherGrudsky2005}, and Toeplitz-structured perturbations in
+\cite{ButtaGuglielmiNoschese2012}; robustness of a one-dimensional resonator
+skin effect under random imperfections in \cite{AmmariEtAl2024Stability};
+pseudospectral boundary sensitivity in correlated or disordered systems in
+\cite{OkumaSato2021}; and
+pseudospectral scaling and cloud merger in asymmetric lattices in
+\cite{KiorpelidisMakris2025}.  Long-time dynamical amplification can also
+persist beyond the cloud-merger crossover \cite{KiorpelidisMakris2025}.
+
+Thus \(N_c\) is the exact threshold at which the clean open Hatano--Nelson
+chain loses robust separation into multiple pseudospectral resolution
+classes under unstructured spectral-norm uncertainty.  This finite-size
+spectral-resolution transition is governed by the skin-depth scale; the
+onset of the skin effect, structured-disorder thresholds, individual noisy
+spectra, and dynamical amplification are governed by their corresponding
+observables and may occur at different scales.
+
+\appendix
+
+\section{Pentadiagonal continuant certificate for vertical monotonicity}
+\label[appendix]{app:vertical-certificate}
+
+\begin{proposition}[Vertical determinant certificate]
+\label{prop:vertical-determinant-certificate}
+Fix \(x\in\mathbb R\), \(Y,t\geq0\), and define
+\(\mathcal P_n(Y,t)\) and \(F_n(Y,t)\) as in the proof of
+\cref{lem:vertical}.  For every \(n\geq1\),
+\[
+ \mathcal P_n(Y,t)>0
+ \quad\Longrightarrow\quad
+ \partial_YF_n(Y,t)>0.
+\]
+\end{proposition}
+
+\begin{proof}
+At a fixed value of \(Y\), write
+\[
+ d=x^2+Y+1+a^2-t^2,
+ \qquad b=-(1+a)x+\ii(1-a)\sqrt Y.
+\]
+For \(n\geq2\), the matrix \(\mathcal P_n(Y,t)\) has diagonal
+\[
+ d-1,d,\ldots,d,d-a^2,
+\]
+whereas for \(n=1\) its sole entry is \(d-1-a^2\).  In all dimensions
+its first upper diagonal is \(b\), its first lower diagonal is \(\bar b\),
+and its second off-diagonals are \(a\).  Let \(T_k\) be the determinant of
+the pure pentadiagonal Toeplitz matrix with diagonal \(d\) and these two
+off-diagonals.  Set \(T_{-1}=0,T_0=1\), and put
+\begin{equation}\label{eq:D-R-def}
+ D_k=T_k-T_{k-1},\qquad R_k=T_k-a^2T_{k-1}.
+\end{equation}
+Indeed, a determinant is affine in each diagonal entry.  Replacing the
+first diagonal entry \(d\) by \(d-1\) subtracts the cofactor
+\(T_{k-1}\), whereas replacing the last one by \(d-a^2\) subtracts
+\(a^2T_{k-1}\).  Thus, for \(k<n\), \(D_k\) and \(R_k\) are,
+respectively, the leading and trailing principal minors of
+\(\mathcal P_n(Y,t)\).
+
+The following continuant calculation isolates all dependence on \(Y\).
+With \(T_k=0\) for \(k<0\), a Laplace expansion over the last two rows,
+grouped according to the largest displaced index in the contributing
+permutation, gives for every \(k\geq1\)
+\begin{equation}\label{eq:T-recurrence}
+\begin{aligned}
+T_k={}&dT_{k-1}-(|b|^2-a^2)T_{k-2}
+-\bigl(2a^2d-a(b^2+\bar b^2)\bigr)T_{k-3}\\
+&-a^2(|b|^2-a^2)T_{k-4}+a^4dT_{k-5}-a^6T_{k-6}
+-a^2\boldsymbol 1_{\{k=2\}}.
+\end{aligned}
+\end{equation}
+For example, \(T_1=d\) and \(T_2=d^2-|b|^2\); these also verify the
+only inhomogeneous coefficient in \eqref{eq:T-recurrence}.  Multiplying
+the recurrence by \(z^k\) and summing gives
+\begin{equation}\label{eq:T-generating}
+ \sum_{k\geq0}T_kz^k=\frac{1-a^2z^2}{Q(z,Y)},
+\end{equation}
+where
+\[
+\begin{aligned}
+ Q(z,Y)={}&1-dz+(|b|^2-a^2)z^2
+ +\bigl(2a^2d-a(b^2+\bar b^2)\bigr)z^3\\
+ &+a^2(|b|^2-a^2)z^4-a^4dz^5+a^6z^6.
+\end{aligned}
+\]
+Consequently, with \(\mathcal D(z,Y)=\sum_{k\geq0}D_kz^k\),
+\begin{equation}\label{eq:D-F-generating}
+ \mathcal D(z,Y)=\frac{(1-z)(1-a^2z^2)}{Q(z,Y)},\qquad
+ \sum_{k\geq0}F_k(Y,t)z^k=(1-a^2z)\mathcal D(z,Y).
+\end{equation}
+For the second identity, first change the initial diagonal, producing
+\(D_k\), and then change the final diagonal; its cofactor is
+\(D_{k-1}\).  Thus \(F_k=D_k-a^2D_{k-1}\), which proves the asserted
+generating function.  Direct substitution of \(d\) and \(b\) gives
+\[
+ \partial_YQ=-z(1-z)(1+az)^2(1-a^2z).
+\]
+Differentiating \eqref{eq:D-F-generating} therefore yields
+\begin{equation}\label{eq:F-prime-generating}
+ \sum_{k\geq0}\partial_YF_k(Y,t)z^k
+ =\varphi_a(z)\mathcal D(z,Y)^2,
+ \qquad
+ \varphi_a(z)=\frac{z(1+az)(1-a^2z)^2}{1-az}.
+\end{equation}
+
+Suppose that \(\mathcal P_n(Y,t)>0\).  Then
+\begin{equation}\label{eq:D-R-positive}
+ D_k>0,\qquad R_k>0\qquad(0\leq k<n).
+\end{equation}
+Put \(u_k=\sum_{j=0}^kD_jD_{k-j}\), with \(u_k=0\) for \(k<0\).
+The coefficients of \(\varphi_a\), beginning with the coefficient of
+\(z\), are
+\[
+ 1,\quad 2a(1-a),\quad a^2(a^2-4a+2),\quad
+ 2a^{k-1}(1-a)^2\quad(k\geq4).
+\]
+Thus
+\begin{equation}\label{eq:F-prime-convolution}
+\begin{aligned}
+ \partial_YF_n={}&u_{n-1}+2a(1-a)u_{n-2}
+ +a^2(a^2-4a+2)u_{n-3}\\
+ &+2(1-a)^2\sum_{k=4}^na^{k-1}u_{n-k}.
+\end{aligned}
+\end{equation}
+
+The third coefficient is the sole term that may be negative; the following
+cofactor inequality controls its contribution.  Let \(j,k\geq1\),
+\(j+k=n-1\).  Deleting index \(k+1\) from \(\mathcal P_n\) leaves blocks of
+sizes \(k\) and \(j\), with the second off-diagonal \(a\) as their sole
+coupling.  In block form, the deleted principal submatrix is
+\[
+ \begin{bmatrix}
+  L_k&a \mathbf e_k\mathbf e_1^T\\
+  a \mathbf e_1\mathbf e_k^T&R_j^{\rm mat}
+ \end{bmatrix},
+ \qquad \det L_k=D_k,\quad \det R_j^{\rm mat}=R_j.
+\]
+Expanding once in each of the two coupling entries shows that its
+determinant is
+\begin{equation}\label{eq:deleted-cofactor}
+ D_kR_j-a^2D_{k-1}R_{j-1}>0.
+\end{equation}
+Deleting index \(j+1\) instead gives the same inequality with \(j,k\)
+interchanged.  Define
+\[
+ \vartheta_k=\frac{D_k}{D_{k-1}},\qquad
+ \varpi_k=\frac{R_k}{R_{k-1}}.
+\]
+Since \(T_k=\sum_{\ell=0}^kD_\ell\), \eqref{eq:D-R-def} gives
+\begin{equation}\label{eq:R-D-relation}
+ R_k=D_k+(1-a^2)\sum_{\ell=0}^{k-1}D_\ell,\qquad
+ R_k-R_{k-1}=D_k-a^2D_{k-1}.
+\end{equation}
+Hence \(\vartheta_k\leq a^2\) implies \(\varpi_k\leq1\).  On dividing
+\eqref{eq:deleted-cofactor} and its companion by positive factors, we
+obtain
+\begin{equation}\label{eq:ratio-cross}
+ \vartheta_k\varpi_j>a^2,\qquad \vartheta_j\varpi_k>a^2.
+\end{equation}
+If both \(\vartheta_j\) and \(\vartheta_k\) were at most \(a^2\), then
+both \(\varpi_j\) and \(\varpi_k\) would be at most \(1\),
+contradicting \eqref{eq:ratio-cross}.  Hence, after interchanging
+\(j,k\) if necessary, \(\vartheta_j>a^2\).  Moreover,
+\[
+ \vartheta_jR_{j-1}-a^2R_j
+ =(\vartheta_j-a^2)(R_{j-1}-a^2D_{j-1}),
+\]
+and the second factor equals
+\((1-a^2)\sum_{\ell=0}^{j-1}D_\ell>0\).  Therefore
+\[
+ \vartheta_j>a^2\quad\Longrightarrow\quad
+ \varpi_j<\vartheta_j/a^2.
+\]
+The first inequality in \eqref{eq:ratio-cross} now gives
+\(a^2<\vartheta_k\varpi_j<\vartheta_j\vartheta_k/a^2\), and therefore
+\begin{equation}\label{eq:D-ratio-product}
+ \vartheta_j\vartheta_k>a^4.
+\end{equation}
+Consequently, for \(n\geq3\),
+applying \eqref{eq:D-ratio-product} to \(j=p+1\), \(k=n-2-p\) gives
+\[
+ D_{p+1}D_{n-2-p}>a^4D_pD_{n-3-p},
+ \qquad0\leq p\leq n-3.
+\]
+Summing and then adding the two positive endpoint terms gives
+\begin{equation}\label{eq:u-absorption}
+ u_{n-1}=2D_{n-1}+\sum_{j=1}^{n-2}D_jD_{n-1-j}>a^4u_{n-3}.
+\end{equation}
+
+If the third coefficient in \eqref{eq:F-prime-convolution} is negative,
+write it as \(-\mathcal B_{\rm neg}\), where
+\(\mathcal B_{\rm neg}=a^2(4a-2-a^2)\).  Since
+\[
+ a^4-\mathcal B_{\rm neg}=2a^2(1-a)^2>0,
+\]
+equations \eqref{eq:F-prime-convolution} and \eqref{eq:u-absorption}
+prove \eqref{eq:det-derivative-positive}.  If that coefficient is
+nonnegative, the implication is immediate.  For \(n=1\), one has
+\(\partial_YF_1=1\); for \(n=2\), one has
+\(\partial_YF_2=2D_1+2a(1-a)>0\).  Thus
+\eqref{eq:det-derivative-positive} holds in every dimension, which proves
+the proposition.
+\end{proof}
+
+\section{Folded-continuant transfer and boundary residuals}
+\label[appendix]{app:folded-transfer}
+
+This appendix supplies the transfer and generating identities underlying
+\eqref{eq:fold-even}--\eqref{eq:fold-odd} and records every boundary sign
+and parity convention in the signed-pencil argument.
+Pair the coordinates in the order
+\((1,n),(2,n-1),\ldots\).  In this order the symmetric matrix
+\((xI_n-A_n)J_n-sI_n\) is block tridiagonal.  Its interior diagonal and
+off-diagonal blocks are
+\[
+ D_{\rm int}=\begin{bmatrix}-s&x\\x&-s\end{bmatrix},
+ \qquad
+ E_{\rm off}=\begin{bmatrix}0&-1\\-a&0\end{bmatrix},
+\]
+with lower block \(E_{\rm off}^T\).  For even order the terminal block is
+\[
+ D_{\rm term}^{\rm e}=\begin{bmatrix}-1-s&x\\x&-a-s\end{bmatrix};
+\]
+for odd order the terminal block is the scalar \(x-s\), coupled to the
+preceding block by the column \((-1,-a)^T\).  Since
+\[
+ (xI_n-A_n-sJ_n)=\bigl((xI_n-A_n)J_n-sI_n\bigr)J_n,
+\]
+the determinant of this block matrix, multiplied by \(\det J_n\), is
+\(q_n(x,s)\).  Set \(\mathcal Q_m^{\rm e}=q_{2m}(x,s)\) and
+\(\mathcal Q_m^{\rm o}=q_{2m+1}(x,s)\).  The following five-minor transfer
+completes the continuant verification.
+For \(\tau\in\{\mathrm e,\mathrm o\}\), let \(K_m^\tau\) denote the
+corresponding matrix
+\[
+ (xI_n-A_n-sJ_n)J_n=(xI_n-A_n)J_n-sI_n,
+ \qquad n=2m\ \hbox{or}\ 2m+1,
+\]
+after simultaneously permuting its rows and columns into the paired
+order.  Thus \(K_m^{\mathrm e}\) has order \(2m\),
+\(K_m^{\mathrm o}\) has order \(2m+1\), and
+\[
+ K_1^{\mathrm e}=
+ \begin{bmatrix}-1-s&x\\x&-a-s\end{bmatrix},
+ \qquad
+ K_1^{\mathrm o}=
+ \begin{bmatrix}
+ -s&x&-1\\
+ x&-s&-a\\
+ -1&-a&x-s
+ \end{bmatrix}.
+\]
+For \(m\geq1\), increasing \(m\) by one adds one interior block at the
+exposed end:
+\begin{equation}\label{eq:fold-block-extension}
+ K_{m+1}^\tau=
+ \begin{bmatrix}
+  D_{\rm int}&\mathcal E_m^\tau\\
+  (\mathcal E_m^\tau)^T&K_m^\tau
+ \end{bmatrix},
+ \qquad
+ \mathcal E_m^\tau=
+ \begin{bmatrix}E_{\rm off}&0\end{bmatrix},
+\end{equation}
+where the zero block has the width required by \(K_m^\tau\).
+
+For a matrix whose first two coordinates are exposed, write
+\(K(\widehat I\mid\widehat J)\) for the matrix obtained by deleting
+rows \(I\) and columns \(J\).  Suppressing the parity superscript, set
+\[
+\begin{aligned}
+ \mathfrak d_m&=\det K_m,&
+ \mathfrak p_m&=\det K_m(\widehat1\mid\widehat1),&
+ \mathfrak q_m&=\det K_m(\widehat2\mid\widehat2),\\
+ \mathfrak c_m&=\det K_m(\widehat1\mid\widehat2),&
+ \mathfrak r_m&=\det K_m(\widehat{1,2}\mid\widehat{1,2}).
+\end{aligned}
+\]
+The off-principal minor obtained by deleting row \(2\) and column \(1\)
+has the same value \(\mathfrak c_m\), because \(K_m\) is symmetric.
+
+The one-step transfer follows from a Schur complement.  On the dense set
+where both \(K_m\) and the tail obtained by deleting its first two
+coordinates are invertible, let
+\[
+ F=\begin{bmatrix}u&w\\w&v\end{bmatrix}
+\]
+be its Schur complement in \(K_m\), and let \(\delta\) be the
+determinant of that tail.  Then
+\[
+ (\mathfrak d_m,\mathfrak p_m,\mathfrak q_m,\mathfrak c_m,\mathfrak r_m)
+ =\delta(uv-w^2,v,u,w,1).
+\]
+Since
+\[
+ E_{\rm off}\operatorname{adj}(F)E_{\rm off}^T
+ =
+ \begin{bmatrix}u&-aw\\-aw&a^2v\end{bmatrix},
+\]
+taking the Schur complement of \(K_m\) in
+\eqref{eq:fold-block-extension} gives
+\begin{equation}\label{eq:five-minor-update}
+\begin{aligned}
+ \mathfrak d_{m+1}
+ &= (s^2-x^2)\mathfrak d_m
+    +s(a^2\mathfrak p_m+\mathfrak q_m)
+    -2ax\mathfrak c_m+a^2\mathfrak r_m,\\
+ \mathfrak p_{m+1}&=-s\mathfrak d_m-a^2\mathfrak p_m,\\
+ \mathfrak q_{m+1}&=-s\mathfrak d_m-\mathfrak q_m,\\
+ \mathfrak c_{m+1}&=x\mathfrak d_m+a\mathfrak c_m,\\
+ \mathfrak r_{m+1}&=\mathfrak d_m.
+\end{aligned}
+\end{equation}
+Both sides are polynomial in \(x\) and \(s\).  For each fixed \(0<a<1\),
+the identities hold on a dense nonsingular set, so the polynomial identity
+theorem extends them to all \(x,s\), including singular matrix cases.
+
+The five quantities in \eqref{eq:five-minor-update} satisfy one linear
+invariant.  Define
+\[
+ \ell_m=(1-a)\mathfrak d_m-as\,\mathfrak p_m+s\,\mathfrak q_m
+       +(1-a)x\mathfrak c_m-a(1-a)\mathfrak r_m.
+\]
+Direct substitution into \eqref{eq:five-minor-update} gives
+\[
+ \ell_{m+1}=-a\ell_m.
+\]
+For the two terminal blocks, direct evaluation gives
+\[
+\begin{aligned}
+&(\mathfrak d_1,\mathfrak p_1,\mathfrak q_1,\mathfrak c_1,\mathfrak r_1)_{\mathrm e}\\
+&\qquad=\bigl((1+s)(a+s)-x^2,-a-s,-1-s,x,1\bigr),\\
+&(\mathfrak d_1,\mathfrak p_1,\mathfrak q_1,\mathfrak c_1,\mathfrak r_1)_{\mathrm o}\\
+&\qquad=\bigl(x(1+a^2)+2as-C_0(x-s),\\
+&\hspace{26mm}s^2-sx-a^2,\ s^2-sx-1,\ x^2-sx-a,\ x-s\bigr).
+\end{aligned}
+\]
+Thus \(\ell_1=0\) in both parity classes, and consequently
+\begin{equation}\label{eq:fold-minor-invariant}
+ (1-a)\mathfrak d_m-as\,\mathfrak p_m+s\,\mathfrak q_m
+ +(1-a)x\mathfrak c_m-a(1-a)\mathfrak r_m=0
+ \qquad(m\geq1).
+\end{equation}
+
+Because
+\[
+ \det J_{2m}=\det J_{2m+1}=(-1)^m,
+\]
+the first coordinate of the following signed state is the required
+determinant:
+\[
+ \boldsymbol\eta_m^\tau
+ =
+ (-1)^m
+ \begin{bmatrix}
+ \mathfrak d_m^\tau&\mathfrak p_m^\tau&
+ \mathfrak q_m^\tau&\mathfrak c_m^\tau
+ \end{bmatrix}^{T},
+ \qquad
+ (\boldsymbol\eta_m^{\mathrm e})_1=\mathcal Q_m^{\mathrm e},
+ \quad
+ (\boldsymbol\eta_m^{\mathrm o})_1=\mathcal Q_m^{\mathrm o}.
+\]
+Eliminating \(\mathfrak r_m\) with \eqref{eq:fold-minor-invariant} reduces
+\eqref{eq:five-minor-update} to the four-dimensional transfer
+\begin{equation}\label{eq:fold-four-transfer}
+ \boldsymbol\eta_{m+1}^\tau
+ =\mathsf T_{\rm fold}\boldsymbol\eta_m^\tau,
+ \qquad
+ \mathsf T_{\rm fold}=
+ \begin{bmatrix}
+ x^2-s^2-a&\dfrac{a^3s}{1-a}&-\dfrac{s}{1-a}&ax\\[2mm]
+ s&a^2&0&0\\
+ s&0&1&0\\
+ -x&0&0&-a
+ \end{bmatrix}.
+\end{equation}
+Set
+\begin{equation}\label{eq:fold-transfer-initial}
+ \boldsymbol\eta_0^{\mathrm e}
+ =\begin{bmatrix}1&a^{-1}&1&0\end{bmatrix}^{T},
+ \qquad
+ \boldsymbol\eta_0^{\mathrm o}
+ =\begin{bmatrix}x-s&1&1&-1\end{bmatrix}^{T}.
+\end{equation}
+These values incorporate the terminal conditions at \(m=0\).
+Indeed, direct multiplication in \eqref{eq:fold-four-transfer} gives
+\[
+ \mathsf T_{\rm fold}\boldsymbol\eta_0^{\mathrm e}
+ =
+ \begin{bmatrix}
+ x^2-(1+s)(a+s)\\ a+s\\1+s\\-x
+ \end{bmatrix},
+\]
+and
+\[
+ \mathsf T_{\rm fold}\boldsymbol\eta_0^{\mathrm o}
+ =
+ \begin{bmatrix}
+ C_0(x-s)-x(1+a^2)-2as\\
+ a^2-s^2+sx\\
+ 1-s^2+sx\\
+ a+sx-x^2
+ \end{bmatrix},
+\]
+which are exactly the signed terminal minors above.  Hence
+\(\boldsymbol\eta_m^\tau
+=\mathsf T_{\rm fold}^{\,m}\boldsymbol\eta_0^\tau\) for every
+\(m\geq0\).
+
+A direct determinant calculation gives
+\begin{equation}\label{eq:fold-transfer-characteristic}
+\begin{aligned}
+ \det(\lambda I_4-\mathsf T_{\rm fold})
+ &=
+ \lambda^4-C_0\lambda^3+\mathfrak b\lambda^2
+ -a^2C_0\lambda+a^4,\\
+ \mathfrak b
+ &=(1+a^2)x^2+2as^2+2a^2-2a-2a^3.
+\end{aligned}
+\end{equation}
+Apply Cayley--Hamilton to \(\mathsf T_{\rm fold}\), multiply by
+\(\mathsf T_{\rm fold}^{\,m-4}\boldsymbol\eta_0^\tau\), and extract the
+first coordinate.  For both \(Z_m=\mathcal Q_m^{\mathrm e}\) and
+\(Z_m=\mathcal Q_m^{\mathrm o}\), this yields
+\begin{equation}\label{eq:fold-recurrence}
+ Z_m-C_0Z_{m-1}+\mathfrak bZ_{m-2}
+ -a^2C_0Z_{m-3}+a^4Z_{m-4}=0,
+ \qquad m\geq4.
+\end{equation}
+
+Finally, applying \(\mathsf T_{\rm fold}\) three times to
+\eqref{eq:fold-transfer-initial} gives the boundary residuals
+\[
+ \mathsf{Res}_0=Z_0,\quad
+ \mathsf{Res}_1=Z_1-C_0Z_0,\quad
+ \mathsf{Res}_2=Z_2-C_0Z_1+\mathfrak bZ_0,
+\]
+\[
+ \mathsf{Res}_3
+ =Z_3-C_0Z_2+\mathfrak bZ_1-a^2C_0Z_0,
+\]
+namely
+\[
+\begin{array}{ccccc}
+ \toprule
+ &\mathsf{Res}_0&\mathsf{Res}_1&\mathsf{Res}_2&\mathsf{Res}_3\\ \midrule
+ Z_m=\mathcal Q_m^{\rm e}
+ &1&a(1-2\zeta_s)&a^2(1-2\zeta_s)&a^3\\
+ Z_m=\mathcal Q_m^{\rm o}
+ &x-s&-[x(1+a^2)+2as]&a^2(x-s)&0\\
+ \bottomrule
+\end{array}.
+\]
+Thus, as a formal-power-series identity,
+\[
+ \Pi(z)\sum_{m\geq0}Z_mz^m
+ =\mathsf{Res}_0+\mathsf{Res}_1z+\mathsf{Res}_2z^2+\mathsf{Res}_3z^3.
+\]
+For the even sequence the polynomial on the right factors as
+\((1+az)(1-2a\zeta_sz+a^2z^2)\); for the odd sequence it is
+\((x-s)-[x(1+a^2)+2as]z+a^2(x-s)z^2\).  These factorisations identify the
+boundary-residual polynomials.  Since \(\Pi(0)=1\), division by \(\Pi\) in
+\(\mathbb R[[z]]\) gives the two literal formal-power-series identities
+\begin{equation}\label{eq:fold-generating-even}
+ \sum_{m\geq0}\mathcal Q_m^{\rm e}z^m
+ =(1+az)(1-2a\zeta_sz+a^2z^2)\Pi(z)^{-1},
+\end{equation}
+and
+\begin{equation}\label{eq:fold-generating-odd}
+ \sum_{m\geq0}\mathcal Q_m^{\rm o}z^m
+ =\bigl((x-s)-[x(1+a^2)+2as]z+a^2(x-s)z^2\bigr)
+  \Pi(z)^{-1}.
+\end{equation}
+
+\section{Divided differences for the folded Chebyshev formulas}
+\label[appendix]{app:half-chord}
+
+The transfer calculation in \cref{app:folded-transfer} gives two rational
+generating functions.  Coefficient extraction converts them to the
+divided-difference formulas used in the half-angle chord parametrization.
+Set \(U_{-1}=0\).  The Chebyshev generating function gives
+\[
+ \sum_{m\geq0}(u-\zeta_s)(U_m(u)+U_{m-1}(u))\omega_{\rm gf}^m
+ =\frac{(u-\zeta_s)(1+\omega_{\rm gf})}
+ {1-2u\omega_{\rm gf}+\omega_{\rm gf}^2},
+\]
+and, with \(\mathsf B_s^{\rm fold}=[x(1+a^2)+2as]/(2a)\),
+\[
+ \sum_{m\geq0}((x-s)u-\mathsf B_s^{\rm fold})U_m(u)\omega_{\rm gf}^m
+ =\frac{(x-s)u-\mathsf B_s^{\rm fold}}
+ {1-2u\omega_{\rm gf}+\omega_{\rm gf}^2}.
+\]
+For a differentiable real function \(F\), write
+\[
+ [F]_{u,v}:=
+ \begin{cases}
+  \dfrac{F(u)-F(v)}{u-v},&u\neq v,\\[2mm]
+  F'(u),&u=v
+ \end{cases}.
+\]
+Let \(u,v\in\mathbb R\) satisfy the two symmetric relations in
+\eqref{eq:fold-characteristic}.  Taking the corresponding divided
+difference of the Chebyshev generating identities and putting
+\(\omega_{\rm gf}=az\) recovers
+\eqref{eq:fold-generating-even} and \eqref{eq:fold-generating-odd}.
+Coefficient comparison gives
+\begin{equation}
+ q_{2m}(x,s)=a^m[\mathfrak f_m]_{u,v},\qquad
+ \mathfrak f_m(t)=(t-\zeta_s)(U_m(t)+U_{m-1}(t)),
+\end{equation}
+and
+\begin{equation}
+ q_{2m+1}(x,s)=a^m[\mathfrak g_m]_{u,v},\qquad
+ \mathfrak g_m(t)=\left((x-s)t-
+ \frac{x(1+a^2)+2as}{2a}\right)U_m(t).
+\end{equation}
+The polynomial determinant recurrence and generating identities hold
+globally.  Once the two symmetric relations have been verified for a real
+pair, the real-pair formulas
+\eqref{eq:fold-even}--\eqref{eq:fold-odd} apply, with the displayed
+derivative providing the collision value.  For
+\(\Delta_{\rm fold}<0\), the polynomial identities apply directly,
+independently of any square-root branch.
+
+\section{Exhaustion of the endpoint-side chord sheet}
+\label[appendix]{app:chord-exhaustion}
+
+\begin{lemma}[Endpoint-side chord-sheet exhaustion]
+\label{lem:chord-sheet-exhaustion}
+Under the chord parametrization and branch conventions of
+\cref{eq:chord-equation,eq:channel-xs}, the two exhaustion statements made in
+the main text hold in every positive gap, including a gap adjacent to zero.
+For odd \(K\), they also hold on the positive half of the single central gap.
+\end{lemma}
+
+\begin{proof}
+Continue the ordered middle root \(s_*(x)\) through the open gap.  Write
+\(\Delta_*(x)=\Delta_{\rm fold}(x,s_*(x))\) for its folded discriminant,
+let \(y(x)\leq z(x)\) be the reconstructed nonnegative half variables on
+the real sheet issuing from the endpoint germ, and set
+\(\Theta(x)=\arccos y(x)\).  Let \(\mathcal C\) be the set of gap points for
+which
+\[
+ \Delta_*(x)>0,\qquad
+ \frac{j\pi}{K}<\Theta(x)<\frac{(j+1)\pi}{K},\qquad
+ u_K^{\max}<z(x)<\mathfrak c_h.
+\]
+On \(\mathcal C\), the reversible folded determinant identities give
+\(\mathcal W_K(y(x))=\mathcal W_K(z(x))\); uniqueness on the endpoint-side
+outer lobe then gives
+\[
+ z(x)=z_K(\mathcal W_K(y(x))).
+\]
+Thus \(\mathcal C\) is precisely the selected endpoint-side chord sheet.
+The endpoint germ constructed in the main text makes \(\mathcal C\)
+nonempty.  The ordered eigenvalues of the continuous real symmetric pencil
+\(B_{K-1}(x)\) are continuous in \(x\), including at an eigenvalue crossing,
+so the continuation passes through a multiple least singular value.  The
+folded pair \(u=2z^2-1\), \(v=2y^2-1\) and its reconstructed half variables
+are continuous, while the sheet inequalities are strict.  Thus
+\(\mathcal C\) is relatively open in the gap.
+
+It is also relatively closed.  At a relative closure point the chord
+identity and all sheet inequalities persist weakly.  The possible closure
+cases are as follows.  (1) If \(\Delta_*(x)=0\), then the reconstructed half
+variables coincide, which is impossible because
+\[
+ z\geq u_K^{\max}>\cos\frac{\pi}{K}
+ \geq\cos\frac{j\pi}{K}\geq y.
+\]
+(2) At an interior point of a positive gap, including one adjacent to zero,
+both half variables retain their signs: \(z>0\), while \(y=0\) would force
+\(x=0\), outside the open positive half.  (3) At an interior point the outer
+variable stays below \(\mathfrak c_h\), because equality in
+\eqref{eq:channel-xs} would give \(s=0\).  (4) The inner variable stays away
+from a nodal endpoint: the common level would then be zero, the endpoint-side
+solution would equal \(\mathfrak c_h\), and \eqref{eq:channel-xs} would give
+\(s=0\), whereas the middle root is nonzero inside a spectral gap.  (5) The
+outer variable remains in its endpoint-side component, since its first exit
+point would be \(u_K^{\max}\), contradicting
+\eqref{eq:outer-level-dominates}.  Passage through \(z=1\) is harmless; only
+its coordinate changes.  Hence every relative closure point remains in
+\(\mathcal C\).  Since the open gap is an interval, \(\mathcal C\) is the
+entire gap.  This proves the first exhaustion direction: every actual gap
+point lies on the selected endpoint-side chord sheet.
+
+For the converse direction, the reconstructed angle \(\Theta\) extends
+continuously to the closed spectral gap.  The exact folded variables at the
+two endpoints give
+\[
+ \Theta(\lambda_{K-1,j+1})=\frac{(j+1)\pi}{K},\qquad
+ \Theta(\lambda_{K-1,j})=\frac{j\pi}{K}.
+\]
+For every \(\theta_0\in(j\pi/K,(j+1)\pi/K)\), the intermediate value
+theorem therefore supplies an interior gap point \(x\) with
+\(\Theta(x)=\theta_0\).  The classification just proved and uniqueness of
+the endpoint-side outer solution then give
+\[
+ y(x)=\cos\theta_0,\qquad
+ z(x)=z_K(\mathcal W_K(\cos\theta_0)),
+\]
+so the corresponding abscissa and signed root are exactly those of the
+prescribed \(j\)-chord.  Thus every chord parameter produces an actual point
+of the ordered middle branch.  By \cref{lem:middle-branch}, its positive
+magnitude is \(s_{\min}(xI_{K-1}-A_{K-1})\).  Both exhaustion directions
+follow from continuity and sheet classification; monotonicity of
+\(\theta\mapsto x\) is unnecessary.
+
+When \(K\) is odd, the same argument applies to the positive half of
+the single central gap, continuing from the positive spectral endpoint
+to \(x=0\).  Because \(z>0\), the identity
+\(x=(2r/\mathfrak c_h)\cos\theta\,z\) forces \(\theta=\pi/2\) at
+\(x=0\).  Thus every parameter on that half occurs, and reflection covers
+the negative half.
+\end{proof}
+
+\section{Scalar estimate for the lower central-gap comparison}
+\label[appendix]{app:central-scalar}
+
+This appendix proves the strict scalar inequality
+\eqref{eq:central-target} through finite estimates valid uniformly over the
+three cases specified below.
+
+Put \(b=u_+/u_-=1/a\), and define
+\[
+ Q_b=b^2-2b\rho+1,\qquad S_b=b^2+2b\omega_L+1.
+\]
+The Chebyshev identity gives \(u_-^2Q_b=1\), and
+\begin{equation}\label{eq:central-D-QS}
+ \mathfrak D_L=S_b/Q_b,\qquad
+ \Delta_\xi:=\rho-\xi=\Delta_\omega Q_b/S_b.
+\end{equation}
+Indeed, \(u_+=bu_-\) and \(u_-^2=Q_b^{-1}\), so
+\[
+ \mathfrak D_L=1+2(\rho+\omega_L)u_-u_+
+  =1+\frac{2b(\rho+\omega_L)}{Q_b}=\frac{S_b}{Q_b},
+\]
+and the formula for \(\Delta_\xi\) follows from
+\eqref{eq:central-D-xi}.
+The ratio \(U_L/U_{L-1}\) is strictly increasing above the largest zero
+of \(U_{L-1}\), and equals \(1\) at
+\(\rho_{\rm ref}=\cos\frac{\pi}{2L+1}\).  Hence
+\(\rho>\rho_{\rm ref}\).  Since
+\(S_b-Q_b=2b(\rho+\omega_L)>0\),
+\[
+ \xi>\rho_{\rm ref}-\Delta_\omega>2\omega_L-1
+ >2\omega_L^2-1=\cos\frac{\pi}{L}.
+\]
+Therefore \(f_L(x)=(1+x)U_{L-1}(x)\) is positive, strictly increasing,
+and strictly log-concave on \([\xi,\rho]\).  In particular,
+\(\mathfrak d_\rho=(\log f_L)'(\rho)>0\), and
+\[
+ \mathfrak d_\rho=
+ \begin{cases}
+  \dfrac{L(b-\rho)-1}{\rho^2-1},&\rho\neq1,\\[6pt]
+  \dfrac{2L^2+1}{6},&\rho=1
+ \end{cases}.
+\]
+The endpoint value follows directly from \(U_{L-1}(1)=L\) and
+\(U_{L-1}'(1)=L(L^2-1)/3\).  Moreover,
+\[
+ \log f_L(\rho)-\log f_L(\xi)>\Delta_\xi\mathfrak d_\rho,
+ \qquad
+ f_L(\xi)^2<f_L(\rho)^2e^{-2\Delta_\xi\mathfrak d_\rho}
+ <\frac{f_L(\rho)^2}{1+2\Delta_\xi\mathfrak d_\rho}.
+\]
+Here the first strict inequality is the integral form of strict
+log-concavity.  Since
+\(f_L(\rho)^2=(1+\rho)^2/Q_b\) and
+\(\Delta_\xi=\Delta_\omega Q_b/S_b\), substitution into
+\eqref{eq:central-target} reduces it to
+\begin{equation}\label{eq:N-positive-target}
+ \mathcal N=(\rho+\omega_L)
+ (S_b+2\Delta_\omega Q_b\mathfrak d_\rho)
+ -(1+\omega_L)(1+\rho)^2>0.
+\end{equation}
+All three cases use
+\begin{equation}\label{eq:Delta-omega-basic-bound}
+ \Delta_\omega=1-\cos\frac{\pi}{2L}
+ <\frac{\pi^2}{8L^2}<\frac5{4L^2},
+ \qquad \Delta_\omega L<1.
+\end{equation}
+
+Suppose first that \(\rho>1\).  Put \(u=b-\rho\) and
+\(\Delta_+=\rho^2-1\).  Since \(\mathfrak d_\rho>0\), \(u>1/L\).
+Keeping \(\rho\) fixed,
+direct differentiation gives
+\[
+ \frac{\partial_b\mathcal N}{2(\rho+\omega_L)}
+ =\rho+\omega_L+u-\Delta_\omega L
+ +\frac{\Delta_\omega(3Lu^2-2u)}{\Delta_+}.
+\]
+The right-hand side is strictly increasing for \(u\geq1/L\) and is positive
+at \(u=1/L\) because \(\Delta_\omega L<1\).  Hence \(\mathcal N\) exceeds
+its value at
+\(b=\rho+1/L\).  With
+\(s_0=\rho+\omega_L\) and \(\omega_+=1+\omega_L\), that value is
+\[
+ \Upsilon(s_0)
+ =s_0\left[\left(s_0+\frac1L\right)^2+\omega_+\Delta_\omega\right]
+ -\omega_+(s_0+\Delta_\omega)^2.
+\]
+For \(s_0\geq\omega_+\),
+\[
+ \Upsilon''(s_0)=6s_0+4/L-2\omega_+>0,\qquad
+ \Upsilon'(\omega_+)=2\omega_L\omega_++4\omega_+/L+1/L^2>0,
+\]
+and
+\[
+ \Upsilon(\omega_+)
+ =\omega_+(-2\Delta_\omega+2\omega_+/L+1/L^2)>0.
+\]
+Thus \eqref{eq:N-positive-target} holds when \(\rho>1\).  If \(\rho=1\),
+then \(b=(L+1)/L\), \(Q_b=L^{-2}\), and direct substitution, using the
+endpoint value of \(\mathfrak d_\rho\), gives
+\[
+ \mathcal N=\Upsilon(1+\omega_L)
+ +\frac{2(1+\omega_L)\Delta_\omega}{L^2}
+   \frac{2L^2+1}{6}>0.
+\]
+The first term is positive by the preceding calculation, and every factor
+in the correction term is positive.
+
+For \(\rho<1\), set
+\[
+ \upsilon=1-\rho,\qquad \Delta_b=b-1,\qquad
+ u=\Delta_b+\upsilon,\qquad \Delta_-=\upsilon(2-\upsilon).
+\]
+Writing \(\rho=\cos\theta_\rho\) gives
+\(0<L\theta_\rho<\pi/2\) and
+\[
+ u=b-\rho
+ =\frac{\sin((L+1)\theta_\rho)}{\sin(L\theta_\rho)}
+  -\cos\theta_\rho
+ =\sin\theta_\rho\cot(L\theta_\rho).
+\]
+Because \(b>1\), \(u=\Delta_b+\upsilon>\upsilon>0\).  Also
+\(\tan(L\theta_\rho)>L\tan\theta_\rho>L\sin\theta_\rho\), since
+\(x\mapsto\tan x/x\) is strictly increasing on \((0,\pi/2)\).
+Hence
+\begin{equation}\label{eq:u-small-range}
+ 0<\upsilon<u<1/L.
+\end{equation}
+With \(\rho\) fixed, write \(\mathcal N_\rho^{<}(\mathord\cdot)\) for
+\(\mathcal N\) viewed as a function of \(\Delta_b=b-1\).
+A direct expansion of \eqref{eq:N-positive-target} gives
+\[
+ \mathcal N_\rho^{<}(\Delta_b)-\mathcal N_\rho^{<}(0)
+ =\frac{\Delta_b(\rho+\omega_L)}{\Delta_-}\mathfrak q(u),
+\]
+where
+\[
+ \mathfrak q(u)=\Delta_-[2(2-\Delta_\omega)+u-\upsilon]
+ +2\Delta_\omega
+ [u+\upsilon-L(u^2+u\upsilon+\upsilon^2)-L\Delta_-].
+\]
+The function \(\mathfrak q\) is a concave quadratic.  Moreover,
+\[
+ \mathcal N_\rho^{<}(0)=\frac{\upsilon}{2-\upsilon}
+ \bigl[(2-\Delta_\omega)(2-\upsilon)^2
+ -2\Delta_\omega^2
+ -4\Delta_\omega L(2-\upsilon-\Delta_\omega)\bigr].
+\]
+The following elementary bounds hold; the second follows from
+\(\rho>\rho_{\rm ref}\) and
+\(1-\rho_{\rm ref}<\pi^2/[2(2L+1)^2]<5/(2L+1)^2\):
+\begin{equation}\label{eq:Delta-upsilon-bounds}
+ \Delta_\omega<\frac5{4L^2},\qquad
+ \upsilon<\frac5{(2L+1)^2}\leq\frac15.
+\end{equation}
+Although \(5/(2L+1)^2=1/5\) when \(L=2\), the preceding strict bound still
+gives \(\upsilon<1/5\).  These bounds
+show that the bracketed expression is positive, since it equals
+\[
+ (2-\upsilon)
+ \bigl[(2-\Delta_\omega)(2-\upsilon)-4\Delta_\omega L\bigr]
+ +2\Delta_\omega^2(2L-1)
+\]
+and, using \(L\geq2\),
+\[
+ (2-\Delta_\omega)(2-\upsilon)
+ >\frac{27}{16}\frac95=\frac{243}{80}
+ >\frac52\geq4\Delta_\omega L.
+\]
+At the endpoints of
+\eqref{eq:u-small-range},
+\[
+ \mathfrak q(\upsilon)=\upsilon
+ \bigl[(2-\upsilon)(4-2\Delta_\omega)
+ +4\Delta_\omega-4\Delta_\omega L(1+\upsilon)\bigr]>0,
+\]
+\[
+ \mathfrak q(1/L)=\upsilon
+ \bigl[(2-\upsilon)(4-2\Delta_\omega+1/L-\upsilon)
+ -4\Delta_\omega L\bigr]>0.
+\]
+At the two endpoints, the positive leading terms exceed
+\[
+ \frac95\left(4-\frac58\right)=\frac{243}{40},
+ \qquad
+ \frac95\left(4-\frac58-\frac15\right)=\frac{1143}{200},
+\]
+while the negative terms have magnitudes less than
+\((5/L)(6/5)\leq3\) and \(5/L\leq5/2\), respectively.  Concavity therefore
+gives \(\mathfrak q(u)>0\), proving \eqref{eq:N-positive-target}, and hence
+\eqref{eq:central-target}, in all three cases.
+
+
+\section{Signed-root certification in the lower central gap}
+\label[appendix]{app:central-certification}
+
+This appendix verifies the folded substitution and
+second-singular-value separation used in the main proof of
+\(d_m>c_{m+1}\).
+
+At \(x=x_*\) and \(s=\pm c\), the real pair
+\(u=\xi\), \(v=-\omega_L\) satisfies the two symmetric relations in
+\eqref{eq:fold-characteristic}.  Indeed, its sum and product are
+\(\xi-\omega_L\) and \(-\omega_L\xi\), and the required identities
+follow from
+\[
+ \mathfrak D_L=\frac{\zeta+\omega_L}{\zeta-\rho},\qquad
+ \xi=\frac{\rho(\zeta+1)+\zeta(\omega_L-1)}{\zeta+\omega_L}.
+\]
+Positivity of \(\xi+\omega_L\) selects the distinct-variable branch of the
+divided difference in \eqref{eq:fold-odd}.
+For convenience, write the folded numerator as
+\[
+ \mathfrak n_s(t)=-[x(\zeta-t)+s(1+t)]U_{L-1}(t).
+\]
+Put
+\[
+ \mathsf{X}_\xi=x_*(\zeta-\xi),\quad
+ \mathsf{Y}_\xi=c(1+\xi),\quad
+ \mathsf{X}_\omega=x_*(\zeta+\omega_L),\quad
+ \mathsf{Y}_\omega=c\Delta_\omega,
+\]
+and set \(U_\xi=U_{L-1}(\xi)\),
+\(U_{-\omega}=U_{L-1}(-\omega_L)\).  The identities
+\[
+ \mathfrak D_L=2a(\zeta+\omega_L)u_+^2,\qquad
+ \mathfrak D_L(\rho+\omega_L)(\zeta-\xi)
+ =(\zeta+\omega_L)(1+\xi)
+\]
+give
+\(\mathsf{Y}_\omega\mathsf{Y}_\xi
+=\mathsf{X}_\omega\mathsf{X}_\xi\).  The identity \(u_-^2Q_b=1\) gives
+\(Q_b>0\), and \(S_b-Q_b=2b(\rho+\omega_L)>0\), so
+\(\mathfrak D_L=S_b/Q_b>1\).  Moreover, \(L\geq2\) gives
+\(\omega_L>1/2\), while \(\rho>\rho_{\rm ref}>\omega_L\); hence
+\[
+ \rho+\omega_L>2\omega_L>1>1-\omega_L>0.
+\]
+Consequently,
+\[
+ \frac{\mathsf{X}_\omega^2}{\mathsf{Y}_\omega^2}
+ =\frac{\mathfrak D_L(\rho+\omega_L)}{1-\omega_L}>1,
+\]
+so, with
+\(\mathfrak r_*=\mathsf{X}_\xi/\mathsf{Y}_\xi
+=\mathsf{Y}_\omega/\mathsf{X}_\omega\in(0,1)\), the common factor
+\(a^{L-1}/(\xi+\omega_L)\) in \eqref{eq:fold-odd} is positive, and the two
+numerator differences are
+\[
+\begin{aligned}
+ \mathfrak n_c(\xi)-\mathfrak n_c(-\omega_L)
+  &=(1+\mathfrak r_*)
+    (\mathsf{X}_\omega U_{-\omega}-\mathsf{Y}_\xi U_\xi),\\
+ \mathfrak n_{-c}(\xi)-\mathfrak n_{-c}(-\omega_L)
+  &=(1-\mathfrak r_*)
+    (\mathsf{X}_\omega U_{-\omega}+\mathsf{Y}_\xi U_\xi).
+\end{aligned}
+\]
+Their product is positive by \eqref{eq:central-target}, because
+\[
+ U_{-\omega}^2=\frac1{1-\omega_L^2},\qquad
+ \mathsf{X}_\omega^2U_{-\omega}^2
+ =\frac{c^2\mathfrak D_L(\rho+\omega_L)}{1+\omega_L}
+ >\mathsf{Y}_\xi^2U_\xi^2.
+\]
+Thus
+\begin{equation}
+ q_{2L-1}(x_*,c)q_{2L-1}(x_*,-c)>0.
+\end{equation}
+
+At \(x=0\), the second-smallest singular value of \(A_{2L-1}\) is
+\[
+ s_{L,2}^{(0)}=\sqrt{1+a^2-2a\cos\frac{\pi}{L}}.
+\]
+Indeed, after separating odd and even coordinates, the two rectangular
+off-diagonal blocks have Gram matrices equal to the
+\((L-1)\)-dimensional tridiagonal Toeplitz matrix with diagonal
+\(1+a^2\) and off-diagonal \(a\).  Their singular values therefore have
+squares
+\[
+ 1+a^2+2a\cos\frac{k\pi}{L},\qquad 1\leq k\leq L-1,
+\]
+and each occurs twice, while the remaining singular value is zero.
+We claim
+\begin{equation}
+ x_*+c<2\sqrt a\sin\frac{\pi}{2L}\leq s_{L,2}^{(0)}.
+\end{equation}
+Indeed, recall \(\rho_{\rm ref}=\cos\frac{\pi}{2L+1}\).  Since
+\(\rho>\rho_{\rm ref}\) and \(U_{L-1}\) is strictly increasing above its
+largest zero,
+\[
+ u_-=U_{L-1}(\rho)>U_{L-1}(\rho_{\rm ref})=:u_{-,\rm ref},
+ \qquad u_{-,\rm ref}^{-2}=2(1-\rho_{\rm ref}).
+\]
+The identities \(c=a/u_-\) and \(c^2=2a(\zeta-\rho)\) imply
+\(\zeta-\rho<a(1-\rho_{\rm ref})<1-\rho_{\rm ref}\).  Also
+\[
+ \frac{x_*^2}{2a}
+ =\Delta_\omega\frac{\rho+\omega_L}{\zeta+\omega_L}
+ <\Delta_\omega.
+\]
+Put
+\[
+ \theta_L=\frac{\pi}{4L},\qquad
+ \Delta_L=\frac{\theta_L}{2L+1}.
+\]
+Then \(\Delta_\omega=2\sin^2\theta_L\) and
+\(1-\rho_{\rm ref}=2\sin^2(\theta_L-\Delta_L)\).  Since all quantities are
+positive, the preceding quotient bound for \(x_*^2\) gives
+\[
+ x_*<2\sqrt a\sin\theta_L.
+\]
+Likewise,
+\[
+ c^2=2a(\zeta-\rho)
+ <2a^2(1-\rho_{\rm ref})
+ =4a^2\sin^2(\theta_L-\Delta_L),
+\]
+and hence
+\[
+ c<2a\sin(\theta_L-\Delta_L)
+ <2\sqrt a\sin(\theta_L-\Delta_L),
+\]
+where the last inequality uses \(0<a<1\), hence \(a<\sqrt a\).
+It suffices to prove
+\begin{equation}\label{eq:angle-inequality}
+ \sin\theta_L+\sin(\theta_L-\Delta_L)<\sin(2\theta_L).
+\end{equation}
+The estimates
+\[
+ 2\sin\theta_L-\sin(2\theta_L)
+ =2\sin\theta_L(1-\cos\theta_L)<\theta_L^3
+\]
+and
+\[
+ \sin\theta_L-\sin(\theta_L-\Delta_L)
+ =\int_{\theta_L-\Delta_L}^{\theta_L}\cos u\,du
+ >\Delta_L\cos\theta_L
+\]
+reduce \eqref{eq:angle-inequality} to
+\(\Delta_L\cos\theta_L>\theta_L^3\).  Substituting
+\(\Delta_L=\theta_L/(2L+1)\) and \(\theta_L=\pi/(4L)\) gives the equivalent
+condition \(2\cos\theta_L>\theta_L(\pi+2\theta_L)\).  For
+\(0<\theta_L\leq\pi/8\), using \(\pi^2<10\),
+\[
+ 2\cos\theta_L>2-\theta_L^2\geq\frac{59}{32}
+ >\frac{25}{16}\geq\theta_L(\pi+2\theta_L).
+\]
+Consequently \(x_*+c<2\sqrt a\sin\frac{\pi}{2L}\).  Finally,
+\[
+ (s_{L,2}^{(0)})^2-4a\sin^2\frac{\pi}{2L}
+ =(1-a)^2\geq0,
+\]
+which proves \eqref{eq:x-c-second-singular}.
+
+
+\ifdefined\JPADoubleAnonymous
+  \section*{Declarations}
+  Removed for anonymity.
+\else
+  \ack{\JPAAcknowledgmentStatement}
+
+  \funding{\JPAFundingStatement}
+
+  \section*{Conflict of interest}
+  \JPAConflictStatement
+
+  \data{\JPADataStatement}
+\fi
+
+\bibliographystyle{unsrt}
+\bibliography{hatano_nelson_jpa}
+
+\end{document}

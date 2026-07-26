@@ -1,0 +1,162 @@
+\begin{thebibliography}{10}
+
+\bibitem{HatanoNelson1996}
+N.~Hatano and D.~R. Nelson.
+\newblock Localization transitions in non-{Hermitian} quantum mechanics.
+\newblock {\em Phys. Rev. Lett.}, 77:570--573, 1996.
+
+\bibitem{HatanoNelson1997}
+N.~Hatano and D.~R. Nelson.
+\newblock Vortex pinning and non-{Hermitian} quantum mechanics.
+\newblock {\em Phys. Rev. B}, 56:8651--8673, 1997.
+
+\bibitem{TrefethenEmbree2005}
+L.~N. Trefethen and M.~Embree.
+\newblock {\em Spectra and Pseudospectra: The Behavior of Nonnormal Matrices
+  and Operators}.
+\newblock Princeton University Press, Princeton, NJ, 2005.
+
+\bibitem{Trefethen1997}
+L.~N. Trefethen.
+\newblock Pseudospectra of linear operators.
+\newblock {\em SIAM Rev.}, 39:383--406, 1997.
+
+\bibitem{OkumaEtAl2020}
+N.~Okuma, K.~Kawabata, K.~Shiozaki, and M.~Sato.
+\newblock Topological origin of non-{Hermitian} skin effects.
+\newblock {\em Phys. Rev. Lett.}, 124:086801, 2020.
+
+\bibitem{YaoWang2018}
+S.~Yao and Z.~Wang.
+\newblock Edge states and topological invariants of non-{Hermitian} systems.
+\newblock {\em Phys. Rev. Lett.}, 121:086803, 2018.
+
+\bibitem{YokomizoMurakami2019}
+K.~Yokomizo and S.~Murakami.
+\newblock {Non-Bloch} band theory of non-{Hermitian} systems.
+\newblock {\em Phys. Rev. Lett.}, 123:066404, 2019.
+
+\bibitem{ZhangEtAl2022}
+X.~Zhang, T.~Zhang, M.-H. Lu, and Y.-F. Chen.
+\newblock A review on non-{Hermitian} skin effect.
+\newblock {\em Adv. Phys.: X}, 7:2109431, 2022.
+
+\bibitem{SchmidtSpitzer1960}
+P.~Schmidt and F.~Spitzer.
+\newblock The {Toeplitz} matrices of an arbitrary {Laurent} polynomial.
+\newblock {\em Math. Scand.}, 8:15--38, 1960.
+
+\bibitem{BottcherGrudskySilbermann1997}
+A.~B{\"o}ttcher, S.~M. Grudsky, and B.~Silbermann.
+\newblock Norms of inverses, spectra, and pseudospectra of large truncated
+  {Wiener--Hopf} operators and {Toeplitz} matrices.
+\newblock {\em New York J. Math.}, 3:1--31, 1997.
+
+\bibitem{ReichelTrefethen1992}
+L.~Reichel and L.~N. Trefethen.
+\newblock Eigenvalues and pseudo-eigenvalues of {Toeplitz} matrices.
+\newblock {\em Linear Algebra Appl.}, 162--164:153--185, 1992.
+
+\bibitem{BottcherEmbreeTrefethen2002}
+A.~B{\"o}ttcher, M.~Embree, and L.~N. Trefethen.
+\newblock Piecewise continuous {Toeplitz} matrices and operators: {Slow}
+  approach to infinity.
+\newblock {\em SIAM J. Matrix Anal. Appl.}, 24:484--489, 2002.
+
+\bibitem{BottcherGrudsky2005}
+A.~B{\"o}ttcher and S.~M. Grudsky.
+\newblock {\em Spectral Properties of Banded Toeplitz Matrices}.
+\newblock SIAM, Philadelphia, 2005.
+
+\bibitem{NoschesePasquiniReichel2013}
+S.~Noschese, L.~Pasquini, and L.~Reichel.
+\newblock Tridiagonal {Toeplitz} matrices: {Properties} and novel applications.
+\newblock {\em Numer. Linear Algebra Appl.}, 20:302--326, 2013.
+
+\bibitem{AlamEtAl2011}
+R.~Alam, S.~Bora, R.~Byers, and M.~L. Overton.
+\newblock Characterization and construction of the nearest defective matrix via
+  coalescence of pseudospectral components.
+\newblock {\em Linear Algebra Appl.}, 435:494--513, 2011.
+
+\bibitem{BurkeLewisOverton2003}
+J.~V. Burke, A.~S. Lewis, and M.~L. Overton.
+\newblock Optimization and pseudospectra, with applications to robust
+  stability.
+\newblock {\em SIAM J. Matrix Anal. Appl.}, 25:80--104, 2003.
+
+\bibitem{LewisPang2008}
+A.~S. Lewis and C.~H.~J. Pang.
+\newblock Variational analysis of pseudospectra.
+\newblock {\em SIAM J. Optim.}, 19:1048--1072, 2008.
+
+\bibitem{TrefethenContediniEmbree2001}
+L.~N. Trefethen, M.~Contedini, and M.~Embree.
+\newblock Spectra, pseudospectra, and localization for random bidiagonal
+  matrices.
+\newblock {\em Comm. Pure Appl. Math.}, 54:595--623, 2001.
+
+\bibitem{OkumaSato2020}
+N.~Okuma and M.~Sato.
+\newblock {Hermitian} zero modes protected by nonnormality: {Application} of
+  pseudospectra.
+\newblock {\em Phys. Rev. B}, 102:014203, 2020.
+
+\bibitem{OkumaSato2021}
+N.~Okuma and M.~Sato.
+\newblock {Non-Hermitian} skin effects in {Hermitian} correlated or disordered
+  systems: {Quantities} sensitive or insensitive to boundary effects and
+  pseudo-quantum-number.
+\newblock {\em Phys. Rev. Lett.}, 126:176601, 2021.
+
+\bibitem{AmmariEtAl2024}
+H.~Ammari, S.~Barandun, J.~Cao, B.~Davies, and E.~O. Hiltunen.
+\newblock Mathematical foundations of the non-{Hermitian} skin effect.
+\newblock {\em Arch. Ration. Mech. Anal.}, 248:33, 2024.
+
+\bibitem{AmmariEtAl2025}
+H.~Ammari, S.~Barandun, Y.~{De Bruijn}, P.~Liu, and C.~Thalhammer.
+\newblock Spectra and pseudo-spectra of tridiagonal {$k$}-{Toeplitz} matrices
+  and the topological origin of the non-{Hermitian} skin effect.
+\newblock {\em J. Phys. A: Math. Theor.}, 58:205201, 2025.
+
+\bibitem{AmmariCorrigendum2026}
+H.~Ammari, S.~Barandun, Y.~{De Bruijn}, P.~Liu, and C.~Thalhammer.
+\newblock Corrigendum: {Spectra} and pseudo-spectra of tridiagonal
+  {$k$}-{Toeplitz} matrices and the topological origin of the non-{Hermitian}
+  skin effect (2025 {J. Phys. A: Math. Theor.} 58 205201).
+\newblock {\em J. Phys. A: Math. Theor.}, 59:079501, 2026.
+
+\bibitem{KiorpelidisMakris2025}
+I.~Kiorpelidis and K.~G. Makris.
+\newblock Scaling of pseudospectra in exponentially sensitive lattices.
+\newblock {\em Phys. Rev. Research}, 7:L032043, 2025.
+
+\bibitem{Sirker2026}
+J.~Sirker.
+\newblock Pseudospectral phenomena and the origin of the non-{Hermitian} skin
+  effect.
+\newblock preprint, arXiv:2603.22643v3 [cond-mat.stat-mech], 2026.
+
+\bibitem{CorlessEtAl1996}
+R.~M. Corless, G.~H. Gonnet, D.~E.~G. Hare, D.~J. Jeffrey, and D.~E. Knuth.
+\newblock On the {Lambert} {$W$} function.
+\newblock {\em Adv. Comput. Math.}, 5:329--359, 1996.
+
+\bibitem{HatanoNelson1998}
+N.~Hatano and D.~R. Nelson.
+\newblock {Non-Hermitian} delocalization and eigenfunctions.
+\newblock {\em Phys. Rev. B}, 58:8384--8390, 1998.
+
+\bibitem{ButtaGuglielmiNoschese2012}
+P.~Butt{\`a}, N.~Guglielmi, and S.~Noschese.
+\newblock Computing the structured pseudospectrum of a {Toeplitz} matrix and
+  its extreme points.
+\newblock {\em SIAM J. Matrix Anal. Appl.}, 33:1300--1319, 2012.
+
+\bibitem{AmmariEtAl2024Stability}
+H.~Ammari, S.~Barandun, B.~Davies, E.~O. Hiltunen, and P.~Liu.
+\newblock Stability of the non-{Hermitian} skin effect in one dimension.
+\newblock {\em SIAM J. Appl. Math.}, 84:1697--1717, 2024.
+
+\end{thebibliography}

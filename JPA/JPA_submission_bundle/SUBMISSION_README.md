@@ -15,7 +15,8 @@ This directory contains the revised submission materials for
   manuscript for editorial records and later production.
 - `exact_connectedness_threshold_hatano_nelson.tex` — shared manuscript body;
   its raw text contains no author name, email, ORCID, affiliation, repository
-  URL, or AI-use declaration.
+  URL, or other identifying declaration.  It contains the generic AI-use
+  acknowledgment so that disclosure remains visible in both PDFs.
 - `jpa_identified_metadata.tex` — author information and identified
   declarations used only by the non-anonymous build.
 - `exact_connectedness_threshold_hatano_nelson.bbl` — generated numerical
@@ -54,14 +55,14 @@ The manuscript uses the official `iopjournal` class dated 2024-01-31 and
 standard TeX Live packages.  Its article title, body text, abstract,
 captions, declarations, and bibliography are fully justified; journal-header
 and author/address metadata and section headings retain the class defaults.
-The compiled manuscript has 42 pages: the main text occupies pages 1--27,
+The compiled manuscript has 41 pages: the main text occupies pages 1--27,
 and the six self-contained technical appendices occupy pages 28--39, with
 the acknowledgments beginning on the latter page.
-The anonymous reviewer PDF has 40 pages because the class removes the author
-front matter and the source replaces the identified declarations with one
-anonymity notice.  Its PDF Author
-metadata is empty, and visible-text searches find no author name, email,
-ORCID, affiliation, or repository URL.
+The anonymous reviewer PDF also has 41 pages.  The class removes the author
+front matter, the shared AI-use acknowledgment remains visible, and the
+source replaces identifying declarations with an anonymity notice.  Its PDF
+Author metadata is empty, and visible-text searches find no author name,
+email, ORCID, affiliation, or repository URL.
 At initial submission, IOP's current guidance requests a single, legible
 manuscript PDF; source files can be supplied together in one directory when
 requested.
@@ -70,8 +71,8 @@ The author-identified manuscript locally replaces the generic “Journal Name”
 and “Author et al” placeholders with the target journal name and “Shanmu
 Jin.”  The anonymous wrapper instead uses “Anonymous manuscript” and the
 official anonymous-author notice.  The journal-owned class remains
-untouched.  Crossmark and the received/revised date text remain the generic
-class placeholders and will be replaced in production.
+untouched.  A manuscript-local patch removes the generic Crossmark and
+received/revised date placeholders from both submission PDFs.
 
 For a double-anonymous source upload, include the anonymous wrapper, shared
 main source, anonymous `.bbl`, bibliography, and three PDF figures.  Exclude
@@ -107,7 +108,7 @@ upload as manuscript source files.
 
 ## Official guidance checked
 
-The conversion was checked on 26 July 2026 against the current official
+The conversion was checked on 27 July 2026 against the current official
 [J. Phys. A scope and article-type page](https://publishingsupport.iopscience.iop.org/journals/journal-of-physics-a-mathematical-and-theoretical/about-journal-physics-mathematical-theoretical/),
 [IOP manuscript guidance](https://publishingsupport.iopscience.iop.org/publishing-support/authors/authoring-for-journals/writing-journal-article/),
 [IOP LaTeX-template page](https://publishingsupport.iopscience.iop.org/questions/latex-template/),

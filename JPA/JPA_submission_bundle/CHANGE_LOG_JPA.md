@@ -11,14 +11,16 @@
 - Added a double-anonymous wrapper driven by the same main source.  Its PDF
   uses the official class option, replaces the running author with
   “Anonymous manuscript,” removes author/address/ORCID content and
-  declarations from the reviewer view, and leaves the PDF Author metadata
-  empty.  The author-identified version remains available for editorial
-  records and later production.
+  identifying declarations from the reviewer view, retains the generic
+  AI-use disclosure required for editorial transparency, and leaves the PDF
+  Author metadata empty.  The author-identified version remains available
+  for editorial records and later production.
 - Moved the author name, ORCID, affiliation, email, repository-bearing data
-  statement, and AI-use declaration into `jpa_identified_metadata.tex`.
-  The shared manuscript source and anonymous wrapper are therefore
-  textually deidentified when that identified-only file is omitted from a
-  reviewer source upload.
+  statement, funding statement, and conflict statement into
+  `jpa_identified_metadata.tex`.  The non-identifying AI-use declaration
+  remains in the shared source so that it appears in both PDFs.  The shared
+  manuscript source and anonymous wrapper are textually deidentified when
+  the identified-only file is omitted from a reviewer source upload.
 
 ## Title and abstract
 
@@ -48,6 +50,15 @@
 - Added an early main-results discussion in which \(\gamma_n\) is the largest
   real-axis backward-error barrier separating adjacent open-boundary
   spectral labels.
+- Added the pointwise backward-error identity and explained that “backward”
+  refers to perturbing the matrix data until a prescribed spectral point is
+  exact.  Added the dimensional merger barrier
+  \(\varepsilon_*(n)=t_L\gamma_n\), its variational characterization, and the
+  strict connectedness criterion immediately after the main theorem.
+- Clarified that “exact” means the proved finite-dimensional variational
+  identity and necessary-and-sufficient connectedness criterion; it does
+  not assert an elementary closed form for \(\gamma_n(a)\) at general
+  matrix size.
 - Explained that strict decrease gives one system-size crossing at fixed
   uncertainty and excludes re-entrant disconnection.
 - Stated explicitly that the result concerns unstructured spectral-norm
@@ -66,9 +77,10 @@
   declarations for a direct mathematical-physics register consistent with
   J. Phys. A.
 - Replaced repetitive defensive and negative constructions with active
-  statements of scope, mechanism, and consequence.  The final article has
-  no literal use of “not”; the four remaining uses of “no” occur only in
-  the postal address and standard funding, conflict, and data declarations.
+  statements of scope, mechanism, and consequence.  The final article body
+  has no literal use of “not” and retains one deliberate “No” sentence to
+  delimit the closed-form claim; the remaining “no” phrases occur in
+  standard funding and conflict declarations.
 - Streamlined procedural proof narration, strengthened transitions between
   technical blocks, and replaced ambiguous uses of “topological” with
   “connectedness” or “pseudospectral component merger” where band topology
@@ -94,6 +106,9 @@
   eigenvalue branches, folded variables parametrize the relevant branch,
   scale inequalities handle noncentral gaps, and interlacing resolves the
   central obstruction.
+- Added a four-output dependency map at the start of the proof of strict
+  comparison, ending explicitly with the reflection-and-maximization step
+  that yields \(\gamma_{n+1}<\gamma_n\).
 - Added transitions explaining why each construction is needed and
   conclusion sentences recording exactly how each block advances
   \(\gamma_{n+1}<\gamma_n\).
@@ -166,6 +181,9 @@
 - Increased panel, axis, tick, and legend typography and enlarged the
   barrier plot to improve legibility at the compiled width.  Float barriers
   keep all three illustrations inside section 6.
+- Rebalanced the final float placement: transition text and figure 1 share
+  page 23, while figures 2 and 3 occupy separate upper and lower blocks on
+  page 24 with legible labels and captions.
 
 ## References
 
@@ -199,6 +217,9 @@
   Ultra,” state its use for assistance with formula derivations, figure
   preparation, language polishing, and LaTeX typesetting, and record final
   human review, verification, and responsibility.
+- Kept the same factual AI disclosure in the double-anonymous reviewer PDF
+  while withholding author-identifying funding, conflict, and repository
+  information.
 - Adapted funding, conflict-of-interest, and data-availability statements to
   the current IOP commands and wording without adding funding, roles, or
   acknowledgments absent from the local record.
@@ -212,9 +233,9 @@
   machinery with the current 12-point `iopjournal` class and compatible
   standard packages.
 - Preserved section-based equation and theorem numbering, semantic
-  cross-references, and all 100 original labels.  The eight new labels name
-  the six appendix sections and the two concise appendix certificate
-  statements.
+  cross-references, and all 100 original labels.  Ten new labels name the
+  six appendix sections, two concise appendix certificate statements, the
+  pointwise backward-error identity, and the dimensional merger barrier.
 - Used the official IOP front-matter, acknowledgment, funding, and
   data-availability commands and the standard `unsrt` bibliography style.
 - Overrode the class-wide ragged setting so that the article title,
@@ -223,8 +244,11 @@
   journal-header and author/address metadata and section headings.
 - Kept the journal-owned class outside the redistributable bundle and placed
   every uploadable source and figure file in one directory.
+- Removed the template’s generic Crossmark and received/revised date
+  placeholders with a manuscript-local patch; the journal-owned class was
+  left untouched.
 - Rebuilt until there were no fatal errors, missing files, unresolved
   citations/references, multiply defined labels, overfull/underfull boxes, or
   font/package warnings.
-- Built and visually inspected both deliverables: the 42-page
-  author-identified PDF and the 40-page double-anonymous reviewer PDF.
+- Built and visually inspected both 41-page deliverables: the
+  author-identified PDF and the double-anonymous reviewer PDF.

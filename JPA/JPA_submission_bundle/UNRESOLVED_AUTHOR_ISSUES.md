@@ -3,13 +3,14 @@
 No author-choice issue remains unresolved.
 
 1. **Peer-review model: resolved.**  The author selected double-anonymous
-   review.  The submission bundle therefore includes a 40-page anonymous
+   review.  The submission bundle therefore includes a 41-page anonymous
    reviewer PDF and a small anonymous wrapper built from the same main
-   source.  The visible PDF, running header, declarations, and PDF Author
+   source.  The visible PDF, running header, identifying declarations, and PDF Author
    metadata contain no author name, email, ORCID, affiliation, or repository
-   URL.  Author-identifying source content is isolated in
+   URL; the generic AI-use acknowledgment remains visible.  Author-identifying
+   source content is isolated in
    `jpa_identified_metadata.tex`, which must be omitted from any reviewer
-   source upload.  The 42-page author-identified PDF is retained for
+   source upload.  The 41-page author-identified PDF is retained for
    editorial records and later production.
 
 2. **Repository alignment: resolved.**  The author requested publication of

@@ -51,6 +51,12 @@
 \newcommand{\ii}{\mathrm i}
 \newcommand{\proofstage}[1]{%
   \par\medskip\noindent\textit{#1}\par\nobreak\smallskip}
+\newcommand{\JPAAIDisclosure}{%
+  The author used OpenAI ChatGPT Work 5.6 Sol Ultra for assistance with
+  formula derivations, figure preparation, language polishing, and LaTeX
+  typesetting.  The human author reviewed and verified the final manuscript
+  and accepts full responsibility for its content.%
+}
 
 %TC:ignore
 \AtBeginDocument{\justifying}
@@ -58,6 +64,15 @@
 \patchcmd{\articletype}{Journal Name}
   {Journal of Physics A: Mathematical and Theoretical}{}
   {\PackageError{manuscript}{Journal-name patch failed}{}}
+\patchcmd{\articletype}
+  {\vspace*{8mm} \noindent\reversemarginpar
+   \marginpar{\vspace{-3mm} {\color{gray}\hrule} \ \\ Crossmark\\
+   {\color{gray}\hrule} \ \\ \tiny {\sf RECEIVED}
+   {\small \\ dd Month yyyy}\\ \\ {\sf REVISED}
+   {\small \\ dd Month yyyy}}}
+  {\vspace*{8mm} \noindent}
+  {}
+  {\PackageError{manuscript}{Submission-placeholder patch failed}{}}
 \patchcmd{\title}{\raggedright}{\justifying}{}
   {\PackageError{manuscript}{Title-justification patch failed}{}}
 \patchcmd{\abstract}{\raggedright}{\justifying\noindent}{}
@@ -374,6 +389,19 @@ When the dimension is \(n\), write \(N=n+1\) and define
  \quad
  \gamma_n=\max_{x\in I_n^{\mathrm{sp}}}g_n(x).
 \end{equation}
+Equivalently, the pointwise spectral backward error---the smallest change
+to the matrix data that makes \(x\) an exact eigenvalue---is
+\begin{equation}\label{eq:backward-error-main}
+ g_n(x)=
+ \min\bigl\{\lVert\Delta A\rVert_2:
+ \Delta A\in\C^{n\times n},\
+ x\in\sigma(A_n+\Delta A)\bigr\}.
+\end{equation}
+Here ``backward'' means perturbing the matrix so that the prescribed
+spectral point becomes exact, rather than predicting the displacement
+caused by one fixed perturbation.
+The minimization is pointwise in \(x\); different points may require
+different optimizing perturbations.
 The explicit lower and upper barriers used below are
 \begin{align}
  \mathcal U_n(a)&=r^n\csc\frac{\pi}{N},\label{eq:main-U-def}\\
@@ -382,12 +410,12 @@ The explicit lower and upper barriers used below are
  \frac{r^n(1-r^2)}
  {(1-r^{2N})\sin\frac{3\pi}{2N}}.\label{eq:main-L-def}
 \end{align}
-The quantity \(g_n(x)\) is the minimum unstructured spectral-norm
-perturbation needed to place an eigenvalue at the real point \(x\).
-Accordingly, \(\gamma_n\) will be shown to be the largest backward-error
-barrier separating adjacent open-boundary spectral labels.  It is a global
-quantity: determining it requires examining every real inter-eigenvalue
-gap, whereas one spectral parameter provides only local information.
+Thus \(g_n(x)\) is the minimum unstructured spectral-norm perturbation
+needed to place an eigenvalue at the real point \(x\), and \(\gamma_n\) will
+be shown to be the largest such barrier separating adjacent open-boundary
+spectral labels.  Determining this global quantity requires examining every
+real inter-eigenvalue gap; one spectral parameter supplies only local
+information.
 
 \begin{theorem}[Main theorem]\label{thm:main}
 For every $0<a<1$ and $\varepsilon>0$, the following assertions hold.
@@ -421,13 +449,49 @@ and $N_c(a,\varepsilon)=2$ if and only if $\varepsilon>a$.
 \end{enumerate}
 \end{theorem}
 
+For the positive-sign Hamiltonian \(H_n=t_LA_n(a)\), \(t_L>0\), the
+corresponding merger barrier in energy units is the exact variational
+quantity
+\begin{equation}\label{eq:physical-barrier-early}
+ \boxed{\begin{aligned}
+ \varepsilon_*(n)
+ &:=
+ \max_{E\in t_L I_n^{\mathrm{sp}}}
+ s_{\min}(EI_n-H_n)
+ =t_L\gamma_n\\
+ &=\inf\{\varepsilon>0:
+ \sigma_\varepsilon(H_n)\text{ is connected}\}.
+ \end{aligned}}
+\end{equation}
+Consequently,
+\[
+ \sigma_{\varepsilon_{\rm phys}}(H_n)\text{ is connected}
+ \quad\Longleftrightarrow\quad
+ \varepsilon_{\rm phys}>\varepsilon_*(n).
+\]
+At equality the strict open pseudospectrum remains disconnected.
+Here and throughout, ``exact threshold'' means the finite-dimensional
+variational characterization \eqref{eq:physical-barrier-early} together
+with this necessary-and-sufficient criterion.  No elementary closed form
+for \(\gamma_n(a)\) at arbitrary \(n\) is asserted; the theorem instead
+supplies explicit sharp-order bounds and the critical-size asymptotic.
+
 The theorem turns the growth-induced cloud merger into an exact
-size-dependent transition.  Vertical monotonicity makes every component
+size-dependent transition.  Vertical monotonicity, together with the
+component--eigenvalue property proved below, makes every component
 connection visible on the real energy axis, where \(\gamma_n\) is the final
 backward-error barrier between open-boundary spectral labels.  Strict
-comparison in consecutive dimensions makes the transition one-way, and the
-sharp-order bounds show that the imaginary gauge controls both skin
-localization and the loss of global spectral-cluster resolution.
+comparison in consecutive dimensions gives
+\(n<N_c(a,\varepsilon)\) disconnected and
+\(n\geq N_c(a,\varepsilon)\) connected at fixed \((a,\varepsilon)\) (with an
+empty first range when \(N_c=2\)); the sharp-order bounds show that the
+imaginary gauge controls both skin localization and the loss of global
+spectral-cluster resolution.
+Operationally, the theorem classifies the union of spectra over the entire
+open unstructured spectral-norm ball
+\(\lVert\Delta A\rVert_2<\varepsilon\).  A single noisy realization, a
+structure-preserving disorder ensemble, the onset of skin localization, and
+branch tracking along a known perturbation path remain distinct questions.
 
 \section{Vertical monotonicity}\label{sec:vertical}
 
@@ -683,6 +747,14 @@ singular values, which proves the assertion.
 With the signed branch in hand, we introduce folded coordinates.  They
 compare the noncentral gaps, resolve the central pair, and assemble the
 global inequality.
+
+Four outputs organize the argument.  First, folded continuants give the
+parity-dependent signed-branch formulas.  Second, chord coordinates
+parametrize and exhaust every possible noncentral maximizer.  Third, scale
+inequalities compare those noncentral gaps strictly across consecutive
+dimensions.  Finally, a separate interlacing and certification argument
+orders the two central gaps.  Reflection symmetry and maximization then
+yield \(\gamma_{n+1}<\gamma_n\).
 
 To avoid ambiguity, \(F_n\) continues to denote the determinant from the
 vertical argument, whereas \(\mathcal F_h\) below is an angular factor; the
@@ -1806,7 +1878,7 @@ shorter chains, individual open-boundary eigenvalues retain separate
 pseudospectral components; at the threshold size these components form one
 connected uncertainty cloud.
 
-\begin{figure}[t]
+\begin{figure}[!b]
  \centering
  \includegraphics[width=\textwidth]{fig1_connectedness_transition}
  \caption{Numerical illustration of the Euclidean pseudospectral merger for
@@ -1815,7 +1887,8 @@ connected uncertainty cloud.
  eigenvalues.  Separate gapwise checks support the component counts for
  \(n=5,6\), while global checks place the illustrated one-cloud transition
  at \(n=7\).  The shaded sets and component counts are numerical
- illustrations; the theorem supplies the connectedness criterion and its
+ illustrations.  All proofs are analytic and independent of these
+ calculations; the theorem supplies the connectedness criterion and its
  persistence.}
  \label{fig:transition}
 \end{figure}
@@ -1842,7 +1915,8 @@ real trace contains the full open-boundary spectral segment.
  a solid line are floating-point estimates; the red horizontal line is the
  fixed uncertainty \(\varepsilon=10^{-2}\), and the black vertical line marks
  the numerical crossing \(\widehat N_c=7\).  The theorem gives the analytic
- bracket \(6\leq N_c\leq9\); the proof uses the analytic bounds.}
+ bracket \(6\leq N_c\leq9\).  All proofs use the analytic bounds and are
+ independent of the floating-point estimates.}
  \label{fig:barriers}
 \end{figure}
 
@@ -1863,7 +1937,8 @@ the maximizing gap.
  formula at \(n=20\); the black line is their common imaginary-gauge
  envelope, whose amplitude decay length is
  \(\ell_{\rm skin}=2/\log(1/a)\).  The numerical evaluations are
- illustrative; the proof is analytic.}
+ illustrative.  All proofs are analytic and independent of these
+ calculations.}
  \label{fig:physics}
 \end{figure}
 
@@ -1944,32 +2019,15 @@ gauge condition number is
 
 \subsection{Why a finite threshold exists}
 
-The least singular value admits the backward-error formula
-\[
- s_{\min}(zI_n-A_n)
- =\min\{\lVert\Delta A\rVert_2:
- z\in\sigma(A_n+\Delta A)\}.
-\]
-Accordingly, \(\gamma_n\) is the largest, over the real interval between
-the extreme open-boundary
-eigenvalues, of the minimum perturbation required to place an eigenvalue at a
-prescribed point.  Hence it is exactly the final barrier that the uncertainty
-level must exceed for connectedness.
-
-For the dimensional positive-sign Hamiltonian \(H_n=t_LA_n(a)\), define
-the dimensional barrier
-\[
- \varepsilon_*(n)=t_L\gamma_n.
-\]
-Then the exact physical form of the connectedness criterion is
-\[
- \sigma_{\varepsilon_{\rm phys}}(H_n)\text{ is connected}
- \quad\Longleftrightarrow\quad
- \varepsilon_{\rm phys}>\varepsilon_*(n).
-\]
+Equations \eqref{eq:backward-error-main} and
+\eqref{eq:physical-barrier-early} identify \(\varepsilon_*(n)\) as the
+largest minimum matrix perturbation, in energy units, required to place an
+eigenvalue at a prescribed point between the two extreme open-boundary
+eigenvalues.  It is therefore the final barrier that the uncertainty level
+must exceed for connectedness.
 Because \(\gamma_n\) decreases strictly to zero, a fixed uncertainty crosses
-the barrier sequence at one site count, after which the cloud remains
-connected.  Equivalently, if
+the barrier sequence at the unique site count \(N_c\), after which the cloud
+remains connected.  Equivalently, if
 \(E_{\min}\) and \(E_{\max}\) are the extreme eigenvalues of \(H_n\), then
 \[
  \varepsilon_*(n)^{-1}
@@ -3091,10 +3149,15 @@ which proves \eqref{eq:x-c-second-singular}.
 
 
 \ifdefined\JPADoubleAnonymous
-  \section*{Declarations}
-  Removed for anonymity.
+  \section*{Acknowledgments}
+  \JPAAIDisclosure
+
+  \section*{Other declarations}
+  Funding, conflict-of-interest, and data-availability declarations are
+  supplied separately to the journal and omitted from this
+  double-anonymous reviewer manuscript.
 \else
-  \ack{\JPAAcknowledgmentStatement}
+  \ack{\JPAAIDisclosure}
 
   \funding{\JPAFundingStatement}
 

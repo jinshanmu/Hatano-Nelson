@@ -1,6 +1,6 @@
 # Submission audit
 
-Audit date: 26 July 2026
+Audit date: 27 July 2026
 
 ## Original-file integrity
 
@@ -11,9 +11,10 @@ checks matched.  No original submission-bundle file was altered.
 
 ## Mathematical preservation and consistency
 
-- All 100 original LaTeX labels remain in the revised source.  The eight new
-  labels name the six appendix sections and the two concise appendix
-  certificate statements.  All 108 labels are unique.
+- All 100 original LaTeX labels remain in the revised source.  Ten new
+  labels name the six appendix sections, two concise appendix certificate
+  statements, the pointwise backward-error identity, and the dimensional
+  merger barrier.  All 110 labels are unique.
 - A label-keyed comparison found all 84 original labelled equations,
   contained in 83 display environments, unchanged after whitespace,
   comments, and label placement were normalized.
@@ -45,12 +46,13 @@ checks matched.  No original submission-bundle file was altered.
   records the two-way chord-sheet exhaustion before the gap comparisons, and
   states the central scalar and signed-root conclusions before the global
   Weyl/interlacing assembly.
-- After the whole-manuscript language pass, normalized hashes of every
-  displayed equation environment, every theorem/lemma/proposition
-  environment, and the complete label list match the pre-polish snapshot.
-  The final pass therefore changed prose and punctuation around the
-  mathematics, rather than the mathematical statements or displayed
-  formulas.
+- A label-keyed comparison after the final language pass confirmed that
+  every original labelled equation and every original
+  theorem/lemma/proposition statement remains unchanged.  Two new labelled
+  displays make the already-used backward-error identity and dimensional
+  merger barrier explicit near the main theorem; redundant unlabelled
+  restatements later in the physical section were consolidated into
+  cross-references.
 - A final scope audit clarified that onsite and hopping perturbations belong
   to the unstructured norm ball, while realization of the extremal dimer
   perturbation by generic disorder is a separate question.  It also made the
@@ -60,8 +62,10 @@ checks matched.  No original submission-bundle file was altered.
 - A second independent review round rechecked every parity convention,
   signed-pencil branch, collision case, central-gap comparison, strict
   threshold equality, Lipschitz sampling implication, and physical
-  normalization.  It reported no P0, P1, P2, or mathematical P3 issue and
-  judged the frozen candidate mathematically ready for submission.
+  normalization.  A final adversarial mathematical pass also checked the
+  new backward-error, dimensional-barrier, infimum-threshold, resolvent, and
+  skin-depth formulas.  It reported no P0, P1, P2, or mathematical P3 issue
+  and judged the frozen candidate mathematically ready for submission.
 
 No theorem-level mathematical error was found.
 
@@ -152,8 +156,8 @@ no theorem, proof, or analytic bound.
   metadata without duplicating the mathematical body.  All identifying
   front matter and declarations are isolated in
   `jpa_identified_metadata.tex`; the shared source and wrapper contain no
-  author name, email, ORCID, affiliation, repository URL, or AI-use
-  declaration.
+  author name, email, ORCID, affiliation, or repository URL.  The generic
+  AI-use declaration remains visible in both versions.
 - The abstract contains approximately 150 prose words, below IOP's
   300-word guidance.
 - The journal-owned class and ORCID graphic are not duplicated in the
@@ -165,15 +169,15 @@ no theorem, proof, or analytic bound.
   class warnings.
 - The figure generator ran successfully.  Each PDF figure exists, is
   embedded in citation order, and has legible labels at its compiled width.
-- All 42 author-version pages were rendered and inspected.  The title-page
+- All 41 author-version pages were rendered and inspected.  The title-page
   margin metadata, equations, figures, appendices, declarations, hyperlinks,
   and references were checked at full-page and enlarged figure-page scale.
   No clipping, collision, or unreadable label remains.
-- The affected pages of the 40-page anonymous reviewer PDF were separately
-  rendered and inspected after the final build.  Its title page, running
-  header, anonymity notices, appendix boundary, and references are clean.
+- All 41 pages of the anonymous reviewer PDF were rendered, with its title
+  page, running header, AI disclosure, appendix boundary, and references
+  also inspected at enlarged scale.  These elements are clean.
   PDF text, raw-string, and metadata searches found no author name, email,
-  ORCID, affiliation, repository URL, or AI-declaration text.
+  ORCID, affiliation, or repository URL.
 - The anonymous source was also built from an isolated temporary directory
   containing only the wrapper, deidentified shared source, anonymous
   bibliography inputs, and figures.  The identified metadata file was
@@ -192,9 +196,12 @@ no theorem, proof, or analytic bound.
 - The author-version acknowledgment names “OpenAI ChatGPT Work 5.6 Sol
   Ultra,” states its use for assistance with formula derivations, figure
   preparation, language polishing, and LaTeX typesetting, and assigns final
-  review, verification, and responsibility to the human author.  The
-  anonymous reviewer PDF replaces the identified declarations with a concise
-  anonymity notice.
+  review, verification, and responsibility to the human author.  The same
+  generic acknowledgment appears in the anonymous reviewer PDF; only the
+  identifying declarations are withheld.
+- The generic Crossmark and received/revised date placeholders supplied by
+  the template are absent from both final PDFs.  This was achieved through
+  a manuscript-local patch, leaving the journal class unchanged.
 
 ## Counts and page allocation
 
@@ -204,20 +211,19 @@ also assigns one token to each inline or displayed formula:
 
 | Measure | Original | Revised |
 |---|---:|---:|
-| Text, headings, and captions | 7,378 words | 8,563 words |
-| TeXcount sum, including one token per inline/displayed formula | 8,511 | 9,749 |
-| Author-identified compiled pages | 37 | 42 |
-| Double-anonymous compiled pages | — | 40 |
+| Text, headings, and captions | 7,378 words | 8,679 words |
+| TeXcount sum, including one token per inline/displayed formula | 8,511 | 9,875 |
+| Author-identified compiled pages | 37 | 41 |
+| Double-anonymous compiled pages | — | 41 |
 
 The revised main text occupies pages 1--27.  The six appendices begin on
-page 28 and end on page 39; page 39 is shared with the acknowledgments.
-Funding, conflicts, data availability, and the reference list begin on page
-40, with references continuing through page 42.  Thus the allocation is 27
-main-text pages, approximately 12 appendix pages, and approximately three
-pages of declarations and references, with the noted shared boundary page.
-In the anonymous reviewer PDF, the shorter hidden front matter moves the
-main-text/appendix boundary to pages 1--26 and 27--38, respectively;
-the anonymity notice and references occupy pages 39--40.
+page 28 and end on page 39; page 39 is shared with the acknowledgments,
+declarations, and the beginning of the references.  References continue
+through page 41.  Thus the allocation is 27 main-text pages, approximately
+12 appendix pages, and approximately three pages containing declarations
+and references, with the noted shared boundary page.  The anonymous reviewer
+version has the same main-text and appendix page ranges; its acknowledgment,
+anonymous declarations notice, and references also occupy pages 39--41.
 The original manuscript had no appendices: its proof and physical discussion
 ran through approximately page 36, where the declarations also began, and
 the reference list continued through page 37.
@@ -238,6 +244,12 @@ non-expository reason.  The substantive non-expository revisions were:
    current IOP policy, the author-supplied model/version string, and the
    materials actually verified.
 
+For exposition, two labelled identity displays were added near the main
+theorem: the pointwise spectral backward-error formula and the dimensional
+barrier \(\varepsilon_*(n)=t_L\gamma_n\), including its infimum
+characterization.  They restate consequences already used later and alter no
+result.
+
 No other suspected mathematical error was identified.
 
 ## Frozen deliverable identifiers
@@ -246,15 +258,15 @@ At the final review freeze, the principal files had the following SHA-256
 identifiers:
 
 - TeX source:
-  `c0ac6e9ce44f49099cd9f99b66dee86633f58c291a2628828b490e559b6282ce`
+  `6784cf68538c2bfe14ce5aa8bb38b1556160d1c8e16b522d288b9a53c52937e5`
 - identified metadata:
-  `c3b54470b63d9d7ff9947db575366a3d1521c611df4694eac944fa1df72c9bcf`
+  `a074ba30e9b11580dd8a3dd00560bd0f8eb0995a4fb70598cb25adfd71c99472`
 - author-identified PDF:
-  `b85eea6659c58a0121b42e0308d5fc4d91489e24ad92aff985c03757a7c47367`
+  `e4f9ea430868efef867a38eabc19e2e9f4d11124cab3321d0510eb67b8995824`
 - anonymous wrapper:
   `8fe6a0badd228da4102f41b9918f70b2ca508f65773f78fa3f972e7f649b71ed`
 - double-anonymous PDF:
-  `bec09af6541c1b6633881323b98def9714b3b57300605c97066e87e7c1099bac`
+  `f5ec5366b4090b65f38dbec59b01c81afb5872e6a26da1503a2a40768a91a1e9`
 - bibliography:
   `5fc466615b93bc293a71287c7501b565349d141cc103ae111724001499e3982f`
 - figure generator:

@@ -1,18 +1,21 @@
 cff-version: 1.2.0
 message: "If you use this manuscript, formalization, or reproducibility material, please cite the article described below."
-title: "Connected Pseudospectra of a Nonnormal Toeplitz Path: The Open Hatano–Nelson Chain"
+title: "Exact Connectedness Threshold for Pseudospectra of the Open Hatano–Nelson Chain"
 type: software
 authors:
   - family-names: Jin
     given-names: Shanmu
     email: jinshanmu1129@pku.edu.cn
     affiliation: "Department of Neurosurgery, Peking Union Medical College Hospital, No. 1 Shuaifuyuan, Dongcheng District, Beijing 100730, China"
+    orcid: "https://orcid.org/0009-0009-5346-753X"
 repository-code: "https://github.com/jinshanmu/Hatano-Nelson"
 url: "https://github.com/jinshanmu/Hatano-Nelson"
 keywords:
   - pseudospectrum
-  - nonnormal Toeplitz matrix
-  - Hatano–Nelson model
+  - Euclidean pseudospectrum
+  - open Hatano–Nelson chain
+  - non-Hermitian skin effect
+  - connectedness threshold
   - Lean 4
   - formal verification
 preferred-citation:
@@ -20,6 +23,6 @@ preferred-citation:
   authors:
     - family-names: Jin
       given-names: Shanmu
-  title: "Connected Pseudospectra of a Nonnormal Toeplitz Path: The Open Hatano–Nelson Chain"
+  title: "Exact Connectedness Threshold for Pseudospectra of the Open Hatano–Nelson Chain"
   year: 2026
   url: "https://github.com/jinshanmu/Hatano-Nelson"

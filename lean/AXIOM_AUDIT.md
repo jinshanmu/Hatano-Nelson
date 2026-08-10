@@ -1,46 +1,31 @@
 # Kernel-axiom audit
 
-## Command
-
-Run the audit from `lean/` in the pinned environment with default Lean options:
+Run from `lean/` in the pinned environment:
 
 ```sh
 lake env lean AxiomAudit.lean
 ```
 
-No `-D` flags, environment-provided Lean options, or project option overrides
-are part of this command.
+`AxiomAudit.lean` contains 238 selected `#print axioms` commands.  The
+selection includes the final `ConnectedPseudospectrum.main_theorem` and the
+principal endpoints for:
 
-## Scope
+- spectrum and least-singular-value infrastructure;
+- the attained pointwise spectral backward-error minimum;
+- the affine positive-off-diagonal Toeplitz reduction;
+- component topology and the connectedness criterion;
+- vertical monotonicity;
+- folded continuants, collision formulas, and chord exhaustion;
+- noncentral and central gap comparisons;
+- strict barrier decrease and quantitative bounds;
+- elementary threshold inversion, the exact connected tail, and the
+  critical-size asymptotic; and
+- the exact two-dimensional endpoint.
 
-`AxiomAudit.lean` imports the final theorem and selected supporting modules and
-contains 230 `#print axioms` commands: 216 whose declaration name is on the
-command line and 14 whose name continues on the next line.  This is a selected
-endpoint/closure audit, not a claim that every public declaration is printed
-individually.
-
-The selection includes:
-
-- the final `ConnectedPseudospectrum.main_theorem`, whose reported axioms cover
-  its complete proof dependency closure;
-- the literal spectrum/resolvent/least-singular-value equality and attained
-  Euclidean least-singular-value infrastructure;
-- vertical monotonicity, the connectedness criterion, and component
-  contractibility;
-- the exact exported quotient inequalities corresponding to `eq:ratio-cross`;
-- the folded determinant, signed branch, chord continuation, central and
-  noncentral comparisons, and strict barrier decrease;
-- barrier bounds, threshold equality, the fixed-parameter asymptotic, and the
-  exact size-two characterization;
-- the generic and actual-root collision formulas for the folded divided
-  differences;
-- the complete bordered odd-dilation endpoints and the all-angle normalized
-  principal-sine formula; and
-- the local lower-Lambert-branch specification and uniqueness, exact explicit
-  floor threshold, and logarithmic--logarithmic bounded-error expansion.
-
-The exact declaration list lives in `AxiomAudit.lean`, so the executable audit
-is the authoritative scope record.
+The exact command list in `AxiomAudit.lean` is authoritative.  This is a
+selected closure audit, not a claim that every public declaration is printed
+separately; the output for `main_theorem` covers its complete proof dependency
+closure.
 
 ## Acceptance criterion
 
@@ -50,15 +35,9 @@ Each printed declaration may depend only on:
 - `Classical.choice`; and
 - `Quot.sound`.
 
-These are standard foundational Lean/Mathlib principles, not project-specific
-mathematical assumptions.  Any project axiom, `Lean.ofReduce*`,
-`Lean.trustCompiler`, or another compiler-trust escape is a failure.
+Any project-specific axiom or compiler-trust escape is a failure.  The five
+finite paired-permutation facts use ordinary kernel `decide`, not
+`native_decide`, and are printed explicitly.
 
-Five finite paired-permutation facts use ordinary kernel `decide`, not
-`native_decide`.  They are printed explicitly so that a future non-kernel
-dependency would be visible.
-
-The final execution result, diagnostics, unique-record count, and observed
-dependency set for the current 2026-07-16 source state are recorded in
-`STATUS.md`.  The exact command above exited successfully for all 230 distinct
-targets, with only the three accepted foundational dependencies observed.
+The latest command result and observed dependency set are recorded in
+`STATUS.md`.

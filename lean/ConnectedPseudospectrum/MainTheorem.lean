@@ -40,6 +40,8 @@ theorem main_theorem {a ε : ℝ} (ha0 : 0 < a) (ha1 : a < 1) (hε : 0 < ε) :
       (upperBarrierCrossingSet a ε).Nonempty ∧
       criticalThreshold a ε = firstHitThreshold a ε ∧
       criticalThreshold a ε = eventualThreshold a ε ∧
+      ({n : ℕ | 2 ≤ n ∧ IsConnected (pseudospectrum n a ε)} =
+        {n : ℕ | criticalThreshold a ε ≤ n}) ∧
       1 + lowerObstructionMaximum a ε ≤ criticalThreshold a ε ∧
       criticalThreshold a ε ≤ upperBarrierThreshold a ε ∧
       (lowerObstructionSet a ε = ∅ →
@@ -101,6 +103,9 @@ theorem main_theorem {a ε : ℝ} (ha0 : 0 < a) (ha1 : a < 1) (hε : 0 < ε) :
     · rfl
     constructor
     · simpa only [criticalThreshold] using heq
+    constructor
+    · exact connectedDimensions_eq_criticalThreshold_tail
+        ha0 ha1 hε hcriterion hstrict
     constructor
     · simpa only [criticalThreshold] using hLowerThreshold
     constructor

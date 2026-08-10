@@ -1,4 +1,5 @@
 import ConnectedPseudospectrum.Asymptotics
+import ConnectedPseudospectrum.BackwardError
 import ConnectedPseudospectrum.CentralBidiagonal
 import ConnectedPseudospectrum.CentralMeshBridges
 import ConnectedPseudospectrum.Chebyshev
@@ -29,6 +30,7 @@ import ConnectedPseudospectrum.FoldedReconstruction
 import ConnectedPseudospectrum.FoldedTransfer
 import ConnectedPseudospectrum.FoldedVariables
 import ConnectedPseudospectrum.GeneralPseudospectrum
+import ConnectedPseudospectrum.GeneralToeplitz
 import ConnectedPseudospectrum.GapDecay
 import ConnectedPseudospectrum.GapUpperBound
 import ConnectedPseudospectrum.HalfChordAlgebra
@@ -41,7 +43,6 @@ import ConnectedPseudospectrum.HermitianPathSpectrum
 import ConnectedPseudospectrum.HermitianSingularValues
 import ConnectedPseudospectrum.HermitianWeylPerturbation
 import ConnectedPseudospectrum.HyperbolicParameter
-import ConnectedPseudospectrum.LambertWThreshold
 import ConnectedPseudospectrum.LeastSingular
 import ConnectedPseudospectrum.LowerBarrierOrder
 import ConnectedPseudospectrum.MainTheorem
@@ -106,5 +107,5 @@ import ConnectedPseudospectrum.VerticalTopology
 # Connected pseudospectra of finite Hatano--Nelson paths
 
 This is the umbrella module for the formalization of
-`final_connected_pseudospectrum_proof_2026-07-16.tex`.
+`../LAA/laa_connected_pseudospectra.tex`.
 -/

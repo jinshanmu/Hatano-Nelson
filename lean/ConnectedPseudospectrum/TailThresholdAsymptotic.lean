@@ -6,8 +6,7 @@ import ConnectedPseudospectrum.GapDecay
 
 This module formalizes the paper's scalar tail model
 `Θₙ(r) = (n+1) rⁿ` and its first permanent crossing below a positive
-level.  The inversion is developed directly from logarithmic estimates; no
-Lambert `W` function or expansion is used.
+level by direct logarithmic estimates.
 -/
 
 namespace ConnectedPseudospectrum
@@ -208,8 +207,7 @@ private theorem tendsto_logTailScale_atTop (lam : ℝ) (hlam : 0 < lam) :
   exact (div_le_div_iff_of_pos_right hlam).2
     (le_add_of_nonneg_right (Real.log_nonneg hy))
 
-/-- Uniform two-sided logarithmic inversion estimate.  This is the elementary
-replacement for the paper's Lambert-`W` expansion. -/
+/-- Uniform two-sided logarithmic inversion estimate. -/
 theorem tailThreshold_logarithmic_bounds {r : ℝ} (hr : 0 < r) (hr1 : r < 1) :
     ∃ C : ℝ, 0 ≤ C ∧ ∃ Y : ℝ, ∀ t : ℝ,
       0 < t → Y ≤ Real.log (1 / t) →

@@ -1,67 +1,57 @@
-# Exact Connectedness Threshold for Pseudospectra of the Open Hatano–Nelson Chain
+# Pseudospectral Connectedness Thresholds for Tridiagonal Toeplitz Matrices
 
 **Author:** Shanmu Jin
 
 **Public repository:** https://github.com/jinshanmu/Hatano-Nelson
 
-This repository accompanies the manuscript *Exact Connectedness Threshold for
-Pseudospectra of the Open Hatano–Nelson Chain*. It contains the current
-Journal of Physics A submission bundle, reproducibility code for the numerical
-illustrations, and the scoped Lean 4 formalization and audit materials described
-below. The earlier SIAM-formatted manuscript remains available as a historical
-snapshot.
+This repository accompanies the manuscript *Pseudospectral connectedness
+thresholds and strict dimension monotonicity for asymmetric tridiagonal
+Toeplitz matrices*, prepared for submission to *Linear Algebra and its
+Applications*.  It contains the current manuscript, reproducibility code for
+the numerical illustrations, and the corresponding Lean 4 formalization and
+audit materials.
 
 ## Current artifacts
 
-- [`JPA/JPA_submission_bundle/`](JPA/JPA_submission_bundle/) contains the
-  current audited J. Phys. A source, author-identified PDF,
-  double-anonymous reviewer PDF, bibliography, figures, figure generator,
-  change log, and submission audit.
-- [`final_connected_pseudospectrum_proof_2026-07-16.tex`](SIMAX_submission_bundle/final_connected_pseudospectrum_proof_2026-07-16.tex)
-  and its compiled PDF are preserved unchanged as the preceding
-  SIAM-formatted snapshot. The corresponding 2026-07-13 source/PDF is also
-  retained.
-- [`lean/`](lean/) contains the pinned formalization and the current
-  statement-by-statement audit documentation.
-- [`make_hatano_nelson_figures.py`](JPA/JPA_submission_bundle/make_hatano_nelson_figures.py)
-  regenerates the current manuscript figures.
+- [`LAA/`](LAA/) contains the current manuscript source and PDF,
+  bibliography, figures, figure generator, and public reproduction notes.
+- [`lean/`](lean/) contains the pinned formalization, the result-by-result
+  manuscript map, and executable build and axiom-audit records.
+- [`JPA/JPA_submission_bundle/`](JPA/JPA_submission_bundle/) preserves the
+  earlier J. Phys. A-formatted version as a historical snapshot.
+- [`SIMAX_submission_bundle/`](SIMAX_submission_bundle/) preserves the earlier
+  SIAM-formatted version.
 
-The Lean materials are pinned to the earlier audited source and document their
-coverage statement by statement. They formalize the mathematical items listed
-in the map and audit files; the J. Phys. A physical exposition, the
-floating-point illustrations, and the new editorial wrapper statements are
-outside that claim. See [`lean/README.md`](lean/README.md),
-[`lean/FORMALIZATION_MAP.md`](lean/FORMALIZATION_MAP.md), and
-[`lean/STATUS.md`](lean/STATUS.md) for the exact scope and latest evidence.
+The Lean development covers every numbered theorem-like result in the LAA
+manuscript and the independently used pointwise backward-error identity at the
+result/proof-stage level.  See [`lean/FORMALIZATION_MAP.md`](lean/FORMALIZATION_MAP.md)
+for the exact correspondence and [`lean/STATUS.md`](lean/STATUS.md) for the
+latest build, linter, and kernel-axiom evidence.
 
 ## Reproduce the artifacts
 
 The figure script uses Python 3.9 or later with NumPy 1.23 or later, SciPy 1.9
-or later, and Matplotlib 3.6 or later. The configured Conda environment can be
-used from the repository root:
+or later, and Matplotlib 3.6 or later.  From the repository root, the configured
+Conda environment can regenerate both figures with:
 
 ```sh
-conda run -n wirtinger_calculus python JPA/JPA_submission_bundle/make_hatano_nelson_figures.py
+conda run -n wirtinger_calculus python LAA/make_laa_figures.py
 ```
 
-The journal-owned `iopjournal.cls` and ORCID graphic are intentionally absent
-from the repository. Download the current IOP template, place it on
-`TEXINPUTS`, and compile the double-anonymous reviewer manuscript from the
-submission directory:
+The manuscript uses Elsevier's `elsarticle` 3.4 class.  Third-party template
+files are intentionally absent from the public repository.  After obtaining
+the class and `elsarticle-harv.bst` from Elsevier, make them visible on
+`TEXINPUTS` and `BSTINPUTS`, then run:
 
 ```sh
-cd JPA/JPA_submission_bundle
-TEXINPUTS=/path/to/iop-template: latexmk -pdf -interaction=nonstopmode \
-  -halt-on-error exact_connectedness_threshold_hatano_nelson_anonymous.tex
+cd LAA
+TEXINPUTS=/path/to/elsarticle: BSTINPUTS=/path/to/elsarticle: \
+  latexmk -pdf -interaction=nonstopmode -halt-on-error \
+  laa_connected_pseudospectra.tex
 ```
-
-The author-identifying front matter and declarations are isolated in
-`jpa_identified_metadata.tex`. Exclude that file, the identified PDF, and the
-identified `.bbl` from any reviewer source upload; the exact deidentified
-source list is recorded in the bundle README.
 
 The formalization is pinned to Lean 4.28.0 and Mathlib commit
-`8f9d9cff6bd728b17a24e163c9402775d9e6a365`. Its acceptance commands use all
+`8f9d9cff6bd728b17a24e163c9402775d9e6a365`.  Its acceptance commands use
 default Lean options:
 
 ```sh
@@ -72,38 +62,33 @@ lake env lean AxiomAudit.lean
 
 ## Repository layout
 
-- `JPA/JPA_submission_bundle/`: current J. Phys. A manuscript sources,
-  author-identified and double-anonymous PDFs, bibliography, figures,
-  generator, and audit documents. Journal-owned IOP template files are
-  excluded.
-- `SIMAX_submission_bundle/`: preserved earlier manuscript, bibliography,
-  figures, generator, and SIAM macro distribution.
-- `SIAM_template/siamart_251216/`: a second complete, unmodified reference copy
-  of the SIAM standard macro distribution dated 2025-12-16.
+- `LAA/`: current LAA manuscript, bibliography, figures, and reproducibility
+  code.
 - `lean/`: canonical Lean sources, pinned build configuration, formalization
   map, manuscript audit, axiom audit, and current validation status.
-- The local working copy may contain an ignored `legacy/` directory of earlier
-  research notes. It is not part of the GitHub repository and is not a current
-  manuscript or formalization source.
+- `JPA/JPA_submission_bundle/`: historical J. Phys. A-formatted manuscript.
+- `SIMAX_submission_bundle/`: historical SIAM-formatted manuscript and
+  companion artifacts.
+- `SIAM_template/siamart_251216/`: retained unmodified reference copy of the
+  SIAM standard macro distribution dated 2025-12-16.
+- The local working copy may contain ignored journal templates, submission
+  correspondence, local reference PDFs, and legacy research notes.  They are
+  not part of the public reproducibility record.
 
 ## Third-party files and licensing
 
-The retained SIAM class is third-party material and is **not** covered by this
-repository's MIT grant. Its embedded redistribution notice requires the class
-to be distributed with the complete macro set. Both retained copies now
-include that set, including `docsiamart.tex` and `docsiamart.pdf`. The source,
-inventory, verification record, and controlling terms are documented in
-[`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md). The current upstream file
-list is published on the [SIAM Journal Authors page](https://epubs.siam.org/journal-authors#siam-macros).
-The IOP class and ORCID graphic used to build the J. Phys. A PDFs are
-journal-owned and are deliberately not redistributed here.
+The current Elsevier class and bibliography style are not redistributed in
+this repository.  The retained SIAM class remains third-party material and is
+not covered by the repository's MIT grant.  Its redistribution terms,
+inventory, and provenance are recorded in
+[`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md).
 
 The root [`LICENSE`](LICENSE) states the separate treatment of original source
-code, manuscript material, and third-party files. Citation metadata are in
+code, manuscript material, and third-party files.  Citation metadata are in
 [`CITATION.cff`](CITATION.cff).
 
 ## Citation
 
-Until an article DOI is available, please use the metadata in
-[`CITATION.cff`](CITATION.cff), which cites this repository and identifies the
-preferred article title and author without inventing publication metadata.
+Until an article DOI is available, use the metadata in
+[`CITATION.cff`](CITATION.cff), which identifies the preferred article title
+and author without inventing publication metadata.

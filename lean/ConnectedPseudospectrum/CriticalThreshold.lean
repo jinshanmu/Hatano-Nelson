@@ -90,6 +90,33 @@ theorem criticalThreshold_eq_eventualThreshold_of_succ_lt
   exact firstHitThreshold_eq_eventualThreshold_of_barrier_antitone
     hcriterion (gapBarrier_antitone_of_succ_lt hstrict)
 
+/-- Among dimensions at least two, connectedness holds exactly at and above
+the critical threshold. -/
+theorem connectedDimensions_eq_criticalThreshold_tail
+    {a ε : ℝ} (ha0 : 0 < a) (ha1 : a < 1) (hε : 0 < ε)
+    (hcriterion : ∀ {n : ℕ}, 2 ≤ n →
+      (ConnectedAtSize n a ε ↔ gapBarrier n a < ε))
+    (hstrict : ∀ {n : ℕ}, 2 ≤ n →
+      gapBarrier (n + 1) a < gapBarrier n a) :
+    {n : ℕ | 2 ≤ n ∧ IsConnected (pseudospectrum n a ε)} =
+      {n : ℕ | criticalThreshold a ε ≤ n} := by
+  have hevent : (eventualSet a ε).Nonempty :=
+    eventualSet_nonempty_of_gapBarrier_tendsto ha0 ha1 hε hcriterion
+  have hfirst : (firstHitSet a ε).Nonempty :=
+    firstHitSet_nonempty_of_eventualSet_nonempty hevent
+  have hpersistent :
+      ∀ {N : ℕ}, 2 ≤ N → ConnectedAtSize N a ε →
+        ∀ {n : ℕ}, N ≤ n → ConnectedAtSize n a ε :=
+    connectedAtSize_persistent_of_barrier_antitone
+      hcriterion (gapBarrier_antitone_of_succ_lt hstrict)
+  change firstHitSet a ε = {n : ℕ | firstHitThreshold a ε ≤ n}
+  ext n
+  constructor
+  · exact fun hn => firstHitThreshold_le hn
+  · intro hn
+    have hmin := firstHitThreshold_mem hfirst
+    exact ⟨hmin.1.trans hn, hpersistent hmin.1 hmin.2 hn⟩
+
 /-- Equation `eq:tail-threshold-bounds`, for the actual critical threshold.
 -/
 theorem criticalThreshold_tail_sandwich

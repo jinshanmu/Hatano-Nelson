@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 message: "If you use this manuscript, formalization, or reproducibility material, please cite the article described below."
-title: "Exact Connectedness Threshold for Pseudospectra of the Open Hatano–Nelson Chain"
+title: "Pseudospectral connectedness thresholds and strict dimension monotonicity for asymmetric tridiagonal Toeplitz matrices"
 type: software
 authors:
   - family-names: Jin
@@ -13,9 +13,10 @@ url: "https://github.com/jinshanmu/Hatano-Nelson"
 keywords:
   - pseudospectrum
   - Euclidean pseudospectrum
-  - open Hatano–Nelson chain
-  - non-Hermitian skin effect
+  - tridiagonal Toeplitz matrix
+  - nonnormal matrix
   - connectedness threshold
+  - strict dimension monotonicity
   - Lean 4
   - formal verification
 preferred-citation:
@@ -23,6 +24,6 @@ preferred-citation:
   authors:
     - family-names: Jin
       given-names: Shanmu
-  title: "Exact Connectedness Threshold for Pseudospectra of the Open Hatano–Nelson Chain"
+  title: "Pseudospectral connectedness thresholds and strict dimension monotonicity for asymmetric tridiagonal Toeplitz matrices"
   year: 2026
   url: "https://github.com/jinshanmu/Hatano-Nelson"

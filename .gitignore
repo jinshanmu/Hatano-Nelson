@@ -48,9 +48,24 @@ legacy/
 
 # Local reference library, not project source
 literature/
+references/
 
 # Private journal-submission correspondence; keep local only
 submission_private/
+**/COVER_LETTER_*.md
+
+# Local journal templates and submission packaging
+JPA/ioplatextemplate/
+LAA/elsarticle/
+LAA/elsarticle.zip
+LAA/elsarticle.cls
+LAA/elsarticle-*.bst
+LAA/LAA_submission_bundle.zip
+LAA/SUBMISSION_README.md
+LAA/highlights.txt
+SIMAX_submission_bundle/SIAM_template/
 
 # Temporary render output
 tmp/
+build.stdout
+*.spl

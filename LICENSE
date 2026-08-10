@@ -11,7 +11,8 @@ documentation authored for this repository, namely:
 
 - the Lean source and project configuration under `lean/`, including the audit
   and status documentation there;
-- `SIMAX_submission_bundle/make_hatano_nelson_figures.py`; and
+- the figure-generation scripts under `LAA/`, `JPA/JPA_submission_bundle/`,
+  and `SIMAX_submission_bundle/`; and
 - the root `README.md`, `CITATION.cff`, and `THIRD_PARTY_NOTICES.md`.
 
 2. Manuscript and research artifacts

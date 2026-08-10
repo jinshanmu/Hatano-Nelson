@@ -3,11 +3,11 @@ import ConnectedPseudospectrum.Definitions
 /-!
 # First-hit and eventual connectedness thresholds
 
-This module gives the exact `N_f` and `N_e` definitions from `thm:main` as
-least natural numbers.  It also proves their order-theoretic well-definedness
-and the precise lemma that turns persistence of connectedness into
-`N_f = N_e`.  Later modules supply persistence from the strict decrease of
-the concrete barriers and the geometric connectedness criterion.
+This module introduces first-hit and eventual thresholds as internal proof
+devices.  It proves their order-theoretic well-definedness and the precise
+lemma that identifies them under persistence of connectedness.  Later modules
+supply persistence from strict decrease of the concrete barriers and the
+geometric connectedness criterion.
 -/
 
 namespace ConnectedPseudospectrum
@@ -28,13 +28,13 @@ def firstHitSet (a ε : ℝ) : Set ℕ :=
 def eventualSet (a ε : ℝ) : Set ℕ :=
   {N | 2 ≤ N ∧ ∀ n, N ≤ n → ConnectedAtSize n a ε}
 
-/-- The paper's first-hit threshold `N_f`.  As for `sInf` on naturals, its
-value is `0` before nonemptiness is proved; `firstHitThreshold_mem` shows that
-under the paper's hypotheses it is the advertised minimum. -/
+/-- The internal first-hit threshold.  As for `sInf` on naturals, its value is
+`0` before nonemptiness is proved; `firstHitThreshold_mem` identifies it as
+the minimum once nonemptiness is known. -/
 def firstHitThreshold (a ε : ℝ) : ℕ :=
   sInf (firstHitSet a ε)
 
-/-- The paper's eventual connectedness threshold `N_e`. -/
+/-- The internal eventual connectedness threshold. -/
 def eventualThreshold (a ε : ℝ) : ℕ :=
   sInf (eventualSet a ε)
 

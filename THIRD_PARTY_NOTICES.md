@@ -1,10 +1,27 @@
 # Third-party notices
 
+## ELA/SIAM standard LaTeX macros (2016)
+
+The current ELA manuscript uses the unmodified `siamart1116.cls` version
+1.4.1 and `siamplain.bst` distributed through ELA's official author-template
+page.  The complete upstream 13-file macro distribution is retained as
+`ELA/official-template/siamart_1116.zip`; its provenance and checksums are
+recorded in `ELA/official-template/SOURCE.md`.  Convenience copies of the
+class and bibliography style beside the manuscript are byte-for-byte
+identical to the files in that archive.
+
+The class notice permits redistribution only with the complete macro
+distribution and prohibits alteration of the class.  The separate
+`ELA/siamart1116-compat.tex` file is an original, conditional pre-class shim
+for current LaTeX kernels; it does not modify the upstream class.  The
+embedded upstream notice, rather than this summary, is controlling.  These
+third-party macros are excluded from the repository's MIT grant.
+
 ## SIAM standard LaTeX macros
 
-This repository includes the Society for Industrial and Applied Mathematics
-(SIAM) standard LaTeX macros dated 2025-12-16. The class identifies itself as
-`siamart251216` version 1.4.8.
+The historical SIMAX submission bundle includes the Society for Industrial
+and Applied Mathematics (SIAM) standard LaTeX macros dated 2025-12-16. The
+class identifies itself as `siamart251216` version 1.4.8.
 
 The notice embedded in `siamart251216.cls` prohibits changing the class and
 permits redistribution only when it is kept together with the complete
@@ -64,6 +81,7 @@ grant, and no ownership or relicensing claim is made for them.
 
 ## SIAM style guide
 
-`SIAM_template/SIAM_STYLE_GUIDE_2019.pdf` is also third-party SIAM material and
-is excluded from the repository's MIT grant. Its own copyright and terms
-control.
+`SIAM_template/SIAM_STYLE_GUIDE_2019.pdf` and the copy in
+`SIMAX_submission_bundle/SIAM_template/` are also third-party SIAM material
+and are excluded from the repository's MIT grant. Their own copyright and
+terms control.

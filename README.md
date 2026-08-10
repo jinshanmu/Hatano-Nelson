@@ -1,32 +1,37 @@
-# Pseudospectral Connectedness Thresholds for Tridiagonal Toeplitz Matrices
+# Pseudospectral Topology of Complex Tridiagonal Toeplitz Matrices
 
 **Author:** Shanmu Jin
 
 **Public repository:** https://github.com/jinshanmu/Hatano-Nelson
 
-This repository accompanies the manuscript *Pseudospectral connectedness
-thresholds and strict dimension monotonicity for asymmetric tridiagonal
-Toeplitz matrices*, prepared for submission to *Linear Algebra and its
-Applications*.  It contains the current manuscript, reproducibility code for
-the numerical illustrations, and the corresponding Lean 4 formalization and
-audit materials.
+This repository accompanies the manuscript *Pseudospectral topology of
+complex tridiagonal Toeplitz matrices: thresholds and finite-size
+monotonicity*, prepared for submission to the *Electronic Journal of Linear
+Algebra*.  It contains the current manuscript, reproducibility code for the
+numerical illustrations, and the corresponding Lean 4 formalization and audit
+materials.
 
 ## Current artifacts
 
-- [`LAA/`](LAA/) contains the current manuscript source and PDF,
-  bibliography, figures, figure generator, and public reproduction notes.
+- [`ELA/`](ELA/) contains the current manuscript source and PDF,
+  bibliography, figures, figure generator, official-template provenance, and
+  submission notes.
 - [`lean/`](lean/) contains the pinned formalization, the result-by-result
   manuscript map, and executable build and axiom-audit records.
+- [`LAA/`](LAA/) preserves the earlier LAA-formatted version as a historical
+  snapshot.
 - [`JPA/JPA_submission_bundle/`](JPA/JPA_submission_bundle/) preserves the
   earlier J. Phys. A-formatted version as a historical snapshot.
 - [`SIMAX_submission_bundle/`](SIMAX_submission_bundle/) preserves the earlier
   SIAM-formatted version.
 
-The Lean development covers every numbered theorem-like result in the LAA
-manuscript and the independently used pointwise backward-error identity at the
-result/proof-stage level.  See [`lean/FORMALIZATION_MAP.md`](lean/FORMALIZATION_MAP.md)
-for the exact correspondence and [`lean/STATUS.md`](lean/STATUS.md) for the
-latest build, linter, and kernel-axiom evidence.
+The Lean development covers every theorem-bearing statement and independently
+used proof-stage identity listed for the ELA manuscript, including the
+pointwise backward-error identity, the abstract vertical-scaling topology,
+and the complex Toeplitz reductions.  See
+[`lean/FORMALIZATION_MAP.md`](lean/FORMALIZATION_MAP.md) for the exact
+correspondence and [`lean/STATUS.md`](lean/STATUS.md) for the latest build,
+linter, and kernel-axiom evidence.
 
 ## Reproduce the artifacts
 
@@ -35,19 +40,18 @@ or later, and Matplotlib 3.6 or later.  From the repository root, the configured
 Conda environment can regenerate both figures with:
 
 ```sh
-conda run -n wirtinger_calculus python LAA/make_laa_figures.py
+conda run -n wirtinger_calculus python ELA/make_ela_figures.py
 ```
 
-The manuscript uses Elsevier's `elsarticle` 3.4 class.  Third-party template
-files are intentionally absent from the public repository.  After obtaining
-the class and `elsarticle-harv.bst` from Elsevier, make them visible on
-`TEXINPUTS` and `BSTINPUTS`, then run:
+The manuscript uses ELA's official `siamart1116` class.  The unmodified class,
+its complete upstream macro archive, provenance record, bibliography style,
+and a compatibility shim for current LaTeX kernels are retained in `ELA/`.
+Build with:
 
 ```sh
-cd LAA
-TEXINPUTS=/path/to/elsarticle: BSTINPUTS=/path/to/elsarticle: \
-  latexmk -pdf -interaction=nonstopmode -halt-on-error \
-  laa_connected_pseudospectra.tex
+cd ELA
+latexmk -pdf -interaction=nonstopmode -halt-on-error \
+  ela_pseudospectral_topology.tex
 ```
 
 The formalization is pinned to Lean 4.28.0 and Mathlib commit
@@ -62,10 +66,11 @@ lake env lean AxiomAudit.lean
 
 ## Repository layout
 
-- `LAA/`: current LAA manuscript, bibliography, figures, and reproducibility
-  code.
+- `ELA/`: current ELA manuscript, bibliography, figures, reproducibility code,
+  official template provenance, and submission material.
 - `lean/`: canonical Lean sources, pinned build configuration, formalization
   map, manuscript audit, axiom audit, and current validation status.
+- `LAA/`: historical LAA manuscript and submission material.
 - `JPA/JPA_submission_bundle/`: historical J. Phys. A-formatted manuscript.
 - `SIMAX_submission_bundle/`: historical SIAM-formatted manuscript and
   companion artifacts.
@@ -77,9 +82,8 @@ lake env lean AxiomAudit.lean
 
 ## Third-party files and licensing
 
-The current Elsevier class and bibliography style are not redistributed in
-this repository.  The retained SIAM class remains third-party material and is
-not covered by the repository's MIT grant.  Its redistribution terms,
+The ELA/SIAM class and bibliography style remain third-party material and are
+not covered by the repository's MIT grant.  Their redistribution terms,
 inventory, and provenance are recorded in
 [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md).
 

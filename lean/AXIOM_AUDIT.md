@@ -6,13 +6,21 @@ Run from `lean/` in the pinned environment:
 lake env lean AxiomAudit.lean
 ```
 
-`AxiomAudit.lean` contains 238 selected `#print axioms` commands.  The
+`AxiomAudit.lean` contains 284 selected `#print axioms` commands.  The
 selection includes the final `ConnectedPseudospectrum.main_theorem` and the
 principal endpoints for:
 
 - spectrum and least-singular-value infrastructure;
 - the attained pointwise spectral backward-error minimum;
-- the affine positive-off-diagonal Toeplitz reduction;
+- the abstract vertical-topology theorem and its attained real-axis barrier;
+- the complex unitary--affine tridiagonal Toeplitz reduction and boundary
+  classifications;
+- the connected rotation-invariant radial classification, the exact
+  one-sided Jordan disks, and their contractibility;
+- the normal union-of-disks formula, largest-half-gap threshold, strict
+  connectedness criterion, and equal-modulus complex transfer;
+- the explicit normal cubic remainder and bounded-error critical-dimension
+  inversion;
 - component topology and the connectedness criterion;
 - vertical monotonicity;
 - folded continuants, collision formulas, and chord exhaustion;

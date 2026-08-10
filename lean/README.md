@@ -1,11 +1,12 @@
 # Connected pseudospectrum formalization
 
-This Lean project formalizes the main mathematical theorem in
-`../LAA/laa_connected_pseudospectra.tex`: component contractibility, the exact
-connectedness criterion, strict decrease of the real-gap barrier, quantitative
-barrier bounds, the exact tail of connected dimensions, the critical-size
-asymptotic, the exact two-dimensional endpoint, the pointwise spectral
-backward-error minimum, and the positive-off-diagonal Toeplitz reduction.
+This Lean project formalizes the canonical nonnormal theorem and the
+complex-Toeplitz extension in `../ELA/ela_pseudospectral_topology.tex`:
+component contractibility, the exact connectedness criterion, strict decrease
+of the real-gap barrier, quantitative barrier bounds, the exact tail of
+connected dimensions, the critical-size asymptotic, the exact two-dimensional
+endpoint, the pointwise spectral backward-error minimum, and unitary--affine
+reduction of complex tridiagonal Toeplitz matrices.
 
 The public assembly theorem is
 `ConnectedPseudospectrum.main_theorem` in
@@ -27,8 +28,23 @@ main theorem:
 - elementary logarithmic inversion of `(n+1) r^n`; and
 - the exact `n=2` threshold;
 - attainment of the norm-minimizing spectral backward error; and
-- the affine-image, component, connectedness, scaled-barrier, and connected-
-  dimension conclusions for positive unequal Toeplitz off-diagonals.
+- the matrix-independent vertical-scaling criterion for real-axis
+  connectedness and component contractibility;
+- exact diagonal-unitary phase removal and complex affine pseudospectral
+  transport for nonzero complex off-diagonals;
+- the affine-image, component, connectedness, and strict scaled-barrier
+  conclusions in the unequal-modulus regime;
+- exact reduction of the equal-modulus regime to the Hermitian endpoint
+  `a = 1`; and
+- triangular determinant, singleton-spectrum, connectedness, and scalar-disk
+  results on the zero-product boundary; and
+- exact rotation invariance, open-disk classification, and contractibility
+  for both one-sided Jordan orientations;
+- the exact normal union-of-disks formula, largest-half-gap threshold,
+  component contractibility, and complex equal-modulus affine transfer;
+- the explicit normal cubic error bound and the uniform critical-size estimate
+  `|N-pi*c/epsilon|<2`; and
+- the general radial classification underlying the Jordan boundary.
 
 The logarithmic inversion is proved directly in
 `ConnectedPseudospectrum/TailThresholdAsymptotic.lean`.  No Lambert `W`
@@ -37,11 +53,13 @@ part of the current manuscript or formalization.
 
 Bibliography, floating-point illustrations, and the physical interpretation
 in the Discussion are non-theorem material and remain outside the kernel
-scope.  The backward-error and general-Toeplitz results are standalone
+scope.  The backward-error and complex-Toeplitz results are standalone
 kernel theorems because they are mathematically independent of
 `main_theorem`.
 
-`FORMALIZATION_MAP.md` records the proof-stage correspondence.
+`FORMALIZATION_MAP.md` records the proof-stage correspondence, including the
+named endpoints for every theorem-bearing boundary statement used in the ELA
+classification.
 
 ## Pinned environment
 
@@ -60,7 +78,7 @@ lake env lean AxiomAudit.lean
 
 The umbrella module imports every source module under
 `ConnectedPseudospectrum/`; there are no detached proof modules.  The axiom
-audit contains 238 selected `#print axioms` commands, including the final
+audit contains 284 selected `#print axioms` commands, including the final
 theorem.  The only accepted foundational dependencies are `propext`,
 `Classical.choice`, and `Quot.sound`.
 

@@ -1,0 +1,18 @@
+% Compatibility shim for ELA's official 2016 SIAM class on recent LaTeX.
+% Load this file BEFORE \documentclass:
+%   \input{siamart1116-compat}
+%   \documentclass[10pt,twoside]{siamart1116}
+%
+% siamart1116 redefines kernel versions of \label and \refstepcounter.
+% Since the 2024-11 LaTeX kernel update, this can conflict with the
+% hyperref/cleveref support loaded by the class.  Preserve the kernel
+% definitions and restore them immediately before hyperref is loaded.
+% The conditional leaves older LaTeX installations unchanged.
+
+\ifdefined\AddToHook
+  \let\ELAOriginalLabel\label
+  \let\ELAOriginalRefstepcounter\refstepcounter
+  \AddToHook{package/hyperref/before}{%
+    \let\label\ELAOriginalLabel
+    \let\refstepcounter\ELAOriginalRefstepcounter}
+\fi

@@ -5,7 +5,7 @@ import ConnectedPseudospectrum.Definitions
 # Spectral backward error
 
 This module proves the pointwise spectral backward-error identity used in the
-LAA manuscript.  For a positive-dimensional complex square matrix, the least
+ELA manuscript.  For a positive-dimensional complex square matrix, the least
 singular value of `zI - M` is the minimum Euclidean operator norm of a
 perturbation that makes `z` an eigenvalue.
 -/
@@ -116,7 +116,7 @@ theorem generalPseudospectralHeight_isLeast_spectralBackwardErrors
   · intro η hη
     exact generalPseudospectralHeight_le_of_mem_spectralBackwardErrors M hn z hη
 
-/-- Path-specific form of the pointwise identity displayed in the LAA
+/-- Path-specific form of the pointwise identity specialized in the ELA
 manuscript: `gₙ(x)` is the minimum perturbation norm that makes `x` an
 eigenvalue of `Aₙ(a) + Δ`. -/
 theorem realGapValue_isLeast_spectralBackwardErrors

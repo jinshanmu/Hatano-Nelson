@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 message: "If you use this manuscript, formalization, or reproducibility material, please cite the article described below."
-title: "Pseudospectral connectedness thresholds and strict dimension monotonicity for asymmetric tridiagonal Toeplitz matrices"
+title: "Pseudospectral topology of complex tridiagonal Toeplitz matrices: thresholds and finite-size monotonicity"
 type: software
 authors:
   - family-names: Jin
@@ -12,11 +12,11 @@ repository-code: "https://github.com/jinshanmu/Hatano-Nelson"
 url: "https://github.com/jinshanmu/Hatano-Nelson"
 keywords:
   - pseudospectrum
-  - Euclidean pseudospectrum
   - tridiagonal Toeplitz matrix
   - nonnormal matrix
+  - least singular value
   - connectedness threshold
-  - strict dimension monotonicity
+  - finite-size monotonicity
   - Lean 4
   - formal verification
 preferred-citation:
@@ -24,6 +24,6 @@ preferred-citation:
   authors:
     - family-names: Jin
       given-names: Shanmu
-  title: "Pseudospectral connectedness thresholds and strict dimension monotonicity for asymmetric tridiagonal Toeplitz matrices"
+  title: "Pseudospectral topology of complex tridiagonal Toeplitz matrices: thresholds and finite-size monotonicity"
   year: 2026
   url: "https://github.com/jinshanmu/Hatano-Nelson"

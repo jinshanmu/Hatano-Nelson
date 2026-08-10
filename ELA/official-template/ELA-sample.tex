@@ -1,0 +1,321 @@
+\documentclass[10pt,twoside]{siamart1116}
+% or 
+%\documentclass[10pt,twoside]{siamltex}
+
+%Standard ELA packages
+\usepackage[english]{babel}
+\usepackage{graphicx,epstopdf,epsfig}
+\usepackage{amsfonts,epsfig,fancyhdr,graphics, hyperref,amsmath,amssymb}
+
+%ELA page dimensions
+\setlength{\textheight}{210mm}
+\setlength{\textwidth}{165mm}
+\topmargin = -10mm
+\renewcommand{\baselinestretch}{1.1}
+\setlength{\parskip}{.1in}
+
+% Box for end of proof outside environment
+\def\cvd{~\vbox{\hrule\hbox{%
+     \vrule height1.3ex\hskip0.8ex\vrule}\hrule } }
+
+%Information for ELA papers, to be completed by the Editors upon acceptance
+%Starting page
+\newcommand{\SP}{1}
+%Ending page
+\newcommand{\EP}{10}
+%Publication month
+\newcommand{\PMonth}{Month}
+%Handling Editor
+\newcommand{\HE}{Namie of Handling Editor}
+%Date of Submission
+\newcommand{\DoS}{Month/Day/Year}
+%Date of Acceptance
+\newcommand{\DoA}{Month/Day/Year}
+\newcommand{\CA}{Name of Corresponding Author}
+
+%Please insert names of author(s) and short title for running headers
+\newcommand{\Names}{Moshe Goldberg, Daniel Hershkowitz, and Daniel Szyld}
+\newcommand{\Title}{Sample paper for ELA}
+
+
+% Common extra environments
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+
+% Symbols for real and complex numbers
+\newcommand{\reals}{\mathbb{R}}
+\newcommand{\complex}{\mathbb{C}}
+ 
+%Setting up to have Theorems indexed by section
+\renewcommand{\theequation}{\thesection.\arabic{equation}}
+\renewtheorem{theorem}{Theorem}[section]
+%\newtheorem{remark}[theorem]{Remark}
+%\newtheorem{example}[theorem]{Example}
+
+
+\begin{document}
+
+\bibliographystyle{plain}
+
+%  Leave these commented lines here
+%\input{ELAheader-template.tex}
+% ELA insert correct page number
+\setcounter{page}{1}
+
+\thispagestyle{empty}
+
+%Insert the title of the paper
+ \title{\Title\thanks{Received
+ by the editors on \DoS.
+ Accepted for publication on \DoA. 
+ Handling Editor: \HE. Corresponding Author: \CA}}
+
+\author{
+Daniel B.\ Szyld\thanks{Department of Mathematics,
+Temple University, Philadelphia, Pennsylvania 19122-6094, USA
+(szyld@math.temple.edu). Supported by a generous grant from ILAS.}
+% Remember to put \and between any two authors
+\and
+Danny Hershkowitz\thanks{Mathematics Department, Technion,
+Haifa 32000, Israel (hershkow@math.technion.ac.il, \newline 
+goldberg@math.technion.ac.il).}
+\and 
+Moshe Goldberg\footnotemark[3]}
+
+
+%\pagestyle{myheadings}
+\markboth{\Names}{\Title}
+
+\maketitle
+
+\begin{abstract}
+A good descriptive abstract is always very useful. The main results of
+the paper are explained here of course, if possible. It should be written 
+in the third person!
+\end{abstract}
+
+\begin{keywords}
+Nonsingular matrices, Determinants, Spherical coordinates.
+\end{keywords}
+\begin{AMS}
+15A15, 15F10. 
+\end{AMS}
+
+% Sample article for the Electronic Journal of Linear Algebra
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Introduction} \label{intro-sec}
+Each section starts with a {\verb# \section{name} #} command.
+The label is used to refer to it in other sections. Definitions, lemmas,
+theorems, etc., are numbered consecutively within each section.
+Formulas are numbered on the left as in the following equation:
+\begin{equation} 
+\label{firstfor}
+Ax = b, 
+\end{equation}
+where $A$ is $n \times n$.
+
+\begin{definition}
+{\rm A square matrix $A$ is said to be {\em nonsingular} if its columns are 
+linearly independent. }
+\end{definition}
+
+\begin{lemma} \label{main-lem}
+If $A$ is $n \times n$ and nonsingular, the system {\rm (\ref{firstfor})} 
+has a unique solution for any $b \in \reals^n$.
+\end{lemma}
+
+\begin{proof}
+Consult any standard textbook (in linear algebra).
+\end{proof}
+
+\begin{corollary}
+If $A$ is $n \times n$ and singular, the system {\rm (\ref{firstfor})} 
+may have more than one solution.
+\end{corollary}
+
+\begin{theorem} \label{main-th}
+Let $A$ be an $n \times n$ matrix. Then 
+$\displaystyle{\lim_{k \rightarrow \infty}} A^k =O$ 
+if and only if $\rho(A) <1$.
+\end{theorem}
+
+\begin{proof}
+This is a well-known result; see e.g., Varga \cite[Some result]{varga-62}.
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Another section}
+A few more items worth reading before you prepare an ELA article.
+
+\begin{remark}
+ 
+\begin{itemize}
+\item[]
+\item
+Remark and Definition contents are in roman font, while
+Lemma and Theorem statements are in italics.
+\item
+Note in the bibliography how a journal article like \cite{schneider-84}
+is cited.  The journal name should be either completely spelled out or,
+if abbreviated, the abbreviation should be the one used by 
+{\em Mathematical Reviews} ({\tt http://www.ams.org}).
+Consistency should be established in each paper: either all journal 
+names are abbreviated, or none.
+\item
+Article \cite{ela-paper} is an example of a cited ELA paper.
+The official abbreviation that can be used for ELA is
+{\em Electron. J. Linear Algebra}.
+\item
+Use the macros {\verb# \reals #} to denote the real numbers $\reals$ and 
+{\verb# \complex #} to denote the complex numbers $\complex$.
+\item
+Square brackets {\verb# \left[#} and {\verb# \right] #} are preferred for arrays.
+\item
+Only formulas referenced in the text, such as 
+(\ref{firstfor}) or (\ref{below}) below, should be numbered; 
+others can be included in the text or be displayed without numbers. 
+Similarly, one expects a reference 
+in the text to every item listed in the bibliography.
+\item
+When the end of a proof is a displayed formula, the end of the proof
+mark should be in the line of the formula. Use the {\verb# \cvd #}
+macro as illustrated in Lemma \ref{lem}.
+\end{itemize}
+\end{remark}
+
+\begin{lemma}
+\label{lem}
+The off-diagonal entries of a $2 \times 2$ symmetric matrix 
+are the same.
+\end{lemma}
+
+{\em Proof.}  
+The proof follows from the structure of the matrix, as follows:
+\begin{equation}
+\label{below}
+A =  \left[ \begin{array}{lr} a  & b \\ b &  c  \end{array}
+\right]. ~~~~~~ \cvd
+\end{equation}
+
+% There are various ways to include postscript figures in a
+% LaTeX file. Consult the manual for details.
+% Below is a particular example with an encapsulated postscript file
+% Note that the epsfig package must be included in the preamble.
+
+There are various ways to include figures.  Here are ways to include a figure 
+from .eps, .pdf, and .jpg formats.
+
+\begin{verbatim}
+\begin{figure}[ht]
+ \begin{center}
+ \epsfig{file=imgres.png,height=40mm,width=40mm,clip=}
+ \caption{A .png graphic}
+ \end{center}
+ \label{fig1}
+ \end{figure}
+\end{verbatim}
+
+
+\begin{figure}[ht]
+ \begin{center}
+ \epsfig{file=imgres.png,height=40mm,width=40mm,clip=}
+ \caption{A .png graphic}
+ \end{center}
+ \label{fig1}
+ \end{figure}
+
+\newpage 
+
+\begin{verbatim}
+ \begin{figure}[ht]
+ \begin{center}
+ \epsfig{file=logo.eps,height=25mm,width=25mm,clip=}
+ \caption{An .eps graphic}
+ \end{center}
+ \label{fig2}
+ \end{figure}
+\end{verbatim}
+
+\begin{figure}[ht]
+ \begin{center}
+ \epsfig{file=logo.eps,height=25mm,width=25mm,clip=}
+ \caption{An .eps graphic}
+ \end{center}
+ \label{fig2}
+ \end{figure}
+
+
+
+\begin{verbatim}
+\begin{center}
+ \includegraphics[scale=.3]{unitary.pdf}
+   \caption{A .pdf graphic}
+\end{center}
+\label{fig3}
+\end{figure}
+\end{verbatim}
+
+\begin{figure}[ht]
+\begin{center}
+ \includegraphics[scale=.3]{unitary.pdf}
+   \caption{A .pdf graphic}
+\end{center}
+\label{fig3}
+\end{figure}
+
+\newpage
+
+\begin{verbatim}
+\begin{figure}
+\begin{center}
+ \includegraphics[scale=.15]{la.jpg}
+ \caption{A .jpg graphic}
+\end{center}
+\label{fig4}
+\end{figure}
+\end{verbatim}
+
+\begin{figure}
+\begin{center}
+ \includegraphics[scale=.15]{la.jpg}
+ \caption{A .jpg graphic}
+\end{center}
+\label{fig4}
+\end{figure}
+
+
+
+\bigskip
+{\bf Acknowledgment.} We wish to thank everybody who has contributed
+papers to the Electronic Journal of Linear Algebra.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{thebibliography}{1}
+\bibitem{schneider-84}
+Hans Schneider.
+\newblock  Theorems on M-splittings of a singular M-matrix which
+           depend on graph structure.
+\newblock  {\em Linear Algebra and its Applications}, 58:407--424, 1984.
+
+\bibitem{varga-62}
+Richard S.~Varga.
+\newblock  {\em Matrix Iterative Analysis}.
+\newblock  Prentice-Hall, Englewood Cliffs, New Jersey, 1962.
+
+\bibitem{ela-paper}
+S.~Friedland and H.~Schneider. 
+\newblock  Spectra of expansion graphs. 
+\newblock  {\em Electronic Journal of Linear Algebra}, 6:2--10, 1999.
+
+\end{thebibliography}
+\end{document}
+
+
+

@@ -1,13 +1,36 @@
-# LAA proof-to-Lean map
+# ELA proof-to-Lean map
 
-Source: `../LAA/laa_connected_pseudospectra.tex`
+Current source: `../ELA/ela_pseudospectral_topology.tex`
 
-This map gives a result-by-result correspondence for every numbered
-theorem-like statement in the LAA manuscript and for independently used
-displayed claims.  Intermediate algebraic
+The canonical nonnormal proof is inherited from the earlier LAA draft.  The
+first table records the new ELA abstraction and complex-Toeplitz extension;
+the second retains the detailed canonical proof map.  Intermediate algebraic
 displays are discharged inside the listed kernel-checked endpoints.
 
-| LAA result or proof stage | Principal Lean endpoint(s) | Module(s) |
+## ELA abstraction and complex-Toeplitz extension
+
+| ELA result or label | Principal Lean endpoint(s) | Module(s) | Coverage |
+|---|---|---|---|
+| Matrix family, Eq. `eq:A-matrix` | `complexToeplitzMatrix`, `complexToeplitzMatrix_apply` | `ComplexToeplitz` | Exact definition and entry formula |
+| Vertical contraction, Eq. `eq:abstract-vertical-property` | `VerticalScalingClosed`, `verticalScale_mem_connectedComponentIn` | `VerticalTopology` | Exact strict-sublevel-set formulation |
+| Backward-error identity, Eq. `eq:backward-error-abstract` | `generalPseudospectralHeight_isLeast_spectralBackwardErrors` | `BackwardError` | Exact attained minimum for arbitrary finite complex matrices |
+| Component lemma, Lem. `lem:component` | `exists_mem_spectrum_mem_pseudospectral_component` | `PseudospectralComponents` | Exact arbitrary finite-matrix statement |
+| Abstract barrier, Eq. `eq:abstract-barrier` | `generalRealIntervalBarrier`, `exists_generalPseudospectralHeight_eq_generalRealIntervalBarrier`, `realInterval_mapsTo_generalPseudospectrum_iff_barrier_lt` | `AbstractPseudospectralTopology` | Exact attained compact-interval maximum and strict-sublevel equivalence |
+| Vertical topology theorem, Thm. `thm:vertical-topology`, Eq. `eq:abstract-connectedness` | `generalPseudospectrum_vertical_topology_with_barrier`, assembled from `generalPseudospectrum_vertical_topology`, `isConnected_iff_realInterval_mapsTo_of_verticalScaling`, `contractibleSpace_connectedComponentIn_of_verticalScaling`, and `exists_mem_spectrum_mem_pseudospectral_component` | `AbstractPseudospectralTopology`, `VerticalTopology`, `PseudospectralComponents` | Exact component-contractibility and both connectedness equivalences with explicit real spectral endpoints; the endpoint parameters replace a particular min/max representation of Mathlib's abstract algebra spectrum |
+| Complex affine invariance used in Prop. `prop:complex-reduction` | `generalPseudospectrum_complexAffine`, `generalPseudospectrum_unitary_conjugate` | `ComplexToeplitz` | Exact for every nonzero complex affine scale and every unitary similarity |
+| Phase removal, Eq. `eq:complex-unitary-reduction` | `complexToeplitzMatrix_phase_reduction`, `complexToeplitzMatrix_phase_reduction_eq_canonical_or_reversal` | `ComplexToeplitz` | Exact for two nonzero off-diagonals, with reversal in the opposite orientation |
+| Pseudospectral reduction, Eq. `eq:complex-pseudospectrum-reduction` | `complexToeplitzPseudospectrum_eq_affine_image` | `ComplexToeplitz` | Exact for `alpha beta != 0`, including equal moduli |
+| Scalar part of Prop. `prop:boundary-cases` | `generalPseudospectralHeight_complexToeplitzMatrix_zero_zero`, `generalPseudospectrum_complexToeplitzMatrix_zero_zero` | `ComplexToeplitz` | Exact open disk |
+| One-sided part of Prop. `prop:boundary-cases` | `generalPseudospectralHeight_left_zero_rotation`, `generalPseudospectralHeight_right_zero_rotation`, `exists_eq_ball_complexToeplitzPseudospectrum_of_left_zero`, `exists_eq_ball_complexToeplitzPseudospectrum_of_right_zero`, `contractibleSpace_complexToeplitzPseudospectrum_of_mul_eq_zero` | `ComplexToeplitz`, `RadialTopology`, `JordanBoundary` | Exact rotation invariance, open-disk identification, connectedness, and contractibility in both one-sided orientations, including the scalar overlap |
+| Normal scalar, Eqs. `eq:normal-threshold`, `eq:normal-error-bound`, `eq:normal-asymptotic` | `normalThreshold`, `normalThreshold_even`, `normalThreshold_odd`, `normalThreshold_succ_lt`, `normalThreshold_error_bound`, `normalThreshold_cubic_remainder` | `BoundaryCases`, `NormalCriticalThreshold` | Exact parity formula, strict adjacent-dimension decrease, the displayed two-sided cubic error bound, and its absolute-remainder form |
+| Normal half-gap and Eq. `eq:normal-connectedness` for `A_n(1)` | `normalAdjacentHalfGap_le_normalThreshold`, `exists_normalAdjacentHalfGap_eq_normalThreshold`, `pseudospectrum_one_eq_iUnion_balls`, `isConnected_pseudospectrum_one_iff_normalThreshold_lt`, `contractibleSpace_pseudospectrum_one_component` | `NormalGapGeometry`, `NormalBoundary`, `NormalToeplitzBoundary` | Exact largest adjacent half-gap, union-of-open-disks formula, strict connectedness threshold (including equality failure), and contractibility of every component |
+| Equal-modulus normal reduction and Eqs. `eq:normal-connectedness`, `eq:full-connectedness` | `complexToeplitzPseudospectrum_eq_normal_affine_image`, `complexToeplitz_normal_corollary` | `ComplexToeplitz`, `NormalToeplitzBoundary` | Exact affine transfer to every complex equal-nonzero-modulus Toeplitz matrix, including component contractibility and threshold `epsilon > norm alpha * normalThreshold n` |
+| Normal critical dimension, Eq. `eq:general-normal-critical` | `normalCriticalThreshold`, `normalCriticalThreshold_isLeast`, `normalCriticalThreshold_predecessor_ge`, `normalCriticalThreshold_scale_bounds`, `normalCriticalThreshold_error_lt_two`, `normalCriticalThreshold_boundedErrorAtZero`, `complexToeplitz_normal_connectedDimensions_eq_normalCriticalSet`, `complexToeplitz_normal_firstConnectedDimension_isLeast` | `NormalCriticalThreshold`, `NormalToeplitzBoundary` | Exact equality between matrix-connected dimensions and the scalar critical set, the literal first-connected-dimension specification, and the stronger estimate `|N-pi*c/epsilon|<2` for `0<epsilon<=c`, hence `pi*c/epsilon+O(1)` |
+| Unequal-modulus clauses of Thm. `thm:main`, Eqs. `eq:full-connectedness`, `eq:general-nonnormal-critical` | `complexToeplitz_corollary`, `complexToeplitz_scaled_barrier_succ_lt`, composed with `main_theorem` | `ComplexToeplitz`, `MainTheorem` | Exact component contractibility, connectedness threshold, and strict adjacent-size decrease for `0<a<1`; threshold bounds and critical-size asymptotic remain available through the normalized substitution |
+
+## Canonical nonnormal proof
+
+| Canonical ELA result or proof stage | Principal Lean endpoint(s) | Module(s) |
 |---|---|---|
 | Matrix, gauge similarity, and real spectrum | `pathMatrix_eq_gauge_symmetricPath_mul_inv`, `spectrum_pathMatrix`, `charpoly_pathMatrix_separable` | `PathSpectrum`, `Spectrum` |
 | Least singular value and gap barrier | `leastSingularValue_eq_zero_iff_det_eq_zero`, `exists_realGapValue_eq_gapBarrier` | `LeastSingular`, `Definitions` |
@@ -23,8 +46,8 @@ displays are discharged inside the listed kernel-checked endpoints.
 | Strict barrier comparison, Lem. `lem:mesh` | `meshGapHeight_succ_lt_gapBarrier`, `gapBarrier_succ_lt` | `MeshStrictComparison` |
 | Sharp-order gap bounds, Prop. `prop:gap-bounds` | `lowerBarrier_le_gapBarrier`, `gapBarrier_le_upperBarrier`, `lowerBarrierOrderConstant_mul_tailModel_le_lowerBarrier` | `RectangularPrincipalAngle`, `GapUpperBound`, `LowerBarrierOrder` |
 | Elementary threshold inversion | `tailThreshold_logarithmic_bounds`, `tailThreshold_boundedErrorAtZero`, `tailThreshold_mul_boundedErrorAtZero` | `TailThresholdAsymptotic` |
-| Main theorem, Thm. `thm:main` | `main_theorem`, with `connectedDimensions_eq_criticalThreshold_tail`, `criticalThreshold_hasCriticalSizeAsymptotic`, and `criticalThreshold_eq_two_iff` as named endpoints | `MainTheorem`, `CriticalThreshold`, `DimensionTwo` |
-| Positive-off-diagonal Toeplitz corollary, Cor. `cor:general-toeplitz` | `positiveToeplitzPseudospectrum_eq_affine_image`, `positiveToeplitz_corollary`, `positiveToeplitz_scaled_barrier_succ_lt`, `positiveToeplitz_scaled_barrier_bounds`, `positiveToeplitz_connectedDimensions_eq_criticalThreshold_tail`, `positiveToeplitz_firstConnectedDimension_isLeast`, `positiveToeplitz_threshold_bounds_and_asymptotic` | `GeneralToeplitz` |
+| Canonical theorem, Thm. `thm:canonical-main` | `main_theorem`, with `connectedDimensions_eq_criticalThreshold_tail`, `criticalThreshold_hasCriticalSizeAsymptotic`, and `criticalThreshold_eq_two_iff` as named endpoints | `MainTheorem`, `CriticalThreshold`, `DimensionTwo` |
+| Historical positive-real specialization retained internally | `positiveToeplitzPseudospectrum_eq_affine_image`, `positiveToeplitz_corollary`, `positiveToeplitz_scaled_barrier_succ_lt`, `positiveToeplitz_scaled_barrier_bounds`, `positiveToeplitz_connectedDimensions_eq_criticalThreshold_tail`, `positiveToeplitz_firstConnectedDimension_isLeast`, `positiveToeplitz_threshold_bounds_and_asymptotic` | `GeneralToeplitz` |
 
 ## Internal threshold representation
 
@@ -39,10 +62,20 @@ of candidate sets.  The paper's explicit identity
 
 ## Scope boundary
 
-The backward-error perturbation minimum and affine general-Toeplitz corollary
-now have standalone kernel theorems.  They are logically independent of
-`main_theorem`, while the exact affine-image formula transfers the main
-theorem's normalized bounds and asymptotic conclusions by the substitution
-`epsilon -> epsilon / c`.  Numerical figures, bibliographic claims, and the
-physical Discussion contain no proof obligations and remain outside the
-kernel scope.
+The backward-error perturbation minimum, abstract vertical-topology theorem,
+and complex affine Toeplitz reduction have standalone kernel theorems.  They
+are logically independent of `main_theorem`, while the exact affine-image
+formula transfers the canonical theorem's normalized bounds and asymptotic
+conclusions by the substitution `epsilon -> epsilon / c` in the nonnormal
+regime.
+
+All theorem-bearing boundary assertions in `prop:boundary-cases` and the
+normal clause of `eq:general-normal-critical` now have named kernel endpoints:
+the Jordan disk and contractibility, the actual normal connectedness
+threshold, the explicit cubic remainder, and the bounded-error inversion.
+The scalar critical-threshold definition is exactly the least `n >= 2` with
+`c * normalThreshold n < epsilon`; `complexToeplitz_normal_corollary`
+identifies that predicate with connectedness for the matrix family.
+
+Numerical figures, bibliographic claims, and the physical Discussion contain
+no proof obligations and remain outside the kernel scope.

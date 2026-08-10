@@ -1,6 +1,6 @@
-# Current LAA manuscript
+# Historical LAA manuscript
 
-This directory contains the public research artifacts for
+This directory preserves the superseded LAA-formatted research artifacts for
 *Pseudospectral connectedness thresholds and strict dimension monotonicity
 for asymmetric tridiagonal Toeplitz matrices*.
 

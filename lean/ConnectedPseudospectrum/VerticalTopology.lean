@@ -172,6 +172,79 @@ theorem contractibleSpace_connectedComponentIn_of_real_mem
   apply (contractible_iff_id_nullhomotopic C).2
   exact ⟨bC, ⟨verticalHomotopy.trans realHomotopy⟩⟩
 
+/-! ## Abstract real-axis criterion -/
+
+/-- A vertically scaling-closed subset of the plane is connected exactly
+when it contains the real interval joining two distinguished real points,
+provided every component contains a real anchor in that interval.
+
+This is the matrix-independent topological implication used by the
+pseudospectral connectedness criterion.  All spectral information is isolated
+in the endpoint and component-anchor hypotheses. -/
+theorem isConnected_iff_realInterval_mapsTo_of_verticalScaling
+    {Ω : Set ℂ} (hΩ : VerticalScalingClosed Ω)
+    {l r : ℝ} (hlr : l ≤ r)
+    (hl : (l : ℂ) ∈ Ω) (hr : (r : ℂ) ∈ Ω)
+    (hanchor : ∀ {z : ℂ}, z ∈ Ω →
+      ∃ x ∈ Icc l r, (x : ℂ) ∈ connectedComponentIn Ω z) :
+    IsConnected Ω ↔ MapsTo (fun x : ℝ => (x : ℂ)) (Icc l r) Ω := by
+  constructor
+  · intro hconnected
+    let R : Set ℝ := Complex.re '' Ω
+    have hRpre : IsPreconnected R :=
+      hconnected.2.image Complex.re Complex.continuous_re.continuousOn
+    have hlR : l ∈ R := ⟨(l : ℂ), hl, by simp⟩
+    have hrR : r ∈ R := ⟨(r : ℂ), hr, by simp⟩
+    intro x hx
+    have hxR : x ∈ R := hRpre.Icc_subset hlR hrR hx
+    obtain ⟨z, hzΩ, hzre⟩ := hxR
+    have hrealΩ : verticalScale 0 z ∈ Ω := hΩ z hzΩ 0 (by simp)
+    simpa [verticalScale, hzre] using hrealΩ
+  · intro hinterval
+    let base : ℂ := (r : ℂ)
+    have hbaseI : r ∈ Icc l r := ⟨hlr, le_rfl⟩
+    have hbaseΩ : base ∈ Ω := hinterval hbaseI
+    have hsubset : Ω ⊆ connectedComponentIn Ω base := by
+      intro z hzΩ
+      obtain ⟨x, hxI, hxComponent⟩ := hanchor hzΩ
+      let node : ℂ := (x : ℂ)
+      let S : Set ℂ := (fun y : ℝ => (y : ℂ)) '' Icc l r
+      have hSpre : IsPreconnected S :=
+        isPreconnected_Icc.image _ Complex.continuous_ofReal.continuousOn
+      have hSΩ : S ⊆ Ω := by
+        rintro w ⟨y, hyI, rfl⟩
+        exact hinterval hyI
+      have hnodeS : node ∈ S := ⟨x, hxI, rfl⟩
+      have hbaseS : base ∈ S := ⟨r, hbaseI, rfl⟩
+      have hbaseNode : base ∈ connectedComponentIn Ω node :=
+        (hSpre.subset_connectedComponentIn hnodeS hSΩ) hbaseS
+      have hcomponentNode :
+          connectedComponentIn Ω z = connectedComponentIn Ω node :=
+        connectedComponentIn_eq hxComponent
+      have hbaseZ : base ∈ connectedComponentIn Ω z :=
+        hcomponentNode.symm ▸ hbaseNode
+      have hcomponentBase :
+          connectedComponentIn Ω z = connectedComponentIn Ω base :=
+        connectedComponentIn_eq hbaseZ
+      exact hcomponentBase ▸ mem_connectedComponentIn hzΩ
+    have heq : connectedComponentIn Ω base = Ω :=
+      (connectedComponentIn_subset Ω base).antisymm hsubset
+    refine ⟨⟨base, hbaseΩ⟩, ?_⟩
+    rw [← heq]
+    exact isPreconnected_connectedComponentIn
+
+/-- Matrix-independent packaging of the second topological consequence:
+vertical scaling plus a real anchor in each component makes every component
+contractible. -/
+theorem contractibleSpace_connectedComponentIn_of_verticalScaling
+    {Ω : Set ℂ} (hΩ : VerticalScalingClosed Ω)
+    (hanchor : ∀ {z : ℂ}, z ∈ Ω →
+      ∃ b ∈ connectedComponentIn Ω z, b.im = 0)
+    {z : ℂ} (hz : z ∈ Ω) :
+    ContractibleSpace (connectedComponentIn Ω z) := by
+  obtain ⟨b, hb, hbReal⟩ := hanchor hz
+  exact contractibleSpace_connectedComponentIn_of_real_mem hΩ hb hbReal
+
 end
 
 end ConnectedPseudospectrum

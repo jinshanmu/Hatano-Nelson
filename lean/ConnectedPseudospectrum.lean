@@ -1,5 +1,7 @@
+import ConnectedPseudospectrum.AbstractPseudospectralTopology
 import ConnectedPseudospectrum.Asymptotics
 import ConnectedPseudospectrum.BackwardError
+import ConnectedPseudospectrum.BoundaryCases
 import ConnectedPseudospectrum.CentralBidiagonal
 import ConnectedPseudospectrum.CentralMeshBridges
 import ConnectedPseudospectrum.Chebyshev
@@ -11,6 +13,7 @@ import ConnectedPseudospectrum.ChordFamilySignedPencil
 import ConnectedPseudospectrum.ChordEndpointAgreement
 import ConnectedPseudospectrum.ChordSignClassification
 import ConnectedPseudospectrum.ComponentTopology
+import ConnectedPseudospectrum.ComplexToeplitz
 import ConnectedPseudospectrum.ConnectednessCriterion
 import ConnectedPseudospectrum.Conjugation
 import ConnectedPseudospectrum.CriticalThreshold
@@ -43,6 +46,7 @@ import ConnectedPseudospectrum.HermitianPathSpectrum
 import ConnectedPseudospectrum.HermitianSingularValues
 import ConnectedPseudospectrum.HermitianWeylPerturbation
 import ConnectedPseudospectrum.HyperbolicParameter
+import ConnectedPseudospectrum.JordanBoundary
 import ConnectedPseudospectrum.LeastSingular
 import ConnectedPseudospectrum.LowerBarrierOrder
 import ConnectedPseudospectrum.MainTheorem
@@ -60,6 +64,10 @@ import ConnectedPseudospectrum.NoncentralGapComparison
 import ConnectedPseudospectrum.NoncentralHyperbolicComparison
 import ConnectedPseudospectrum.NoncentralReflectedComparison
 import ConnectedPseudospectrum.NoncentralHyperbolicScale
+import ConnectedPseudospectrum.NormalBoundary
+import ConnectedPseudospectrum.NormalCriticalThreshold
+import ConnectedPseudospectrum.NormalGapGeometry
+import ConnectedPseudospectrum.NormalToeplitzBoundary
 import ConnectedPseudospectrum.OddCentralChordData
 import ConnectedPseudospectrum.OddCentralHeight
 import ConnectedPseudospectrum.OddCentralLowerAngle
@@ -79,6 +87,7 @@ import ConnectedPseudospectrum.PathSpectrum
 import ConnectedPseudospectrum.PathTopologyFinal
 import ConnectedPseudospectrum.PseudospectralComponents
 import ConnectedPseudospectrum.PositivePrincipalSubmatrix
+import ConnectedPseudospectrum.RadialTopology
 import ConnectedPseudospectrum.RectangularFactorization
 import ConnectedPseudospectrum.RectangularGramBound
 import ConnectedPseudospectrum.RectangularPrincipalAngle
@@ -106,6 +115,7 @@ import ConnectedPseudospectrum.VerticalTopology
 /-!
 # Connected pseudospectra of finite Hatano--Nelson paths
 
-This is the umbrella module for the formalization of
-`../LAA/laa_connected_pseudospectra.tex`.
+This is the umbrella module for the formalization of the canonical path
+theorem and its complex tridiagonal Toeplitz extension in
+`../ELA/ela_pseudospectral_topology.tex`.
 -/

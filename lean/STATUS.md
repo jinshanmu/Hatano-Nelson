@@ -1,17 +1,17 @@
 # Current validation status
 
-Last updated: 2026-08-10 (Asia/Shanghai).
+Last updated: 2026-08-11 (Asia/Shanghai).
 
 ## Acceptance result
 
-The LAA formalization passed the complete umbrella build:
+The ELA formalization passed the complete umbrella build:
 
 ```sh
 lake build
 ```
 
 - Exit status: `0`.
-- Final line: `Build completed successfully (8131 jobs).`
+- Final line: `Build completed successfully (8140 jobs).`
 - Errors and warnings: none.
 
 The whole namespace also passed the Mathlib unused-argument linter.  The
@@ -23,8 +23,9 @@ import ConnectedPseudospectrum
 #lint only unusedArguments in ConnectedPseudospectrum
 ```
 
-It found zero errors in 2,403 declarations, plus 2,217 automatically
-generated declarations, and ended with `All linting checks passed!`.
+It found zero errors in 2,502 declarations, plus 2,289 automatically
+generated declarations, and ended with `All linting checks passed!`.  The
+temporary driver was deleted after the check.
 
 The kernel-axiom audit was then run with:
 
@@ -32,63 +33,69 @@ The kernel-axiom audit was then run with:
 lake env lean AxiomAudit.lean
 ```
 
-It exited `0` for all 238 selected `#print axioms` commands.  Every record
+It exited `0` for all 284 selected `#print axioms` commands.  Every record
 reported exactly `propext`, `Classical.choice`, and `Quot.sound`; no record
 contained a project axiom, `sorryAx`, or compiler-trust escape.
 
 ## Mathematical scope
 
 `ConnectedPseudospectrum.main_theorem` checks the complete dependency chain
-for the LAA main theorem: component contractibility, the exact connectedness
-criterion, strict adjacent-size barrier decrease, the exact tail of connected
-dimensions, quantitative bounds, the fixed-parameter critical-size
-asymptotic, and the exact size-two endpoint.  Its assumptions `0 < a`,
-`a < 1`, and `0 < epsilon` are all used.
+for the canonical nonnormal theorem: component contractibility, the exact
+connectedness criterion, strict adjacent-size barrier decrease, the exact
+tail of connected dimensions, quantitative bounds, the fixed-parameter
+critical-size asymptotic, and the exact size-two endpoint.  Its assumptions
+`0 < a`, `a < 1`, and `0 < epsilon` are all used.
 
-`BackwardError.lean` proves both the general pointwise spectral backward-error
-minimum and the path-specific formula displayed in the paper.
-`GeneralToeplitz.lean` proves the exact affine-image identity and the paper's
-positive unequal off-diagonal Toeplitz corollary, including component
-contractibility, the connectedness criterion, strict scaled-barrier decrease,
-two-sided bounds, the exact connected-dimension tail, the first connected
-dimension, the scaled asymptotic, and the exact size-two endpoint.
+`AbstractPseudospectralTopology.lean` packages the matrix-independent
+vertical-scaling theorem with an attained real-interval barrier.  Under the
+stated real-spectrum and endpoint hypotheses it proves component
+contractibility and both the real-axis and strict-barrier connectedness
+criteria.
 
-The critical-size asymptotic uses the direct elementary inversion in
-`ConnectedPseudospectrum/TailThresholdAsymptotic.lean`.  No Lambert `W`
-function, exact Lambert floor formula, or auxiliary small-parameter condition
-remains in the manuscript or formalization.
+`ComplexToeplitz.lean` defines the general complex family
+`tridiag(alpha,d,beta)`, proves exact unitary--affine reduction for two
+nonzero off-diagonals, transfers the unequal-modulus connectedness and strict
+dimension conclusions, reduces equal nonzero moduli to the Hermitian
+endpoint, and treats the zero-product boundary by triangular determinant and
+connectedness theorems.  The double-zero scalar case is identified exactly
+with an open disk.
+
+`BoundaryCases.lean` verifies the displayed normal scalar threshold's parity
+formula, strict decrease in every adjacent dimension `n >= 2`, and the
+explicit cubic error bound.  `JordanBoundary.lean` packages the exact
+one-sided open disks and their contractibility.  `NormalBoundary.lean`,
+`NormalGapGeometry.lean`, and `NormalToeplitzBoundary.lean` package the exact
+normal union of disks, largest-half-gap threshold, component contractibility,
+strict connectedness criterion, and its equal-modulus complex affine
+transfer.  `NormalCriticalThreshold.lean` proves the first-hit specification
+and the stronger uniform bound `|N-pi*c/epsilon|<2`, hence the normal
+`pi*c/epsilon+O(1)` law.
 
 ## Lean environment and source integrity
 
 - Lean: `leanprover/lean4:v4.28.0`.
 - Lake: 5.0.0.
 - Mathlib commit: `8f9d9cff6bd728b17a24e163c9402775d9e6a365`.
-- The umbrella module imports all 104 source modules under
+- The umbrella module imports all 113 source modules under
   `ConnectedPseudospectrum/`; there are no detached proof modules.
-- Canonical library closure: 105 files, 41,745 lines, 1,719,923 bytes.
+- Canonical library closure: 114 files, 44,333 lines, 1,828,033 bytes.
 - `AxiomAudit.lean` SHA-256:
-  `d9e28d7960d0e32c344e953239546a0782c249969735108685cdab4639ef5523`.
+  `d5349fbf5f7d26fdf8c563e7fd3f5e51c9a92041b3663c63e190c9d74c7a0c31`.
 
 Static scans of the canonical library found no `sorry`, `admit`,
 `native_decide`, project axiom, unsafe declaration, compiler-trust escape,
-linter suppression, or Lean option override.
+linter suppression, or Lean option override.  `CheckComplex.lean` and the
+temporary lint driver are absent.
 
-## LAA manuscript
+## ELA manuscript alignment
 
-- Source: `../LAA/laa_connected_pseudospectra.tex`.
-- Source size: 2,680 lines; 97,740 bytes.
-- Source SHA-256:
-  `f135e47d5c0e7428cbc4762a3c1247359f18e464fc4498aaee97f449f7ba58f3`.
-- Compiled PDF: 44 A4 pages; 694,272 bytes.
-- PDF SHA-256:
-  `b73debecdfe48f0b375af2fdd15cbd76722ef854c2a4d85bff28624baaca4f96`.
-- Local submission bundle (not tracked publicly): 12 files; 857,007 bytes.
-- Local submission bundle SHA-256:
-  `62d277272bfd831856106799982b1809d12cfa3028929dc111e08430530817ea`.
+- Current source: `../ELA/ela_pseudospectral_topology.tex`.
+- `FORMALIZATION_MAP.md` uses the current ELA labels, including
+  `thm:canonical-main`, `prop:boundary-cases`,
+  `eq:normal-error-bound`, and `eq:general-normal-critical`.
+- `LATEX_AUDIT.md` records the statement-level correspondence and proof-scope
+  simplifications.
 
-The manuscript was built with the supplied Elsevier `elsarticle` 3.4 class.
-The final LaTeX/BibTeX log scan found no error, warning, undefined reference
-or citation, rerun request, duplicate label, overfull box, or underfull box.
-All 44 pages were rendered and visually checked.  The 12-file submission ZIP
-passes a complete archive integrity test, and every archived file matches the
-current workspace copy byte for byte.
+This file records executable Lean validation.  LaTeX, bibliography, figures,
+and submission-bundle checks are maintained with the ELA manuscript rather
+than duplicated here.

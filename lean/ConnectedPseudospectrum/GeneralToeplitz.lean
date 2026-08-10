@@ -8,8 +8,9 @@ import Mathlib.Topology.Homotopy.Contractible
 /-!
 # Positive-off-diagonal tridiagonal Toeplitz matrices
 
-This module formalizes the affine reduction in `cor:general-toeplitz` of the
-LAA manuscript.  Translation and positive scaling give an exact affine image
+This module retains the positive-real affine reduction underlying the general
+complex-Toeplitz result in the ELA manuscript.  Translation and positive
+scaling give an exact affine image
 of the normalized path pseudospectrum.  Reversal deals with the opposite
 orientation of the two off-diagonals by a unitary conjugation.
 -/

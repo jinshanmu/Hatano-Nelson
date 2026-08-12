@@ -6,8 +6,10 @@ Run from `lean/` in the pinned environment:
 lake env lean AxiomAudit.lean
 ```
 
-`AxiomAudit.lean` contains 284 selected `#print axioms` commands.  The
-selection includes the final `ConnectedPseudospectrum.main_theorem` and the
+`AxiomAudit.lean` contains 290 selected `#print axioms` commands.  The
+selection includes both the canonical `ConnectedPseudospectrum.main_theorem`
+and the full-family `ConnectedPseudospectrum.complexToeplitz_main_theorem`,
+as well as the
 principal endpoints for:
 
 - spectrum and least-singular-value infrastructure;
@@ -32,8 +34,8 @@ principal endpoints for:
 
 The exact command list in `AxiomAudit.lean` is authoritative.  This is a
 selected closure audit, not a claim that every public declaration is printed
-separately; the output for `main_theorem` covers its complete proof dependency
-closure.
+separately; the output for each assembly theorem covers its complete proof
+dependency closure.
 
 ## Acceptance criterion
 

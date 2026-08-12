@@ -43,9 +43,8 @@ The eight files expressly required by that notice are:
 SIAM's current standard-macro download also lists five companion example
 artifacts: `ex_article.pdf`, `ex_supplement.pdf`, `lexample_fig1.eps`,
 `lexample_fig2.eps`, and `data.dat`. This repository keeps all 13 files
-together in each place where the class is retained:
+together where the class is retained:
 
-- `SIAM_template/siamart_251216/`
 - `SIMAX_submission_bundle/`
 
 The authoritative upstream inventory is the
@@ -81,7 +80,7 @@ grant, and no ownership or relicensing claim is made for them.
 
 ## SIAM style guide
 
-`SIAM_template/SIAM_STYLE_GUIDE_2019.pdf` and the copy in
-`SIMAX_submission_bundle/SIAM_template/` are also third-party SIAM material
-and are excluded from the repository's MIT grant. Their own copyright and
-terms control.
+The copy of `SIAM_STYLE_GUIDE_2019.pdf` in
+`SIMAX_submission_bundle/SIAM_template/` is also third-party SIAM material
+and is excluded from the repository's MIT grant. Its own copyright and terms
+control.

@@ -5,7 +5,8 @@ import ConnectedPseudospectrum.ThresholdBounds
 /-!
 # Critical threshold and its fixed-parameter asymptotic
 
-This module proves the scalar threshold inversion part of `thm:main` from the
+This module proves the scalar threshold inversion part of
+`thm:canonical-main` from the
 actual connectedness criterion, the strict decrease of the actual gap barrier,
 and the lower half of `prop:gap-bounds`.  The upper half and all tail inversion
 estimates are already concrete theorems of the project.

@@ -347,3 +347,9 @@ strict global barrier comparison, and the literal final theorem. -/
 #print axioms ConnectedPseudospectrum.meshGapHeight_succ_lt_gapBarrier
 #print axioms ConnectedPseudospectrum.gapBarrier_succ_lt
 #print axioms ConnectedPseudospectrum.main_theorem
+#print axioms ConnectedPseudospectrum.complexToeplitz_classification_at_size
+#print axioms ConnectedPseudospectrum.complexToeplitzThreshold_succ_lt_of_mul_ne_zero
+#print axioms ConnectedPseudospectrum.tendsto_complexToeplitzThreshold_atTop_zero
+#print axioms ConnectedPseudospectrum.complexToeplitz_firstConnectedDimension_isLeast
+#print axioms ConnectedPseudospectrum.criticalThreshold_div_boundedErrorAtZero_scaled
+#print axioms ConnectedPseudospectrum.complexToeplitz_main_theorem

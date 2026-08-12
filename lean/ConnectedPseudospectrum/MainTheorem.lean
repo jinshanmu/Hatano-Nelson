@@ -6,7 +6,7 @@ import ConnectedPseudospectrum.RectangularPrincipalAngle
 /-!
 # Main theorem
 
-This module assembles the four clauses of `thm:main` from the proved
+This module assembles the four clauses of `thm:canonical-main` from the proved
 topological, mesh-comparison, barrier, threshold, and asymptotic results.
 The threshold clause explicitly records nonemptiness of every set whose
 minimum is used and the paper's empty-maximum convention.
@@ -18,7 +18,7 @@ open Filter Set
 
 noncomputable section
 
-/-- The complete formal counterpart of `thm:main`.
+/-- The complete formal counterpart of `thm:canonical-main`.
 
 The connected components are represented pointwise by
 `connectedComponentIn`.  The common critical size is

@@ -4,8 +4,9 @@ import ConnectedPseudospectrum.LeastSingular
 /-!
 # Pseudospectral definitions and attained real barrier
 
-This module records the definitions in `eq:main-definitions`,
-`eq:main-U-def`, and `eq:main-L-def`.  The pseudospectrum uses the actual
+This module records the canonical interval and barrier definitions preceding
+`thm:canonical-main`, together with `eq:main-U-def` and `eq:main-L-def`.
+The pseudospectrum uses the actual
 Euclidean least singular value from `ConnectedPseudospectrum.LeastSingular`.
 -/
 

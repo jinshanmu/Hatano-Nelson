@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 message: "If you use this manuscript, formalization, or reproducibility material, please cite the article described below."
-title: "Pseudospectral topology of complex tridiagonal Toeplitz matrices: thresholds and finite-size monotonicity"
+title: "Connectedness thresholds for complex tridiagonal Toeplitz pseudospectra: monotonicity with matrix order"
 type: software
 authors:
   - family-names: Jin
@@ -15,8 +15,8 @@ keywords:
   - tridiagonal Toeplitz matrix
   - nonnormal matrix
   - least singular value
-  - connectedness threshold
-  - finite-size monotonicity
+  - pseudospectral connectedness
+  - matrix-order monotonicity
   - Lean 4
   - formal verification
 preferred-citation:
@@ -24,6 +24,6 @@ preferred-citation:
   authors:
     - family-names: Jin
       given-names: Shanmu
-  title: "Pseudospectral topology of complex tridiagonal Toeplitz matrices: thresholds and finite-size monotonicity"
+  title: "Connectedness thresholds for complex tridiagonal Toeplitz pseudospectra: monotonicity with matrix order"
   year: 2026
   url: "https://github.com/jinshanmu/Hatano-Nelson"

@@ -33,7 +33,8 @@ spectral anchor for arbitrary finite matrices.
 `ComplexToeplitz.lean` defines `tridiag(alpha,d,beta)` over `Complex`, proves
 the diagonal-unitary phase gauge entry by entry, and transports the complete
 strict pseudospectrum through unitary similarity, translation, rotation, and
-positive scaling.  For two nonzero unequal-modulus off-diagonals it transfers
+positive scaling.  The exact reduction includes the one-sided `a=0` endpoint.
+For two nonzero unequal-modulus off-diagonals it transfers
 component contractibility, the exact connectedness threshold, and strict
 adjacent-size barrier decrease from `main_theorem`.  Equal nonzero moduli are
 reduced exactly to the Hermitian endpoint `a=1`.  On the zero-product boundary,
@@ -49,6 +50,12 @@ connectedness threshold, and transfer component contractibility to equal
 complex moduli.  `NormalCriticalThreshold.lean` proves the displayed cubic
 error and the stronger uniform estimate `|N-pi*c/epsilon|<2`, which implies
 the manuscript's normal `O(1)` critical-order statement.
+
+`FullFamilyMain.lean` defines the literal piecewise `Theta_n` and `N_T`
+wrappers and packages all three regimes in `complexToeplitz_main_theorem`.
+It proves the exact connected-order tail and `IsLeast` specification, rather
+than leaving the complex critical-size conclusions as an informal composition
+of branch-specific endpoints.
 
 ## Simplifications retained from the canonical version
 

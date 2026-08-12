@@ -32,6 +32,7 @@ import ConnectedPseudospectrum.FoldedPowerSeries
 import ConnectedPseudospectrum.FoldedReconstruction
 import ConnectedPseudospectrum.FoldedTransfer
 import ConnectedPseudospectrum.FoldedVariables
+import ConnectedPseudospectrum.FullFamilyMain
 import ConnectedPseudospectrum.GeneralPseudospectrum
 import ConnectedPseudospectrum.GeneralToeplitz
 import ConnectedPseudospectrum.GapDecay

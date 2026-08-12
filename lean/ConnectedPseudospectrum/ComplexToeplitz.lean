@@ -330,16 +330,17 @@ theorem norm_complexToeplitzScale (α β : ℂ) :
     abs_of_nonneg hmax]
 
 theorem complexToeplitzScale_ne_zero {α β : ℂ}
-    (hα : α ≠ 0) :
+    (hne : α ≠ 0 ∨ β ≠ 0) :
     complexToeplitzScale α β ≠ 0 := by
   apply mul_ne_zero (toeplitzDirection_ne_zero α β)
   exact Complex.ofReal_ne_zero.mpr
-    (ne_of_gt (lt_max_iff.mpr (Or.inl (norm_pos_iff.mpr hα))))
+    (ne_of_gt (lt_max_iff.mpr (hne.imp norm_pos_iff.mpr norm_pos_iff.mpr)))
 
-/-- With two nonzero off-diagonals, the gauged matrix is either the canonical
-affine path or its reversal. -/
+/-- With at least one nonzero off-diagonal, the gauged matrix is either the
+canonical affine path or its reversal.  This includes the one-sided endpoint
+`a = 0` in `prop:complex-reduction`. -/
 theorem complexToeplitzMatrix_phase_reduction_eq_canonical_or_reversal
-    (n : ℕ) {α β : ℂ} (d : ℂ) (hα : α ≠ 0) (hβ : β ≠ 0) :
+    (n : ℕ) {α β : ℂ} (d : ℂ) (hne : α ≠ 0 ∨ β ≠ 0) :
     let c := max ‖α‖ ‖β‖
     let a := min ‖α‖ ‖β‖ / c
     let C := d • 1 + complexToeplitzScale α β • complexPathMatrix n a
@@ -351,10 +352,12 @@ theorem complexToeplitzMatrix_phase_reduction_eq_canonical_or_reversal
         complexToeplitzGauge n α β =
           complexReversal n * C * complexReversal n := by
   dsimp only
-  have hαnorm : 0 < ‖α‖ := norm_pos_iff.mpr hα
-  have hβnorm : 0 < ‖β‖ := norm_pos_iff.mpr hβ
   rcases le_total ‖α‖ ‖β‖ with hle | hge
   · left
+    have hβnorm : 0 < ‖β‖ := by
+      rcases hne with hα | hβ
+      · exact (norm_pos_iff.mpr hα).trans_le hle
+      · exact norm_pos_iff.mpr hβ
     rw [complexToeplitzMatrix_phase_reduction,
       complexPathMatrix_eq_complex_shifts]
     ext i j
@@ -365,6 +368,10 @@ theorem complexToeplitzMatrix_phase_reduction_eq_canonical_or_reversal
     field_simp [hβnorm.ne']
     ring
   · right
+    have hαnorm : 0 < ‖α‖ := by
+      rcases hne with hα | hβ
+      · exact norm_pos_iff.mpr hα
+      · exact (norm_pos_iff.mpr hβ).trans_le hge
     rw [complexToeplitzMatrix_phase_reduction]
     have hJJ : complexReversal n * complexReversal n = 1 := by
       have hunit := Matrix.mem_unitaryGroup_iff.mp
@@ -398,13 +405,14 @@ theorem complexToeplitzMatrix_phase_reduction_eq_canonical_or_reversal
         push_cast
         field_simp [hαnorm.ne']
 
-/-- Exact normalized pseudospectral formula for arbitrary complex nonzero
-off-diagonals, including the equal-modulus normal endpoint `a = 1`. -/
+/-- Exact normalized pseudospectral formula whenever the overall Toeplitz
+scale is nonzero.  It includes both the one-sided endpoint `a = 0` and the
+equal-modulus normal endpoint `a = 1`. -/
 theorem complexToeplitzPseudospectrum_eq_affine_image
-    (n : ℕ) {α β : ℂ} (d : ℂ) (hα : α ≠ 0) (hβ : β ≠ 0) (ε : ℝ) :
+    (n : ℕ) {α β : ℂ} (d : ℂ) (hne : α ≠ 0 ∨ β ≠ 0) (ε : ℝ) :
     generalPseudospectrum (complexToeplitzMatrix n α d β) ε =
       complexAffineHomeomorph (complexToeplitzScale α β) d
-        (complexToeplitzScale_ne_zero hα) ''
+        (complexToeplitzScale_ne_zero hne) ''
         pseudospectrum n
           (min ‖α‖ ‖β‖ / max ‖α‖ ‖β‖)
           (ε / max ‖α‖ ‖β‖) := by
@@ -413,7 +421,7 @@ theorem complexToeplitzPseudospectrum_eq_affine_image
     complexPathMatrix n (min ‖α‖ ‖β‖ / max ‖α‖ ‖β‖)
   have hG := complexToeplitzGauge_mem_unitary n α β
   have hphase := complexToeplitzMatrix_phase_reduction_eq_canonical_or_reversal
-    n d hα hβ
+    n d hne
   have hpsGauge :
       generalPseudospectrum (complexToeplitzMatrix n α d β) ε =
         generalPseudospectrum
@@ -443,11 +451,12 @@ theorem complexToeplitzPseudospectrum_eq_normal_affine_image
     (heq : ‖α‖ = ‖β‖) (ε : ℝ) :
     generalPseudospectrum (complexToeplitzMatrix n α d β) ε =
       complexAffineHomeomorph (complexToeplitzScale α β) d
-        (complexToeplitzScale_ne_zero hα) ''
+        (complexToeplitzScale_ne_zero (Or.inl hα)) ''
         pseudospectrum n 1 (ε / ‖α‖) := by
   have hβnorm : ‖β‖ ≠ 0 := (norm_pos_iff.mpr hβ).ne'
   simpa only [heq, min_self, max_self, div_self hβnorm] using
-    (complexToeplitzPseudospectrum_eq_affine_image n d hα hβ ε)
+    (complexToeplitzPseudospectrum_eq_affine_image
+      (α := α) (β := β) n d (Or.inl hα) ε)
 
 /-- The equal-modulus canonical endpoint is Hermitian before its final
 rotation and translation. -/
@@ -488,10 +497,10 @@ theorem complexToeplitz_corollary
   constructor
   · intro z hz
     rw [complexToeplitzPseudospectrum_eq_affine_image
-      n d hα hβ ε] at hz ⊢
+      n d (Or.inl hα) ε] at hz ⊢
     rcases hz with ⟨w, hw, rfl⟩
     let e := complexAffineHomeomorph (complexToeplitzScale α β) d
-      (complexToeplitzScale_ne_zero hα)
+      (complexToeplitzScale_ne_zero (Or.inl hα))
     let C := connectedComponentIn
       (pseudospectrum n (min ‖α‖ ‖β‖ / max ‖α‖ ‖β‖)
         (ε / max ‖α‖ ‖β‖)) w
@@ -510,9 +519,9 @@ theorem complexToeplitz_corollary
         n hn ha0 ha1 hεc hw
     exact hcomponent.symm.contractibleSpace
   · rw [complexToeplitzPseudospectrum_eq_affine_image
-      n d hα hβ ε,
+      n d (Or.inl hα) ε,
       (complexAffineHomeomorph (complexToeplitzScale α β) d
-        (complexToeplitzScale_ne_zero hα)).isConnected_image,
+        (complexToeplitzScale_ne_zero (Or.inl hα))).isConnected_image,
       isConnected_pathPseudospectrum_iff_gapBarrier_lt
         n hn ha0 ha1 hεc]
     constructor

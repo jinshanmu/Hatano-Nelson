@@ -2,7 +2,7 @@
 
 This directory contains the manuscript and submission material for the
 *Electronic Journal of Linear Algebra* (ELA).  The requirements below were
-checked against the journal website on 2026-08-10.
+checked against the journal website on 2026-08-12.
 
 ## Files
 
@@ -28,8 +28,11 @@ checked against the journal website on 2026-08-10.
   worksheet for consistent entry in OJS.
 - `REFERENCE_AUDIT.md`: bibliography-key to local-PDF map and claim-support
   audit for every retained citation.
-- `make_ela_figures.py` and the figure files: reproducibility material for the
-  illustrations.
+- `FINAL_SUBMISSION_AUDIT.md`: closing validation record and the remaining
+  author-only actions.
+- `make_ela_figures.py`, `requirements-figures.txt`, and the figure files:
+  reproducibility material for the illustrations.  The requirements file
+  pins the direct dependencies of the audited figure-generation environment.
 - `ELA_submission_source.zip` (local, ignored by Git): the validated nine-file
   OJS source archive; upload the manuscript PDF separately.
 
@@ -91,10 +94,9 @@ also compiles on a current LaTeX installation, put
 ```
 
 at the top of the manuscript, in that order.  The shim is conditional and
-does nothing on older kernels that lack the hook mechanism.  A minimal local
-smoke test of this combination completed successfully with `pdflatex` on
-2026-08-10.  A separate BibTeX smoke test with `siamplain.bst` also completed
-successfully and printed the cited article's DOI as a resolvable URL.
+does nothing on older kernels that lack the hook mechanism.  The final source
+compiled without warnings with `pdflatex` on 2026-08-12.  A separate BibTeX
+check with `siamplain.bst` printed every cited DOI as a resolvable URL.
 
 From this directory, run
 
@@ -102,6 +104,26 @@ From this directory, run
 latexmk -pdf -interaction=nonstopmode -halt-on-error \
   ela_pseudospectral_topology.tex
 ```
+
+## Rebuild the figures
+
+The committed figures were reproduced and audited with CPython 3.11.14,
+NumPy 2.3.5, SciPy 1.16.3, and Matplotlib 3.10.7.  The script is
+deterministic and uses no random samples.  To recreate that environment with
+`uv`, run from this directory:
+
+```sh
+uv run --no-project --python 3.11.14 \
+  --with-requirements requirements-figures.txt \
+  python make_ela_figures.py
+```
+
+The final command overwrites both `fig1_connectedness_transition` and
+`fig2_gap_barrier_bounds` in PDF and PNG format.  It reports the numerical
+barrier estimates and the independent 1-Lipschitz grid brackets used to
+check the topology labels.  Those brackets are conditional on the float64
+singular-value samples; they are not interval-arithmetic certificates and
+are not used in the proofs.
 
 The upload archive should contain the main `.tex`, bibliography source and
 generated `.bbl` if used, `siamart1116.cls`, `siamplain.bst`,

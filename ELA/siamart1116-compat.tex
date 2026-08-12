@@ -10,6 +10,30 @@
 % The conditional leaves older LaTeX installations unchanged.
 
 \ifdefined\AddToHook
+  % The current kernel adds \@currentcounter to \eqnarray.  The 2016 class
+  % tests against the preceding kernel definition before applying its own
+  % spacing correction; bridge that one-line version difference after
+  % ntheorem is loaded.  The manuscript itself does not use eqnarray.
+  \makeatletter
+  \def\ELALegacyEqnarray{%
+     \stepcounter{equation}%
+     \def\@currentlabel{\p@equation\theequation}%
+     \global\@eqnswtrue
+     \m@th
+     \global\@eqcnt\z@
+     \tabskip\@centering
+     \let\\\@eqncr
+     $$\everycr{}\halign to\displaywidth\bgroup
+         \hskip\@centering$\displaystyle\tabskip\z@skip{##}$\@eqnsel
+        &\global\@eqcnt\@ne\hskip \tw@\arraycolsep \hfil${##}$\hfil
+        &\global\@eqcnt\tw@ \hskip \tw@\arraycolsep
+           $\displaystyle{##}$\hfil\tabskip\@centering
+        &\global\@eqcnt\thr@@ \hb@xt@\z@\bgroup\hss##\egroup
+           \tabskip\z@skip
+        \cr
+  }
+  \AddToHook{package/ntheorem/after}{\let\eqnarray\ELALegacyEqnarray}
+  \makeatother
   \let\ELAOriginalLabel\label
   \let\ELAOriginalRefstepcounter\refstepcounter
   \AddToHook{package/hyperref/before}{%

@@ -87,7 +87,7 @@ theorem complexToeplitz_normal_corollary
       n d hα hβ heq ε] at hz ⊢
     rcases hz with ⟨w, hw, rfl⟩
     let e := complexAffineHomeomorph (complexToeplitzScale α β) d
-      (complexToeplitzScale_ne_zero hα)
+      (complexToeplitzScale_ne_zero (Or.inl hα))
     let C := connectedComponentIn (pseudospectrum n 1 (ε / ‖α‖)) w
     let hC : e '' C =
         connectedComponentIn
@@ -103,7 +103,7 @@ theorem complexToeplitz_normal_corollary
   · rw [complexToeplitzPseudospectrum_eq_normal_affine_image
       n d hα hβ heq ε,
       (complexAffineHomeomorph (complexToeplitzScale α β) d
-        (complexToeplitzScale_ne_zero hα)).isConnected_image,
+        (complexToeplitzScale_ne_zero (Or.inl hα))).isConnected_image,
       isConnected_pseudospectrum_one_iff_normalThreshold_lt n hn hεα]
     constructor
     · intro h

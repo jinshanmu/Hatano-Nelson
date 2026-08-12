@@ -1,68 +1,68 @@
 # ELA submission checklist
 
-Checked against ELA's public instructions on 2026-08-10.  Recheck the live
+Checked against ELA's public instructions on 2026-08-12.  Recheck the live
 OJS form immediately before uploading because portal fields may change
 without appearing in the public author guidelines.
 
 ## Scientific and editorial readiness
 
-- [ ] The final title and abstract present
+- [x] The final title and abstract present
   `tridiag(alpha,d,beta)` as the main object, not merely as a late corollary.
-- [ ] The cases `alpha*beta = 0`, `|alpha| = |beta|`, and
+- [x] The cases `alpha*beta = 0`, `|alpha| = |beta|`, and
   `alpha*beta != 0`, `|alpha| != |beta|` are all stated without overlap or
   omission.
-- [ ] Every result asserted in `COVER_LETTER_ELA.md` appears in the final
+- [x] Every result asserted in `COVER_LETTER_ELA.md` appears in the final
   manuscript with exactly the same scope and hypotheses.
-- [ ] Neither the title nor the abstract suggests strict threshold decrease
+- [x] Neither the title nor the abstract suggests strict threshold decrease
   when `alpha*beta = 0`; the threshold is identically zero in that regime.
-- [ ] The abstract is written in the third person and contains no more than
+- [x] The abstract is written in the third person and contains no more than
   250 words.
-- [ ] There are 4--6 keywords and both primary and secondary AMS 2020
+- [x] There are 4--6 keywords and both primary and secondary AMS 2020
   classifications.
-- [ ] The manuscript explains why nonunitary similarity, ordinary
+- [x] The manuscript explains why nonunitary similarity, ordinary
   interlacing, and asymptotic Toeplitz theory do not imply the strict
   finite-order result.
-- [ ] Physics is retained only if it sharpens the mathematical significance;
+- [x] Physics is retained only if it sharpens the mathematical significance;
   it is confined to a short discussion paragraph and is not needed for any
   theorem or proof.
 
 ## ELA style and source integrity
 
-- [ ] The source uses ELA's `siamart1116` class and follows
+- [x] The source uses ELA's `siamart1116` class and follows
   `official-template/ELA-sample.tex` for title and author information.
-- [ ] `\input{siamart1116-compat}` appears immediately before
+- [x] `\input{siamart1116-compat}` appears immediately before
   `\documentclass` when compiling on the current local TeX Live; the official
   class file itself remains unmodified.
-- [ ] Receipt date, acceptance date, page range, and handling-editor fields
+- [x] Receipt date, acceptance date, page range, and handling-editor fields
   have not been invented; these are completed by ELA after acceptance.
-- [ ] Theorems, lemmas, propositions, corollaries, definitions, remarks, and
+- [x] Theorems, lemmas, propositions, corollaries, definitions, remarks, and
   examples are numbered consecutively within each section.
-- [ ] Only equations cited in the text are numbered.  The website requests
+- [x] Only equations cited in the text are numbered.  The website requests
   right-side numbers but the distributed official class enforces left-side
   numbers; the manuscript follows the unmodified class, and this discrepancy
   has been noted rather than silently changing the journal template.
-- [ ] Every color figure remains readable in grayscale; labels and symbols
+- [x] Every color figure remains readable in grayscale; labels and symbols
   agree with the manuscript.
-- [ ] `pdflatex`/`latexmk` completes without errors, undefined references,
+- [x] `pdflatex`/`latexmk` completes without errors, undefined references,
   missing citations, or missing files.
-- [ ] The final PDF has been visually inspected page by page for clipped
+- [x] The final PDF has been visually inspected page by page for clipped
   equations, overfull lines, misplaced floats, and illegible labels.
 
 ## References and reproducibility
 
-- [ ] Every bibliography entry is cited, and every citation supports the
+- [x] Every bibliography entry is cited, and every citation supports the
   statement attached to it.
-- [ ] Journal titles are consistently abbreviated according to
+- [x] Journal titles are consistently abbreviated according to
   *Mathematical Reviews* (or consistently written in full).
-- [ ] The bibliography uses the supplied `siamplain.bst` (rather than generic
+- [x] The bibliography uses the supplied `siamplain.bst` (rather than generic
   `plain`) so verified DOI fields are printed in the PDF.
-- [ ] Authors, title, journal or publisher, volume, year, pages/article
+- [x] Authors, title, journal or publisher, volume, year, pages/article
   number, and DOI have been checked against the corresponding local PDF and
   an authoritative bibliographic record.
-- [ ] A DOI is included whenever one exists; DOI links resolve.
+- [x] A DOI is included whenever one exists; DOI links resolve.
 - [ ] The repository URL in `DECLARATIONS.tex` is public and contains the
   figure script and the Lean files cited in the manuscript.
-- [ ] The submitted Lean revision and theorem crosswalk correspond to the
+- [x] The submitted Lean revision and theorem crosswalk correspond to the
   final mathematical statements, including boundary cases.
 
 ## Declarations and authorship
@@ -75,7 +75,7 @@ without appearing in the public author guidelines.
   responsibility for the work.
 - [ ] Funding, conflict-of-interest, and data/code-availability statements
   in `DECLARATIONS.tex` remain factually accurate.
-- [ ] The AI acknowledgment says “OpenAI ChatGPT Work” and “checking
+- [x] The AI acknowledgment says “OpenAI ChatGPT Work” and “checking
   algebraic consistency and presentation”; no other AI tool is named.
 - [ ] The author has independently verified all AI-assisted suggestions,
   citations, formulas, and proofs.

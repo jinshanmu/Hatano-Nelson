@@ -1,15 +1,14 @@
-# Pseudospectral Topology of Complex Tridiagonal Toeplitz Matrices
+# Connectedness Thresholds for Complex Tridiagonal Toeplitz Pseudospectra
 
 **Author:** Shanmu Jin
 
 **Public repository:** https://github.com/jinshanmu/Hatano-Nelson
 
-This repository accompanies the manuscript *Pseudospectral topology of
-complex tridiagonal Toeplitz matrices: thresholds and finite-size
-monotonicity*, prepared for submission to the *Electronic Journal of Linear
-Algebra*.  It contains the current manuscript, reproducibility code for the
-numerical illustrations, and the corresponding Lean 4 formalization and audit
-materials.
+This repository accompanies the manuscript *Connectedness thresholds for
+complex tridiagonal Toeplitz pseudospectra: monotonicity with matrix order*,
+prepared for submission to the *Electronic Journal of Linear Algebra*.  It
+contains the current manuscript, reproducibility code for the numerical
+illustrations, and the corresponding Lean 4 formalization and audit materials.
 
 ## Current artifacts
 
@@ -35,12 +34,15 @@ linter, and kernel-axiom evidence.
 
 ## Reproduce the artifacts
 
-The figure script uses Python 3.9 or later with NumPy 1.23 or later, SciPy 1.9
-or later, and Matplotlib 3.6 or later.  From the repository root, the configured
-Conda environment can regenerate both figures with:
+The audited figure environment is pinned in
+`ELA/requirements-figures.txt`.  From the repository root, regenerate both
+figures with:
 
 ```sh
-conda run -n wirtinger_calculus python ELA/make_ela_figures.py
+cd ELA
+uv run --no-project --python 3.11.14 \
+  --with-requirements requirements-figures.txt \
+  python make_ela_figures.py
 ```
 
 The manuscript uses ELA's official `siamart1116` class.  The unmodified class,
@@ -74,8 +76,6 @@ lake env lean AxiomAudit.lean
 - `JPA/JPA_submission_bundle/`: historical J. Phys. A-formatted manuscript.
 - `SIMAX_submission_bundle/`: historical SIAM-formatted manuscript and
   companion artifacts.
-- `SIAM_template/siamart_251216/`: retained unmodified reference copy of the
-  SIAM standard macro distribution dated 2025-12-16.
 - The local working copy may contain ignored journal templates, submission
   correspondence, local reference PDFs, and legacy research notes.  They are
   not part of the public reproducibility record.

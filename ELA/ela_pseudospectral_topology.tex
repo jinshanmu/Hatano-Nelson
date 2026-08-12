@@ -24,11 +24,15 @@
 \allowdisplaybreaks
 \graphicspath{{./}}
 \DeclareGraphicsExtensions{.pdf,.png,.jpg}
-\renewcommand{\theequation}{\thesection.\arabic{equation}}
+\numberwithin{equation}{section}
 \renewtheorem{theorem}{Theorem}[section]
 
 \crefname{appendix}{appendix}{appendices}
 \Crefname{appendix}{Appendix}{Appendices}
+\crefname{lemma}{lemma}{lemmas}
+\Crefname{lemma}{Lemma}{Lemmas}
+\crefname{proposition}{proposition}{propositions}
+\Crefname{proposition}{Proposition}{Propositions}
 
 \DeclareMathOperator{\diag}{diag}
 \DeclareMathOperator{\tridiag}{tridiag}
@@ -40,12 +44,15 @@
   \par\medskip\noindent\textit{#1}\par\nobreak\smallskip}
 
 \newcommand{\Names}{Shanmu Jin}
-\newcommand{\Title}{Pseudospectral topology of complex tridiagonal Toeplitz
-matrices: thresholds and finite-size monotonicity}
+\newcommand{\Title}{Connectedness thresholds for complex tridiagonal Toeplitz
+pseudospectra: monotonicity with matrix order}
 
 \hypersetup{
   pdftitle={\Title},
-  pdfauthor={Shanmu Jin}
+  pdfauthor={Shanmu Jin},
+  pdfsubject={Connectedness thresholds for complex tridiagonal Toeplitz pseudospectra},
+  pdfkeywords={pseudospectrum, tridiagonal Toeplitz matrix, nonnormal matrix,
+    least singular value, pseudospectral connectedness, matrix-order monotonicity}
 }
 
 \begin{document}
@@ -54,35 +61,38 @@ matrices: thresholds and finite-size monotonicity}
 \author{Shanmu Jin\thanks{Department of Neurosurgery, Peking Union Medical
 College Hospital, No.~1 Shuaifuyuan, Dongcheng District, Beijing 100730,
 China (jinshanmu1129@pku.edu.cn). ORCID: 0009-0009-5346-753X.}}
-\markboth{\Names}{Pseudospectral topology of complex tridiagonal Toeplitz
-matrices}
+\markboth{\Names}{Connectedness thresholds for complex tridiagonal Toeplitz
+pseudospectra}
 \maketitle
 
 \begin{abstract}
-For \(T_n(\alpha,d,\beta)=\tridiag(\alpha,d,\beta)\), with complex
-entries and \(n\geq2\), this paper classifies the connectedness of the
-strict Euclidean pseudospectrum and its dependence on the matrix order.
-Unitary diagonal conjugation, reversal, translation, rotation, and scaling
-reduce every nonscalar family to \(A_n(a)=\tridiag(a,0,1)\), where
-\(a=\min\{|\alpha|,|\beta|\}/\max\{|\alpha|,|\beta|\}\).  An abstract
-vertical-monotonicity principle first shows that a matrix with collinear
-spectrum whose least-singular-value sublevel sets contract toward the
-spectral line has contractible pseudospectral components, with connectedness
-governed by one least-singular-value barrier.  For \(0<a<1\), that
-barrier is \(\max\{|\alpha|,|\beta|\}\gamma_n(a)\), where
-\(\gamma_{n+1}(a)<\gamma_n(a)\) for every \(n\geq2\) and
-\(\gamma_n(a)\asymp_a(n+1)a^{n/2}\).  At the normal boundary \(a=1\),
-the threshold is an explicit half-gap and decreases strictly at the
-algebraic scale \(\pi\max\{|\alpha|,|\beta|\}/(n+1)\).  At the reducible
-boundary \(a=0\), the pseudospectrum is a disk and is connected at every
-order.  Thus every component is contractible, connectedness persists with
-dimension, and the normal, nonnormal, and reducible regimes have distinct
-transition scales.
+The connectedness threshold of the open Euclidean-norm pseudospectrum of the
+complex tridiagonal Toeplitz matrix
+\(T_n(\alpha,d,\beta)=\tridiag(\alpha,d,\beta)\), \(n\geq2\), is determined
+for all \(\alpha,d,\beta\in\C\).  Set
+\(c=\max\{|\alpha|,|\beta|\}\).  For \(c>0\), unitary similarity and affine
+transformations reduce the problem to
+\(A_n(a)=\tridiag(a,0,1)\), where
+\(a=\min\{|\alpha|,|\beta|\}/c\).  In the irreducible nonnormal regime
+\(0<a<1\), let \(\gamma_n(a)\) denote the threshold for \(A_n(a)\).  Every
+pseudospectral component is contractible, and the pseudospectrum of
+\(T_n(\alpha,d,\beta)\) is connected exactly when
+\(\varepsilon>c\gamma_n(a)\).  The thresholds satisfy
+\(\gamma_{n+1}(a)<\gamma_n(a)\) for every \(n\geq2\) and, for fixed \(a\),
+are bounded above and below by positive \(a\)-dependent multiples of
+\((n+1)a^{n/2}\).  Connectedness therefore persists with matrix order, and
+the first connected order has a two-term logarithmic asymptotic as
+\(\varepsilon\downarrow0\).  At the normal boundary \(a=1\), the threshold
+is the largest adjacent half-gap and has scale \(\pi c/(n+1)\).  At the
+one-sided boundary \(a=0\), and also for \(c=0\), the pseudospectrum is a
+disk.  An underlying topological result shows more generally that contraction
+toward a spectral line makes every pseudospectral component contractible and
+reduces connectedness to one least-singular-value barrier.
 \end{abstract}
 
 \begin{keywords}
 pseudospectrum, tridiagonal Toeplitz matrix, nonnormal matrix, least singular
-value, connectedness threshold, finite-size monotonicity
+value, pseudospectral connectedness, matrix-order monotonicity
 \end{keywords}
 
 \begin{AMS}
@@ -91,24 +101,28 @@ value, connectedness threshold, finite-size monotonicity
 
 \section{Introduction}\label{sec:introduction}
 
-For \(n\geq1\), a matrix \(A\in\C^{n\times n}\), and \(\varepsilon>0\), the strict Euclidean
-\(\varepsilon\)-pseudospectrum is
+Let \(n\geq1\), \(A\in\C^{n\times n}\), and \(\varepsilon>0\).  The open
+Euclidean-norm \(\varepsilon\)-pseudospectrum is
 \begin{equation}\label{eq:intro-pseudospectrum}
  \sigma_\varepsilon(A)
  =\sigma(A)\cup
- \{z\in\C:\lVert(zI_n-A)^{-1}\rVert_2>\varepsilon^{-1}\}
+ \{z\in\C\setminus\sigma(A):
+   \lVert(zI_n-A)^{-1}\rVert_2>\varepsilon^{-1}\}
  =\{z\in\C:s_{\min}(zI_n-A)<\varepsilon\}.
 \end{equation}
-Equivalently, it is the union of the spectra of \(A+\Delta A\) over all
-complex perturbations satisfying \(\lVert\Delta A\rVert_2<\varepsilon\)
+Here and throughout, \(I_n\) is the \(n\)-by-\(n\) identity,
+\(s_{\min}\) denotes the least singular value, and \(\lVert\cdot\rVert_2\)
+is the Euclidean norm on vectors or its induced operator norm on matrices.
+Equivalently, \eqref{eq:intro-pseudospectrum} is the union of the spectra of
+\(A+\Delta A\) over all complex perturbations satisfying
+\(\lVert\Delta A\rVert_2<\varepsilon\)
 \cite{TrefethenEmbree2005}.  Pseudospectral components therefore encode
-robust spectral clusters under an unstructured norm bound.  Their merger is
-also tied to distance-to-defectivity questions.  For matrices with distinct
-eigenvalues, first coalescence is characterized by a generalized saddle point
-of the smallest-singular-value function, and its level determines the
-spectral-norm distance to defectivity \cite{AlamEtAl2011}.  These observations
-motivate a finite-dimensional topological problem that is not determined by
-the spectrum alone.
+spectral clusters stable under unstructured perturbations.  Their merger is
+also related to distance to defectivity: for matrices with distinct
+eigenvalues, the first coalescence occurs at a generalized saddle point of
+the least-singular-value function, whose level determines the Euclidean-norm
+distance to defectivity \cite{AlamEtAl2011}.  This leads to a
+finite-dimensional topological problem not determined by the spectrum alone.
 
 The object of this paper is the full complex tridiagonal Toeplitz family
 \begin{equation}\label{eq:A-matrix}
@@ -123,7 +137,7 @@ The object of this paper is the full complex tridiagonal Toeplitz family
 \end{equation}
 where the arguments of \(\tridiag\) are the subdiagonal, diagonal, and
 superdiagonal.  Although the family has three complex parameters, its
-Euclidean pseudospectral topology has only two effective real parameters.
+Euclidean-norm pseudospectral geometry has only two effective real parameters.
 When
 \[
  c=\max\{|\alpha|,|\beta|\}>0,
@@ -135,74 +149,76 @@ the canonical matrix
 \begin{equation}\label{eq:canonical-matrix}
  A_n(a)=\tridiag(a,0,1).
 \end{equation}
-Thus \(a=0\) is the reducible shift boundary, \(0<a<1\) is the irreducible
-nonnormal regime, and \(a=1\) is the normal boundary.  Treating all three
-cases gives a complete classification rather than a result for one selected
-orientation or choice of phases.
+The parameter in \eqref{eq:canonical-matrix} separates three regimes:
+\(a=0\) is the one-sided nilpotent-shift boundary, \(0<a<1\) is the
+irreducible nonnormal regime, and \(a=1\) is the normal boundary.  The scalar
+case \(c=0\) is treated separately.
 
-The finite-size difficulty is the comparison of global barriers defined on
-order-dependent spectral intervals.  The diagonal similarity identifies the
-spectrum, while its condition number \(a^{-(n-1)/2}\) leaves Euclidean
-least-singular-value geometry uncontrolled.  Ordinary interlacing orders
-pointwise signed branches, whereas the barrier is a maximum over an
-order-dependent interval and its central gap changes parity.  Toeplitz
-asymptotics identify the eventual scale rather than strict inequalities at
-adjacent finite orders.  The argument below combines these tools with a
-strict comparison of the maximizing barrier at every consecutive order.
+The finite-order difficulty is to compare global barriers on spectral
+intervals that change with the matrix order.  Diagonal similarity identifies
+the spectrum, but its condition number in the Euclidean operator norm
+\(a^{-(n-1)/2}\) gives no control of the corresponding least-singular-value
+geometry.  Interlacing is pointwise, whereas
+the barrier maximizes over moving gaps whose central geometry changes with
+parity.  Toeplitz asymptotics determine an eventual scale but do not imply a
+strict inequality at every pair of adjacent orders.
 
-The first contribution is independent of Toeplitz structure.  A general
-vertical-monotonicity theorem shows that, for any finite matrix with real
-spectrum, contraction of the least-singular-value level sets toward the
-real axis makes every pseudospectral component contractible and reduces
-connectedness to the largest backward-error barrier on the convex hull of
-the spectrum.  Unitary--affine reduction transfers this statement to a
-matrix whose spectrum lies on any affine line.
+The relevant literature spans Toeplitz spectral theory and pseudospectral
+optimization.  Spectral limit sets of banded Toeplitz matrices go back to
+Schmidt and
+Spitzer \cite{SchmidtSpitzer1960}; finite Toeplitz spectra, inverse norms, and
+pseudospectra are studied in
+\cite{ReichelTrefethen1992,BottcherGrudsky2005}, and tridiagonal Toeplitz
+structure is treated in \cite{NoschesePasquiniReichel2013}.  Pseudospectral
+optimization, component coalescence, and distance to defectivity are studied
+in \cite{BurkeLewisOverton2003,AlamEtAl2011}.  Recent work on tridiagonal
+\(k\)-Toeplitz matrices treats broader periodic coefficient patterns
+\cite{AmmariEtAl2025,AmmariCorrigendum2026}.  Numerical studies of
+exponentially sensitive lattices have also visualized order-driven merger of
+pseudospectral clouds in Hatano--Nelson examples
+\cite{KiorpelidisMakris2025}, while recent analysis discusses the associated
+pseudospectral instability, its exponential condition-number scale, and the
+finite-chain residual cutoff \cite{Sirker2026}.
+The contribution developed here is the all-order finite-dimensional
+inequality that the maximizing least-singular-value barrier decreases
+strictly between consecutive matrix orders.
 
-For the nonnormal canonical regime \(0<a<1\), write
+For the canonical nonnormal regime \(0<a<1\), write
 \[
  \gamma_n(a)=\max_{|x|\leq2\sqrt a\cos(\pi/(n+1))}
  s_{\min}(xI_n-A_n(a)).
 \]
-The central finite-size result is
+The main result is
 \(\gamma_{n+1}(a)<\gamma_n(a)\) for every \(n\geq2\).  Explicit bounds give
 \begin{equation}\label{eq:intro-barrier-order}
- \gamma_n(a)\asymp_a(n+1)a^{n/2},
+ \gamma_n(a)\asymp_a(n+1)a^{n/2}.
 \end{equation}
-including the sharp polynomial prefactor.  At \(a=1\), the exact barrier is
-half the largest adjacent eigenvalue gap and decreases strictly at order
-\((n+1)^{-1}\).  At \(a=0\), the pseudospectrum is a disk and is connected
-for every \(n\).  The classification therefore identifies a singular
-change from an exponential transition scale in the nonnormal interior to an
-algebraic scale at the normal boundary, followed by immediate connectedness
-at the reducible boundary.
+The factor \(n+1\) in \eqref{eq:intro-barrier-order} is optimal.  Consequently,
+connectedness persists at larger orders, and the first connected order has a
+two-term logarithmic asymptotic.  The unitary--affine reduction transfers
+these conclusions to the full complex family.  At \(a=1\), the
+barrier is half the largest adjacent eigenvalue gap and decreases strictly at
+order \((n+1)^{-1}\); at \(a=0\), the pseudospectrum is a disk and is
+connected for every \(n\).  Thus the nonnormal interior, normal boundary, and
+one-sided boundary have exponential--polynomial, algebraic, and zero
+threshold scales, respectively.
 
-The relevant literature has several complementary strands.  A foundational
-spectral limit-set theorem for banded Toeplitz matrices is due to Schmidt and
-Spitzer \cite{SchmidtSpitzer1960}.  Finite Toeplitz spectra, inverse norms,
-and pseudospectra are studied in
-\cite{ReichelTrefethen1992,BottcherGrudsky2005}, and tridiagonal Toeplitz
-structure is treated in \cite{NoschesePasquiniReichel2013}.  For general
-matrices, optimization methods for pseudospectra appear in
-\cite{BurkeLewisOverton2003}, while component coalescence and nearest
-defective matrices are treated in \cite{AlamEtAl2011}.  Recent work on
-tridiagonal \(k\)-Toeplitz matrices addresses broader periodic coefficient
-patterns \cite{AmmariEtAl2025,AmmariCorrigendum2026}.  Our contribution is a
-complete unitary--affine classification of complex tridiagonal Toeplitz
-pseudospectral connectedness, together with an exact finite-size order law
-in every irreducible regime and sharp transition asymptotics.  The new
-finite-dimensional ingredient is the strict all-\(n\) barrier comparison,
-which complements the cited spectral and asymptotic results.
+A complementary result applies beyond Toeplitz matrices.  For a finite matrix
+with real spectrum, contraction of least-singular-value sublevel sets toward
+the real axis makes every pseudospectral component contractible and reduces
+connectedness to the largest backward-error barrier on the spectral interval.
+Rotation and scaling extend the result to spectra on any affine line.
 
-The proof separates general topology and unitary--affine geometry from the
-canonical nonnormal calculation.  In the latter, a pentadiagonal determinant
-certificate establishes vertical monotonicity, and persymmetry turns
-singular values into signed eigenvalues of a symmetric pencil.  Folded
-continuants, Chebyshev divided differences, chord comparisons, and a
-separate central-gap certification prove strict finite-size comparison.
-Rectangular factorizations then give the sharp bounds and their logarithmic
-inversion.  The longer algebraic certificates are isolated in
-\crefrange{app:vertical-certificate}{app:central-certification}.  A short
-physical correspondence appears briefly in \cref{sec:discussion}.
+\Cref{sec:topological-reduction} proves this topological principle, and
+\cref{sec:main-results} performs the unitary--affine reduction and states the
+classification.  The Toeplitz-specific proof occupies
+\crefrange{sec:vertical}{sec:topology-bounds}: vertical monotonicity gives the
+real-axis criterion, signed-pencil and chord arguments prove strict
+matrix-order comparison, and rectangular factorizations give the two-sided
+bounds.  The algebraic certificates are collected in
+\crefrange{app:vertical-certificate}{app:central-certification}; numerical
+illustrations and broader implications appear in
+\cref{sec:numerics,sec:discussion}.
 
 \section{A vertical-monotonicity principle}
 \label{sec:topological-reduction}
@@ -217,10 +233,9 @@ We say that \(B\) has the \emph{vertical contraction property} if
  h_B(x,ty)\leq h_B(x,y)
  \qquad(x,y\in\R,\ 0\leq t\leq1).
 \end{equation}
-This hypothesis is stated directly in the form needed by strict
-pseudospectral sublevel sets.  For a real matrix it follows, for example,
-when \(y\mapsto h_B(x,y)\) is nondecreasing on \([0,\infty)\), because
-singular values are invariant under complex conjugation.
+For a real matrix, \eqref{eq:abstract-vertical-property} holds whenever
+\(y\mapsto h_B(x,y)\) is nondecreasing on \([0,\infty)\), since singular
+values are invariant under complex conjugation.
 
 Write
 \[
@@ -232,21 +247,22 @@ and define the real-axis barrier
  \Gamma(B)=\max_{\lambda_-(B)\leq x\leq\lambda_+(B)}
  s_{\min}(xI_n-B).
 \end{equation}
-The maximum exists by continuity.  It is a global pointwise backward-error
-barrier: for each \(x\),
+The maximum exists by continuity and equals the largest pointwise backward
+error: for each \(x\),
 \begin{equation}\label{eq:backward-error-abstract}
  s_{\min}(xI_n-B)=
  \min\{\lVert\Delta B\rVert_2:x\in\sigma(B+\Delta B)\}.
 \end{equation}
-Indeed, if \((xI_n-B-\Delta B)v=0\) for a unit vector \(v\), then
-\(s_{\min}(xI_n-B)\leq\lVert\Delta B\rVert_2\).  Conversely, for unit
-singular vectors satisfying \((xI_n-B)v=s_{\min}(xI_n-B)u\), the rank-one
-choice \(\Delta B=s_{\min}(xI_n-B)uv^*\) attains equality.
+Identity \eqref{eq:backward-error-abstract} follows because, if
+\((xI_n-B-\Delta B)v=0\) for a unit vector \(v\), then
+\(s_{\min}(xI_n-B)\leq\lVert\Delta B\rVert_2\).  Conversely, unit singular
+vectors satisfying \((xI_n-B)v=s_{\min}(xI_n-B)u\) yield the minimizing
+rank-one perturbation \(\Delta B=s_{\min}(xI_n-B)uv^*\).
 
 We use the following standard component fact in a form that applies to every
 finite matrix \cite{BurkeLewisOverton2003,TrefethenEmbree2005}.
 
-\begin{lemma}[Eigenvalue in every component]\label{lem:component}
+\begin{lemma}[Eigenvalue in every component]\label[lemma]{lem:component}
 Let \(n\geq1\), \(M\in\C^{n\times n}\), and \(\varepsilon>0\).  Every connected
 component of \(\sigma_\varepsilon(M)\) contains an eigenvalue of \(M\).
 \end{lemma}
@@ -280,7 +296,7 @@ Let \(n\geq1\).  If \(B\in\C^{n\times n}\) has real spectrum and satisfies
 \end{equation}
 If \(\Gamma(B)>0\), then at the positive level
 \(\varepsilon=\Gamma(B)\), a maximizing real point is excluded from the
-strict pseudospectrum.
+open pseudospectrum.
 \end{theorem}
 
 \begin{proof}
@@ -308,24 +324,23 @@ proves the first equivalence in \eqref{eq:abstract-connectedness}; the second
 is exactly the strict sublevel definition and \eqref{eq:abstract-barrier}.
 \end{proof}
 
-The theorem is invariant under a Euclidean similitude of the spectral
-plane: translation, rotation, and positive scaling merely translate,
-rotate, and scale the pseudospectrum and its barrier.  This observation will
-allow the real-axis statement to govern every matrix in
-\eqref{eq:A-matrix}, whose spectrum lies on an affine line.
+Translation, rotation, and positive scaling translate, rotate, and scale the
+pseudospectrum and its barrier.  The theorem therefore extends from the real
+axis to any affine spectral line and applies to every matrix in
+\eqref{eq:A-matrix}.
 
 \section{Complex tridiagonal Toeplitz matrices and main results}
 \label{sec:main-results}
 
-We begin with the transformations that remove the inessential phases,
-orientation, diagonal, and overall scale from \eqref{eq:A-matrix}.  Let
+We first normalize the phases, orientation, diagonal, and overall scale in
+\eqref{eq:A-matrix}.  Let
 \(V_n=\tridiag(0,0,1)\), let \(J_n\) be the reversal permutation matrix,
 and, for \(|q|=1\), put
 \[
  \mathsf D_n(q)=\diag(1,q,\ldots,q^{n-1}).
 \]
 
-\begin{proposition}[Unitary--affine reduction]\label{prop:complex-reduction}
+\begin{proposition}[Unitary--affine reduction]\label[proposition]{prop:complex-reduction}
 Let \(n\geq2\), \(c=\max\{|\alpha|,|\beta|\}>0\), and
 \(a=\min\{|\alpha|,|\beta|\}/c\).  There are a unitary matrix \(S_n\) and
 a unimodular number \(\omega\) such that
@@ -352,17 +367,17 @@ If \(|\alpha|>|\beta|>0\), first conjugate by \(J_n\), which interchanges
 the two off-diagonals, and apply the preceding case.  If \(\alpha=0\) and
 \(\beta\ne0\), take \(S_n=I_n\) and \(\omega=\beta/|\beta|\); if
 \(\beta=0\) and \(\alpha\ne0\), take \(S_n=J_n\) and
-\(\omega=\alpha/|\alpha|\).  Equation
-\eqref{eq:complex-pseudospectrum-reduction} follows
-because unitary conjugation preserves singular values, while
+\(\omega=\alpha/|\alpha|\).  Applying the singular-value transformation in
+\eqref{eq:complex-unitary-reduction} gives
+\eqref{eq:complex-pseudospectrum-reduction}, because unitary conjugation
+preserves singular values, while
 \[
  \sigma_\varepsilon(dI_n+c\omega A)
  =d+c\omega\,\sigma_{\varepsilon/c}(A).
 \]
 \end{proof}
 
-Thus the canonical parameter \(a\) covers both boundary cases.  Their
-thresholds can be computed without the nonnormal argument.  Define
+The boundary thresholds follow directly.  Define
 \begin{equation}\label{eq:normal-threshold}
  \eta_n=
  \begin{cases}
@@ -372,7 +387,7 @@ thresholds can be computed without the nonnormal argument.  Define
 \end{equation}
 
 \begin{proposition}[Reducible and normal boundaries]
-\label{prop:boundary-cases}
+\label[proposition]{prop:boundary-cases}
 Let \(n\geq2\) and \(\varepsilon>0\).
 \begin{enumerate}
 \item If \(\alpha=\beta=0\), then
@@ -400,9 +415,10 @@ In particular,
 \end{proposition}
 
 \begin{proof}
-The scalar case is immediate.  If exactly one off-diagonal is nonzero,
+The scalar case follows directly.  If exactly one off-diagonal is nonzero,
 \cref{prop:complex-reduction} reduces the matrix to the nilpotent Jordan
-shift \(V_n\), up to a plane similitude.  By \cref{lem:component}, every
+shift \(V_n\), followed by an affine transformation of the spectral plane.
+By \cref{lem:component}, every
 component of \(\sigma_\varepsilon(V_n)\) contains its only eigenvalue, zero;
 hence the pseudospectrum is connected.  Moreover,
 \(\mathsf D_n(q)^*V_n\mathsf D_n(q)=qV_n\), while unitary invariance and
@@ -411,12 +427,13 @@ invariant under every rotation.  Its
 set of attained moduli is therefore a connected interval containing zero.
 Boundedness and openness make this interval \([0,R_{n,\varepsilon})\) for
 some \(R_{n,\varepsilon}>0\), and thus
-\(\sigma_\varepsilon(V_n)=\{z:|z|<R_{n,\varepsilon}\}\).  The plane
-similitude gives the asserted disk centered at \(d\).
+\(\sigma_\varepsilon(V_n)=\{z:|z|<R_{n,\varepsilon}\}\).  The affine
+transformation in \eqref{eq:complex-pseudospectrum-reduction} gives the
+asserted disk centered at \(d\).
 
 In part~2, \cref{prop:complex-reduction} reduces the problem to the real
 symmetric matrix \(A_n(1)\), whose eigenvalues are
-\(2\cos(k\pi/(n+1))\), \(1\leq k\leq n\).  Its strict pseudospectrum is the
+\(2\cos(k\pi/(n+1))\), \(1\leq k\leq n\).  Its open pseudospectrum is the
 union of open disks of radius \(\varepsilon/c\) about these collinear
 points.  It is connected exactly when twice that radius exceeds every
 adjacent gap.  The identity
@@ -435,9 +452,9 @@ For this normal matrix,
  s_{\min}((x+\ii y)I_n-A_n(1))
  =\min_k\sqrt{(x-\lambda_k)^2+y^2},
 \]
-so the vertical contraction property is immediate.  Component
+so the vertical contraction property follows.  Component
 contractibility follows from \cref{thm:vertical-topology} and is preserved by
-the plane similitude in \eqref{eq:complex-pseudospectrum-reduction}.
+the affine transformation in \eqref{eq:complex-pseudospectrum-reduction}.
 
 The two parity transitions are strict.  From \(2m\) to
 \(2m+1\), if \(x=\pi/(4m+2)\) and \(y=\pi/(2m+2)\), then
@@ -453,7 +470,7 @@ parity formulas in \eqref{eq:normal-threshold}, this gives
 \eqref{eq:normal-error-bound}, and hence \eqref{eq:normal-asymptotic}.
 \end{proof}
 
-We now state the nonnormal theorem in its canonical variables.  Fix
+For the nonnormal regime, fix
 \(0<a<1\), put \(r=\sqrt a\), and write
 \(A_n=A_n(a)=V_n+aV_n^T\).  Define
 \[
@@ -477,8 +494,8 @@ Define
  \end{aligned}
 \]
 The theorem below shows that the minimum defining \(N_c\) exists.  When
-\(a\) is fixed, its argument will be suppressed.  The explicit lower
-and upper barriers are
+\(a\) is fixed, its argument is suppressed.  Define the explicit lower and
+upper barriers
 \begin{align}
  \mathcal U_n(a)&=r^n\csc\frac{\pi}{n+1},\label{eq:main-U-def}\\
  \mathcal L_n(a)&=
@@ -492,8 +509,9 @@ For every \(0<a<1\) and \(\varepsilon>0\), the following assertions hold.
 \begin{enumerate}
 \item For every \(n\geq2\), every component of
 \(\sigma_\varepsilon(A_n(a))\) is contractible.
-\item For \(n\geq2\), the barrier sequence is strictly decreasing,
-\(\gamma_{n+1}(a)<\gamma_n(a)\), tends to zero, and
+\item The barrier sequence satisfies
+\(\gamma_{n+1}(a)<\gamma_n(a)\) for every \(n\geq2\), and
+\(\gamma_n(a)\to0\) as \(n\to\infty\).  Moreover, for every \(n\geq2\),
 \[
  \sigma_\varepsilon(A_n(a))\text{ is connected}
  \quad\Longleftrightarrow\quad \varepsilon>\gamma_n(a).
@@ -535,14 +553,13 @@ where the middle case uses
 \(c=\max\{|\alpha|,|\beta|\}\) and
 \(a=\min\{|\alpha|,|\beta|\}/c\).  Also set
 \[
- N_T(\alpha,\beta;\varepsilon)=
+ N_T(\alpha,d,\beta;\varepsilon)=
  \min\{n\geq2:\sigma_\varepsilon(T_n(\alpha,d,\beta))
  \text{ is connected}\}.
 \]
-The classification below shows that this minimum exists.
-By \cref{prop:complex-reduction}, this value is independent of \(d\) and of
-the phases of the off-diagonal entries.  Whenever \(\alpha\beta\ne0\), the
-notation below uses
+The classification below shows that this minimum exists.  By
+\cref{prop:complex-reduction}, it is independent of \(d\) and of the phases
+of the off-diagonal entries.  Whenever \(\alpha\beta\ne0\), write
 \[
  c=\max\{|\alpha|,|\beta|\},\qquad
  a=\frac{\min\{|\alpha|,|\beta|\}}{c}\in(0,1].
@@ -550,42 +567,45 @@ notation below uses
 
 \begin{theorem}[Complex tridiagonal Toeplitz classification]
 \label{thm:main}
-Let \(\alpha,d,\beta\in\C\), \(\varepsilon>0\), and \(n\geq2\).
+Let \(\alpha,d,\beta\in\C\) and \(\varepsilon>0\).
 \begin{enumerate}
-\item Every component of \(\sigma_\varepsilon(T_n(\alpha,d,\beta))\) is
+\item For every \(n\geq2\), every component of
+\(\sigma_\varepsilon(T_n(\alpha,d,\beta))\) is
 contractible, and
 \begin{equation}\label{eq:full-connectedness}
  \sigma_\varepsilon(T_n(\alpha,d,\beta))\text{ is connected}
  \quad\Longleftrightarrow\quad \varepsilon>\Theta_n(\alpha,\beta).
 \end{equation}
 \item If \(\alpha\beta\ne0\), then
-\(\Theta_{n+1}(\alpha,\beta)<\Theta_n(\alpha,\beta)\) and
-\(\Theta_n(\alpha,\beta)\to0\).  Hence connectedness persists after its
-first occurrence.  If \(\alpha\beta=0\), then the threshold is identically
-zero and the pseudospectrum is already connected at every order, so
-persistence is immediate.
-\item In the irreducible nonnormal case \(0<a<1\),
+\(\Theta_{n+1}(\alpha,\beta)<\Theta_n(\alpha,\beta)\) for every \(n\geq2\),
+and \(\Theta_n(\alpha,\beta)\to0\) as \(n\to\infty\).  Hence connectedness
+persists after its first occurrence.  If \(\alpha\beta=0\), the threshold is
+identically zero and the pseudospectrum is connected at every order.
+\item For fixed \(\alpha,d,\beta\), in the irreducible nonnormal case
+\(0<a<1\),
 \begin{equation}\label{eq:general-nonnormal-critical}
- N_T(\alpha,\beta;\varepsilon)=N_c(a,\varepsilon/c)
+ N_T(\alpha,d,\beta;\varepsilon)=N_c(a,\varepsilon/c)
  =\frac{2}{\log(1/a)}
  \left(\log\frac c\varepsilon+
  \log\!\log\frac c\varepsilon\right)+O_a(1)
 \end{equation}
 as \(\varepsilon\downarrow0\).  In the normal case \(a=1\),
 \begin{equation}\label{eq:general-normal-critical}
- N_T(\alpha,\beta;\varepsilon)
+ N_T(\alpha,d,\beta;\varepsilon)
  =\frac{\pi c}{\varepsilon}+O(1).
 \end{equation}
-If \(\alpha\beta=0\), then \(N_T(\alpha,\beta;\varepsilon)=2\).
+If \(\alpha\beta=0\), then \(N_T(\alpha,d,\beta;\varepsilon)=2\).
 \end{enumerate}
 \end{theorem}
 
 \begin{proof}
-For \(c>0\), apply \cref{prop:complex-reduction}.  The nonnormal assertions
-follow from \cref{thm:canonical-main}, with \(\varepsilon\) replaced by
+For \(c>0\), \eqref{eq:full-connectedness} follows from
+\cref{prop:complex-reduction} and the definition
+\eqref{eq:full-threshold}.  The nonnormal assertions follow from
+\cref{thm:canonical-main}, with \(\varepsilon\) replaced by
 \(\varepsilon/c\); the boundary assertions follow from
 \cref{prop:boundary-cases}.  In the normal case, put
-\(m=N_T(\alpha,\beta;\varepsilon)\).  For sufficiently small
+\(m=N_T(\alpha,d,\beta;\varepsilon)\).  For sufficiently small
 \(\varepsilon\), one has \(m>2\) and
 \[
  c\eta_{m-1}\geq\varepsilon>c\eta_m.
@@ -594,18 +614,21 @@ The bound \eqref{eq:normal-error-bound} first gives
 \(m\sim\pi c/\varepsilon\), and then
 \(\varepsilon=\pi c/m+O(m^{-2})\).  Hence
 \(m=\pi c/\varepsilon+O(1)\), proving
-\eqref{eq:general-normal-critical}.  If \(c=0\), the scalar case applies
-directly.
+\eqref{eq:general-normal-critical}.  The nonnormal asymptotic in
+\eqref{eq:general-nonnormal-critical} is the corresponding scaled form of
+\eqref{eq:N-asymptotic-main}.  If \(c=0\), the scalar case applies directly.
 \end{proof}
 
 
-\section{Vertical monotonicity and topological reduction}
+\section{Verification of vertical monotonicity for
+\texorpdfstring{\(A_n(a)\)}{A\string_n(a)}}
 \label{sec:vertical}
 
-The topological reduction rests on a monotonicity property that makes every
-pseudospectral component connection visible on the real axis.
+For the canonical family, the topological reduction rests on a monotonicity
+property that makes every merger of pseudospectral components visible on the
+real axis.
 
-\begin{lemma}[Vertical monotonicity]\label{lem:vertical}
+\begin{lemma}[Vertical monotonicity]\label[lemma]{lem:vertical}
 Let \(n\geq2\) and \(0<a<1\).  For every real \(x\),
 \[
  y\longmapsto s_{\min}((x+\ii y)I_n-A_n),\qquad y\geq0,
@@ -656,21 +679,19 @@ gives contractibility of every component and
  \quad\Longleftrightarrow\quad
  \gamma_n(a)<\varepsilon.
 \end{equation}
-The strict inequality is essential: at \(\varepsilon=\gamma_n(a)\), a
-maximizing real point remains excluded.
+At \(\varepsilon=\gamma_n(a)\), a maximizing real point is excluded from the
+open pseudospectrum.
 
 
-\section{Strict finite-size comparison of real-gap barriers}
+\section{Strict matrix-order comparison of real-gap barriers}
 \label{sec:mesh}
 
-The final barrier can occur in any inter-eigenvalue gap, and the identity of
-the central gap changes with parity.  A global finite-size comparison must
-therefore control every gap.  Persymmetry turns singular values into signed
-eigenvalue branches, folded Chebyshev coordinates parametrize those
-branches, scale inequalities compare noncentral gaps, and a separate
-interlacing argument handles the parity-changing central gaps.  We first
-define the local real-gap barriers.
-Write the eigenvalues in decreasing order as
+The global barrier may occur in any inter-eigenvalue gap, while the central
+gap changes with parity.  We therefore compare every gap.  Persymmetry
+selects the signed eigenvalue branch whose magnitude is the least singular
+value; folded Chebyshev coordinates and chord geometry compare the
+noncentral gaps, and a separate argument treats the parity-changing central
+gaps.  Write the eigenvalues in decreasing order as
 \[
  \lambda_{n,k}=2r\cos\frac{k\pi}{n+1},\qquad 1\leq k\leq n,
 \]
@@ -679,45 +700,43 @@ and call
  G_{n,k}=[\lambda_{n,k+1},\lambda_{n,k}],\qquad
  \gamma_{n,k}=\max_{x\in G_{n,k}}g_n(x),\qquad 1\leq k<n,
 \]
-the closed spectral gaps and their heights.  Continuity guarantees that the
-maximum on each compact gap is attained, while the spectral endpoints have
-height zero.  Every
-interior gap point belongs to the resolvent set, so \(xI_n-A_n\) is invertible
-there and \(g_n(x)>0\).  Consequently every gap height is positive and every
-maximizer lies in the open gap.  Hence
+the closed spectral gaps and their heights.  Continuity guarantees that each
+maximum is attained.  The spectral endpoints have height zero, whereas
+\(g_n(x)>0\) in every open gap.  Thus every gap height is positive, every
+maximizer lies in the open gap, and
 \begin{equation}\label{eq:gamma-def}
  \gamma_n=\max_{1\leq k<n}\gamma_{n,k}.
 \end{equation}
-
-\begin{lemma}[Strict barrier comparison]\label{lem:mesh}
+\begin{lemma}[Strict barrier comparison]\label[lemma]{lem:mesh}
 For every \(n\geq2\),
 \[
  \gamma_{n+1}<\gamma_n.
 \]
 \end{lemma}
 
-Let
-\[
- J_n=[\boldsymbol 1_{\{i+j=n+1\}}]_{i,j=1}^n
-\]
-be the reversal matrix.  Persymmetry supplies the signed spectral
-representation needed for the finite-size comparison:
+\subsection{Signed-pencil representation and branch selection}
+\label{subsec:signed-pencil}
+
+Recall from \cref{sec:main-results} that \(J_n\) is the reversal matrix.
+Persymmetry supplies the signed spectral representation needed for the
+matrix-order comparison:
 \(A_nJ_n=J_nA_n^T\), so
 \(B_n(x)=(xI_n-A_n)J_n\) is real symmetric.  Moreover,
 \[
  (xI_n-A_n-sJ_n)J_n=B_n(x)-sI_n.
 \]
-Since \(J_n\) is orthogonal, the absolute eigenvalues of \(B_n(x)\)
+Since \(J_n\) is orthogonal, the absolute values of the eigenvalues of \(B_n(x)\)
 are exactly the singular values of \(xI_n-A_n\), including multiplicity.
 Consequently,
 \begin{equation}\label{eq:signed-pencil}
  s_{\min}(xI_n-A_n)
  =\min\{|s|:\det(xI_n-A_n-sJ_n)=0\}.
 \end{equation}
-Let \(q_n(x,s)=\det(xI_n-A_n-sJ_n)\).
-\begin{lemma}[The middle signed branch]\label{lem:middle-branch}
+Set \(q_n(x,s)=\det(xI_n-A_n-sJ_n)\); the minimum in
+\eqref{eq:signed-pencil} selects its signed branch nearest zero.
+\begin{lemma}[The middle signed branch]\label[lemma]{lem:middle-branch}
 Write the eigenvalues of \(B_n(x)\) in decreasing order as
-\(\alpha_1(x)\geq\cdots\geq\alpha_n(x)\), and abbreviate
+\(\mu_1(x)\geq\cdots\geq\mu_n(x)\), and abbreviate
 \(\lambda_k=\lambda_{n,k}\).
 If \(\lambda_{j+1}<x<\lambda_j\), then
 \[
@@ -728,8 +747,8 @@ where
 \[
  s_*(x)=
  \begin{cases}
-  \alpha_m(x),&n=2m,\\
-  \alpha_{m+1}(x),&n=2m+1
+  \mu_m(x),&n=2m,\\
+  \mu_{m+1}(x),&n=2m+1
  \end{cases}.
 \]
 \end{lemma}
@@ -780,7 +799,8 @@ the ambient space.  In these coordinates
  0&a \mathbf e_m\mathbf e_m^T\end{bmatrix},
 \end{aligned}
 \end{equation}
-where \(P_m(x)=xI_m-A_m\).  Thus \(\mathcal R_{\rm bd}\geq0\) and
+where \(P_m(x)=xI_m-A_m\).  In \eqref{eq:even-dilation},
+\(\mathcal R_{\rm bd}\geq0\) and
 \(\operatorname{rank}\mathcal R_{\rm bd}=2\).  For
 \(\Gamma=\diag(I_m,-I_m)\),
 \[
@@ -788,29 +808,30 @@ where \(P_m(x)=xI_m-A_m\).  Thus \(\mathcal R_{\rm bd}\geq0\) and
  =\widehat P_m(x)+\mathcal R_{\rm bd}
  =B_{2m}(x)+2\mathcal R_{\rm bd}.
 \]
-If \(\widetilde\alpha_1\geq\cdots\geq\widetilde\alpha_{2m}\) are the
+If \(\widetilde\mu_1\geq\cdots\geq\widetilde\mu_{2m}\) are the
 eigenvalues of
 \(\widetilde B\), then
 \begin{equation}\label{eq:alpha-reflection}
- \widetilde\alpha_k=-\alpha_{2m+1-k}.
+ \widetilde\mu_k=-\mu_{2m+1-k}.
 \end{equation}
-Positive-semidefinite rank-two interlacing gives
+Combining the reflection \eqref{eq:alpha-reflection} with
+positive-semidefinite rank-two interlacing gives
 \begin{equation}\label{eq:rank-two-interlace}
- \widetilde\alpha_k\geq\alpha_k\geq\widetilde\alpha_{k+2},
+ \widetilde\mu_k\geq\mu_k\geq\widetilde\mu_{k+2},
  \qquad1\leq k\leq2m-2.
 \end{equation}
 If \(j\) is even, the only candidates for minimum modulus
-have moduli \(\alpha_m\) and
-\(-\alpha_{m+1}=\widetilde\alpha_m\), and
-\(\alpha_m\leq\widetilde\alpha_m\).  If \(j\) is odd and \(m\geq2\), the two
-candidates have moduli \(\alpha_{m-1}\) and
-\(-\alpha_m=\widetilde\alpha_{m+1}\); taking \(k=m-1\) in
+have moduli \(\mu_m\) and
+\(-\mu_{m+1}=\widetilde\mu_m\), and
+\(\mu_m\leq\widetilde\mu_m\).  If \(j\) is odd and \(m\geq2\), the two
+candidates have moduli \(\mu_{m-1}\) and
+\(-\mu_m=\widetilde\mu_{m+1}\); taking \(k=m-1\) in
 \eqref{eq:rank-two-interlace} gives
-\(\alpha_{m-1}\geq\widetilde\alpha_{m+1}\).  For \(m=1\), both eigenvalues in
-the sole gap are negative, so the larger one \(\alpha_1\) has minimum
-modulus.  Thus \(\alpha_m\) always attains the minimum modulus, and its
+\(\mu_{m-1}\geq\widetilde\mu_{m+1}\).  For \(m=1\), both eigenvalues in
+the sole gap are negative, so the larger one \(\mu_1\) has minimum
+modulus.  Thus \(\mu_m\) always attains the minimum modulus, and its
 sign follows from \eqref{eq:middle-inertia}.  Equality in an interlacing
-comparison is harmless: it only gives a multiple least singular value.
+comparison corresponds to a multiple least singular value.
 
 Now let \(n=2m+1\).  Group the first and last \(m\) coordinates as
 above and leave the middle coordinate last.  Then
@@ -820,7 +841,8 @@ above and leave the middle coordinate last.  Then
  \qquad
  \boldsymbol w=\begin{bmatrix}-\mathbf e_m\\-a\mathbf e_m\end{bmatrix}.
 \end{equation}
-In an open spectral gap of \(A_{2m+1}\), \(P_m(x)\) is nonsingular.  Indeed,
+In an open spectral gap of \(A_{2m+1}\), \(P_m(x)\), and hence the principal
+block \(\widehat P_m(x)\) in \eqref{eq:odd-dilation}, is nonsingular.  Indeed,
 the explicit path spectrum gives
 \[
  \operatorname{spec}(A_m)
@@ -837,30 +859,31 @@ consequently
 \]
 Cauchy interlacing gives
 \[
- \alpha_m\geq s_m(P_m)\geq\alpha_{m+1}
- \geq-s_m(P_m)\geq\alpha_{m+2}.
+ \mu_m\geq s_m(P_m)\geq\mu_{m+1}
+ \geq-s_m(P_m)\geq\mu_{m+2}.
 \]
 If \(j\) is even, \eqref{eq:middle-inertia} and interlacing give
 \[
- 0<\alpha_{m+1}\leq s_m(P_m)\leq-\alpha_{m+2};
+ 0<\mu_{m+1}\leq s_m(P_m)\leq-\mu_{m+2};
 \]
 if \(j\) is odd, they give
 \[
- 0<-\alpha_{m+1}\leq s_m(P_m)\leq\alpha_m.
+ 0<-\mu_{m+1}\leq s_m(P_m)\leq\mu_m.
 \]
 Every other eigenvalue is farther from zero.  Hence
-\(\alpha_{m+1}\) attains the minimum modulus, with sign prescribed by
-\eqref{eq:middle-inertia}; equality again only means multiplicity.  At a
+\(\mu_{m+1}\) attains the minimum modulus, with sign prescribed by
+\eqref{eq:middle-inertia}; equality corresponds to multiplicity.  At a
 spectral endpoint the zero is simple because \(A_n\) is similar to the
 Jacobi matrix \(A_n^{\rm sym}\), whose eigenvalues are simple.  Thus the selected
 ordered branch extends continuously to zero at both ends of the closed
 gap.  This proves the assertion.
 \end{proof}
 
+\subsection{Folded continuants}
+\label{subsec:folded-continuants}
+
 We use folded coordinates for the noncentral gaps and a separate
 interlacing argument for the parity-changing central gaps.
-
-\proofstage{Folded continuants}
 Let \(U_j\) be the Chebyshev polynomial of the second kind, with
 \(U_{-1}=0\).  Put
 \[
@@ -896,10 +919,10 @@ relations in \eqref{eq:fold-characteristic}:
 \]
 We use the root presentation on these real sheets and the polynomial
 \(\Pi\) itself for the global transfer and generating identities.
-The complete five-minor transfer, characteristic-polynomial calculation,
-boundary residuals, and generating functions are given in
-\cref{app:folded-transfer}.  Their parity-unified conclusion is the part
-needed in the main argument.  For a differentiable real function \(f\), write
+The five-minor transfer, characteristic polynomial, boundary residuals, and
+generating functions are derived in \cref{app:folded-transfer}.  Here we use
+their parity-unified consequence.  For a differentiable real function \(f\),
+write
 \[
  [f]_{u,v}:=
  \begin{cases}
@@ -920,34 +943,38 @@ and
  \mathfrak g_m(t)=\left((x-s)t-
  \frac{x(1+a^2)+2as}{2a}\right)U_m(t).
 \end{equation}
-The recurrence and generating identities are polynomial and therefore
-global.  The real-pair formulas are used only after the two symmetric
-relations have been checked; at \(u=v\), the displayed derivative is the
-collision convention.  For \(\Delta_{\rm fold}<0\), the argument stays at
-the polynomial level and avoids any complex square-root branch.
+The recurrence and generating identities are polynomial and hence global.
+The real-pair formulas apply when the two symmetric relations hold, with the
+displayed derivative as the collision value at \(u=v\).  When
+\(\Delta_{\rm fold}<0\), the polynomial identities avoid choosing a complex
+square-root branch.
 
 These formulas replace the singular-value problem by a signed scalar branch
 with parity already resolved.  The next step identifies a geometric
 parametrization of that branch.
 
-\proofstage{Half-angle chord parametrization}
+\subsection{Half-angle chord parametrization}
+\label{subsec:half-angle-chords}
 Put \(h=-\tfrac12\log a>0\), so that \(a=e^{-2h}\), and set
 \[
  \mathfrak s_h=\sinh h,\qquad \mathfrak c_h=\cosh h.
 \]
-For \(K\geq2\) and \(0\leq\theta\leq\pi\), define
+For \(K\geq2\), define
 \begin{equation}\label{eq:Phi-Psi-def}
- \Phi_K(\theta)=\sqrt{\mathfrak s_h^2+\sin^2\theta}\,
- \frac{|\sin(K\theta)|}{\sin\theta},
+\begin{aligned}
+ \Phi_K(\theta)
+ &=\sqrt{\mathfrak s_h^2+\sin^2\theta}\,
+   \frac{|\sin(K\theta)|}{\sin\theta},
+   &&0\leq\theta\leq\pi,\\
+ \Psi_K(\eta)
+ &=\sqrt{\mathfrak s_h^2-\sinh^2\eta}\,
+   \frac{\sinh(K\eta)}{\sinh\eta},
+   &&0\leq\eta\leq h.
+\end{aligned}
 \end{equation}
-where the quotient is interpreted continuously at \(\theta=0,\pi\),
-and
-\[
- \Psi_K(\eta)=\sqrt{\mathfrak s_h^2-\sinh^2\eta}\,
- \frac{\sinh(K\eta)}{\sinh\eta},\qquad0\leq\eta\leq h,
-\]
-with the limiting value at \(\eta=0\).  The following half-angle reduction
-also fixes the sign convention.  Put
+The quotients in \eqref{eq:Phi-Psi-def} are interpreted continuously at
+\(\theta=0,\pi\) and \(\eta=0\).  The following half-angle reduction also
+fixes the sign convention.  Put
 \[
  y=\cos\theta,\qquad z=\cosh\eta,\qquad
  \mathfrak p_\theta=\sqrt{\mathfrak c_h^2-y^2},\qquad
@@ -966,7 +993,8 @@ expansion gives
  +2\varsigma\mathfrak p_\theta\mathfrak p_\eta.
 \end{gathered}
 \end{equation}
-The real pair \((u,v)\) satisfies the two symmetric relations in
+Substitution of \eqref{eq:half-variable-identities} shows that the real pair
+\((u,v)\) satisfies the two symmetric relations in
 \eqref{eq:fold-characteristic}.
 For \(K=2m+1\), use
 \[
@@ -1030,13 +1058,11 @@ folded variables, their sum and product determine
  x^2=L_0^2y^2z^2,\qquad
  s^2=L_0^2(\mathfrak c_h^2-y^2)(\mathfrak c_h^2-z^2).
 \]
-Thus, for distinct real variables and a fixed sign of \(x\), the
-preceding steps are reversible, and the two chord relations are
-equivalent to the corresponding signed equation.  The determinant
-identities themselves extend to a folded-variable collision by the
-continuous divided-difference convention, but we invoke the chord
-equivalence only for distinct variables; the selected middle branch is
-proved below to be collision-free.
+Thus, for distinct real variables and a fixed sign of \(x\), the two chord
+relations are equivalent to the corresponding signed equation.  The
+continuous divided-difference convention extends the determinant identities
+to a folded-variable collision; the selected middle branch is shown below to
+be collision-free.
 Here \(K-1\) is the matrix size.  If the exterior argument has crossed
 through \(1\), write it as \(z=\cos\phi\),
 \(0\leq\phi<\pi/K\).  Then the chord equation is
@@ -1050,15 +1076,16 @@ value by
        (\mathfrak s_h^2+\sin^2\phi)}.
 \]
 
-\proofstage{Branch classification and outer-lobe geometry}
-It remains to identify which chords realize the middle branch of
-\Cref{lem:middle-branch}.  Set
+\subsection{Outer-lobe geometry and chord classification}
+\label{subsec:outer-lobe}
+To identify the chords that realize the middle branch of
+\cref{lem:middle-branch}, set
 \begin{equation}\label{eq:Wcal-def}
  \mathcal W_K(u)=\sqrt{\mathfrak c_h^2-u^2}\,|U_{K-1}(u)|,
  \qquad |u|\leq\mathfrak c_h.
 \end{equation}
-At \(u=\pm\mathfrak c_h\), this denotes the continuous endpoint value
-\(0\).
+At \(u=\pm\mathfrak c_h\), \eqref{eq:Wcal-def} denotes the continuous
+endpoint value \(0\).
 Then
 \[
  \Phi_K(\theta)=\mathcal W_K(\cos\theta),\qquad
@@ -1075,7 +1102,8 @@ and its derivative is
  -\sum_{\ell=1}^{K-1}\frac1{(u-u_{\ell,K}^{(0)})^2}
  -\frac{\mathfrak c_h^2+u^2}{(\mathfrak c_h^2-u^2)^2}<0.
 \end{equation}
-At each finite nodal endpoint the logarithmic derivative tends to the
+The strict negativity in \eqref{eq:W-log-concave} makes the logarithmic
+derivative strictly decreasing.  At each finite nodal endpoint it tends to the
 appropriate signed infinity, and it tends to \(-\infty\) as
 \(u\uparrow\mathfrak c_h\).  Thus there is exactly one lobe maximum in
 every nodal
@@ -1138,15 +1166,36 @@ invertible.  The implicit-function theorem therefore gives, near either
 gap endpoint, a real continuation of the middle signed root and real
 half variables \(y=\cos\theta\) and \(z\).
 
-\proofstage{Chord-sheet exhaustion}
-By \cref{lem:chord-sheet-exhaustion}, the ordered middle branch in every
-positive gap is exactly the selected endpoint-side chord sheet.  In
-particular, its signed root is \((-1)^j s\), its magnitude is the least
-singular value, and its folded variables are distinct in the open gap.  The
-same result covers the positive half of the central gap when \(K\) is odd.
+\subsection{Exhaustion of the selected chord sheet}
+\label{subsec:chord-exhaustion}
+
+\begin{lemma}[Endpoint-side chord-sheet exhaustion]
+\label[lemma]{lem:chord-sheet-exhaustion}
+Let \(K\geq3\) and let \(j\geq1\) be an integer.  Under the conventions of
+\cref{eq:chord-equation,eq:channel-xs}, if
+\[
+ \frac{(j+1)\pi}{K}\leq\frac{\pi}{2},
+\]
+then every point of the ordered middle branch in the corresponding open
+positive gap has a selected endpoint-side \(j\)-chord representation with
+\(j\pi/K<\theta<(j+1)\pi/K\), and every \(\theta\) in this interval gives a
+point of that branch.  The signed root is \((-1)^j s\), its magnitude is
+\(s_{\min}(xI_{K-1}-A_{K-1})\), and the two folded variables are distinct.
+This includes a gap adjacent to zero.  Separately, if \(K\) is odd and
+\(j=(K-1)/2\), the same bidirectional statement holds from the positive
+spectral endpoint to the center of the single central gap, with
+\(j\pi/K<\theta\leq\pi/2\).
+\end{lemma}
+
+The proof is deferred to \cref{app:chord-exhaustion}; the lemma identifies
+every middle-branch value used below with the selected chord, and hence with
+the least singular value.
+
+\subsection{Noncentral gap comparison}
+\label{subsec:noncentral-comparison}
 
 \begin{lemma}[Noncentral gap comparison]
-\label{lem:noncentral-gap-comparison}
+\label[lemma]{lem:noncentral-gap-comparison}
 Let \(j\geq1\) and \(N\geq2(j+1)\) be integers, and put \(M=N+1\).
 For every \(x\in G_{M-1,j}^{\circ}\), there is
 \(\widehat x\in G_{N-1,j}^{\circ}\) such that
@@ -1185,7 +1234,8 @@ On the other hand,
  =\frac{\sinh(N\eta)}{\sinh(M\eta)}\leq\kappa,
 \end{equation}
 with strict inequality for \(\eta>0\), by convexity of \(\sinh\) on
-the positive half-axis.  Hence
+the positive half-axis.  Together, \eqref{eq:Phi-scale} and
+\eqref{eq:Psi-scale} imply
 \(\Phi_N(\theta_0)>\Psi_N(\eta)\).  Since \(\Phi_N\) vanishes at the right
 endpoint \((j+1)\pi/N\), its rightmost solution
 \(\widehat\theta\) of
@@ -1288,21 +1338,27 @@ constructed heights with \(g_{M-1}(x)\) and
 \(g_{N-1}(\widehat x)\), respectively, proving the claim.
 \end{proof}
 
-For \(m\geq1\), let
+\subsection{Central gap comparison}
+\label{subsec:central-comparison}
+
+For \(m\geq1\), define the even-order central height by
 \begin{equation}\label{eq:c-height-def}
- c_m=s_{\min}(aI_m+V_m).
+ \mathfrak h_m^{\mathrm e}=s_{\min}(aI_m+V_m).
 \end{equation}
 By reflection, the two gaps adjacent to the zero eigenvalue of
 \(A_{2m+1}\) have the same height; denote it by
 \begin{equation}\label{eq:d-height-def}
- d_m=\max_{0\leq x\leq2r\sin\frac{\pi}{2m+2}}
+ \mathfrak h_m^{\mathrm o}=\max_{0\leq x\leq2r\sin\frac{\pi}{2m+2}}
  s_{\min}(xI_{2m+1}-A_{2m+1}).
 \end{equation}
+The central heights defined in \eqref{eq:c-height-def} and
+\eqref{eq:d-height-def} satisfy the following strict alternation.
 
-\begin{lemma}[Central gap comparison]\label{lem:central-gap-comparison}
+\begin{lemma}[Central gap comparison]\label[lemma]{lem:central-gap-comparison}
 For every \(m\geq1\),
 \begin{equation}\label{eq:central-interlace}
- c_m>d_m>c_{m+1}.
+ \mathfrak h_m^{\mathrm e}>\mathfrak h_m^{\mathrm o}>
+ \mathfrak h_{m+1}^{\mathrm e}.
 \end{equation}
 \end{lemma}
 
@@ -1336,11 +1392,12 @@ with
 \]
 equations \eqref{eq:rho-central} and \eqref{eq:c-determinant} give
 \begin{equation}\label{eq:c-rho-identities}
- c_j^2=1+a^2-2a\rho_j=\frac1{U_j(\rho_j)^2},\qquad
+ (\mathfrak h_j^{\mathrm e})^2
+ =1+a^2-2a\rho_j=\frac1{U_j(\rho_j)^2},\qquad
  \zeta-\rho_j=\frac1{2U_{j-1}(\rho_j)U_j(\rho_j)}.
 \end{equation}
 
-Next we identify \(c_m\) as the exact height of the central gap of
+We first identify \(\mathfrak h_m^{\mathrm e}\) as the central-gap height of
 \(A_{2m}\).  Let
 \[
  P_{\rm oe}=[\mathbf e_1,\mathbf e_3,\ldots,\mathbf e_{2m-1},
@@ -1357,13 +1414,12 @@ Moreover,
  -J_m(aI_m+V_m)^*(aI_m+V_m)J_m
  =(1-a^2)\mathbf e_m\mathbf e_m^T\geq0.
 \]
-The singular values of the block off-diagonal matrix are the union of
-the singular values of its two off-diagonal blocks.  The Gram
-inequality shows that
-\(s_{\min}(I_m+aV_m^T)\geq s_{\min}(aI_m+V_m)=c_m\), and hence
-\(s_{\min}(A_{2m})=c_m\).  To identify the maximum throughout the central
-gap, put \(K=2m+1\) and use the half
-variables
+The singular values of the block off-diagonal matrix are those of its two
+off-diagonal blocks.  The Gram inequality shows that
+\(s_{\min}(I_m+aV_m^T)\geq s_{\min}(aI_m+V_m)=
+\mathfrak h_m^{\mathrm e}\), and hence
+\(s_{\min}(A_{2m})=\mathfrak h_m^{\mathrm e}\).  To maximize over the central
+gap, put \(K=2m+1\) and use the half variables
 \[
  y=\cos\theta,\qquad
  z=\cosh\eta\quad\text{or}\quad z=\cos\phi.
@@ -1395,20 +1451,21 @@ The half-angle identity and \eqref{eq:rho-central} give
 Together with \eqref{eq:c-rho-identities}, this yields
 \begin{equation}\label{eq:z0-central}
  \mathcal W_K(z_0)=\mathfrak c_h,\qquad
- 4a(\mathfrak c_h^2-z_0^2)=2a(\zeta-\rho_m)=c_m^2.
+ 4a(\mathfrak c_h^2-z_0^2)=2a(\zeta-\rho_m)
+ =(\mathfrak h_m^{\mathrm e})^2.
 \end{equation}
-At \(x=0\), \cref{lem:middle-branch} and the chord-exhaustion argument
-identify the nearest root with \(c_m\), so \(z_0\) is the endpoint-side
-outer solution of level \(\mathfrak c_h\).  If \(x\neq0\), the level
-in \eqref{eq:even-central-half} is strictly below \(\mathfrak c_h\), and hence its
+At \(x=0\), \cref{lem:middle-branch} and chord exhaustion identify the nearest
+root with \(\mathfrak h_m^{\mathrm e}\), so \(z_0\) is the endpoint-side outer
+solution of level \(\mathfrak c_h\).  If \(x\neq0\), the level in
+\eqref{eq:even-central-half} is strictly below \(\mathfrak c_h\), and its
 endpoint-side solution satisfies \(z>z_0\).  Equations
 \eqref{eq:even-central-half}--\eqref{eq:z0-central} then give
 \[
- s^2<4a(\mathfrak c_h^2-z_0^2)=c_m^2.
+ s^2<4a(\mathfrak c_h^2-z_0^2)=(\mathfrak h_m^{\mathrm e})^2.
 \]
 Reflection gives the same strict bound on the other half of the gap.
-Therefore the central-gap height equals \(c_m\) and has the unique maximizer
-\(x=0\).
+Therefore the central-gap height is \(\mathfrak h_m^{\mathrm e}\), uniquely
+attained at \(x=0\).
 
 Set
 \[
@@ -1448,8 +1505,8 @@ parametrization:
  s^2=\frac{2a(\zeta-t_{\rm out})(\zeta-t_{\rm in})}{\zeta+1},
 \end{gathered}
 \end{equation}
-where \(t_{\rm out}\) is the descending, or largest, solution.  To see this
-from \eqref{eq:chord-equation}, use
+where \(t_{\rm out}\) is the descending, or largest, solution.  To derive
+\eqref{eq:central-chord} from \eqref{eq:chord-equation}, use
 \[
  \mathfrak s_h^2+\sin^2\theta=\frac{\zeta-t_{\rm in}}{2},\qquad
  \mathfrak s_h^2-\sinh^2\eta=\frac{\zeta-t_{\rm out}}{2}.
@@ -1462,7 +1519,7 @@ concave on \((\omega_m^{\rm e},\zeta)\).  If
 \((\log\mathcal V_m)'(\rho)\geq0\), then \(\rho\) lies at or before the
 unique lobe maximum.  The descending root lies at or after that maximum, so
 \(t_{\rm out}\geq\rho\).  Now suppose
-\((\log\mathcal V_m)'(\rho)<0\).  We claim that \(\rho>a\).  If
+\((\log\mathcal V_m)'(\rho)<0\).  Then \(\rho>a\): if
 \(\rho\leq a<1\), then \(\rho<1\), hence \(\rho^2-1\neq0\), and the
 following quotient is well defined:
 \[
@@ -1496,14 +1553,16 @@ unique descending root again satisfies \(t_{\rm out}>\rho\).  In either case,
 \(t_{\rm out}\geq\rho\), and \(t_{\rm in}>-1\) makes the following
 inequality strict:
 \[
- s^2<2a(\zeta-\rho)=c_m^2.
+ s^2<2a(\zeta-\rho)=(\mathfrak h_m^{\mathrm e})^2.
 \]
-This holds along the whole central sheet, so \(d_m<c_m\).
+This holds along the whole central sheet, so
+\(\mathfrak h_m^{\mathrm o}<\mathfrak h_m^{\mathrm e}\).
 Thus the odd-order central height lies strictly below the preceding
-even-order central height.  To complete the alternating comparison, it
-remains to place it strictly above the next even-order height.
+even-order central height.  We next compare it with the following even-order
+height.
 
-\proofstage{Lower comparison \(d_m>c_{m+1}\): decisive scalar estimate}
+\proofstage{Lower comparison
+\(\mathfrak h_m^{\mathrm o}>\mathfrak h_{m+1}^{\mathrm e}\): scalar estimate}
 Put \(L=m+1\geq2\), and abbreviate
 \[
  \rho=\rho_L,\quad u_-=U_{L-1}(\rho),\quad u_+=U_L(\rho),\quad
@@ -1513,7 +1572,7 @@ Put \(L=m+1\geq2\), and abbreviate
  \mathfrak D_L=1+2(\rho+\omega_L)u_-u_+,\qquad
  \xi=\rho-\frac{\Delta_\omega}{\mathfrak D_L}.
 \end{equation}
-Thus \(a=u_-/u_+\) and \(c_L=1/u_+\).
+Thus \(a=u_-/u_+\) and \(\mathfrak h_L^{\mathrm e}=1/u_+\).
 
 The required inequality is
 \begin{equation}\label{eq:central-target}
@@ -1531,9 +1590,9 @@ Since \(a>0\), \(\Delta_\omega>0\), \(\rho+\omega_L>0\), and
 by
 \begin{equation}\label{eq:x-star-central}
  x_*^2=\frac{2a\Delta_\omega(\rho+\omega_L)}{\zeta+\omega_L},
- \qquad \tau_*=c_L.
+ \qquad \tau_*=\mathfrak h_L^{\mathrm e}.
 \end{equation}
-The algebraic certification is given in
+The algebraic certification of the choice \eqref{eq:x-star-central} is given in
 \cref{app:central-certification}.  Substitution of the distinct folded pair
 \(u=\xi\), \(v=-\omega_L\) into \eqref{eq:fold-odd}, followed by
 \eqref{eq:central-target}, proves
@@ -1549,8 +1608,8 @@ The same appendix proves the strict separation
 \begin{equation}\label{eq:x-c-second-singular}
  x_*+\tau_*<2\sqrt a\sin\frac{\pi}{2L}\leq s_{L,2}^{(0)}.
 \end{equation}
-The product parity and this second-singular-value separation now identify
-the relevant signed root independently of any prior branch choice.
+The product sign and second-singular-value separation identify the relevant
+signed root.
 
 Let \(\mu_1,\ldots,\mu_{2L-1}\) be the eigenvalues of the real symmetric
 matrix
@@ -1576,11 +1635,17 @@ singular-value perturbation inequality and
 so at most one index can satisfy \(|\mu_i|<\tau_*\).  Parity therefore gives
 \(|\mu_i|\geq\tau_*\) for every \(i\), and strict positivity of the product
 rules out equality.  Hence
-\(s_{\min}(x_*I_{2L-1}-A_{2L-1})>c_L\).  Since
+\(s_{\min}(x_*I_{2L-1}-A_{2L-1})>\mathfrak h_L^{\mathrm e}\).  Since
 \(0<x_*<2r\sin\frac{\pi}{2L}\), the point lies strictly in the positive
-central gap, and \(d_{L-1}>c_L\).  Together with the upper comparison
-\(c_m>d_m\), this proves \eqref{eq:central-interlace}.
+central gap, and
+\(\mathfrak h_{L-1}^{\mathrm o}>\mathfrak h_L^{\mathrm e}\).  Together
+with the upper comparison
+\(\mathfrak h_m^{\mathrm e}>\mathfrak h_m^{\mathrm o}\), this proves
+\eqref{eq:central-interlace}.
 \end{proof}
+
+\subsection{Assembly of the global comparison}
+\label{subsec:global-comparison}
 
 \begin{proof}[Proof of \Cref{lem:mesh}]
 Reflection and the central interlacing chain now assemble the local
@@ -1602,14 +1667,19 @@ comparison to a positive gap.  For each positive noncentral gap
 Reflection gives the same inequality on the corresponding reflected gap.
 
 By \cref{lem:central-gap-comparison}, if \(M=2\ell_*+1\), the remaining
-single central height of the larger, even-order matrix is \(c_{\ell_*}\),
+single central height of the larger, even-order matrix is
+\(\mathfrak h_{\ell_*}^{\mathrm e}\),
 whereas each central height of the
-smaller odd-order matrix is \(d_{\ell_*-1}>c_{\ell_*}\).  If
+smaller odd-order matrix is
+\(\mathfrak h_{\ell_*-1}^{\mathrm o}>\mathfrak h_{\ell_*}^{\mathrm e}\).  If
 \(M=2\ell_*+2\), the two central heights of the larger odd-order matrix
-equal \(d_{\ell_*}<c_{\ell_*}\), where \(c_{\ell_*}\) is the single
+equal
+\(\mathfrak h_{\ell_*}^{\mathrm o}<\mathfrak h_{\ell_*}^{\mathrm e}\),
+where \(\mathfrak h_{\ell_*}^{\mathrm e}\) is the single
 central height of the smaller even-order matrix.
 Thus every height of the larger problem is strictly smaller than at
-least one height of the smaller problem.  Choose \(j_*\) with
+least one height of the smaller problem.  By \eqref{eq:gamma-def}, choose
+\(j_*\) with
 \(\gamma_{M-1,j_*}=\max_j\gamma_{M-1,j}\).  Then
 \[
  \gamma_{M-1}=\gamma_{M-1,j_*}
@@ -1628,7 +1698,7 @@ comparison of \cref{lem:mesh} reduce the remaining problem to estimating
 \(\mathcal U_n(a)\) from
 \eqref{eq:main-U-def}--\eqref{eq:main-L-def}.
 
-\begin{proposition}[Sharp-order gap bounds]\label{prop:gap-bounds}
+\begin{proposition}[Optimal-order gap bounds]\label[proposition]{prop:gap-bounds}
 For every \(n\geq2\),
 \begin{equation}\label{eq:gamma-LU}
  \mathcal L_n(a)\leq\gamma_n\leq\mathcal U_n(a).
@@ -1638,6 +1708,7 @@ depending only on \(a\).
 \end{proposition}
 
 \begin{proof}
+We prove the two inequalities in \eqref{eq:gamma-LU} separately.
 For \(x=2r\cos\theta\in I_n^{\mathrm{sp}}\), set
 \[
  \boldsymbol v=(v_j)_{j=1}^n,\qquad
@@ -1668,7 +1739,8 @@ Direct multiplication, using \(p_\theta+q_\theta=x\) and
 \begin{equation}\label{eq:rectangular-factorization}
  xI_n-A_n=\mathsf{D}_\theta^*\mathsf{C}_\theta.
 \end{equation}
-The two Gram matrices are
+The two Gram matrices associated with the factorization
+\eqref{eq:rectangular-factorization} are
 diagonally unitarily similar to the tridiagonal Toeplitz matrix with
 diagonal \(1+r^2\) and off-diagonal \(-r\).  Its eigenvalues are
 \(1+r^2-2r\cos\frac{k\pi}{N}\), \(1\leq k\leq n\).  Consequently, for
@@ -1724,7 +1796,8 @@ Finally,
 \]
 Using \(s_{\min}(XYZ)\geq
 s_{\min}(X)s_{\min}(Y)s_{\min}(Z)\) and
-\eqref{eq:rectangular-min} gives
+\eqref{eq:rectangular-min}, with \(\chi_N\) as defined in
+\eqref{eq:chi}, gives
 \[
  g_n(2r\cos\theta)\geq
  \left(1+r^2-2r\cos\frac{\pi}{N}\right)\chi_N(\theta).
@@ -1741,11 +1814,11 @@ while
  \mathcal L_n(a)\geq C_{\rm lb}(a)(n+1)r^n,\qquad
  C_{\rm lb}(a)=\frac{2(1-r)^2(1-r^2)}{3\pi}.
 \end{equation}
-These follow from
+The estimate \eqref{eq:L-simple} and the preceding upper estimate follow from
 \(\sin\frac{\pi}{N}\geq2/N\),
 \(1+r^2-2r\cos\frac{\pi}{N}\geq(1-r)^2\), and
-\(\sin\frac{3\pi}{2N}\leq3\pi/(2N)\).  This proves the asserted sharp
-order.
+\(\sin\frac{3\pi}{2N}\leq3\pi/(2N)\).  This proves the asserted optimal
+order up to constants depending only on \(a\).
 \end{proof}
 
 \begin{proof}[Proof of \Cref{thm:canonical-main}]
@@ -1753,12 +1826,12 @@ By \Cref{prop:gap-bounds},
 \(\gamma_n\leq\mathcal U_n(a)\to0\).  \Cref{lem:mesh} says that
 \(\gamma_n\) is strictly decreasing.  Equation
 \eqref{eq:connected-iff-gamma} therefore shows that, once the
-pseudospectrum is connected, it stays connected in every larger
-dimension, which proves the set identity in part~3.  Contractibility and the
+pseudospectrum is connected, it stays connected at every larger matrix
+order, which proves the set identity in part~3.  Contractibility and the
 connectedness criterion are exactly \eqref{eq:connected-iff-gamma}.
 
 If \(\mathcal L_n(a)\geq\varepsilon\), then
-\(\gamma_n\geq\varepsilon\), so the pseudospectrum in dimension \(n\)
+\(\gamma_n\geq\varepsilon\), so the pseudospectrum at order \(n\)
 is disconnected.  If \(\mathcal U_n(a)<\varepsilon\), then
 \(\gamma_n<\varepsilon\), so it is connected.  Strict decrease of
 \(\gamma_n\) now gives \eqref{eq:N-two-sided-main}.
@@ -1776,14 +1849,11 @@ Because persistence gives
  \min\{N\geq2:\gamma_m<\varepsilon\text{ for every }m\geq N\},
 \]
 the bounds \(C_{\rm lb}(a)\mathfrak e_m\leq\gamma_m\leq\mathfrak e_m/2\)
-immediately give
+give
 \begin{equation}\label{eq:tail-threshold-bounds}
  \mathcal T_r(\varepsilon/C_{\rm lb}(a))\leq N_c(a,\varepsilon)
  \leq\mathcal T_r(2\varepsilon).
 \end{equation}
-Thus the polynomial factor \(n+1\), as well as the exponential factor
-\(a^{n/2}\), is sharp on both sides.
-
 \proofstage{Elementary inversion of the envelope threshold}
 Let
 \[
@@ -1819,19 +1889,21 @@ the two sides of \eqref{eq:tail-threshold-bounds} proves
 \eqref{eq:N-asymptotic-main}.
 
 \proofstage{Exact two-site endpoint}
-For $|x|\leq r$,
+For \(|x|\leq r\),
 \[
  \det\bigl((xI_2-A_2)^*(xI_2-A_2)-a^2I_2\bigr)
  =x^2(x^2-2a-2a^2)\leq0.
 \]
 The matrix inside the determinant is Hermitian, and the nonpositive
 product of its two eigenvalues forces its least eigenvalue to be
-nonpositive.  Thus $s_{\min}(xI_2-A_2)\leq a$.  At $x=0$, the singular
-values of $-A_2$ are $1$ and $a$, so equality is attained and
-$\gamma_2=a$.  Hence \eqref{eq:connected-iff-gamma} gives
+nonpositive.  Thus \(s_{\min}(xI_2-A_2)\leq a\).  At \(x=0\), the singular
+values of \(-A_2\) are \(1\) and \(a\), so equality is attained and
+\(\gamma_2=a\).  Hence \eqref{eq:connected-iff-gamma} gives
 \(N_c(a,\varepsilon)=2\) if and only if \(\varepsilon>a\).
 This proves all assertions.
 \end{proof}
+
+\FloatBarrier
 
 \section{Numerical illustrations}\label{sec:numerics}
 
@@ -1839,61 +1911,68 @@ This proves all assertions.
 transition: coalescence of pseudospectral components and decay of the
 real-axis backward-error barrier.
 
-\begin{figure}[t]
+At each sampled point, the least singular value was computed by a
+double-precision singular value decomposition.  The contour plots use a
+\(561\)-by-\(361\) Cartesian grid.  Each spectral gap was scanned at \(121\)
+equally spaced points before bounded scalar optimization was used to estimate
+\(\gamma_n\).  The displayed component counts were also evaluated on
+\(1001\) points per gap, with the 1-Lipschitz dependence of the least singular
+value controlling variation between adjacent sample points.
+
+\begin{figure}[!htbp]
  \centering
  \includegraphics[width=\textwidth]{fig1_connectedness_transition}
- \caption{Numerically sampled strict pseudospectra of \(A_n(1/4)\) at
+ \caption{Numerically sampled open pseudospectra of \(A_n(1/4)\) at
  \(\varepsilon=10^{-2}\).  Shading marks the sampled pseudospectrum and
  crosses mark the exact eigenvalues.  The samples show component
  coalescence between \(n=6\) and \(n=7\).}
  \label{fig:transition}
 \end{figure}
 
-\begin{figure}[t]
+\begin{figure}[!t]
  \centering
  \includegraphics[width=.84\textwidth]{fig2_gap_barrier_bounds}
  \caption{Real-axis backward-error barriers for \(a=1/4\).
- The grey band, bounded by the dotted lower curve \(\mathcal L_n(a)\) and
+ The gray band, bounded by the dotted lower curve \(\mathcal L_n(a)\) and
  dashed upper curve \(\mathcal U_n(a)\), is the rigorous enclosure of
- \(\gamma_n\) and proves the scale \((n+1)a^{n/2}\).  Blue circles joined by
+ \(\gamma_n\) and establishes the order \((n+1)a^{n/2}\).  Blue circles joined by
  a solid line are floating-point estimates; the red horizontal line is the
  fixed pseudospectral level \(\varepsilon=10^{-2}\), and the black vertical line marks
- the numerical crossing \(\widehat N_c=7\).  The theorem gives the analytic
- bracket \(6\leq N_c\leq9\).}
+ the numerical crossing \(\widehat N_c=7\).  The theorem gives the bracket
+ \(6\leq N_c\leq9\).}
  \label{fig:barriers}
 \end{figure}
 
-\FloatBarrier
-
 \section{Discussion}\label{sec:discussion}
 
-The classification separates three genuinely different finite-size
-mechanisms.  In the irreducible nonnormal regime, the exact threshold has
-the exponential--polynomial scale \(c(n+1)a^{n/2}\), and the first connected
-order grows logarithmically in \(1/\varepsilon\).  At the normal boundary,
-the threshold is the largest half-gap, has scale \(\pi c/(n+1)\), and the
-critical order grows as \(1/\varepsilon\).  At the reducible boundary, the
-pseudospectrum is already a disk and the threshold is zero.  The two
-boundaries are singular limits of the interior scale: the remainder
-\(O_a(1)\) in
-\eqref{eq:N-asymptotic-main} is pointwise for fixed \(0<a<1\).
+The three threshold scales show that both boundary regimes are singular
+limits of the nonnormal interior.  For \(0<a<1\), the threshold has the
+exponential--polynomial scale \(c(n+1)a^{n/2}\); at \(a=1\), it has the
+algebraic scale \(\pi c/(n+1)\); and at \(a=0\), it vanishes.  Accordingly,
+the remainder \(O_a(1)\) in \eqref{eq:N-asymptotic-main} is pointwise for
+fixed \(a\) and is not uniform at either boundary.
 
-This trichotomy also explains the role of strict dimension monotonicity.
-For every irreducible complex tridiagonal Toeplitz family, normal or
-nonnormal, the final barrier decreases at each order, so the connected
-orders form one integer tail.  At reducibility the barrier collapses to zero
-at every order, and persistence holds without a strict inequality.  The
-statement is topological rather than merely spectral: pseudospectral
-components are robust spectral clusters under an unstructured norm bound,
-and \(N_T\) is the first order at which all such clusters have coalesced.
+Strict matrix-order monotonicity makes the connected orders an integer tail
+for every irreducible family.  At the reducible boundary, this tail begins at
+\(n=2\) because the barrier vanishes identically.  Thus
+\(N_T(\alpha,d,\beta;\varepsilon)\) marks the first order at which all
+pseudospectral clusters have coalesced.
 
-The pseudospectrum throughout is generated by the full complex
-spectral-norm ball.  Restricting perturbations to Toeplitz, tridiagonal,
-real, or entrywise patterns changes the attainable set and may change its
-connectedness threshold; see \cite{ButtaGuglielmiNoschese2012} for
-Toeplitz-structured pseudospectra.  Extending the strict order comparison to
-such structured sets, to block Toeplitz matrices, or to periodic
-\(k\)-Toeplitz families provides natural directions for further study.
+The vertical-contraction theorem separates the transferable topology from
+the Toeplitz-specific algebra.  For another matrix family with spectrum on an
+affine line, contraction toward that line yields component contractibility
+and a one-dimensional connectedness criterion.  Adjacent-order comparison
+then becomes a problem for the resulting barrier; in the present family it is
+resolved by folded continuants and chord geometry.
+
+The pseudospectrum here uses the Euclidean vector norm, equivalently the full
+ball of complex perturbations in the induced operator norm.  Toeplitz,
+tridiagonal, real, or entrywise perturbation constraints change the attainable
+set and may alter the connectedness threshold; see
+\cite{ButtaGuglielmiNoschese2012} for Toeplitz-structured pseudospectra.
+Structured perturbations, block Toeplitz matrices, and periodic
+\(k\)-Toeplitz families are natural settings for extending the order
+comparison.
 
 Restricting the nearest-neighbor Hatano--Nelson hopping law
 \cite{HatanoNelson1996,HatanoNelson1997} to an open finite chain and, if
@@ -1903,14 +1982,9 @@ case is the normal boundary, its one-way limit is the Jordan boundary, and
 its nonreciprocal interior is the nonnormal regime.  Writing
 \(h=\tfrac12\log(t_L/t_R)\), \eqref{eq:intro-similarity} gives the familiar
 right-eigenvector envelope \(e^{-h(j-1)}\) \cite{AmmariEtAl2024}; the same
-exponent appears in \(a^{n/2}=e^{-hn}\).  This interpretation motivates the
-three mathematical regimes within a standard nonreciprocal-chain model.
-
-In summary, the general vertical theorem identifies the topological
-mechanism, the unitary--affine reduction classifies the full complex family,
-and the canonical comparison supplies the nontrivial all-order law.  The
-result is an exact finite-dimensional classification of connectedness,
-including the boundary levels.
+exponent appears in \(a^{n/2}=e^{-hn}\).  Thus eigenvector localization and
+pseudospectral connectedness share the same exponential scale in the
+nonreciprocal chain.
 
 \appendix
 \renewcommand{\thetheorem}{\Alph{section}.\arabic{theorem}}
@@ -1919,7 +1993,7 @@ including the boundary levels.
 \label[appendix]{app:vertical-certificate}
 
 \begin{proposition}[Vertical determinant certificate]
-\label{prop:vertical-determinant-certificate}
+\label[proposition]{prop:vertical-determinant-certificate}
 Fix \(0<a<1\), \(x\in\mathbb R\), \(Y\geq0\), and \(t\in\mathbb R\), and
 extend the matrix notation by
 \(A_1=[0]\).  For \(k\geq1\), set
@@ -1959,7 +2033,7 @@ off-diagonals.  Set \(T_{-1}=0,T_0=1\), and put
 \begin{equation}\label{eq:D-R-def}
  D_k=T_k-T_{k-1},\qquad R_k=T_k-a^2T_{k-1}.
 \end{equation}
-Indeed, a determinant is affine in each diagonal entry.  Replacing the
+Since a determinant is affine in each diagonal entry, replacing the
 first diagonal entry \(\delta_{\rm pent}\) by
 \(\delta_{\rm pent}-1\) subtracts the cofactor \(T_{k-1}\), whereas
 replacing the last one by \(\delta_{\rm pent}-a^2\) subtracts
@@ -1994,12 +2068,13 @@ where
  &+a^2(|b|^2-a^2)z^4-a^4\delta_{\rm pent}z^5+a^6z^6.
 \end{aligned}
 \]
-Consequently, with \(\mathcal D(z,Y)=\sum_{k\geq0}D_kz^k\),
+Substituting \eqref{eq:T-generating} into \eqref{eq:D-R-def}, with
+\(\mathcal D(z,Y)=\sum_{k\geq0}D_kz^k\), gives the first identity in
 \begin{equation}\label{eq:D-F-generating}
  \mathcal D(z,Y)=\frac{(1-z)(1-a^2z^2)}{Q(z,Y)},\qquad
  \sum_{k\geq0}F_k(Y,t)z^k=(1-a^2z)\mathcal D(z,Y).
 \end{equation}
-For the second identity, first change the initial diagonal, producing
+For the second identity in \eqref{eq:D-F-generating}, first change the initial diagonal, producing
 \(D_k\), and then change the final diagonal; its cofactor is
 \(D_{k-1}\).  Thus \(F_k=D_k-a^2D_{k-1}\), which proves the asserted
 generating function.  Direct substitution of \(\delta_{\rm pent}\) and \(b\) gives
@@ -2018,8 +2093,10 @@ Suppose that \(\mathcal P_n(Y,t)>0\).  Then
 \begin{equation}\label{eq:D-R-positive}
  D_k>0,\qquad R_k>0\qquad(0\leq k<n).
 \end{equation}
-Put \(u_k=\sum_{j=0}^kD_jD_{k-j}\), with \(u_k=0\) for \(k<0\).
-The coefficients of \(\varphi_a\), beginning with the coefficient of
+Under the positivity in \eqref{eq:D-R-positive}, put
+\(u_k=\sum_{j=0}^kD_jD_{k-j}\), with \(u_k=0\) for \(k<0\).
+To extract coefficients from \eqref{eq:F-prime-generating}, note that the
+coefficients of \(\varphi_a\), beginning with the coefficient of
 \(z\), are
 \[
  1,\quad 2a(1-a),\quad a^2(a^2-4a+2),\quad
@@ -2062,7 +2139,8 @@ Since \(T_k=\sum_{\ell=0}^kD_\ell\), \eqref{eq:D-R-def} gives
  R_k=D_k+(1-a^2)\sum_{\ell=0}^{k-1}D_\ell,\qquad
  R_k-R_{k-1}=D_k-a^2D_{k-1}.
 \end{equation}
-Hence \(\vartheta_k\leq a^2\) implies \(\varpi_k\leq1\).  On dividing
+The second identity in \eqref{eq:R-D-relation} shows that
+\(\vartheta_k\leq a^2\) implies \(\varpi_k\leq1\).  On dividing
 \eqref{eq:deleted-cofactor} and its companion by positive factors, we
 obtain
 \begin{equation}\label{eq:ratio-cross}
@@ -2106,7 +2184,7 @@ write it as \(-\mathcal B_{\rm neg}\), where
 \]
 equations \eqref{eq:F-prime-convolution} and \eqref{eq:u-absorption}
 prove \eqref{eq:det-derivative-positive}.  If that coefficient is
-nonnegative, the implication is immediate.  For \(n=1\), one has
+nonnegative, the implication follows directly.  For \(n=1\), one has
 \(\partial_YF_1=1\); for \(n=2\), one has
 \(\partial_YF_2=2D_1+2a(1-a)>0\).  Thus
 \eqref{eq:det-derivative-positive} holds in every dimension, which proves
@@ -2116,9 +2194,9 @@ the proposition.
 \section{Folded-continuant transfer and boundary residuals}
 \label[appendix]{app:folded-transfer}
 
-This appendix supplies the transfer and generating identities underlying
-\eqref{eq:fold-even}--\eqref{eq:fold-odd} and records every boundary sign
-and parity convention in the signed-pencil argument.
+This appendix derives the transfer and generating identities underlying
+\eqref{eq:fold-even}--\eqref{eq:fold-odd} and tracks the boundary signs and
+parity conventions in the signed-pencil argument.
 Pair the coordinates in the order
 \((1,n),(2,n-1),\ldots\).  In this order the symmetric matrix
 \((xI_n-A_n)J_n-sI_n\) is block tridiagonal.  Its interior diagonal and
@@ -2312,7 +2390,8 @@ A direct determinant calculation gives
  &=(1+a^2)x^2+2as^2+2a^2-2a-2a^3.
 \end{aligned}
 \end{equation}
-Apply Cayley--Hamilton to \(\mathsf T_{\rm fold}\), multiply by
+Apply Cayley--Hamilton with the characteristic polynomial
+\eqref{eq:fold-transfer-characteristic} to \(\mathsf T_{\rm fold}\), multiply by
 \(\mathsf T_{\rm fold}^{\,m-4}\boldsymbol\eta_0^\tau\), and extract the
 first coordinate.  For both \(Z_m=\mathcal Q_m^{\mathrm e}\) and
 \(Z_m=\mathcal Q_m^{\mathrm o}\), this yields
@@ -2322,8 +2401,9 @@ first coordinate.  For both \(Z_m=\mathcal Q_m^{\mathrm e}\) and
  \qquad m\geq4.
 \end{equation}
 
-Finally, applying \(\mathsf T_{\rm fold}\) three times to
-\eqref{eq:fold-transfer-initial} gives the boundary residuals
+Applying \(\mathsf T_{\rm fold}\) three times to
+\eqref{eq:fold-transfer-initial} gives the initial residuals for the
+recurrence \eqref{eq:fold-recurrence}:
 \[
  \mathsf{Res}_0=Z_0,\quad
  \mathsf{Res}_1=Z_1-C_0Z_0,\quad
@@ -2354,7 +2434,7 @@ For the even sequence the polynomial on the right factors as
 \((1+az)(1-2a\zeta_sz+a^2z^2)\); for the odd sequence it is
 \((x-s)-[x(1+a^2)+2as]z+a^2(x-s)z^2\).  These factorizations identify the
 boundary-residual polynomials.  Since \(\Pi(0)=1\), division by \(\Pi\) in
-\(\mathbb R[[z]]\) gives the two literal formal-power-series identities
+\(\mathbb R[[z]]\) gives the formal-power-series identities
 \begin{equation}\label{eq:fold-generating-even}
  \sum_{m\geq0}\mathcal Q_m^{\rm e}z^m
  =(1+az)(1-2a\zeta_sz+a^2z^2)\Pi(z)^{-1},
@@ -2397,25 +2477,10 @@ square-root branch.
 \section{Exhaustion of the endpoint-side chord sheet}
 \label[appendix]{app:chord-exhaustion}
 
-\begin{lemma}[Endpoint-side chord-sheet exhaustion]
-\label{lem:chord-sheet-exhaustion}
-Let \(K\geq3\) and let \(j\geq1\) be an integer.  Under the conventions of
-\cref{eq:chord-equation,eq:channel-xs}, if
-\[
- \frac{(j+1)\pi}{K}\leq\frac{\pi}{2},
-\]
-then every point of the ordered middle branch in the corresponding open
-positive gap has a selected endpoint-side \(j\)-chord representation with
-\(j\pi/K<\theta<(j+1)\pi/K\), and every \(\theta\) in this interval gives a
-point of that branch.  The signed root is \((-1)^j s\), its magnitude is
-\(s_{\min}(xI_{K-1}-A_{K-1})\), and the two folded variables are distinct.
-This includes a gap adjacent to zero.  Separately, if \(K\) is odd and
-\(j=(K-1)/2\), the same bidirectional statement holds from the positive
-spectral endpoint to the center of the single central gap, with
-\(j\pi/K<\theta\leq\pi/2\).
-\end{lemma}
+This appendix proves the chord-sheet exhaustion lemma used in the main
+comparison.
 
-\begin{proof}
+\begin{proof}[Proof of \Cref{lem:chord-sheet-exhaustion}]
 Continue the ordered middle root \(s_*(x)\) through the open gap.  Write
 \(\Delta_*(x)=\Delta_{\rm fold}(x,s_*(x))\) for its folded discriminant,
 let \(y(x)\leq z(x)\) be the reconstructed nonnegative half variables on
@@ -2467,8 +2532,8 @@ case the common level is zero, the endpoint-side solution is
 inside a spectral gap.  (4) The
 outer variable remains in its endpoint-side component, since its first exit
 point would be \(u_K^{\max}\), contradicting
-\eqref{eq:outer-level-dominates}.  Passage through \(z=1\) is harmless; only
-its coordinate changes.  Hence every relative closure point remains in
+\eqref{eq:outer-level-dominates}.  Passage through \(z=1\) changes only the
+coordinate representation.  Hence every relative closure point remains in
 \(\mathcal C\).  Since the open gap is an interval, \(\mathcal C\) is the
 entire gap.  This proves the first exhaustion direction: every actual gap
 point lies on the selected endpoint-side chord sheet.
@@ -2482,7 +2547,7 @@ two endpoints give
 \]
 For every \(\theta_0\in(j\pi/K,(j+1)\pi/K)\), the intermediate value
 theorem therefore supplies an interior gap point \(x\) with
-\(\theta_{\rm ch}(x)=\theta_0\).  The classification just proved and uniqueness of
+\(\theta_{\rm ch}(x)=\theta_0\).  The preceding classification and uniqueness of
 the endpoint-side outer solution then give
 \[
  y(x)=\cos\theta_0,\qquad
@@ -2504,9 +2569,8 @@ the negative half.
 \section{Scalar estimate for the lower central-gap comparison}
 \label[appendix]{app:central-scalar}
 
-This appendix proves the strict scalar inequality
-\eqref{eq:central-target} through finite estimates valid uniformly over the
-three cases specified below.
+This appendix proves \eqref{eq:central-target} separately in the regimes
+\(\rho>1\), \(\rho=1\), and \(\rho<1\).
 
 Put \(b=u_+/u_-=1/a\), and define
 \[
@@ -2517,12 +2581,13 @@ The Chebyshev identity gives \(u_-^2Q_b=1\), and
  \mathfrak D_L=S_b/Q_b,\qquad
  \Delta_\xi:=\rho-\xi=\Delta_\omega Q_b/S_b.
 \end{equation}
-Indeed, \(u_+=bu_-\) and \(u_-^2=Q_b^{-1}\), so
+Indeed, since \(u_+=bu_-\) and \(u_-^2=Q_b^{-1}\),
 \[
  \mathfrak D_L=1+2(\rho+\omega_L)u_-u_+
   =1+\frac{2b(\rho+\omega_L)}{Q_b}=\frac{S_b}{Q_b},
 \]
-and the formula for \(\Delta_\xi\) follows from
+which proves the first identity in \eqref{eq:central-D-QS}; the second
+follows from
 \eqref{eq:central-D-xi}.
 The ratio \(U_L/U_{L-1}\) is strictly increasing above the largest zero
 of \(U_{L-1}\), and equals \(1\) at
@@ -2578,7 +2643,7 @@ direct differentiation gives
  +\frac{\Delta_\omega(3Lu^2-2u)}{\Delta_+}.
 \]
 The right-hand side is strictly increasing for \(u\geq1/L\) and is positive
-at \(u=1/L\) because \(\Delta_\omega L<1\).  Hence \(\mathcal N\) exceeds
+at \(u=1/L\) by \eqref{eq:Delta-omega-basic-bound}.  Hence \(\mathcal N\) exceeds
 its value at
 \(b=\rho+1/L\).  With
 \(s_0=\rho+\omega_L\) and \(\omega_+=1+\omega_L\), that value is
@@ -2646,9 +2711,10 @@ The following elementary bounds hold; the second follows from
  \Delta_\omega<\frac5{4L^2},\qquad
  \upsilon<\frac5{(2L+1)^2}\leq\frac15.
 \end{equation}
-Although \(5/(2L+1)^2=1/5\) when \(L=2\), the preceding strict bound still
-gives \(\upsilon<1/5\).  These bounds
-show that the bracketed expression is positive, since it equals
+When \(L=2\), the non-strict bound equals \(1/5\), while the preceding strict
+estimate still gives \(\upsilon<1/5\).  These bounds
+in \eqref{eq:Delta-upsilon-bounds} show that the bracketed expression is
+positive, since it equals
 \[
  (2-\upsilon)
  \bigl[(2-\Delta_\omega)(2-\upsilon)-4\Delta_\omega L\bigr]
@@ -2689,9 +2755,10 @@ gives \(\mathfrak q(u)>0\), proving \eqref{eq:N-positive-target}, and hence
 
 This appendix verifies the folded substitution and
 second-singular-value separation used in the main proof of
-\(d_m>c_{m+1}\).
+\(\mathfrak h_m^{\mathrm o}>\mathfrak h_{m+1}^{\mathrm e}\).
 
-At \(x=x_*\) and \(s=\pm\tau_*\), where \(\tau_*=c_L\), the real pair
+At \(x=x_*\) and \(s=\pm\tau_*\), where
+\(\tau_*=\mathfrak h_L^{\mathrm e}\), the real pair
 \(u=\xi\), \(v=-\omega_L\) satisfies the two symmetric relations in
 \eqref{eq:fold-characteristic}.  Indeed, its sum and product are
 \(\xi-\omega_L\) and \(-\omega_L\xi\), and the required identities
@@ -2702,7 +2769,7 @@ follow from
 \]
 Positivity of \(\xi+\omega_L\) selects the distinct-variable branch of the
 divided difference in \eqref{eq:fold-odd}.
-For convenience, write the folded numerator as
+Write the folded numerator as
 \[
  \mathfrak n_s(t)=-[x(\zeta-t)+s(1+t)]U_{L-1}(t).
 \]
@@ -2757,9 +2824,9 @@ Their product is positive by \eqref{eq:central-target}, because
  >\mathsf{Y}_\xi^2U_\xi^2.
 \]
 Thus
-\begin{equation}
+\[
  q_{2L-1}(x_*,\tau_*)q_{2L-1}(x_*,-\tau_*)>0.
-\end{equation}
+\]
 
 At \(x=0\), the second-smallest singular value of \(A_{2L-1}\) is
 \[
@@ -2774,10 +2841,10 @@ squares
  1+a^2+2a\cos\frac{k\pi}{L},\qquad 1\leq k\leq L-1,
 \]
 and each occurs twice, while the remaining singular value is zero.
-We claim
-\begin{equation}
+The required separation is
+\[
  x_*+\tau_*<2\sqrt a\sin\frac{\pi}{2L}\leq s_{L,2}^{(0)}.
-\end{equation}
+\]
 Indeed, recall \(\rho_{\rm ref}=\cos\frac{\pi}{2L+1}\).  Since
 \(\rho>\rho_{\rm ref}\) and \(U_{L-1}\) is strictly increasing above its
 largest zero,
@@ -2846,9 +2913,13 @@ Consequently \(x_*+\tau_*<2\sqrt a\sin\frac{\pi}{2L}\).  Finally,
 \]
 which proves \eqref{eq:x-c-second-singular}.
 
+Together with the signed product inequality, this proves the signed-root
+certification used in \cref{subsec:central-comparison}.
 
 \input{DECLARATIONS}
 
+\clearpage
+\phantomsection
 \bibliographystyle{siamplain}
 \bibliography{ela_pseudospectral_topology}
 

@@ -8,8 +8,10 @@ connected dimensions, the critical-size asymptotic, the exact two-dimensional
 endpoint, the pointwise spectral backward-error minimum, and unitary--affine
 reduction of complex tridiagonal Toeplitz matrices.
 
-The public assembly theorem is
-`ConnectedPseudospectrum.main_theorem` in
+The public full-family assembly theorem is
+`ConnectedPseudospectrum.complexToeplitz_main_theorem` in
+`ConnectedPseudospectrum/FullFamilyMain.lean`.  The canonical nonnormal
+assembly remains `ConnectedPseudospectrum.main_theorem` in
 `ConnectedPseudospectrum/MainTheorem.lean`.
 
 ## Scope
@@ -31,7 +33,8 @@ main theorem:
 - the matrix-independent vertical-scaling criterion for real-axis
   connectedness and component contractibility;
 - exact diagonal-unitary phase removal and complex affine pseudospectral
-  transport for nonzero complex off-diagonals;
+  transport whenever the overall scale is nonzero, including one-sided
+  off-diagonals;
 - the affine-image, component, connectedness, and strict scaled-barrier
   conclusions in the unequal-modulus regime;
 - exact reduction of the equal-modulus regime to the Hermitian endpoint
@@ -44,7 +47,9 @@ main theorem:
   component contractibility, and complex equal-modulus affine transfer;
 - the explicit normal cubic error bound and the uniform critical-size estimate
   `|N-pi*c/epsilon|<2`; and
-- the general radial classification underlying the Jordan boundary.
+- the general radial classification underlying the Jordan boundary; and
+- a single piecewise full-family threshold and critical-size wrapper, with
+  exact tail, first-order, decay, and all three critical-order laws.
 
 The logarithmic inversion is proved directly in
 `ConnectedPseudospectrum/TailThresholdAsymptotic.lean`.  No Lambert `W`
@@ -53,9 +58,10 @@ part of the current manuscript or formalization.
 
 Bibliography, floating-point illustrations, and the physical interpretation
 in the Discussion are non-theorem material and remain outside the kernel
-scope.  The backward-error and complex-Toeplitz results are standalone
-kernel theorems because they are mathematically independent of
-`main_theorem`.
+scope.  The backward-error and complex-Toeplitz reduction results are
+standalone kernel theorems because they are mathematically independent of
+the canonical `main_theorem`; `complexToeplitz_main_theorem` is their
+full-family top-level assembly.
 
 `FORMALIZATION_MAP.md` records the proof-stage correspondence, including the
 named endpoints for every theorem-bearing boundary statement used in the ELA
@@ -78,8 +84,8 @@ lake env lean AxiomAudit.lean
 
 The umbrella module imports every source module under
 `ConnectedPseudospectrum/`; there are no detached proof modules.  The axiom
-audit contains 284 selected `#print axioms` commands, including the final
-theorem.  The only accepted foundational dependencies are `propext`,
+audit contains 290 selected `#print axioms` commands, including both assembly
+theorems.  The only accepted foundational dependencies are `propext`,
 `Classical.choice`, and `Quot.sound`.
 
 For a diagnostic unused-argument scan of the umbrella namespace, use a

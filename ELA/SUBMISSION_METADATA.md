@@ -5,37 +5,39 @@ Synchronize every field with the final PDF immediately before submission.
 ## Article
 
 - **Article type:** Research article
-- **Title:** Pseudospectral topology of complex tridiagonal Toeplitz
-  matrices: thresholds and finite-size monotonicity
+- **Title:** Connectedness thresholds for complex tridiagonal Toeplitz
+  pseudospectra: monotonicity with matrix order
 - **Language:** English
 - **Primary AMS 2020 classification:** 15A18
 - **Secondary AMS 2020 classifications:** 15A60, 15B05, 65F15
 - **Keywords (6):** pseudospectrum; tridiagonal Toeplitz matrix; nonnormal
-  matrix; least singular value; connectedness threshold; finite-size
+  matrix; least singular value; pseudospectral connectedness; matrix-order
   monotonicity
 
 ## Abstract
 
-For \(T_n(\alpha,d,\beta)=\operatorname{tridiag}(\alpha,d,\beta)\), with
-complex entries and \(n\geq2\), this paper classifies the connectedness of
-the strict Euclidean pseudospectrum and its dependence on the matrix order.
-Unitary diagonal conjugation, reversal, translation, rotation, and scaling
-reduce every nonscalar family to
+The connectedness threshold of the open Euclidean-norm pseudospectrum of the
+complex tridiagonal Toeplitz matrix
+\(T_n(\alpha,d,\beta)=\operatorname{tridiag}(\alpha,d,\beta)\), \(n\geq2\),
+is determined for all \(\alpha,d,\beta\in\mathbb C\). Set
+\(c=\max\{|\alpha|,|\beta|\}\). For \(c>0\), unitary similarity and affine
+transformations reduce the problem to
 \(A_n(a)=\operatorname{tridiag}(a,0,1)\), where
-\(a=\min\{|\alpha|,|\beta|\}/\max\{|\alpha|,|\beta|\}\). An abstract
-vertical-monotonicity principle first shows that a matrix with collinear
-spectrum whose least-singular-value sublevel sets contract toward the
-spectral line has contractible pseudospectral components, with connectedness
-governed by one least-singular-value barrier. For \(0<a<1\), that barrier is
-\(\max\{|\alpha|,|\beta|\}\gamma_n(a)\), where
-\(\gamma_{n+1}(a)<\gamma_n(a)\) for every \(n\geq2\) and
-\(\gamma_n(a)\asymp_a(n+1)a^{n/2}\). At the normal boundary \(a=1\), the
-threshold is an explicit half-gap and decreases strictly at the algebraic
-scale \(\pi\max\{|\alpha|,|\beta|\}/(n+1)\). At the reducible boundary
-\(a=0\), the pseudospectrum is a disk and is connected at every order. Thus
-every component is contractible, connectedness persists with dimension, and
-the normal, nonnormal, and reducible regimes have distinct transition
-scales.
+\(a=\min\{|\alpha|,|\beta|\}/c\). In the irreducible nonnormal regime
+\(0<a<1\), let \(\gamma_n(a)\) denote the threshold for \(A_n(a)\). Every
+pseudospectral component is contractible, and the pseudospectrum of
+\(T_n(\alpha,d,\beta)\) is connected exactly when
+\(\varepsilon>c\gamma_n(a)\). The thresholds satisfy
+\(\gamma_{n+1}(a)<\gamma_n(a)\) for every \(n\geq2\) and, for fixed \(a\),
+are bounded above and below by positive \(a\)-dependent multiples of
+\((n+1)a^{n/2}\). Connectedness therefore persists with matrix order, and
+the first connected order has a two-term logarithmic asymptotic as
+\(\varepsilon\downarrow0\). At the normal boundary \(a=1\), the threshold
+is the largest adjacent half-gap and has scale \(\pi c/(n+1)\). At the
+one-sided boundary \(a=0\), and also for \(c=0\), the pseudospectrum is a
+disk. An underlying topological result shows more generally that contraction
+toward a spectral line makes every pseudospectral component contractible and
+reduces connectedness to one least-singular-value barrier.
 
 ## Author and corresponding author
 

@@ -4,7 +4,7 @@ import ConnectedPseudospectrum.Definitions
 # The exact two-dimensional barrier
 
 This module formalizes the final explicit calculation in the proof of
-`thm:main`: for `0 < a < 1`, the real gap barrier of the two-site path is
+`thm:canonical-main`: for `0 < a < 1`, the real gap barrier of the two-site path is
 exactly `a`.
 -/
 

@@ -255,8 +255,8 @@ theorem positiveToeplitzPseudospectrum_eq_affine_image
         generalPseudospectrum_complexPathMatrix]
     simpa only [min_eq_right hgt.le, max_eq_left hgt.le] using hbranch
 
-/-- Formal counterpart of the topological and threshold assertions in
-`cor:general-toeplitz`. -/
+/-- Historical positive-real specialization of the topological and threshold
+assertions now included in `thm:main`. -/
 theorem positiveToeplitz_corollary
     (n : ℕ) (hn : 2 ≤ n) {α β : ℝ} (d : ℂ)
     (hα : 0 < α) (hβ : 0 < β) (hαβ : α ≠ β)
@@ -448,7 +448,7 @@ theorem criticalThreshold_div_hasCriticalSizeAsymptotic
     simpa only [div_eq_mul_inv, mul_comm] using hcomp
   exact hcomp'.trans hstable'
 
-/-- Explicit transfer of the main theorem's threshold bounds, physical-
+/-- Explicit transfer of the canonical theorem's threshold bounds, physical-
 uncertainty asymptotic, and exact size-two endpoint. -/
 theorem positiveToeplitz_threshold_bounds_and_asymptotic
     {α β : ℝ} (hα : 0 < α) (hβ : 0 < β) (hαβ : α ≠ β)

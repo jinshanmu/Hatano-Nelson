@@ -1,0 +1,6 @@
+# Figure-generation environment audited on 2026-08-12 with CPython 3.11.14.
+# Only direct runtime dependencies are listed; installers resolve transitive
+# dependencies for the selected platform.
+numpy==2.3.5
+scipy==1.16.3
+matplotlib==3.10.7

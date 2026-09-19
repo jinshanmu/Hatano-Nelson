@@ -33,14 +33,14 @@ theorem foldXiPlus_ne_foldXiMinus_of_pos
 /-- The even folded sequence is the paper's explicit Chebyshev divided
 difference on the positive-discriminant region. -/
 theorem foldEvenSequence_eq_explicitFoldXi
-    {a x s : ℝ} (ha0 : a ≠ 0) (ha1 : a ≠ 1)
+    {a x s : ℝ} (ha0 : a ≠ 0)
     (hdisc : 0 < foldDiscriminant a x s) (m : ℕ) :
     foldEvenSequence a x s m =
       a ^ m *
         ((foldEvenChebyshevFunction m (foldXiPlus a x s) (foldZeta a s) -
           foldEvenChebyshevFunction m (foldXiMinus a x s) (foldZeta a s)) /
             (foldXiPlus a x s - foldXiMinus a x s)) := by
-  apply foldEvenSequence_eq_chebyshevDividedDifference ha0 ha1
+  apply foldEvenSequence_eq_chebyshevDividedDifference ha0
     (foldXiPlus_ne_foldXiMinus_of_pos ha0 hdisc)
     (foldXiPlus_add_foldXiMinus ha0)
   exact foldXiPlus_mul_foldXiMinus ha0 hdisc.le
@@ -48,7 +48,7 @@ theorem foldEvenSequence_eq_explicitFoldXi
 /-- The odd folded sequence is the paper's explicit Chebyshev divided
 difference on the positive-discriminant region. -/
 theorem foldOddSequence_eq_explicitFoldXi
-    {a x s : ℝ} (ha0 : a ≠ 0) (ha1 : a ≠ 1)
+    {a x s : ℝ} (ha0 : a ≠ 0)
     (hdisc : 0 < foldDiscriminant a x s) (m : ℕ) :
     foldOddSequence a x s m =
       a ^ m *
@@ -57,7 +57,7 @@ theorem foldOddSequence_eq_explicitFoldXi
           foldOddChebyshevFunction m x s (foldOddBeta a x s)
             (foldXiMinus a x s)) /
             (foldXiPlus a x s - foldXiMinus a x s)) := by
-  apply foldOddSequence_eq_chebyshevDividedDifference ha0 ha1
+  apply foldOddSequence_eq_chebyshevDividedDifference ha0
     (foldXiPlus_ne_foldXiMinus_of_pos ha0 hdisc)
     (foldXiPlus_add_foldXiMinus ha0)
   exact foldXiPlus_mul_foldXiMinus ha0 hdisc.le

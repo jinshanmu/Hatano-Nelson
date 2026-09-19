@@ -14,6 +14,11 @@ The public full-family assembly theorem is
 assembly remains `ConnectedPseudospectrum.main_theorem` in
 `ConnectedPseudospectrum/MainTheorem.lean`.
 
+The simplified canonical proofs also correspond to
+`../preprint/connectedness_thresholds.tex`. The preprint proof map in
+`FORMALIZATION_MAP.md` records the direct five-minor generating functions,
+the two-case central estimate, and the adjacent-order logarithmic inversion.
+
 ## Scope
 
 The kernel-checked proof includes the complete dependency chain used by the
@@ -51,8 +56,11 @@ main theorem:
 - a single piecewise full-family threshold and critical-size wrapper, with
   exact tail, first-order, decay, and all three critical-order laws.
 
-The logarithmic inversion is proved directly in
-`ConnectedPseudospectrum/TailThresholdAsymptotic.lean`.  No Lambert `W`
+The shared logarithmic inversion is proved in
+`ConnectedPseudospectrum/Asymptotics.lean`. The critical-order proof in
+`ConnectedPseudospectrum/CriticalThreshold.lean` applies it directly to the
+first connected order and its predecessor. The tail-model results in
+`ConnectedPseudospectrum/TailThresholdAsymptotic.lean` use the same estimate.  No Lambert `W`
 function, exact Lambert floor formula, or extra small-parameter condition is
 part of the current manuscript or formalization.
 
@@ -84,7 +92,7 @@ lake env lean AxiomAudit.lean
 
 The umbrella module imports every source module under
 `ConnectedPseudospectrum/`; there are no detached proof modules.  The axiom
-audit contains 290 selected `#print axioms` commands, including both assembly
+audit contains 293 selected `#print axioms` commands, including both assembly
 theorems.  The only accepted foundational dependencies are `propext`,
 `Classical.choice`, and `Quot.sound`.
 

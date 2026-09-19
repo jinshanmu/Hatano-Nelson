@@ -723,7 +723,7 @@ eigenvalue of the full matrix has minimum modulus. -/
 theorem oddCentral_abs_min_of_positive_leadingPrincipal
     (m : ℕ) (hm : 0 < m)
     {B : Matrix (Fin (2 * m + 1)) (Fin (2 * m + 1)) ℝ}
-    (hB : B.IsHermitian) (s : ℝ) (hs : 0 < s)
+    (hB : B.IsHermitian) (s : ℝ)
     (hCpos : orderedHermitianEigenvalue
         (leadingPrincipalMatrix_isHermitian hB) ⟨m - 1, by omega⟩ = s)
     (hCneg : orderedHermitianEigenvalue
@@ -754,6 +754,7 @@ theorem oddCentral_abs_min_of_positive_leadingPrincipal
     have h' : -s ≥ orderedHermitianEigenvalue hB d := by
       simpa only [q, d] using h
     linarith
+  have hs : 0 < s := hselected.trans_le hc_le_s
   have hdNeg : orderedHermitianEigenvalue hB d < 0 := by
     have hnegS : -s < 0 := neg_lt_zero.mpr hs
     have hd_le : orderedHermitianEigenvalue hB d ≤ -s := by
@@ -789,7 +790,7 @@ inertia signs, the negative central eigenvalue has minimum modulus. -/
 theorem oddCentral_abs_min_of_negative_leadingPrincipal
     (m : ℕ) (hm : 0 < m)
     {B : Matrix (Fin (2 * m + 1)) (Fin (2 * m + 1)) ℝ}
-    (hB : B.IsHermitian) (s : ℝ) (hs : 0 < s)
+    (hB : B.IsHermitian) (s : ℝ)
     (hCpos : orderedHermitianEigenvalue
         (leadingPrincipalMatrix_isHermitian hB) ⟨m - 1, by omega⟩ = s)
     (hCneg : orderedHermitianEigenvalue
@@ -815,6 +816,7 @@ theorem oddCentral_abs_min_of_negative_leadingPrincipal
     have h' : orderedHermitianEigenvalue hB c ≥ -s := by
       simpa only [q, c] using h
     linarith
+  have hs : 0 < s := (neg_pos.mpr hselected).trans_le hneg_c_le_s
   have hprevPos : 0 < orderedHermitianEigenvalue hB prev :=
     hs.trans_le hs_le_prev
   refine ⟨hselected, ?_⟩
@@ -2220,108 +2222,12 @@ theorem oddLeadingPrincipal_submatrix_eq_evenPathDilation
       smul_eq_mul]
     split_ifs <;> (first | omega | norm_num)
 
-/-- The eigenvalues of the size-`m` path are precisely the odd
-zero-based (equivalently, even one-based) eigenvalues of the size
-`2m+1` path. -/
-theorem symmetricPathEigenvalue_odd_index_eq_small
-    (m : ℕ) (r : ℝ) (k : Fin m) :
-    symmetricPathEigenvalue (2 * m + 1) r
-        ⟨2 * k.1 + 1, by omega⟩ =
-      symmetricPathEigenvalue m r k := by
-  unfold symmetricPathEigenvalue pathEigenangle
-  congr 2
-  field_simp
-  push_cast
-  ring
-
-/-- In an open spectral gap of the `(2m+1)`-path, the smaller shifted
-path `P_m(x)` is nonsingular.  Its possible zeros are exactly the
-even-numbered spectral nodes, none of which lies in an open gap. -/
-theorem realShiftedPathMatrix_isUnit_of_mem_odd_gap
-    (m j : ℕ) (hj : 0 < j) (hjn : j < 2 * m + 1)
-    {r : ℝ} (hr : 0 < r) {x : ℝ}
-    (hxLower : symmetricPathEigenvalue (2 * m + 1) r ⟨j, hjn⟩ < x)
-    (hxUpper :
-      x < symmetricPathEigenvalue (2 * m + 1) r ⟨j - 1, by omega⟩) :
-    IsUnit (realShiftedPathMatrix m (r ^ 2) x) := by
-  rw [Matrix.isUnit_iff_isUnit_det, isUnit_iff_ne_zero]
-  intro hdet
-  have hcomplexDet :
-      (shiftedPathMatrix m (r ^ 2) (x : ℂ)).det = 0 := by
-    rw [shiftedPathMatrix_ofReal_eq_map]
-    change (Complex.ofRealHom.mapMatrix
-      (x • 1 - pathMatrix m (r ^ 2))).det = 0
-    rw [← Complex.ofRealHom.map_det]
-    change Complex.ofRealHom ((realShiftedPathMatrix m (r ^ 2) x).det) = 0
-    rw [hdet, map_zero]
-  obtain ⟨k, hxk⟩ :=
-    (det_shiftedPathMatrix_eq_zero_iff m (sq_pos_of_pos hr) (x : ℂ)).mp
-      hcomplexDet
-  have hxkReal : x = pathEigenvalue m (r ^ 2) k :=
-    Complex.ofReal_injective hxk
-  have hsqrt : Real.sqrt (r ^ 2) = r := by
-    rw [Real.sqrt_sq_eq_abs, abs_of_pos hr]
-  rw [pathEigenvalue_eq_symmetricPathEigenvalue, hsqrt] at hxkReal
-  let l : Fin (2 * m + 1) := ⟨2 * k.1 + 1, by omega⟩
-  have hxLarge : x = symmetricPathEigenvalue (2 * m + 1) r l := by
-    rw [hxkReal]
-    exact (symmetricPathEigenvalue_odd_index_eq_small m r k).symm
-  by_cases hlj : l.1 < j
-  · have hlUpper : l ≤ (⟨j - 1, by omega⟩ : Fin (2 * m + 1)) := by
-      have hlj' : 2 * k.1 + 1 < j := by simpa only [l] using hlj
-      exact Fin.mk_le_mk.mpr (by omega)
-    have hxEigen : x < symmetricPathEigenvalue (2 * m + 1) r l :=
-      hxUpper.trans_le
-        ((symmetricPathEigenvalue_strictAnti (2 * m + 1) hr).antitone hlUpper)
-    exact (ne_of_lt hxEigen) hxLarge
-  · have hjl : (⟨j, hjn⟩ : Fin (2 * m + 1)) ≤ l := by
-      have hjl' : j ≤ 2 * k.1 + 1 := by
-        simpa only [l] using (le_of_not_gt hlj)
-      exact Fin.mk_le_mk.mpr (by omega)
-    have hEigenX : symmetricPathEigenvalue (2 * m + 1) r l < x :=
-      lt_of_le_of_lt
-        ((symmetricPathEigenvalue_strictAnti (2 * m + 1) hr).antitone hjl)
-        hxLower
-    exact (ne_of_gt hEigenX) hxLarge
-
-/-- Nonsingularity of `P` implies nonsingularity of its off-diagonal
-Hermitian dilation `[[0,P],[Pᵀ,0]]`. -/
-theorem evenPathDilation_isUnit (m : ℕ) (a x : ℝ)
-    (hP : IsUnit (realShiftedPathMatrix m a x)) :
-    IsUnit (evenPathDilation m a x) := by
-  rw [← Matrix.mulVec_injective_iff_isUnit]
-  intro u v huv
-  have hright : (fun i : Fin m => u (Sum.inr i)) =
-      (fun i : Fin m => v (Sum.inr i)) := by
-    apply (Matrix.mulVec_injective_iff_isUnit.mpr hP)
-    funext i
-    have hi := congrFun huv (Sum.inl i)
-    simpa [evenPathDilation, Matrix.mulVec, dotProduct] using hi
-  have hPt : IsUnit (Matrix.transpose (realShiftedPathMatrix m a x)) :=
-    (Matrix.isUnit_transpose (realShiftedPathMatrix m a x)).mpr hP
-  have hleft : (fun i : Fin m => u (Sum.inl i)) =
-      (fun i : Fin m => v (Sum.inl i)) := by
-    apply (Matrix.mulVec_injective_iff_isUnit.mpr hPt)
-    funext i
-    have hi := congrFun huv (Sum.inr i)
-    simpa [evenPathDilation, Matrix.mulVec, dotProduct] using hi
-  funext i
-  rcases i with i | i
-  · exact congrFun hleft i
-  · exact congrFun hright i
-
 /-- The dilation in the ordinary `Fin (2m)` coordinate type used by the
 ordered-eigenvalue and Cauchy-interlacing infrastructure. -/
 def evenPathDilationFin (m : ℕ) (a x : ℝ) :
     Matrix (Fin (2 * m)) (Fin (2 * m)) ℝ :=
   (evenPathDilation m a x).submatrix
     (twoBlockFinEquiv m).symm (twoBlockFinEquiv m).symm
-
-theorem evenPathDilationFin_isUnit (m : ℕ) (a x : ℝ)
-    (hP : IsUnit (realShiftedPathMatrix m a x)) :
-    IsUnit (evenPathDilationFin m a x) := by
-  rw [evenPathDilationFin, Matrix.isUnit_submatrix_equiv]
-  exact evenPathDilation_isUnit m a x hP
 
 theorem evenPathDilation_isSymm (m : ℕ) (a x : ℝ) :
     (evenPathDilation m a x).IsSymm := by
@@ -2396,33 +2302,13 @@ theorem evenPathDilationFin_charpoly_neg (m : ℕ) (a x : ℝ) :
     _ = (-evenPathDilationFin m a x).charpoly := by
       rw [hassoc, evenDilationSignatureFin_mul_self, Matrix.one_mul]
 
-/-- An invertible Hermitian matrix has no zero ordered eigenvalue. -/
-theorem orderedHermitianEigenvalue_ne_zero_of_isUnit
-    {n : ℕ} {A : Matrix (Fin n) (Fin n) ℝ} (hA : A.IsHermitian)
-    (hunit : IsUnit A) (i : Fin n) :
-    orderedHermitianEigenvalue hA i ≠ 0 := by
-  intro hzero
-  let v : Fin n → ℝ := orderedHermitianEigenbasis hA i
-  have hv : v ≠ 0 := by
-    intro hv0
-    apply (orderedHermitianEigenbasis hA).toBasis.ne_zero i
-    apply WithLp.ofLp_injective 2
-    exact hv0
-  have heig := mulVec_orderedHermitianEigenbasis hA i
-  rw [hzero, zero_smul] at heig
-  apply hv
-  apply (Matrix.mulVec_injective_iff_isUnit.mpr hunit)
-  simpa only [Matrix.mulVec_zero] using heig
-
-/-- The two central ordered eigenvalues of a nonsingular dilation are
-`s` and `-s` with `s>0`.  This is the precise input needed by the odd
-Cauchy-interlacing selection argument. -/
+/-- Spectral reflection pairs the two central dilation eigenvalues as
+`s,-s`, where `s≥0`. -/
 theorem evenPathDilationFin_central_pair
-    (m : ℕ) (hm : 0 < m) (a x : ℝ)
-    (hP : IsUnit (realShiftedPathMatrix m a x)) :
+    (m : ℕ) (hm : 0 < m) (a x : ℝ) :
     let hD : (evenPathDilationFin m a x).IsHermitian :=
       evenPathDilationFin_isHermitian m a x
-    0 < orderedHermitianEigenvalue hD ⟨m - 1, by omega⟩ ∧
+    0 ≤ orderedHermitianEigenvalue hD ⟨m - 1, by omega⟩ ∧
       orderedHermitianEigenvalue hD ⟨m, by omega⟩ =
         -orderedHermitianEigenvalue hD ⟨m - 1, by omega⟩ := by
   dsimp only
@@ -2453,15 +2339,10 @@ theorem evenPathDilationFin_central_pair
     (orderedHermitianEigenvalue_antitone hD) (by
       change m - 1 ≤ m
       omega)
-  have hcne : orderedHermitianEigenvalue hD c ≠ 0 :=
-    orderedHermitianEigenvalue_ne_zero_of_isUnit hD
-      (evenPathDilationFin_isUnit m a x hP) c
-  have hcpos : 0 < orderedHermitianEigenvalue hD c := by
-    have hnonneg : 0 ≤ orderedHermitianEigenvalue hD c := by
-      rw [hpair] at horder
-      linarith
-    exact lt_of_le_of_ne hnonneg (Ne.symm hcne)
-  exact ⟨by simpa only [c] using hcpos, by simpa only [c, d] using hpair⟩
+  have hc_nonneg : 0 ≤ orderedHermitianEigenvalue hD c := by
+    rw [hpair] at horder
+    linarith
+  exact ⟨by simpa only [c] using hc_nonneg, by simpa only [c, d] using hpair⟩
 
 theorem oddFoldedSignedMiddleMatrix_isHermitian
     (m : ℕ) (a x : ℝ) :
@@ -2483,36 +2364,28 @@ theorem oddLeadingPrincipal_eq_evenPathDilationFin
   rw [← oddLeadingPrincipal_submatrix_eq_evenPathDilation]
   simp
 
-/-- In every open spectral gap, the leading block of the odd folding has
-central ordered eigenvalues `s,-s` with `s>0`. -/
+/-- The odd folded leading block has central eigenvalues `s,-s`
+with `s≥0`, for every real shift. -/
 theorem oddLeadingPrincipal_central_pair
-    (m j : ℕ) (hm : 0 < m) (hj : 0 < j) (hjn : j < 2 * m + 1)
-    {r : ℝ} (hr : 0 < r) {x : ℝ}
-    (hxLower : symmetricPathEigenvalue (2 * m + 1) r ⟨j, hjn⟩ < x)
-    (hxUpper :
-      x < symmetricPathEigenvalue (2 * m + 1) r ⟨j - 1, by omega⟩) :
-    let hB : (oddFoldedSignedMiddleMatrix m (r ^ 2) x).IsHermitian :=
-      oddFoldedSignedMiddleMatrix_isHermitian m (r ^ 2) x
+    (m : ℕ) (hm : 0 < m) (a x : ℝ) :
+    let hB : (oddFoldedSignedMiddleMatrix m a x).IsHermitian :=
+      oddFoldedSignedMiddleMatrix_isHermitian m a x
     let hC := leadingPrincipalMatrix_isHermitian hB
-    0 < orderedHermitianEigenvalue hC ⟨m - 1, by omega⟩ ∧
+    0 ≤ orderedHermitianEigenvalue hC ⟨m - 1, by omega⟩ ∧
       orderedHermitianEigenvalue hC ⟨m, by omega⟩ =
         -orderedHermitianEigenvalue hC ⟨m - 1, by omega⟩ := by
   dsimp only
-  let B := oddFoldedSignedMiddleMatrix m (r ^ 2) x
-  let hB : B.IsHermitian :=
-    oddFoldedSignedMiddleMatrix_isHermitian m (r ^ 2) x
+  let B := oddFoldedSignedMiddleMatrix m a x
+  let hB : B.IsHermitian := oddFoldedSignedMiddleMatrix_isHermitian m a x
   let C := leadingPrincipalMatrix B
   let hC : C.IsHermitian := leadingPrincipalMatrix_isHermitian hB
-  let D := evenPathDilationFin m (r ^ 2) x
-  let hD : D.IsHermitian := evenPathDilationFin_isHermitian m (r ^ 2) x
-  have hCD : C = D := oddLeadingPrincipal_eq_evenPathDilationFin
-    m (r ^ 2) x
+  let D := evenPathDilationFin m a x
+  let hD : D.IsHermitian := evenPathDilationFin_isHermitian m a x
+  have hCD : C = D := oddLeadingPrincipal_eq_evenPathDilationFin m a x
   have hordered : ∀ i : Fin (2 * m),
       orderedHermitianEigenvalue hC i = orderedHermitianEigenvalue hD i :=
     orderedHermitianEigenvalue_eq_of_charpoly_eq hC hD (by rw [hCD])
-  have hpair := evenPathDilationFin_central_pair m hm (r ^ 2) x
-    (realShiftedPathMatrix_isUnit_of_mem_odd_gap
-      m j hj hjn hr hxLower hxUpper)
+  have hpair := evenPathDilationFin_central_pair m hm a x
   constructor
   · rw [hordered]
     exact hpair.1
@@ -2586,11 +2459,10 @@ theorem oddSignedMiddleMatrix_central_abs_min_even_gap
     rw [hordered]
     exact hsignA.1
   let hC := leadingPrincipalMatrix_isHermitian hB
-  have hcentral := oddLeadingPrincipal_central_pair
-    m j hm hj hjn hr hxLower hxUpper
+  have hcentral := oddLeadingPrincipal_central_pair m hm (r ^ 2) x
   let s := orderedHermitianEigenvalue hC ⟨m - 1, by omega⟩
   have hresult := oddCentral_abs_min_of_positive_leadingPrincipal
-    m hm hB s hcentral.1 rfl hcentral.2 hsignB
+    m hm hB s rfl hcentral.2 hsignB
   constructor
   · rw [← hordered]
     exact hresult.1
@@ -2629,11 +2501,10 @@ theorem oddSignedMiddleMatrix_central_abs_min_odd_gap
     rw [hordered]
     exact hsignA.2
   let hC := leadingPrincipalMatrix_isHermitian hB
-  have hcentral := oddLeadingPrincipal_central_pair
-    m j hm hj hjn hr hxLower hxUpper
+  have hcentral := oddLeadingPrincipal_central_pair m hm (r ^ 2) x
   let s := orderedHermitianEigenvalue hC ⟨m - 1, by omega⟩
   have hresult := oddCentral_abs_min_of_negative_leadingPrincipal
-    m hm hB s hcentral.1 rfl hcentral.2 hsignB
+    m hm hB s rfl hcentral.2 hsignB
   constructor
   · rw [← hordered]
     exact hresult.1

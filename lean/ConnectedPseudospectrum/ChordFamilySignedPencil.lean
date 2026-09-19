@@ -22,7 +22,7 @@ theorem signedPencilDet_outerChordFamily_even_eq_zero
     signedPencilDet (d.K - 1) d.a (outerChordFamilyX d θ)
         (outerChordFamilySignedRoot d θ) = 0 := by
   have hindex : d.K - 1 = 2 * m := by omega
-  rw [hindex, signedPencilDet_even_eq_foldEvenSequence d.ha1.ne]
+  rw [hindex, signedPencilDet_even_eq_foldEvenSequence]
   exact foldEvenSequence_outerChordFamily_eq_zero d m hK θ hleft hright
 
 /-- For even `K=2m+2`, every interior chord solves the actual odd-order
@@ -34,7 +34,7 @@ theorem signedPencilDet_outerChordFamily_odd_eq_zero
     signedPencilDet (d.K - 1) d.a (outerChordFamilyX d θ)
         (outerChordFamilySignedRoot d θ) = 0 := by
   have hindex : d.K - 1 = 2 * m + 1 := by omega
-  rw [hindex, signedPencilDet_odd_eq_foldOddSequence d.ha1.ne]
+  rw [hindex, signedPencilDet_odd_eq_foldOddSequence]
   exact foldOddSequence_outerChordFamily_eq_zero d m hK θ hleft hright
 
 end

@@ -235,7 +235,7 @@ the forced nodal sign and the channel chord equation. -/
 theorem foldEvenSequence_eq_zero_iff_sign_and_channels
     (m j : ℕ) (hm : 1 ≤ m) (hj : j < 2 * m + 1)
     {a θ η varsigma : ℝ}
-    (ha0 : 0 < a) (ha1 : a ≠ 1)
+    (ha0 : 0 < a)
     (hθ : (j : ℝ) * Real.pi / ((2 * m + 1 : ℕ) : ℝ) < θ ∧
       θ < ((j + 1 : ℕ) : ℝ) * Real.pi / ((2 * m + 1 : ℕ) : ℝ))
     (hη0 : 0 ≤ η) (hηh : η ≤ pathLogParameter a)
@@ -247,7 +247,7 @@ theorem foldEvenSequence_eq_zero_iff_sign_and_channels
         (varsigma * halfChordS a θ η) m = 0 ↔
       varsigma = (-1 : ℝ) ^ j ∧
         chordPhi (2 * m + 1) a θ = chordPsi (2 * m + 1) a η := by
-  rw [foldEvenSequence_signed_halfChord_eq_zero_iff m ha0 ha1
+  rw [foldEvenSequence_signed_halfChord_eq_zero_iff m ha0
     hη0 hηh hsign hdistinct]
   have hclassification := signedHalfChord_eq_iff_sign_and_channels
     (K := 2 * m + 1) (j := j) (by omega) hj hθ
@@ -260,7 +260,7 @@ the forced nodal sign and the channel chord equation. -/
 theorem foldOddSequence_eq_zero_iff_sign_and_channels
     (m j : ℕ) (hj : j < 2 * m + 2)
     {a θ η varsigma : ℝ}
-    (ha0 : 0 < a) (ha1 : a ≠ 1)
+    (ha0 : 0 < a)
     (hθ : (j : ℝ) * Real.pi / ((2 * m + 2 : ℕ) : ℝ) < θ ∧
       θ < ((j + 1 : ℕ) : ℝ) * Real.pi / ((2 * m + 2 : ℕ) : ℝ))
     (hη0 : 0 ≤ η) (hηh : η ≤ pathLogParameter a)
@@ -273,7 +273,7 @@ theorem foldOddSequence_eq_zero_iff_sign_and_channels
         (varsigma * halfChordS a θ η) m = 0 ↔
       varsigma = (-1 : ℝ) ^ j ∧
         chordPhi (2 * m + 2) a θ = chordPsi (2 * m + 2) a η := by
-  rw [foldOddSequence_signed_halfChord_eq_zero_iff m ha0 ha1
+  rw [foldOddSequence_signed_halfChord_eq_zero_iff m ha0
     hη0 hηh hsign hdistinct hy]
   have hclassification := signedHalfChord_eq_iff_sign_and_channels
     (K := 2 * m + 2) (j := j) (by omega) hj hθ

@@ -161,7 +161,7 @@ theorem foldOddChebyshev_numerator_signed_halfChord
   ring
 
 theorem foldOddSequence_signed_halfChord_factorization
-    (m : ℕ) {a θ η varsigma : ℝ} (ha0 : 0 < a) (ha1 : a ≠ 1)
+    (m : ℕ) {a θ η varsigma : ℝ} (ha0 : 0 < a)
     (hη0 : 0 ≤ η) (hηh : η ≤ pathLogParameter a)
     (hsign : varsigma ^ 2 = 1)
     (hdistinct : Real.cosh η ^ 2 ≠ Real.cos θ ^ 2)
@@ -190,13 +190,13 @@ theorem foldOddSequence_signed_halfChord_factorization
     (x := halfChordX a θ η)
     (s := varsigma * halfChordS a θ η) ha0.ne' hdisc
   rw [foldOddSequence_eq_chebyshevDividedDifference
-    ha0.ne' ha1 hxi hsum hprod m]
+    ha0.ne' hxi hsum hprod m]
   rw [foldOddChebyshev_numerator_signed_halfChord m ha0 hη0 hηh hsign hy,
     foldXiPlus_signed_halfChord ha0 hη0 hηh hsign,
     foldXiMinus_signed_halfChord ha0 hη0 hηh hsign]
 
 theorem foldOddSequence_signed_halfChord_eq_zero_iff
-    (m : ℕ) {a θ η varsigma : ℝ} (ha0 : 0 < a) (ha1 : a ≠ 1)
+    (m : ℕ) {a θ η varsigma : ℝ} (ha0 : 0 < a)
     (hη0 : 0 ≤ η) (hηh : η ≤ pathLogParameter a)
     (hsign : varsigma ^ 2 = 1)
     (hdistinct : Real.cosh η ^ 2 ≠ Real.cos θ ^ 2)
@@ -206,7 +206,7 @@ theorem foldOddSequence_signed_halfChord_eq_zero_iff
       halfTrigRadical a θ * chebyshevU (2 * m + 1) (Real.cos θ) =
         varsigma * halfHypRadical a η *
           chebyshevU (2 * m + 1) (Real.cosh η) := by
-  rw [foldOddSequence_signed_halfChord_factorization m ha0 ha1
+  rw [foldOddSequence_signed_halfChord_factorization m ha0
     hη0 hηh hsign hdistinct hy]
   have haPow : a ^ m ≠ 0 := pow_ne_zero _ ha0.ne'
   have hsigma : varsigma ≠ 0 := by

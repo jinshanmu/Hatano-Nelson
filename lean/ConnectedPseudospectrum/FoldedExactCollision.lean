@@ -329,7 +329,7 @@ theorem fourthOrderSequence_unique
         linear_combination hp' - hq'
 
 theorem foldEvenSequence_eq_collisionCandidate
-    {a x s u : ℝ} (ha0 : a ≠ 0) (ha1 : a ≠ 1)
+    {a x s u : ℝ} (ha0 : a ≠ 0)
     (hsum : 4 * a * u = foldC0 a x s)
     (hprod : a ^ 2 * (4 * u ^ 2 + 2) = foldB a x s) :
     ∀ m, foldEvenSequence a x s m =
@@ -354,7 +354,7 @@ theorem foldEvenSequence_eq_collisionCandidate
   have hone : foldEvenSequence a x s 1 =
       foldEvenCollisionCandidate a u (foldZeta a s) 1 := by
     have hp := foldEvenSequence_residual_one
-      (a := a) (x := x) (s := s) ha0 ha1
+      (a := a) (x := x) (s := s) ha0
     have hq := foldEvenCollisionCandidate_residual_one
       a u (foldZeta a s)
     rw [← hsum, hzero] at hp
@@ -362,7 +362,7 @@ theorem foldEvenSequence_eq_collisionCandidate
   have htwo : foldEvenSequence a x s 2 =
       foldEvenCollisionCandidate a u (foldZeta a s) 2 := by
     have hp := foldEvenSequence_residual_two
-      (a := a) (x := x) (s := s) ha0 ha1
+      (a := a) (x := x) (s := s) ha0
     have hq := foldEvenCollisionCandidate_residual_two
       a u (foldZeta a s)
     rw [← hsum, ← hprod, hzero, hone] at hp
@@ -370,17 +370,17 @@ theorem foldEvenSequence_eq_collisionCandidate
   have hthree : foldEvenSequence a x s 3 =
       foldEvenCollisionCandidate a u (foldZeta a s) 3 := by
     have hp := foldEvenSequence_residual_three
-      (a := a) (x := x) (s := s) ha1
+      (a := a) (x := x) (s := s)
     have hq := foldEvenCollisionCandidate_residual_three
       a u (foldZeta a s)
     rw [← hsum, ← hprod, hzero, hone, htwo] at hp
     linear_combination hp - hq
   exact fourthOrderSequence_unique
-    (foldEvenSequence_recurrence (a := a) (x := x) (s := s) ha1)
+    (foldEvenSequence_recurrence (a := a) (x := x) (s := s))
     hcand hzero hone htwo hthree
 
 theorem foldOddSequence_eq_collisionCandidate
-    {a x s u : ℝ} (ha0 : a ≠ 0) (ha1 : a ≠ 1)
+    {a x s u : ℝ} (ha0 : a ≠ 0)
     (hsum : 4 * a * u = foldC0 a x s)
     (hprod : a ^ 2 * (4 * u ^ 2 + 2) = foldB a x s) :
     ∀ m, foldOddSequence a x s m =
@@ -410,7 +410,7 @@ theorem foldOddSequence_eq_collisionCandidate
   have hone : foldOddSequence a x s 1 =
       foldOddCollisionCandidate a x s (foldOddBeta a x s) u 1 := by
     have hp := foldOddSequence_residual_one
-      (a := a) (x := x) (s := s) ha1
+      (a := a) (x := x) (s := s)
     have hq := foldOddCollisionCandidate_residual_one
       a x s (foldOddBeta a x s) u
     rw [← hsum, hzero] at hp
@@ -418,7 +418,7 @@ theorem foldOddSequence_eq_collisionCandidate
   have htwo : foldOddSequence a x s 2 =
       foldOddCollisionCandidate a x s (foldOddBeta a x s) u 2 := by
     have hp := foldOddSequence_residual_two
-      (a := a) (x := x) (s := s) ha1
+      (a := a) (x := x) (s := s)
     have hq := foldOddCollisionCandidate_residual_two
       a x s (foldOddBeta a x s) u
     rw [← hsum, ← hprod, hzero, hone] at hp
@@ -426,13 +426,13 @@ theorem foldOddSequence_eq_collisionCandidate
   have hthree : foldOddSequence a x s 3 =
       foldOddCollisionCandidate a x s (foldOddBeta a x s) u 3 := by
     have hp := foldOddSequence_residual_three
-      (a := a) (x := x) (s := s) ha1
+      (a := a) (x := x) (s := s)
     have hq := foldOddCollisionCandidate_residual_three
       a x s (foldOddBeta a x s) u
     rw [← hsum, ← hprod, hzero, hone, htwo] at hp
     linear_combination hp - hq
   exact fourthOrderSequence_unique
-    (foldOddSequence_recurrence (a := a) (x := x) (s := s) ha1)
+    (foldOddSequence_recurrence (a := a) (x := x) (s := s))
     hcand hzero hone htwo hthree
 
 theorem foldXiPlus_eq_foldXiMinus_of_discriminant_eq_zero
@@ -441,7 +441,7 @@ theorem foldXiPlus_eq_foldXiMinus_of_discriminant_eq_zero
   simp [foldXiPlus, foldXiMinus, hdisc]
 
 theorem foldEvenSequence_eq_deriv_at_foldXi_collision
-    {a x s : ℝ} (ha0 : a ≠ 0) (ha1 : a ≠ 1)
+    {a x s : ℝ} (ha0 : a ≠ 0)
     (hdisc : foldDiscriminant a x s = 0) (m : ℕ) :
     foldEvenSequence a x s m =
       a ^ m * deriv
@@ -454,13 +454,13 @@ theorem foldEvenSequence_eq_deriv_at_foldXi_collision
   rw [← hxi] at hsum hprod
   change foldEvenSequence a x s m =
     foldEvenCollisionCandidate a (foldXiPlus a x s) (foldZeta a s) m
-  apply foldEvenSequence_eq_collisionCandidate ha0 ha1
+  apply foldEvenSequence_eq_collisionCandidate ha0
   · linear_combination hsum
   · convert hprod using 1
     all_goals ring
 
 theorem foldOddSequence_eq_deriv_at_foldXi_collision
-    {a x s : ℝ} (ha0 : a ≠ 0) (ha1 : a ≠ 1)
+    {a x s : ℝ} (ha0 : a ≠ 0)
     (hdisc : foldDiscriminant a x s = 0) (m : ℕ) :
     foldOddSequence a x s m =
       a ^ m * deriv
@@ -474,7 +474,7 @@ theorem foldOddSequence_eq_deriv_at_foldXi_collision
   change foldOddSequence a x s m =
     foldOddCollisionCandidate a x s (foldOddBeta a x s)
       (foldXiPlus a x s) m
-  apply foldOddSequence_eq_collisionCandidate ha0 ha1
+  apply foldOddSequence_eq_collisionCandidate ha0
   · linear_combination hsum
   · convert hprod using 1
     all_goals ring

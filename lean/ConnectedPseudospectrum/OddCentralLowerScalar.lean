@@ -14,14 +14,9 @@ odd path of order `2m+1` it sets `L=m+1`, introduces the source's quantities
 `(1+omega_L)(1+xi)^2 U_{L-1}(xi)^2
   < (rho+omega_L) D_L`.
 
-There are two deliberate source-level repairs.
-
-* At `rho=1` the displayed quotient for the logarithmic derivative is
-  `0/0`.  We instead use the exact endpoint derivative
-  `(2*L^2+1)/6` and prove positivity directly.
-* The source's strict inequality `5/(2L+1)^2 < 1/5` is an equality when
-  `L=2`.  We prove the correct weak inequality; the preceding bound on
-  `1-rho` remains strict, so the required conclusion is unchanged.
+The logarithmic-derivative identity is denominator-free, including at
+`rho=1`. Positivity uses two cases, `rho>=1` and `rho<1`; the latter follows
+from one common positive bracket, without a quadratic endpoint argument.
 -/
 
 namespace ConnectedPseudospectrum
@@ -106,13 +101,6 @@ def lowerCentralN (d : OddCentralChordData) : Real :=
         2 * d.lowerCentralOmegaDelta * d.lowerCentralQ *
           d.lowerCentralSlopeAtRho) -
     (1 + d.lowerCentralOmega) * (1 + d.lowerCentralRho) ^ 2
-
-/-- The boundary cubic `Upsilon` used in the `rho>=1` cases. -/
-def lowerCentralUpsilon (d : OddCentralChordData) (s : Real) : Real :=
-  s * ((s + 1 / d.lowerCentralLength) ^ 2 +
-      (1 + d.lowerCentralOmega) * d.lowerCentralOmegaDelta) -
-    (1 + d.lowerCentralOmega) *
-      (s + d.lowerCentralOmegaDelta) ^ 2
 
 /-! ## Elementary positivity and central-root identities -/
 
@@ -866,15 +854,11 @@ theorem lowerCentralLogSlope_eq_chebyshevDerivative
     rw [add_div, div_self hUpos.ne']
   exact (hasDerivAt_log_lowerCentralF ht).unique hlog
 
-/-- The guarded logarithmic-derivative quotient.  The guard is necessary:
-at `rho=1` its printed right-hand side is `0/0`. -/
-theorem lowerCentralSlopeAtRho_eq_quotient
-    (d : OddCentralChordData)
-    (hrhoOne : d.lowerCentralRho ≠ 1) :
-    d.lowerCentralSlopeAtRho =
-      (d.lowerCentralLength *
-          (d.lowerCentralB - d.lowerCentralRho) - 1) /
-        (d.lowerCentralRho ^ 2 - 1) := by
+/-- The logarithmic-derivative identity, valid also at `rho=1`. -/
+theorem lowerCentralSlopeAtRho_identity (d : OddCentralChordData) :
+    (d.lowerCentralRho ^ 2 - 1) * d.lowerCentralSlopeAtRho =
+      d.lowerCentralLength *
+        (d.lowerCentralB - d.lowerCentralRho) - 1 := by
   let rho := d.lowerCentralRho
   let U : Real := chebyshevU d.m rho
   let U' : Real := deriv (chebyshevU d.m) rho
@@ -930,265 +914,74 @@ theorem lowerCentralSlopeAtRho_eq_quotient
     have href := lowerCentralReferenceRho_pos d
     have hr := lowerCentralReferenceRho_lt_Rho d
     linarith
-  have hrhoNegOne : rho ≠ -1 := by linarith
   have honePlusRho : 1 + rho ≠ 0 := by linarith
-  have hden : rho ^ 2 - 1 ≠ 0 := by
-    rw [show rho ^ 2 - 1 = (rho - 1) * (rho + 1) by ring]
-    exact mul_ne_zero (sub_ne_zero.mpr hrhoOne)
-      (by linarith)
   rw [lowerCentralSlopeAtRho,
     lowerCentralLogSlope_eq_chebyshevDerivative
       (lowerCentralRho_above_previousNode d)]
-  dsimp only [rho, U, U', b] at hmain hUpos hden honePlusRho ⊢
-  field_simp [hUpos.ne', hden, honePlusRho]
+  dsimp only [rho, U, U', b] at hmain hUpos honePlusRho ⊢
+  field_simp [hUpos.ne', honePlusRho]
   nlinarith
 
-/-- The exact endpoint value replacing the undefined quotient at `rho=1`. -/
-theorem lowerCentralSlopeAtRho_eq_of_Rho_eq_one
+/-- Quotient form used only away from `rho=1`. -/
+theorem lowerCentralSlopeAtRho_eq_quotient
     (d : OddCentralChordData)
-    (hrho : d.lowerCentralRho = 1) :
+    (hrhoOne : d.lowerCentralRho ≠ 1) :
     d.lowerCentralSlopeAtRho =
-      (2 * d.lowerCentralLength ^ 2 + 1) / 6 := by
-  have hslope := lowerCentralLogSlope_eq_chebyshevDerivative
-    (d := d) (t := (1 : Real)) (by
-      rw [← hrho]
-      exact lowerCentralRho_above_previousNode d)
-  have hUone := Polynomial.Chebyshev.U_eval_one
-    (R := Real) (d.m : Int)
-  have hUderiv := Polynomial.Chebyshev.derivative_U_eval_one
-    (R := Real) (d.m : Int)
-  have hderiv :
-      deriv (chebyshevU d.m) 1 =
-        (Polynomial.Chebyshev.U Real d.m).derivative.eval 1 := by
-    exact (Polynomial.Chebyshev.U Real d.m).deriv
-  rw [lowerCentralSlopeAtRho, hrho, hslope, hderiv]
-  unfold chebyshevU
-  push_cast at hUone hUderiv ⊢
-  rw [hUone]
-  have hL : d.lowerCentralLength = (d.m : Real) + 1 :=
-    lowerCentralLength_eq d
-  rw [hL]
-  have hmOnePos : 0 < (d.m : Real) + 1 := by positivity
-  field_simp [hmOnePos.ne']
-  nlinarith [hUderiv]
+      (d.lowerCentralLength *
+          (d.lowerCentralB - d.lowerCentralRho) - 1) /
+        (d.lowerCentralRho ^ 2 - 1) := by
+  have hrhoPos := (lowerCentralReferenceRho_pos d).trans
+    (lowerCentralReferenceRho_lt_Rho d)
+  apply (eq_div_iff (show d.lowerCentralRho ^ 2 - 1 ≠ 0 by
+    intro h
+    have : d.lowerCentralRho = 1 := by nlinarith
+    exact hrhoOne this)).2
+  simpa only [mul_comm] using lowerCentralSlopeAtRho_identity d
 
-theorem lowerCentralB_eq_one_add_inv_length_of_Rho_eq_one
+/-! ## Positivity of `N`: the case `rho>=1` -/
+
+theorem lowerCentralN_pos_of_one_le_Rho
     (d : OddCentralChordData)
-    (hrho : d.lowerCentralRho = 1) :
-    d.lowerCentralB = 1 + 1 / d.lowerCentralLength := by
-  have hEq := (lowerCentralRho_spec d).2
-  unfold lowerCentralUMinus lowerCentralUPlus at hEq
-  rw [hrho] at hEq
-  have hUm := Polynomial.Chebyshev.U_eval_one
-    (R := Real) (d.m : Int)
-  have hUp := Polynomial.Chebyshev.U_eval_one
-    (R := Real) ((d.m + 1 : Nat) : Int)
-  have hindex : (d.m : Int) + 1 = ((d.m + 1 : Nat) : Int) := by omega
-  rw [← hindex] at hUp
-  unfold chebyshevU at hEq
-  rw [hUm, hUp] at hEq
-  push_cast at hEq
-  unfold lowerCentralB
-  rw [lowerCentralLength_eq]
-  have hmOnePos : 0 < (d.m : Real) + 1 := by positivity
-  field_simp [d.ha0.ne', hmOnePos.ne'] at hEq ⊢
-  nlinarith
-
-/-! ## Positivity of `N`: the cases `rho>1` and `rho=1` -/
-
-theorem lowerCentralUpsilon_at_one_add_omega
-    (d : OddCentralChordData) :
-    d.lowerCentralUpsilon (1 + d.lowerCentralOmega) =
-      (1 + d.lowerCentralOmega) *
-        (-2 * d.lowerCentralOmegaDelta +
-          2 * (1 + d.lowerCentralOmega) / d.lowerCentralLength +
-          1 / d.lowerCentralLength ^ 2) := by
-  unfold lowerCentralUpsilon lowerCentralOmegaDelta
-  ring
-
-theorem lowerCentralUpsilon_at_one_add_omega_pos
-    (d : OddCentralChordData) :
-    0 < d.lowerCentralUpsilon (1 + d.lowerCentralOmega) := by
-  rw [lowerCentralUpsilon_at_one_add_omega]
-  have hdelta := lowerCentralOmegaDelta_mul_length_lt_one d
-  have hLpos := lowerCentralLength_pos d
-  have hwpos := lowerCentralOmega_pos d
-  have hdeltaLt :
-      d.lowerCentralOmegaDelta < 1 / d.lowerCentralLength := by
-    rw [lt_div_iff₀ hLpos]
-    simpa only [mul_comm] using hdelta
-  have hbracket :
-      0 < -2 * d.lowerCentralOmegaDelta +
-        2 * (1 + d.lowerCentralOmega) / d.lowerCentralLength +
-        1 / d.lowerCentralLength ^ 2 := by
-    have hinvPos : 0 < 1 / d.lowerCentralLength := one_div_pos.mpr hLpos
-    have hinvSq : 0 ≤ 1 / d.lowerCentralLength ^ 2 := by positivity
-    have hdeltaTwice :
-        2 * d.lowerCentralOmegaDelta <
-          2 / d.lowerCentralLength := by
-      calc
-        2 * d.lowerCentralOmegaDelta <
-            2 * (1 / d.lowerCentralLength) :=
-          mul_lt_mul_of_pos_left hdeltaLt (by norm_num)
-        _ = 2 / d.lowerCentralLength := by ring
-    have hmain :
-        2 / d.lowerCentralLength <
-          2 * (1 + d.lowerCentralOmega) / d.lowerCentralLength := by
-      apply (div_lt_div_iff_of_pos_right hLpos).2
-      nlinarith
-    linarith
-  exact mul_pos (by linarith) hbracket
-
-theorem lowerCentralUpsilon_taylor (d : OddCentralChordData) (t : Real) :
-    d.lowerCentralUpsilon (1 + d.lowerCentralOmega + t) =
-      d.lowerCentralUpsilon (1 + d.lowerCentralOmega) +
-        (2 * d.lowerCentralOmega * (1 + d.lowerCentralOmega) +
-          4 * (1 + d.lowerCentralOmega) / d.lowerCentralLength +
-          1 / d.lowerCentralLength ^ 2) * t +
-        (2 * (1 + d.lowerCentralOmega) +
-          2 / d.lowerCentralLength) * t ^ 2 + t ^ 3 := by
-  unfold lowerCentralUpsilon lowerCentralOmegaDelta
-  ring
-
-theorem lowerCentralUpsilon_pos_of_one_add_omega_le
-    (d : OddCentralChordData) {s : Real}
-    (hs : 1 + d.lowerCentralOmega ≤ s) :
-    0 < d.lowerCentralUpsilon s := by
-  let t := s - (1 + d.lowerCentralOmega)
-  have ht : 0 ≤ t := sub_nonneg.mpr hs
-  have hw := lowerCentralOmega_pos d
-  have hL := lowerCentralLength_pos d
-  have hlinear :
-      0 < 2 * d.lowerCentralOmega * (1 + d.lowerCentralOmega) +
-        4 * (1 + d.lowerCentralOmega) / d.lowerCentralLength +
-        1 / d.lowerCentralLength ^ 2 := by positivity
-  have hquad :
-      0 < 2 * (1 + d.lowerCentralOmega) +
-        2 / d.lowerCentralLength := by positivity
-  have hbase := lowerCentralUpsilon_at_one_add_omega_pos d
-  have htaylor := lowerCentralUpsilon_taylor d t
-  have hsrep : 1 + d.lowerCentralOmega + t = s := by
-    dsimp only [t]
-    ring
-  rw [hsrep] at htaylor
-  rw [htaylor]
-  positivity
-
-theorem lowerCentralN_upper_difference
-    (d : OddCentralChordData)
-    (hrho : 1 < d.lowerCentralRho) :
-    let u := d.lowerCentralB - d.lowerCentralRho
-    let u₀ := 1 / d.lowerCentralLength
-    let H := d.lowerCentralRho + d.lowerCentralOmega -
-        d.lowerCentralOmegaDelta * d.lowerCentralLength +
-      (u + u₀) / 2 +
-      d.lowerCentralOmegaDelta * d.lowerCentralLength * u ^ 2 /
-        (d.lowerCentralRho ^ 2 - 1)
-    d.lowerCentralN -
-        d.lowerCentralUpsilon
-          (d.lowerCentralRho + d.lowerCentralOmega) =
-      2 * (d.lowerCentralRho + d.lowerCentralOmega) *
-        (u - u₀) * H := by
-  dsimp only
-  have hslope := lowerCentralSlopeAtRho_eq_quotient d
-    (ne_of_gt hrho)
-  have hLne : d.lowerCentralLength ≠ 0 :=
-    (lowerCentralLength_pos d).ne'
-  have hden : d.lowerCentralRho ^ 2 - 1 ≠ 0 := by
-    nlinarith
-  rw [lowerCentralN, hslope]
-  unfold lowerCentralS lowerCentralQ lowerCentralUpsilon
-    lowerCentralOmegaDelta
-  field_simp [hLne, hden]
-  ring
-
-theorem lowerCentralN_pos_of_Rho_gt_one
-    (d : OddCentralChordData)
-    (hrho : 1 < d.lowerCentralRho) :
+    (hrho : 1 ≤ d.lowerCentralRho) :
     0 < d.lowerCentralN := by
   let u := d.lowerCentralB - d.lowerCentralRho
-  let u₀ := 1 / d.lowerCentralLength
-  let H := d.lowerCentralRho + d.lowerCentralOmega -
-      d.lowerCentralOmegaDelta * d.lowerCentralLength +
-    (u + u₀) / 2 +
-    d.lowerCentralOmegaDelta * d.lowerCentralLength * u ^ 2 /
-      (d.lowerCentralRho ^ 2 - 1)
-  have hslope := lowerCentralSlopeAtRho_eq_quotient d
-    (ne_of_gt hrho)
-  have hden : 0 < d.lowerCentralRho ^ 2 - 1 := by nlinarith
-  have hu₀ : 0 < u₀ := by
-    dsimp only [u₀]
-    exact one_div_pos.mpr (lowerCentralLength_pos d)
-  have huGt : u₀ < u := by
-    have hd := lowerCentralSlopeAtRho_pos d
-    rw [hslope, div_pos_iff] at hd
-    rcases hd with hd | hd
-    · dsimp only [u, u₀]
-      rw [div_lt_iff₀ (lowerCentralLength_pos d)]
-      nlinarith
-    · nlinarith
-  have hfirst :
-      0 < d.lowerCentralRho + d.lowerCentralOmega -
-        d.lowerCentralOmegaDelta * d.lowerCentralLength := by
-    have hdelta := lowerCentralOmegaDelta_mul_length_lt_one d
-    nlinarith [lowerCentralOmega_pos d]
-  have hH : 0 < H := by
-    dsimp only [H]
-    have hu : 0 < u := hu₀.trans huGt
-    have hdelta := lowerCentralOmegaDelta_pos d
-    have hL := lowerCentralLength_pos d
-    positivity
-  have hdiff := lowerCentralN_upper_difference d hrho
-  dsimp only [u, u₀, H] at hdiff
-  have hs :
-      0 < d.lowerCentralUpsilon
-        (d.lowerCentralRho + d.lowerCentralOmega) := by
-    apply lowerCentralUpsilon_pos_of_one_add_omega_le d
-    linarith
-  have hfactor :
-      0 < 2 * (d.lowerCentralRho + d.lowerCentralOmega) *
-        (u - u₀) * H := by
-    exact mul_pos
-      (mul_pos
-        (mul_pos (by norm_num) (add_pos (by linarith) (lowerCentralOmega_pos d)))
-        (sub_pos.mpr huGt)) hH
-  dsimp only [u, u₀, H] at hfactor
-  nlinarith
-
-theorem lowerCentralN_eq_boundary_add_of_Rho_eq_one
-    (d : OddCentralChordData)
-    (hrho : d.lowerCentralRho = 1) :
-    d.lowerCentralN =
-      d.lowerCentralUpsilon (1 + d.lowerCentralOmega) +
-        2 * (1 + d.lowerCentralOmega) *
-          d.lowerCentralOmegaDelta /
-            d.lowerCentralLength ^ 2 *
-              d.lowerCentralSlopeAtRho := by
-  have hb := lowerCentralB_eq_one_add_inv_length_of_Rho_eq_one d hrho
-  rw [lowerCentralN]
-  unfold lowerCentralS lowerCentralQ lowerCentralUpsilon
-    lowerCentralOmegaDelta
-  rw [hrho, hb]
-  ring
-
-theorem lowerCentralN_pos_of_Rho_eq_one
-    (d : OddCentralChordData)
-    (hrho : d.lowerCentralRho = 1) :
-    0 < d.lowerCentralN := by
-  rw [lowerCentralN_eq_boundary_add_of_Rho_eq_one d hrho]
-  have hbase := lowerCentralUpsilon_at_one_add_omega_pos d
-  have hslope := lowerCentralSlopeAtRho_eq_of_Rho_eq_one d hrho
-  have hcorr :
-      0 < 2 * (1 + d.lowerCentralOmega) *
-          d.lowerCentralOmegaDelta /
-            d.lowerCentralLength ^ 2 *
-              d.lowerCentralSlopeAtRho := by
-    rw [hslope]
-    have hw := lowerCentralOmega_pos d
-    have hdelta := lowerCentralOmegaDelta_pos d
-    have hL := lowerCentralLength_pos d
-    positivity
-  linarith
+  have hL := lowerCentralLength_pos d
+  have hw := lowerCentralOmega_pos d
+  have hdelta := lowerCentralOmegaDelta_pos d
+  have hslope := lowerCentralSlopeAtRho_pos d
+  have hid := lowerCentralSlopeAtRho_identity d
+  have hnonneg : 0 ≤ (d.lowerCentralRho ^ 2 - 1) *
+      d.lowerCentralSlopeAtRho :=
+    mul_nonneg (by nlinarith) hslope.le
+  have hu : 1 / d.lowerCentralLength ≤ u := by
+    rw [div_le_iff₀ hL]
+    dsimp only [u]
+    nlinarith
+  have hdeltaLt : d.lowerCentralOmegaDelta < 1 / d.lowerCentralLength :=
+    (lt_div_iff₀ hL).2 (lowerCentralOmegaDelta_mul_length_lt_one d)
+  have huDelta : 0 < u - d.lowerCentralOmegaDelta := by linarith
+  have huPos : 0 < u := by linarith
+  have hS : (1 + d.lowerCentralRho) ^ 2 < d.lowerCentralS := by
+    have hmain : 0 < 2 * d.lowerCentralRho *
+        (u - d.lowerCentralOmegaDelta) := by positivity
+    have hrest : 0 < u ^ 2 + 2 * d.lowerCentralOmega * u := by positivity
+    dsimp only [u] at hmain hrest
+    unfold lowerCentralS
+    unfold lowerCentralOmegaDelta at hmain
+    nlinarith only [hmain, hrest]
+  have hcorr : 0 < 2 * d.lowerCentralOmegaDelta * d.lowerCentralQ *
+      d.lowerCentralSlopeAtRho := by
+    exact mul_pos (mul_pos (mul_pos (by norm_num) hdelta)
+      (lowerCentralQ_pos d)) hslope
+  have hmain := mul_lt_mul_of_pos_left hS
+    (show 0 < d.lowerCentralRho + d.lowerCentralOmega by linarith)
+  have hremaining : 0 ≤ (d.lowerCentralRho - 1) *
+      (1 + d.lowerCentralRho) ^ 2 :=
+    mul_nonneg (sub_nonneg.mpr hrho) (sq_nonneg _)
+  have hpositive := mul_pos
+    (show 0 < d.lowerCentralRho + d.lowerCentralOmega by linarith) hcorr
+  unfold lowerCentralN
+  nlinarith only [hmain, hremaining, hpositive]
 
 /-! ## Positivity of `N`: the case `rho<1` -/
 
@@ -1208,25 +1001,21 @@ def lowerCentralU (d : OddCentralChordData) : Real :=
 def lowerCentralDeltaMinus (d : OddCentralChordData) : Real :=
   d.lowerCentralV * (2 - d.lowerCentralV)
 
-/-- The concave quadratic `q(u)` used in the proof of `eq:N-positive-target`. -/
+/-- The quadratic `q(u)` in the positive decomposition of `N`. -/
 def lowerCentralQuadratic (d : OddCentralChordData) (u : Real) : Real :=
   d.lowerCentralDeltaMinus *
-      (2 * (2 - d.lowerCentralOmegaDelta) +
-        u - d.lowerCentralV) +
+      (4 - 2 * d.lowerCentralOmegaDelta + u - d.lowerCentralV) +
     2 * d.lowerCentralOmegaDelta *
-      (u + d.lowerCentralV -
-        d.lowerCentralLength *
-          (u ^ 2 + u * d.lowerCentralV + d.lowerCentralV ^ 2) -
-        d.lowerCentralLength * d.lowerCentralDeltaMinus)
+      ((u + d.lowerCentralV) * (1 - d.lowerCentralLength * u) -
+        2 * d.lowerCentralLength * d.lowerCentralV)
 
-/-- The artificial `Delta_b=0` boundary value of `N`. -/
+/-- The value of `N` at `Delta_b=0`, written as two positive terms. -/
 def lowerCentralNZero (d : OddCentralChordData) : Real :=
-  d.lowerCentralV / (2 - d.lowerCentralV) *
-    ((2 - d.lowerCentralOmegaDelta) *
-        (2 - d.lowerCentralV) ^ 2 -
-      2 * d.lowerCentralOmegaDelta ^ 2 -
-      4 * d.lowerCentralOmegaDelta * d.lowerCentralLength *
-        (2 - d.lowerCentralV - d.lowerCentralOmegaDelta))
+  d.lowerCentralV *
+      ((2 - d.lowerCentralOmegaDelta) * (2 - d.lowerCentralV) -
+        4 * d.lowerCentralOmegaDelta * d.lowerCentralLength) +
+    2 * d.lowerCentralV * d.lowerCentralOmegaDelta ^ 2 *
+      (2 * d.lowerCentralLength - 1) / (2 - d.lowerCentralV)
 
 theorem lowerCentralU_eq_deltaB_add_V (d : OddCentralChordData) :
     d.lowerCentralU = d.lowerCentralDeltaB + d.lowerCentralV := by
@@ -1256,11 +1045,7 @@ theorem lowerCentralDeltaB_pos (d : OddCentralChordData) :
   unfold lowerCentralDeltaB
   exact sub_pos.mpr (one_lt_lowerCentralB d)
 
-/-- The small range `eq:u-small-range`.  The source derives its upper
-bound through `rho=cos theta` and a tangent inequality.  Here the already
-proved exact quotient for the positive logarithmic slope gives the same
-strict bound directly and avoids introducing an inverse-trigonometric
-coordinate that is not used anywhere else in the scalar argument. -/
+/-- The logarithmic-derivative identity gives `v<u<1/L` when `rho<1`. -/
 theorem lowerCentralU_range_of_Rho_lt_one
     (d : OddCentralChordData)
     (hrho : d.lowerCentralRho < 1) :
@@ -1272,19 +1057,14 @@ theorem lowerCentralU_range_of_Rho_lt_one
   have hvu : d.lowerCentralV < d.lowerCentralU := by
     rw [lowerCentralU_eq_deltaB_add_V]
     linarith
-  have hquot := lowerCentralSlopeAtRho_eq_quotient d
-    (ne_of_lt hrho)
+  have hid := lowerCentralSlopeAtRho_identity d
   have hslope := lowerCentralSlopeAtRho_pos d
   have hden : d.lowerCentralRho ^ 2 - 1 < 0 := by
-    have hrhoPos := lowerCentralRho_pos d
-    nlinarith
-  rw [hquot, div_pos_iff] at hslope
-  have hnum :
-      d.lowerCentralLength * d.lowerCentralU - 1 < 0 := by
-    rcases hslope with hslope | hslope
-    · exfalso
-      nlinarith [hden, hslope.2]
-    · exact hslope.1
+    nlinarith [lowerCentralRho_pos d]
+  have hnum : d.lowerCentralLength * d.lowerCentralU - 1 < 0 := by
+    have hprod := mul_neg_of_neg_of_pos hden hslope
+    unfold lowerCentralU
+    linarith
   have huUpper : d.lowerCentralU < 1 / d.lowerCentralLength := by
     rw [lt_div_iff₀ (lowerCentralLength_pos d)]
     nlinarith [hnum]
@@ -1365,20 +1145,6 @@ theorem lowerCentralN_decomposition_of_Rho_lt_one
   unfold lowerCentralV
   ring
 
-theorem lowerCentralNZero_bracket_identity (d : OddCentralChordData) :
-    (2 - d.lowerCentralOmegaDelta) *
-          (2 - d.lowerCentralV) ^ 2 -
-        2 * d.lowerCentralOmegaDelta ^ 2 -
-        4 * d.lowerCentralOmegaDelta * d.lowerCentralLength *
-          (2 - d.lowerCentralV - d.lowerCentralOmegaDelta) =
-      (2 - d.lowerCentralV) *
-          ((2 - d.lowerCentralOmegaDelta) *
-              (2 - d.lowerCentralV) -
-            4 * d.lowerCentralOmegaDelta * d.lowerCentralLength) +
-        2 * d.lowerCentralOmegaDelta ^ 2 *
-          (2 * d.lowerCentralLength - 1) := by
-  ring
-
 theorem two_sub_lowerCentralV_gt_nine_fifths
     (d : OddCentralChordData) :
     (9 : Real) / 5 < 2 - d.lowerCentralV := by
@@ -1389,11 +1155,6 @@ theorem two_sub_lowerCentralOmegaDelta_gt_twenty_seven_sixteenths
     (27 : Real) / 16 < 2 - d.lowerCentralOmegaDelta := by
   linarith [lowerCentralOmegaDelta_lt_five_sixteenths d]
 
-theorem four_sub_two_delta_gt_twenty_seven_eighths
-    (d : OddCentralChordData) :
-    (27 : Real) / 8 < 4 - 2 * d.lowerCentralOmegaDelta := by
-  linarith [lowerCentralOmegaDelta_lt_five_sixteenths d]
-
 theorem four_mul_delta_mul_length_lt_five_halves
     (d : OddCentralChordData) :
     4 * d.lowerCentralOmegaDelta * d.lowerCentralLength <
@@ -1401,11 +1162,9 @@ theorem four_mul_delta_mul_length_lt_five_halves
   (four_mul_delta_mul_length_lt_five_div_length d).trans_le
     (five_div_length_le_five_halves d)
 
-theorem lowerCentralNZero_pos_of_Rho_lt_one
-    (d : OddCentralChordData)
-    (hrho : d.lowerCentralRho < 1) :
-    0 < d.lowerCentralNZero := by
-  have hvPos := lowerCentralV_pos_of_Rho_lt_one d hrho
+theorem lowerCentral_common_bracket_pos (d : OddCentralChordData) :
+    0 < (2 - d.lowerCentralOmegaDelta) * (2 - d.lowerCentralV) -
+      4 * d.lowerCentralOmegaDelta * d.lowerCentralLength := by
   have htwoV := two_sub_lowerCentralV_gt_nine_fifths d
   have htwoDelta :=
     two_sub_lowerCentralOmegaDelta_gt_twenty_seven_sixteenths d
@@ -1417,194 +1176,47 @@ theorem lowerCentralNZero_pos_of_Rho_lt_one
       (sub_pos.mpr htwoDelta) (sub_pos.mpr htwoV)
     nlinarith
   have hfour := four_mul_delta_mul_length_lt_five_halves d
-  have hinner :
-      0 < (2 - d.lowerCentralOmegaDelta) *
-          (2 - d.lowerCentralV) -
-        4 * d.lowerCentralOmegaDelta * d.lowerCentralLength := by
-    nlinarith
-  have hlength : 0 < 2 * d.lowerCentralLength - 1 := by
-    nlinarith [lowerCentralLength_ge_two d]
-  have hbracket :
-      0 < (2 - d.lowerCentralOmegaDelta) *
-          (2 - d.lowerCentralV) ^ 2 -
-        2 * d.lowerCentralOmegaDelta ^ 2 -
-        4 * d.lowerCentralOmegaDelta * d.lowerCentralLength *
-          (2 - d.lowerCentralV - d.lowerCentralOmegaDelta) := by
-    rw [lowerCentralNZero_bracket_identity]
-    have hfirst :
-        0 < (2 - d.lowerCentralV) *
-          ((2 - d.lowerCentralOmegaDelta) *
-              (2 - d.lowerCentralV) -
-            4 * d.lowerCentralOmegaDelta * d.lowerCentralLength) :=
-      mul_pos (by linarith) hinner
-    have hsecond :
-        0 ≤ 2 * d.lowerCentralOmegaDelta ^ 2 *
-          (2 * d.lowerCentralLength - 1) := by positivity
-    linarith
+  nlinarith
+
+theorem lowerCentralNZero_pos_of_Rho_lt_one
+    (d : OddCentralChordData)
+    (hrho : d.lowerCentralRho < 1) :
+    0 < d.lowerCentralNZero := by
+  have hv := lowerCentralV_pos_of_Rho_lt_one d hrho
+  have hB := lowerCentral_common_bracket_pos d
+  have hden : 0 < 2 - d.lowerCentralV := by
+    linarith [two_sub_lowerCentralV_gt_nine_fifths d]
+  have hL : 0 < 2 * d.lowerCentralLength - 1 := by
+    linarith [lowerCentralLength_ge_two d]
   unfold lowerCentralNZero
-  exact mul_pos (div_pos hvPos (by linarith)) hbracket
-
-theorem lowerCentralQuadratic_at_V (d : OddCentralChordData) :
-    d.lowerCentralQuadratic d.lowerCentralV =
-      d.lowerCentralV *
-        ((2 - d.lowerCentralV) *
-            (4 - 2 * d.lowerCentralOmegaDelta) +
-          4 * d.lowerCentralOmegaDelta -
-          4 * d.lowerCentralOmegaDelta * d.lowerCentralLength *
-            (1 + d.lowerCentralV)) := by
-  unfold lowerCentralQuadratic lowerCentralDeltaMinus
-  ring
-
-theorem lowerCentralQuadratic_at_invLength
-    (d : OddCentralChordData) :
-    d.lowerCentralQuadratic (1 / d.lowerCentralLength) =
-      d.lowerCentralV *
-        ((2 - d.lowerCentralV) *
-            (4 - 2 * d.lowerCentralOmegaDelta +
-              1 / d.lowerCentralLength - d.lowerCentralV) -
-          4 * d.lowerCentralOmegaDelta * d.lowerCentralLength) := by
-  unfold lowerCentralQuadratic lowerCentralDeltaMinus
-  field_simp [(lowerCentralLength_pos d).ne']
-  ring
-
-theorem lowerCentralQuadratic_at_V_pos_of_Rho_lt_one
-    (d : OddCentralChordData)
-    (hrho : d.lowerCentralRho < 1) :
-    0 < d.lowerCentralQuadratic d.lowerCentralV := by
-  rw [lowerCentralQuadratic_at_V]
-  have hvPos := lowerCentralV_pos_of_Rho_lt_one d hrho
-  have hA := two_sub_lowerCentralV_gt_nine_fifths d
-  have hB := four_sub_two_delta_gt_twenty_seven_eighths d
-  have hleading :
-      (243 : Real) / 40 <
-        (2 - d.lowerCentralV) *
-          (4 - 2 * d.lowerCentralOmegaDelta) := by
-    have hmul := mul_pos (sub_pos.mpr hA) (sub_pos.mpr hB)
-    nlinarith
-  have hfourPos :
-      0 ≤ 4 * d.lowerCentralOmegaDelta *
-        d.lowerCentralLength := by
-    exact mul_nonneg
-      (mul_nonneg (by norm_num) (lowerCentralOmegaDelta_pos d).le)
-      (lowerCentralLength_pos d).le
-  have hfour := four_mul_delta_mul_length_lt_five_halves d
-  have hvSix : 1 + d.lowerCentralV < (6 : Real) / 5 := by
-    linarith [lowerCentralV_lt_one_fifth_of_Rho_lt_one d]
-  have hnegative :
-      4 * d.lowerCentralOmegaDelta * d.lowerCentralLength *
-          (1 + d.lowerCentralV) < 3 := by
-    have hvPos : 0 < 1 + d.lowerCentralV := by
-      linarith [lowerCentralV_pos_of_Rho_lt_one d hrho]
-    have hmul :
-        4 * d.lowerCentralOmegaDelta * d.lowerCentralLength *
-            (1 + d.lowerCentralV) <
-          ((5 : Real) / 2) * ((6 : Real) / 5) := by
-      calc
-        4 * d.lowerCentralOmegaDelta * d.lowerCentralLength *
-              (1 + d.lowerCentralV) <
-            ((5 : Real) / 2) * (1 + d.lowerCentralV) :=
-          mul_lt_mul_of_pos_right hfour hvPos
-        _ < ((5 : Real) / 2) * ((6 : Real) / 5) :=
-          mul_lt_mul_of_pos_left hvSix (by norm_num)
-    nlinarith
-  have hbracket :
-      0 < (2 - d.lowerCentralV) *
-            (4 - 2 * d.lowerCentralOmegaDelta) +
-          4 * d.lowerCentralOmegaDelta -
-          4 * d.lowerCentralOmegaDelta * d.lowerCentralLength *
-            (1 + d.lowerCentralV) := by
-    nlinarith [lowerCentralOmegaDelta_pos d]
-  exact mul_pos hvPos hbracket
-
-theorem lowerCentralQuadratic_at_invLength_pos_of_Rho_lt_one
-    (d : OddCentralChordData)
-    (hrho : d.lowerCentralRho < 1) :
-    0 < d.lowerCentralQuadratic (1 / d.lowerCentralLength) := by
-  rw [lowerCentralQuadratic_at_invLength]
-  have hvPos := lowerCentralV_pos_of_Rho_lt_one d hrho
-  have hA := two_sub_lowerCentralV_gt_nine_fifths d
-  have hdelta := lowerCentralOmegaDelta_lt_five_sixteenths d
-  have hv := lowerCentralV_lt_one_fifth_of_Rho_lt_one d
-  have hinv : 0 < 1 / d.lowerCentralLength :=
-    one_div_pos.mpr (lowerCentralLength_pos d)
-  have hB :
-      (127 : Real) / 40 <
-        4 - 2 * d.lowerCentralOmegaDelta +
-          1 / d.lowerCentralLength - d.lowerCentralV := by
-    nlinarith
-  have hleading :
-      (1143 : Real) / 200 <
-        (2 - d.lowerCentralV) *
-          (4 - 2 * d.lowerCentralOmegaDelta +
-            1 / d.lowerCentralLength - d.lowerCentralV) := by
-    have hmul := mul_pos (sub_pos.mpr hA) (sub_pos.mpr hB)
-    nlinarith
-  have hfour := four_mul_delta_mul_length_lt_five_halves d
-  have hbracket :
-      0 < (2 - d.lowerCentralV) *
-          (4 - 2 * d.lowerCentralOmegaDelta +
-            1 / d.lowerCentralLength - d.lowerCentralV) -
-        4 * d.lowerCentralOmegaDelta * d.lowerCentralLength := by
-    nlinarith
-  exact mul_pos hvPos hbracket
-
-/-- Denominator-free chord identity expressing concavity of the quadratic. -/
-theorem lowerCentralQuadratic_chord_identity
-    (d : OddCentralChordData) (u : Real) :
-    (1 / d.lowerCentralLength - d.lowerCentralV) *
-        d.lowerCentralQuadratic u =
-      (1 / d.lowerCentralLength - u) *
-          d.lowerCentralQuadratic d.lowerCentralV +
-        (u - d.lowerCentralV) *
-          d.lowerCentralQuadratic (1 / d.lowerCentralLength) +
-        2 * d.lowerCentralOmegaDelta * d.lowerCentralLength *
-          (u - d.lowerCentralV) *
-          (1 / d.lowerCentralLength - u) *
-          (1 / d.lowerCentralLength - d.lowerCentralV) := by
-  unfold lowerCentralQuadratic
-  ring
+  exact add_pos_of_pos_of_nonneg (mul_pos hv hB) (by positivity)
 
 theorem lowerCentralQuadratic_U_pos_of_Rho_lt_one
     (d : OddCentralChordData)
     (hrho : d.lowerCentralRho < 1) :
     0 < d.lowerCentralQuadratic d.lowerCentralU := by
   have hrange := lowerCentralU_range_of_Rho_lt_one d hrho
-  have hleft := lowerCentralQuadratic_at_V_pos_of_Rho_lt_one d hrho
-  have hright :=
-    lowerCentralQuadratic_at_invLength_pos_of_Rho_lt_one d hrho
-  have hchord := lowerCentralQuadratic_chord_identity d d.lowerCentralU
-  have hwidth :
-      0 < 1 / d.lowerCentralLength - d.lowerCentralV := by
-    linarith
-  have hterm1 :
-      0 < (1 / d.lowerCentralLength - d.lowerCentralU) *
-        d.lowerCentralQuadratic d.lowerCentralV :=
-    mul_pos (sub_pos.mpr hrange.2.2) hleft
-  have hterm2 :
-      0 < (d.lowerCentralU - d.lowerCentralV) *
-        d.lowerCentralQuadratic (1 / d.lowerCentralLength) :=
-    mul_pos (sub_pos.mpr hrange.2.1) hright
-  have hdelta := lowerCentralOmegaDelta_pos d
+  have hB := lowerCentral_common_bracket_pos d
+  have hv := hrange.1
+  have htwoV : 0 < 2 - d.lowerCentralV := by
+    linarith [two_sub_lowerCentralV_gt_nine_fifths d]
+  have htwoDelta : 0 < 2 - d.lowerCentralOmegaDelta := by
+    linarith [two_sub_lowerCentralOmegaDelta_gt_twenty_seven_sixteenths d]
   have hL := lowerCentralLength_pos d
-  have hterm3 :
-      0 ≤ 2 * d.lowerCentralOmegaDelta * d.lowerCentralLength *
-          (d.lowerCentralU - d.lowerCentralV) *
-          (1 / d.lowerCentralLength - d.lowerCentralU) *
-          (1 / d.lowerCentralLength - d.lowerCentralV) := by
-    exact mul_nonneg
-      (mul_nonneg
-        (mul_nonneg
-          (mul_nonneg
-            (mul_nonneg (by norm_num) hdelta.le) hL.le)
-          (sub_nonneg.mpr hrange.2.1.le))
-        (sub_nonneg.mpr hrange.2.2.le))
-      hwidth.le
-  have hprod :
-      0 < (1 / d.lowerCentralLength - d.lowerCentralV) *
-        d.lowerCentralQuadratic d.lowerCentralU := by
-    rw [hchord]
-    linarith
-  exact pos_of_mul_pos_right hprod hwidth.le
+  have hdelta := lowerCentralOmegaDelta_pos d
+  have hu : 0 < 1 - d.lowerCentralLength * d.lowerCentralU := by
+    have := (lt_div_iff₀ hL).1 hrange.2.2
+    nlinarith
+  have hfirst := mul_pos hv hB
+  have hsecond : 0 < d.lowerCentralV * (2 - d.lowerCentralV) *
+      (2 - d.lowerCentralOmegaDelta + d.lowerCentralU - d.lowerCentralV) :=
+    mul_pos (mul_pos hv htwoV) (by linarith [hrange.2.1])
+  have huPos : 0 < d.lowerCentralU := by linarith [hrange.2.1]
+  have hthird : 0 < 2 * d.lowerCentralOmegaDelta *
+      (d.lowerCentralU + d.lowerCentralV) *
+      (1 - d.lowerCentralLength * d.lowerCentralU) := by positivity
+  unfold lowerCentralQuadratic lowerCentralDeltaMinus
+  nlinarith only [hfirst, hsecond, hthird]
 
 theorem lowerCentralN_pos_of_Rho_lt_one
     (d : OddCentralChordData)
@@ -1629,10 +1241,9 @@ theorem lowerCentralN_pos_of_Rho_lt_one
 
 theorem lowerCentralN_pos (d : OddCentralChordData) :
     0 < d.lowerCentralN := by
-  rcases lt_trichotomy d.lowerCentralRho 1 with hrho | hrho | hrho
+  rcases lt_or_ge d.lowerCentralRho 1 with hrho | hrho
   · exact lowerCentralN_pos_of_Rho_lt_one d hrho
-  · exact lowerCentralN_pos_of_Rho_eq_one d hrho
-  · exact lowerCentralN_pos_of_Rho_gt_one d hrho
+  · exact lowerCentralN_pos_of_one_le_Rho d hrho
 
 /-! ## Assembly of `eq:central-target` -/
 

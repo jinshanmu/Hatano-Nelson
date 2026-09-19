@@ -98,7 +98,7 @@ caption's \(6\leq N_c\leq9\) bracket at \(a=1/4\),
 name and command in its header when reviewed; updating those was requested.
 The figure script was inspected, not rerun in full during this audit.
 
-## Final artifact checks
+## Initial artifact checks
 
 The rectangular-block clarification and figure-script names were updated.
 The figure script was subsequently rerun in its pinned environment, reproducing
@@ -108,3 +108,32 @@ independent build from the extracted source archive both completed with no
 LaTeX warnings, unresolved references, or overfull boxes. Page images were
 visually inspected, including the final front matter, two figures, and all
 nine DOI-bearing references.
+
+## Proof simplification (2026-09-19)
+
+The preprint now uses direct generating-function elimination from the five
+minors, two cases for the central scalar inequality, one factorization of
+the central signed product, and adjacent-order logarithmic bounds for the
+critical size. The odd middle-branch proof no longer needs the smaller-path
+invertibility argument. The quantitative lower bound uses orthogonal
+projection directly. Repeated vertical definitions and the second proof of
+`gamma_2 = a` have been removed.
+
+The initial formal five-minor states reproduce the actual terminal minors.
+All formal-series denominators have constant term one. The central
+comparison keeps the second-singular-value separation and the parity
+argument after establishing positivity of the signed product. Its new
+scalar identities and determinant prefactor agree with the corresponding
+Lean proof. An independent numerical check of the signed product covered
+20 parameter pairs (orders indexed by `L = 2,3,4,7`, including `rho = 1`);
+the maximum relative residual was `2.8e-14` using a stable formula for `D`.
+
+The introduction, theorem statements and assumptions, boundary section,
+numerical section, figures, conclusions, declarations, and bibliography are
+unchanged. The simplified manuscript has 28 pages. Its LaTeX build has no
+warnings, unresolved references, or overfull boxes. All 106 cross-reference
+labels are unique and resolve, and the page images have been inspected.
+An independent build from the updated 19-file submission archive also
+completed without warnings. Both archived figure PDFs match the unchanged
+figure files. Lean validation and the proof correspondence are recorded in
+`../lean/STATUS.md` and `../lean/FORMALIZATION_MAP.md`.

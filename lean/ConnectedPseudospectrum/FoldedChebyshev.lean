@@ -209,7 +209,7 @@ theorem foldQuadraticProduct_mul_foldEvenChebyshevDividedDifferenceSeries
       simp [sub_ne_zero.mpr huv]
 
 theorem foldEvenPowerSeries_eq_chebyshevDividedDifference
-    {a x s u v : ℝ} (ha0 : a ≠ 0) (ha1 : a ≠ 1)
+    {a x s u v : ℝ} (ha0 : a ≠ 0)
     (huv : u ≠ v)
     (hsum : 2 * a * (u + v) = foldC0 a x s)
     (hprod : a ^ 2 * (4 * u * v + 2) = foldB a x s) :
@@ -230,7 +230,7 @@ theorem foldEvenPowerSeries_eq_chebyshevDividedDifference
   calc
     foldEvenPowerSeries a x s =
         foldEvenResidualSeries a s * (foldRecurrenceSeries a x s)⁻¹ :=
-      foldEvenPowerSeries_eq_mul_inv_recurrence ha0 ha1
+      foldEvenPowerSeries_eq_mul_inv_recurrence ha0
     _ = foldEvenResidualSeries a s *
         (foldQuadraticSeries a u * foldQuadraticSeries a v)⁻¹ := by
       rw [foldRecurrenceSeries_eq_mul_foldQuadraticSeries hsum hprod]
@@ -238,7 +238,7 @@ theorem foldEvenPowerSeries_eq_chebyshevDividedDifference
       hcand.symm
 
 theorem foldEvenSequence_eq_chebyshevDividedDifference
-    {a x s u v : ℝ} (ha0 : a ≠ 0) (ha1 : a ≠ 1)
+    {a x s u v : ℝ} (ha0 : a ≠ 0)
     (huv : u ≠ v)
     (hsum : 2 * a * (u + v) = foldC0 a x s)
     (hprod : a ^ 2 * (4 * u * v + 2) = foldB a x s)
@@ -249,7 +249,7 @@ theorem foldEvenSequence_eq_chebyshevDividedDifference
           foldEvenChebyshevFunction m v (foldZeta a s)) / (u - v)) := by
   have h := congrArg (coeff m)
     (foldEvenPowerSeries_eq_chebyshevDividedDifference
-      ha0 ha1 huv hsum hprod)
+      ha0 huv hsum hprod)
   rw [foldEvenPowerSeries, coeff_mk,
     coeff_foldEvenChebyshevDividedDifferenceSeries] at h
   exact h
@@ -357,7 +357,7 @@ theorem foldQuadraticProduct_mul_foldOddChebyshevDividedDifferenceSeries
       simp [sub_ne_zero.mpr huv]
 
 theorem foldOddPowerSeries_eq_chebyshevDividedDifference
-    {a x s u v : ℝ} (ha0 : a ≠ 0) (ha1 : a ≠ 1)
+    {a x s u v : ℝ} (ha0 : a ≠ 0)
     (huv : u ≠ v)
     (hsum : 2 * a * (u + v) = foldC0 a x s)
     (hprod : a ^ 2 * (4 * u * v + 2) = foldB a x s) :
@@ -380,7 +380,7 @@ theorem foldOddPowerSeries_eq_chebyshevDividedDifference
   calc
     foldOddPowerSeries a x s =
         foldOddResidualSeries a x s * (foldRecurrenceSeries a x s)⁻¹ :=
-      foldOddPowerSeries_eq_mul_inv_recurrence ha1
+      foldOddPowerSeries_eq_mul_inv_recurrence
     _ = foldOddResidualSeries a x s *
         (foldQuadraticSeries a u * foldQuadraticSeries a v)⁻¹ := by
       rw [foldRecurrenceSeries_eq_mul_foldQuadraticSeries hsum hprod]
@@ -388,7 +388,7 @@ theorem foldOddPowerSeries_eq_chebyshevDividedDifference
         (foldOddBeta a x s) u v := hcand.symm
 
 theorem foldOddSequence_eq_chebyshevDividedDifference
-    {a x s u v : ℝ} (ha0 : a ≠ 0) (ha1 : a ≠ 1)
+    {a x s u v : ℝ} (ha0 : a ≠ 0)
     (huv : u ≠ v)
     (hsum : 2 * a * (u + v) = foldC0 a x s)
     (hprod : a ^ 2 * (4 * u * v + 2) = foldB a x s)
@@ -400,7 +400,7 @@ theorem foldOddSequence_eq_chebyshevDividedDifference
             (u - v)) := by
   have h := congrArg (coeff m)
     (foldOddPowerSeries_eq_chebyshevDividedDifference
-      ha0 ha1 huv hsum hprod)
+      ha0 huv hsum hprod)
   rw [foldOddPowerSeries, coeff_mk,
     coeff_foldOddChebyshevDividedDifferenceSeries] at h
   exact h

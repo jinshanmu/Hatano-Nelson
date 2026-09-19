@@ -50,6 +50,32 @@ displays are discharged inside the listed kernel-checked endpoints.
 | Canonical theorem, Thm. `thm:canonical-main` | `main_theorem`, with `connectedDimensions_eq_criticalThreshold_tail`, `criticalThreshold_hasCriticalSizeAsymptotic`, and `criticalThreshold_eq_two_iff` as named endpoints | `MainTheorem`, `CriticalThreshold`, `DimensionTwo` |
 | Historical positive-real specialization retained internally | `positiveToeplitzPseudospectrum_eq_affine_image`, `positiveToeplitz_corollary`, `positiveToeplitz_scaled_barrier_succ_lt`, `positiveToeplitz_scaled_barrier_bounds`, `positiveToeplitz_connectedDimensions_eq_criticalThreshold_tail`, `positiveToeplitz_firstConnectedDimension_isLeast`, `positiveToeplitz_threshold_bounds_and_asymptotic` | `GeneralToeplitz` |
 
+## Preprint proof simplification
+
+Source: `../preprint/connectedness_thresholds.tex` (2026-09-19).
+The canonical main theorem and its assumptions are unchanged. The following
+proof routes replace the longer intermediate arguments:
+
+| Preprint proof step | Lean implementation |
+|---|---|
+| Odd middle branch from dilation symmetry, inertia and Cauchy interlacing | `MiddleBranchSelection`: nonnegative central dilation pair; no smaller-path invertibility detour |
+| Five-minor recurrence to generating functions | `FoldedTransfer`, `FoldedMinorBridge`, `FoldedPowerSeries`: signed minor iteration, direct actual-matrix induction, and `foldCoordinateSeries_elimination`; scalar recurrence and initial residuals are coefficient corollaries |
+| Central scalar inequality in the two cases `rho >= 1` and `rho < 1` | `OddCentralLowerScalar`: `lowerCentralSlopeAtRho_identity`, `lowerCentralN_pos`, `lowerCentral_scalar_target` |
+| Direct signed-determinant product | `OddCentralLowerFolded`: `lowerCentral_cross_identity`, `lowerCentralNumerator_difference_product`, `signedPencilDet_lowerCentral_product_pos`; the subsequent singular-value separation and parity proof are unchanged |
+| Lower bound by orthogonal projection between range hyperplanes | Existing `RectangularPrincipalAngle`: `unitHyperplane_projection_norm_lower_bound`, `rectangularPrincipalProjection_lower_bound` |
+| Critical-order asymptotic from the bounds at `N` and `N-1` | `Asymptotics`: `logarithmic_sandwich_bounded_error`; `CriticalThreshold`: `criticalThreshold_hasCriticalSizeAsymptotic`; no tail-threshold sandwich in the critical proof |
+
+The generic folded and chord identities no longer carry the redundant
+`a ≠ 1` premise. The critical-size asymptotic no longer takes strict
+adjacent-order decrease as a separate hypothesis. Both assembly theorem
+statements are unchanged.
+
+The preprint reuses its central-height formula for `gamma_2 = a`.
+`DimensionTwo.lean` retains its independent elementary proof, which also
+covers the boundary parameters `a = 0,1` without importing the central-gap
+machinery. The vertical-continuation proof already used the determinant
+certificate once; its TeX presentation now does the same.
+
 ## Internal threshold representation
 
 The paper now introduces only `N_c`.  Lean represents it by

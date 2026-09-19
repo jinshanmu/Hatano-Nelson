@@ -663,9 +663,9 @@ theorem signedPencilDet_signedChordRoot_eq_zero
     (hleft : d.angleLower < theta) :
     signedPencilDet (2 * d.m) d.a (d.chordX theta)
       (d.signedChordRoot theta) = 0 := by
-  rw [signedPencilDet_even_eq_foldEvenSequence d.ha1.ne]
+  rw [signedPencilDet_even_eq_foldEvenSequence]
   have hiff := foldEvenSequence_signed_outerChord_eq_zero_iff
-    d.m d.ha0 d.ha1.ne (d.chordZ_abs_le_cosh theta)
+    d.m d.ha0 (d.chordZ_abs_le_cosh theta)
     (d.cos_sq_lt_chordZ_sq theta hleft) (negOnePow_sq d.m)
   change foldEvenSequence d.a
     (outerChordX d.a theta (d.chordZ theta))
@@ -1067,7 +1067,7 @@ theorem chordLobeWeight_selectedZ_eq_selectedY
   have hxRec := d.selectedX_eq_reconstructedChord hxGap hx
   have hsRec := d.selectedRoot_eq_signed_reconstructedChordS hxGap hx
   have hfold : foldEvenSequence d.a x (d.selectedRoot x) d.m = 0 := by
-    rw [← signedPencilDet_even_eq_foldEvenSequence d.ha1.ne]
+    rw [← signedPencilDet_even_eq_foldEvenSequence]
     exact d.signedPencilDet_selectedRoot_eq_zero_of_mem_gap hxGap
   have hfoldRec :
       foldEvenSequence d.a
@@ -1077,7 +1077,7 @@ theorem chordLobeWeight_selectedZ_eq_selectedY
     rw [← hxRec, ← hsRec]
     exact hfold
   have hchord :=
-    (foldEvenSequence_signed_outerChord_eq_zero_iff d.m d.ha0 d.ha1.ne
+    (foldEvenSequence_signed_outerChord_eq_zero_iff d.m d.ha0
       hzAbs horder (negOnePow_sq d.m)).1 hfoldRec
   have habs := abs_signedChordEquation hchord
   have hindex : ((d.K - 1 : ℕ) : ℤ) = 2 * (d.m : ℤ) := by

@@ -1,5 +1,8 @@
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.FieldSimp
+import Mathlib.Tactic.Positivity
+import Mathlib.Tactic.Ring
 
 /-!
 # Bounded-error notation at the small-pseudospectrum limit
@@ -84,5 +87,74 @@ theorem log_one_div_pos {a : ℝ} (ha : 0 < a) (ha₁ : a < 1) :
   apply Real.log_pos
   rw [one_div]
   exact (one_lt_inv₀ ha).2 ha₁
+
+/-- A logarithmic sandwich determines its inverse up to a bounded error.
+The first estimate gives `x` comparable to `y`; substituting this into the
+same sandwich then replaces `log x` by `log y`. -/
+theorem logarithmic_sandwich_bounded_error {β : ℝ} (hβ : 0 < β)
+    (d e : ℝ) :
+    ∃ C : ℝ, 0 ≤ C ∧ ∃ Y : ℝ, ∀ x y : ℝ,
+      1 ≤ x → Y ≤ y →
+      y + Real.log x + d ≤ β * x →
+      β * x ≤ y + Real.log x + e →
+      |x - (y + Real.log y) / β| ≤ C := by
+  let k := β / 2
+  let α := 1 / (2 * β)
+  let K := 4 / β
+  have hk : 0 < k := by dsimp [k]; positivity
+  have hα : 0 < α := by dsimp [α]; positivity
+  have hK : 0 < K := by dsimp [K]; positivity
+  have hβα : β * α = 1 / 2 := by
+    dsimp [α]
+    field_simp
+  have hkK : k * K = 2 := by
+    dsimp [k, K]
+    field_simp
+    norm_num
+  let A := |Real.log k| + |e| + 1
+  let B := |d + Real.log α| + |e + Real.log K|
+  have hB : 0 ≤ B := by dsimp [B]; positivity
+  refine ⟨B / β, div_nonneg hB hβ.le, max 1 (max A (2 * |d|)), ?_⟩
+  intro x y hx hy hl hu
+  have hxpos : 0 < x := lt_of_lt_of_le zero_lt_one hx
+  have hyone : 1 ≤ y := (le_max_left _ _).trans hy
+  have hypos : 0 < y := lt_of_lt_of_le zero_lt_one hyone
+  have hAy : A ≤ y := (le_max_left _ _).trans ((le_max_right _ _).trans hy)
+  have hdy : 2 * |d| ≤ y := (le_max_right _ _).trans ((le_max_right _ _).trans hy)
+  have hlog : Real.log x ≤ k * x + |Real.log k| := by
+    have h := Real.log_le_sub_one_of_pos (mul_pos hk hxpos)
+    rw [Real.log_mul hk.ne' hxpos.ne'] at h
+    linarith [neg_abs_le (Real.log k)]
+  have hlow : α * y ≤ x := by
+    have := Real.log_nonneg hx
+    have hd := neg_abs_le d
+    have hprod : β * (α * y) = y / 2 := by rw [← mul_assoc, hβα]; ring
+    apply (mul_le_mul_iff_right₀ hβ).mp
+    nlinarith
+  have hupp : x ≤ K * y := by
+    have he := le_abs_self e
+    have hprod : k * (K * y) = 2 * y := by rw [← mul_assoc, hkK]
+    apply (mul_le_mul_iff_right₀ hk).mp
+    dsimp only [k, A] at *
+    nlinarith
+  have hlogLow : Real.log y + Real.log α ≤ Real.log x := by
+    have h := Real.log_le_log (mul_pos hα hypos) hlow
+    rw [Real.log_mul hα.ne' hypos.ne'] at h
+    linarith
+  have hlogUpp : Real.log x ≤ Real.log y + Real.log K := by
+    have h := Real.log_le_log hxpos hupp
+    rw [Real.log_mul hK.ne' hypos.ne'] at h
+    linarith
+  have hres : |β * x - (y + Real.log y)| ≤ B := by
+    rw [abs_le]
+    dsimp only [B]
+    constructor
+    · linarith [neg_abs_le (d + Real.log α), abs_nonneg (e + Real.log K)]
+    · linarith [le_abs_self (e + Real.log K), abs_nonneg (d + Real.log α)]
+  have hid : x - (y + Real.log y) / β =
+      (β * x - (y + Real.log y)) / β := by
+    field_simp
+  rw [hid, abs_div, abs_of_pos hβ]
+  exact div_le_div_of_nonneg_right hres hβ.le
 
 end ConnectedPseudospectrum

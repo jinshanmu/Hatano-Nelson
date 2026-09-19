@@ -222,11 +222,11 @@ Fix \(0<a<1\), \(x\in\mathbb R\), \(Y\geq0\), and \(t\in\mathbb R\).  For \(k\ge
  \end{aligned}
 \]
 and set \(F_0=1\).  For every \(n\geq1\),
-\[
+\begin{equation}\label{eq:det-derivative-positive}
  \mathcal P_n(Y,t)>0
  \quad\Longrightarrow\quad
  \partial_YF_n(Y,t)>0.
-\]
+\end{equation}
 \end{proposition}
 
 \begin{proof}
@@ -420,21 +420,8 @@ is nondecreasing.
 \end{lemma}
 
 \begin{proof}
-Put \(Y=y^2\), and, for \(t\geq0\), define
-\[
- \begin{aligned}
- \mathcal P_n(Y,t)
- &=((x+\ii\sqrt Y)I_n-A_n)^*
-   ((x+\ii\sqrt Y)I_n-A_n)-t^2I_n,\\
- F_n(Y,t)&=\det \mathcal P_n(Y,t).
- \end{aligned}
-\]
-\Cref{prop:vertical-determinant-certificate} proves the finite-dimensional
-implication
-\begin{equation}\label{eq:det-derivative-positive}
- \mathcal P_n(Y,t)>0\quad\Longrightarrow\quad
- \partial_YF_n(Y,t)>0.
-\end{equation}
+Use the notation of \Cref{prop:vertical-determinant-certificate} and put
+\(Y=y^2\).
 
 Fix \(Y_0\geq0\).  When the least singular value at \(Y_0\) equals
 zero, monotonicity follows from nonnegativity of singular values.  Otherwise
@@ -661,21 +648,11 @@ above and leave the middle coordinate last.  Then
  \qquad
  \boldsymbol w=\begin{bmatrix}-\mathbf e_m\\-a\mathbf e_m\end{bmatrix}.
 \end{equation}
-In an open spectral gap of \(A_{2m+1}\), \(P_m(x)\), and hence the principal
-block \(\widehat P_m(x)\) in \eqref{eq:odd-dilation}, is nonsingular.  Indeed,
-the explicit path spectrum gives
-\[
- \sigma(A_m)
- =\left\{2r\cos\frac{\ell\pi}{m+1}:1\leq\ell\leq m\right\}
- =\left\{\lambda_{2m+1,2\ell}:1\leq\ell\leq m\right\},
-\]
-so its zeros are exactly the even-indexed eigenvalues of \(A_{2m+1}\), none
-of which lies in an open spectral gap.
 If \(s_1(P_m)\geq\cdots\geq s_m(P_m)\) are the singular values of
 \(P_m(x)\), then the eigenvalues of the principal submatrix
 \(\widehat P_m(x)\) are
 \[
- s_1(P_m)\geq\cdots\geq s_m(P_m)>0>
+ s_1(P_m)\geq\cdots\geq s_m(P_m)\geq0\geq
  -s_m(P_m)\geq\cdots\geq-s_1(P_m).
 \]
 Cauchy interlacing gives
@@ -876,16 +853,6 @@ Both sides are polynomial in \(x\) and \(s\).  For each fixed \(0<a<1\),
 the identities hold on a dense nonsingular set, so the polynomial identity
 theorem extends them to all \(x,s\), including singular matrix cases.
 
-The five quantities in \eqref{eq:five-minor-update} satisfy one linear
-invariant.  Define
-\[
- \ell_m=(1-a)\mathfrak d_m-as\,\mathfrak p_m+s\,\mathfrak q_m
-       +(1-a)x\mathfrak c_m-a(1-a)\mathfrak r_m.
-\]
-Direct substitution into \eqref{eq:five-minor-update} gives
-\[
- \ell_{m+1}=-a\ell_m.
-\]
 For the two terminal blocks, direct evaluation gives
 \[
 \begin{aligned}
@@ -896,117 +863,46 @@ For the two terminal blocks, direct evaluation gives
 &\hspace{26mm}s^2-sx-a^2,\ s^2-sx-1,\ x^2-sx-a,\ x-s\bigr).
 \end{aligned}
 \]
-Thus \(\ell_1=0\) in both parity classes, and consequently
-\begin{equation}\label{eq:fold-minor-invariant}
- (1-a)\mathfrak d_m-as\,\mathfrak p_m+s\,\mathfrak q_m
- +(1-a)x\mathfrak c_m-a(1-a)\mathfrak r_m=0
- \qquad(m\geq1).
-\end{equation}
-
-Because
+Extend the five minors to \(m=0\) by the formal initial values
 \[
- \det J_{2m}=\det J_{2m+1}=(-1)^m,
-\]
-the first coordinate of the following signed state is the required
-determinant:
-\[
- \boldsymbol\eta_m^\tau
- =
- (-1)^m
- \begin{bmatrix}
- \mathfrak d_m^\tau&\mathfrak p_m^\tau&
- \mathfrak q_m^\tau&\mathfrak c_m^\tau
- \end{bmatrix}^{T},
+ (\mathfrak d_0,\mathfrak p_0,\mathfrak q_0,\mathfrak c_0,\mathfrak r_0)_{\mathrm e}
+ =(1,a^{-1},1,0,a^{-1}),
  \qquad
- (\boldsymbol\eta_m^{\mathrm e})_1=\mathcal Q_m^{\mathrm e},
- \quad
- (\boldsymbol\eta_m^{\mathrm o})_1=\mathcal Q_m^{\mathrm o}.
+ (\mathfrak d_0,\mathfrak p_0,\mathfrak q_0,\mathfrak c_0,\mathfrak r_0)_{\mathrm o}
+ =(x-s,1,1,-1,0).
 \]
-Eliminating \(\mathfrak r_m\) with \eqref{eq:fold-minor-invariant} reduces
-\eqref{eq:five-minor-update} to the four-dimensional transfer
-\begin{equation}\label{eq:fold-four-transfer}
- \boldsymbol\eta_{m+1}^\tau
- =\mathsf T_{\rm fold}\boldsymbol\eta_m^\tau,
- \qquad
- \mathsf T_{\rm fold}=
- \begin{bmatrix}
- x^2-s^2-a&\dfrac{a^3s}{1-a}&-\dfrac{s}{1-a}&ax\\[2mm]
- s&a^2&0&0\\
- s&0&1&0\\
- -x&0&0&-a
- \end{bmatrix}.
-\end{equation}
-Set
-\begin{equation}\label{eq:fold-transfer-initial}
- \boldsymbol\eta_0^{\mathrm e}
- =\begin{bmatrix}1&a^{-1}&1&0\end{bmatrix}^{T},
- \qquad
- \boldsymbol\eta_0^{\mathrm o}
- =\begin{bmatrix}x-s&1&1&-1\end{bmatrix}^{T}.
-\end{equation}
-These values incorporate the terminal conditions at \(m=0\).
-Direct multiplication in \eqref{eq:fold-four-transfer} reproduces the
-signed terminal minors above.  Hence
-\(\boldsymbol\eta_m^\tau
-=\mathsf T_{\rm fold}^{\,m}\boldsymbol\eta_0^\tau\) for every
-\(m\geq0\).
-
-A direct determinant calculation gives
-\begin{equation}\label{eq:fold-transfer-characteristic}
-\begin{aligned}
- \det(\lambda I_4-\mathsf T_{\rm fold})
- &=
- \lambda^4-C_0\lambda^3+\mathfrak b\lambda^2
- -a^2C_0\lambda+a^4,\\
- \mathfrak b
- &=(1+a^2)x^2+2as^2+2a^2-2a-2a^3.
-\end{aligned}
-\end{equation}
-Apply Cayley--Hamilton with the characteristic polynomial
-\eqref{eq:fold-transfer-characteristic} to \(\mathsf T_{\rm fold}\), multiply by
-\(\mathsf T_{\rm fold}^{\,m-4}\boldsymbol\eta_0^\tau\), and extract the
-first coordinate.  For both \(Z_m=\mathcal Q_m^{\mathrm e}\) and
-\(Z_m=\mathcal Q_m^{\mathrm o}\), this yields
-\begin{equation}\label{eq:fold-recurrence}
- Z_m-C_0Z_{m-1}+\mathfrak bZ_{m-2}
- -a^2C_0Z_{m-3}+a^4Z_{m-4}=0,
- \qquad m\geq4.
-\end{equation}
-
-Applying \(\mathsf T_{\rm fold}\) three times to
-\eqref{eq:fold-transfer-initial} gives the initial residuals for the
-recurrence \eqref{eq:fold-recurrence}:
+One step of \eqref{eq:five-minor-update} reproduces the terminal minors.
+For \(v\in\{d,p,q,c,r\}\), let
 \[
- \mathsf{Res}_0=Z_0,\quad
- \mathsf{Res}_1=Z_1-C_0Z_0,\quad
- \mathsf{Res}_2=Z_2-C_0Z_1+\mathfrak bZ_0,
+ \mathcal F_v(z)=\sum_{m\geq0}(-1)^m\mathfrak v_mz^m.
 \]
+Since \(\det J_{2m}=\det J_{2m+1}=(-1)^m\),
+\(\mathcal F_d(z)=\sum_{m\geq0}\mathcal Q_m^\tau z^m\).
+Summing \eqref{eq:five-minor-update} with these signs gives
 \[
- \mathsf{Res}_3
- =Z_3-C_0Z_2+\mathfrak bZ_1-a^2C_0Z_0,
+ \mathcal F_p=\frac{\mathfrak p_0+sz\mathcal F_d}{1-a^2z},\qquad
+ \mathcal F_q=\frac{\mathfrak q_0+sz\mathcal F_d}{1-z},\qquad
+ \mathcal F_c=\frac{\mathfrak c_0-xz\mathcal F_d}{1+az},\qquad
+ \mathcal F_r=\mathfrak r_0-z\mathcal F_d,
 \]
-namely
+and
 \[
-\begin{array}{ccccc}
- \toprule
- &\mathsf{Res}_0&\mathsf{Res}_1&\mathsf{Res}_2&\mathsf{Res}_3\\ \midrule
- Z_m=\mathcal Q_m^{\rm e}
- &1&a(1-2\zeta_s)&a^2(1-2\zeta_s)&a^3\\
- Z_m=\mathcal Q_m^{\rm o}
- &x-s&-[x(1+a^2)+2as]&a^2(x-s)&0\\
- \bottomrule
-\end{array}.
+ [1-(x^2-s^2)z-a^2z^2]\mathcal F_d
+ +sz(a^2\mathcal F_p+\mathcal F_q)-2axz\mathcal F_c
+ =\mathfrak d_0-a^2z\mathfrak r_0.
 \]
-Thus, as a formal-power-series identity,
+Substitute the first three expressions into the last identity and multiply
+by \((1-a^2z)(1-z)(1+az)\).  Collecting terms gives
 \[
- \Pi(z)\sum_{m\geq0}Z_mz^m
- =\mathsf{Res}_0+\mathsf{Res}_1z+\mathsf{Res}_2z^2+\mathsf{Res}_3z^3.
+ (1-az)\Pi(z)\mathcal F_d(z)=(1-az)\mathcal N^\tau(z),
 \]
-For the even sequence the polynomial on the right factors as
-\((1+az)(1-2a\zeta_sz+a^2z^2)\); for the odd sequence it is
-\((x-s)-[x(1+a^2)+2as]z+a^2(x-s)z^2\).  These factorizations identify the
-boundary-residual polynomials.  Since \(\Pi(0)=1\), division by \(\Pi\) in
-\(\mathbb R[[z]]\) gives the formal-power-series identities
+where the two initial states give
+\[
+ \mathcal N^{\mathrm e}(z)=(1+az)(1-2a\zeta_sz+a^2z^2),\qquad
+ \mathcal N^{\mathrm o}(z)=(x-s)-[x(1+a^2)+2as]z+a^2(x-s)z^2.
+\]
+All denominators have constant term one and are therefore invertible in
+\(\mathbb R[[z]]\).  Cancelling \(1-az\) yields
 \begin{equation}\label{eq:fold-generating-even}
  \sum_{m\geq0}\mathcal Q_m^{\rm e}z^m
  =(1+az)(1-2a\zeta_sz+a^2z^2)\Pi(z)^{-1},
@@ -1018,8 +914,7 @@ and
   \Pi(z)^{-1}.
 \end{equation}
 
-The preceding transfer calculation gives two rational
-generating functions.  Coefficient extraction converts them to the
+Coefficient extraction converts these generating functions to the
 divided-difference formulas used in the half-angle chord parametrization.
 Fix \(0<a<1\) and set \(U_{-1}=0\).  The Chebyshev generating function gives
 \[
@@ -1784,22 +1679,17 @@ Therefore \(f_L(x)=(1+x)U_{L-1}(x)\) is positive, strictly increasing,
 and strictly log-concave on \([\xi,\rho]\).  In particular,
 \(\mathfrak d_\rho=(\log f_L)'(\rho)>0\), and
 \[
- \mathfrak d_\rho=
- \begin{cases}
-  \dfrac{L(b-\rho)-1}{\rho^2-1},&\rho\neq1,\\[6pt]
-  \dfrac{2L^2+1}{6},&\rho=1
- \end{cases}.
+ (\rho^2-1)\mathfrak d_\rho=L(b-\rho)-1.
 \]
-The endpoint value follows directly from \(U_{L-1}(1)=L\) and
-\(U_{L-1}'(1)=L(L^2-1)/3\).  Moreover,
+This identity follows from the Chebyshev derivative recurrence and holds
+also at \(\rho=1\).  Strict log-concavity gives
 \[
  \log f_L(\rho)-\log f_L(\xi)>\Delta_\xi\mathfrak d_\rho,
  \qquad
  f_L(\xi)^2<f_L(\rho)^2e^{-2\Delta_\xi\mathfrak d_\rho}
  <\frac{f_L(\rho)^2}{1+2\Delta_\xi\mathfrak d_\rho}.
 \]
-Here the first strict inequality is the integral form of strict
-log-concavity.  Since
+Since
 \(f_L(\rho)^2=(1+\rho)^2/Q_b\) and
 \(\Delta_\xi=\Delta_\omega Q_b/S_b\), substitution into
 \eqref{eq:central-target} reduces it to
@@ -1808,130 +1698,73 @@ log-concavity.  Since
  (S_b+2\Delta_\omega Q_b\mathfrak d_\rho)
  -(1+\omega_L)(1+\rho)^2>0.
 \end{equation}
-All three cases use
+Both cases use
 \begin{equation}\label{eq:Delta-omega-basic-bound}
  \Delta_\omega=1-\cos\frac{\pi}{2L}
  <\frac{\pi^2}{8L^2}<\frac5{4L^2},
  \qquad \Delta_\omega L<1.
 \end{equation}
 
-Suppose first that \(\rho>1\).  Put \(u=b-\rho\) and
-\(\Delta_+=\rho^2-1\).  Since \(\mathfrak d_\rho>0\), \(u>1/L\).
-Keeping \(\rho\) fixed,
-direct differentiation gives
+If \(\rho\geq1\), put \(u=b-\rho\).  The derivative identity gives
+\(u\geq1/L\).  Thus
 \[
- \frac{\partial_b\mathcal N}{2(\rho+\omega_L)}
- =\rho+\omega_L+u-\Delta_\omega L
- +\frac{\Delta_\omega(3Lu^2-2u)}{\Delta_+}.
+ \begin{aligned}
+ S_b-(1+\rho)^2
+ &=u(2\rho+u+2\omega_L)-2\rho\Delta_\omega\\
+ &\geq2\rho(1/L-\Delta_\omega)+2\omega_L/L+1/L^2>0.
+ \end{aligned}
 \]
-The right-hand side is strictly increasing for \(u\geq1/L\) and is positive
-at \(u=1/L\) by \eqref{eq:Delta-omega-basic-bound}.  Hence \(\mathcal N\) exceeds
-its value at
-\(b=\rho+1/L\).  With
-\(s_0=\rho+\omega_L\) and \(\omega_+=1+\omega_L\), that value is
-\[
- \Upsilon(s_0)
- =s_0\left[\left(s_0+\frac1L\right)^2+\omega_+\Delta_\omega\right]
- -\omega_+(s_0+\Delta_\omega)^2.
-\]
-For \(s_0\geq\omega_+\),
-\[
- \Upsilon''(s_0)=6s_0+4/L-2\omega_+>0,\qquad
- \Upsilon'(\omega_+)=2\omega_L\omega_++4\omega_+/L+1/L^2>0,
-\]
-and
-\[
- \Upsilon(\omega_+)
- =\omega_+(-2\Delta_\omega+2\omega_+/L+1/L^2)>0.
-\]
-Thus \eqref{eq:N-positive-target} holds when \(\rho>1\).  If \(\rho=1\),
-then \(b=(L+1)/L\), \(Q_b=L^{-2}\), and direct substitution, using the
-endpoint value of \(\mathfrak d_\rho\), gives
-\[
- \mathcal N=\Upsilon(1+\omega_L)
- +\frac{2(1+\omega_L)\Delta_\omega}{L^2}
-   \frac{2L^2+1}{6}>0.
-\]
-The first term is positive by the preceding calculation, and every factor
-in the correction term is positive.
+Together with \(\rho+\omega_L\geq1+\omega_L\) and
+\(Q_b\mathfrak d_\rho>0\), this proves \eqref{eq:N-positive-target}.
 
-For \(\rho<1\), set
+If \(\rho<1\), set
 \[
  \upsilon=1-\rho,\qquad \Delta_b=b-1,\qquad
  u=\Delta_b+\upsilon,\qquad \Delta_-=\upsilon(2-\upsilon).
 \]
-Because \(b>1\), we have \(0<\upsilon<u\).  Moreover,
-\(\rho^2-1<0\), so the positivity of \(\mathfrak d_\rho\) in its quotient
-formula forces \(L(b-\rho)-1<0\).  Since \(u=b-\rho\),
+Since \(b>1\) and \(\mathfrak d_\rho>0\), the same derivative identity gives
 \begin{equation}\label{eq:u-small-range}
  0<\upsilon<u<1/L.
 \end{equation}
-With \(\rho\) fixed, write \(\mathcal N_\rho^{<}(\mathord\cdot)\) for
-\(\mathcal N\) viewed as a function of \(\Delta_b=b-1\).
-A direct expansion of \eqref{eq:N-positive-target} gives
+With \(\rho\) fixed, view \(\mathcal N\) as a function
+\(\mathcal N_\rho^{<}(\Delta_b)\), substituting
+\(\mathfrak d_\rho=(1-Lu)/\Delta_-\).
+Expansion of \eqref{eq:N-positive-target} gives
 \[
  \mathcal N_\rho^{<}(\Delta_b)-\mathcal N_\rho^{<}(0)
  =\frac{\Delta_b(\rho+\omega_L)}{\Delta_-}\mathfrak q(u),
 \]
 where
 \[
- \mathfrak q(u)=\Delta_-[2(2-\Delta_\omega)+u-\upsilon]
- +2\Delta_\omega
- [u+\upsilon-L(u^2+u\upsilon+\upsilon^2)-L\Delta_-].
+ \mathfrak q(u)=\upsilon(2-\upsilon)
+ [4-2\Delta_\omega+u-\upsilon]
+ +2\Delta_\omega[(u+\upsilon)(1-Lu)-2L\upsilon].
 \]
-The function \(\mathfrak q\) is a concave quadratic.  Moreover,
-\[
- \mathcal N_\rho^{<}(0)=\frac{\upsilon}{2-\upsilon}
- \bigl[(2-\Delta_\omega)(2-\upsilon)^2
- -2\Delta_\omega^2
- -4\Delta_\omega L(2-\upsilon-\Delta_\omega)\bigr].
-\]
-The following elementary bounds hold; the second follows from
-\(\rho>\rho_{\rm ref}\) and
-\(1-\rho_{\rm ref}<\pi^2/[2(2L+1)^2]<5/(2L+1)^2\):
+The bounds
 \begin{equation}\label{eq:Delta-upsilon-bounds}
  \Delta_\omega<\frac5{4L^2},\qquad
- \upsilon<\frac5{(2L+1)^2}\leq\frac15.
+ \upsilon<\frac5{(2L+1)^2}\leq\frac15
 \end{equation}
-When \(L=2\), the non-strict bound equals \(1/5\), while the preceding strict
-estimate still gives \(\upsilon<1/5\).  These bounds
-in \eqref{eq:Delta-upsilon-bounds} show that the bracketed expression is
-positive, since it equals
+follow from \eqref{eq:Delta-omega-basic-bound} and
+\(\rho>\rho_{\rm ref}\).  Since \(L\geq2\), they imply
 \[
- (2-\upsilon)
- \bigl[(2-\Delta_\omega)(2-\upsilon)-4\Delta_\omega L\bigr]
- +2\Delta_\omega^2(2L-1)
+ \mathfrak B_\rho:=(2-\Delta_\omega)(2-\upsilon)-4\Delta_\omega L
+ >\frac{243}{80}-\frac52>0.
 \]
-and, using \(L\geq2\),
+Consequently,
 \[
- (2-\Delta_\omega)(2-\upsilon)
- >\frac{27}{16}\frac95=\frac{243}{80}
- >\frac52\geq4\Delta_\omega L.
+ \mathcal N_\rho^{<}(0)
+ =\upsilon\mathfrak B_\rho
+ +\frac{2\upsilon\Delta_\omega^2(2L-1)}{2-\upsilon}>0,
 \]
-At the endpoints of
-\eqref{eq:u-small-range},
+and \eqref{eq:u-small-range} gives directly
 \[
- \mathfrak q(\upsilon)=\upsilon
- \bigl[(2-\upsilon)(4-2\Delta_\omega)
- +4\Delta_\omega-4\Delta_\omega L(1+\upsilon)\bigr]>0,
+ \mathfrak q(u)
+ >\upsilon[2(2-\Delta_\omega)(2-\upsilon)-4\Delta_\omega L]
+ >\upsilon\mathfrak B_\rho>0.
 \]
-\[
- \mathfrak q(1/L)=\upsilon
- \bigl[(2-\upsilon)(4-2\Delta_\omega+1/L-\upsilon)
- -4\Delta_\omega L\bigr]>0.
-\]
-At the two endpoints, the positive leading terms exceed
-\[
- \frac95\left(4-\frac58\right)=\frac{243}{40},
- \qquad
- \frac95\left(4-\frac58-\frac15\right)=\frac{1143}{200},
-\]
-while the negative terms have magnitudes less than
-\((5/L)(6/5)\leq3\) and \(5/L\leq5/2\), respectively.  Concavity therefore
-gives \(\mathfrak q(u)>0\), proving \eqref{eq:N-positive-target}, and hence
-\eqref{eq:central-target}, in all three cases.
-
-
+This proves \eqref{eq:N-positive-target}, and hence
+\eqref{eq:central-target}, in both cases.
 
 \proofstage{A point above the next even-order height}
 Since \(a>0\), \(\Delta_\omega>0\), \(\rho+\omega_L>0\), and
@@ -1953,64 +1786,25 @@ follow from
 \]
 Positivity of \(\xi+\omega_L\) selects the distinct-variable branch of the
 divided difference in \eqref{eq:fold-odd}.
-Write the folded numerator as
+The folded formula \eqref{eq:fold-odd} now gives the product directly.
+The cross terms cancel because
 \[
- \mathfrak n_s(t)=-[x(\zeta-t)+s(1+t)]U_{L-1}(t).
+ x_*^2(\zeta-\xi)(\zeta+\omega_L)
+ =\tau_*^2(1+\xi)(1-\omega_L),
 \]
-Put
-\[
- \mathsf{X}_\xi=x_*(\zeta-\xi),\quad
- \mathsf{Y}_\xi=\tau_*(1+\xi),\quad
- \mathsf{X}_\omega=x_*(\zeta+\omega_L),\quad
- \mathsf{Y}_\omega=\tau_*\Delta_\omega,
-\]
-and set \(U_\xi=U_{L-1}(\xi)\),
-\(U_{-\omega}=U_{L-1}(-\omega_L)\).  The identities
-\[
- \mathfrak D_L=2a(\zeta+\omega_L)u_+^2,\qquad
- \mathfrak D_L(\rho+\omega_L)(\zeta-\xi)
- =(\zeta+\omega_L)(1+\xi)
-\]
-give
-\(\mathsf{Y}_\omega\mathsf{Y}_\xi
-=\mathsf{X}_\omega\mathsf{X}_\xi\).  The identity \(u_-^2Q_b=1\) gives
-\(Q_b>0\), and \(S_b-Q_b=2b(\rho+\omega_L)>0\), so
-\(\mathfrak D_L=S_b/Q_b>1\).  Moreover, \(L\geq2\) gives
-\(\omega_L>1/2\), while \(\rho>\rho_{\rm ref}>\omega_L\); hence
-\[
- \rho+\omega_L>2\omega_L>1>1-\omega_L>0.
-\]
-Consequently,
-\[
- \frac{\mathsf{X}_\omega^2}{\mathsf{Y}_\omega^2}
- =\frac{\mathfrak D_L(\rho+\omega_L)}{1-\omega_L}>1,
-\]
-so, with
-\(\mathfrak r_*=\mathsf{X}_\xi/\mathsf{Y}_\xi
-=\mathsf{Y}_\omega/\mathsf{X}_\omega\in(0,1)\), the common factor
-\(a^{L-1}/(\xi+\omega_L)\) in \eqref{eq:fold-odd} is positive, and the two
-numerator differences are
-\[
-\begin{aligned}
- \mathfrak n_{\tau_*}(\xi)-\mathfrak n_{\tau_*}(-\omega_L)
-  &=(1+\mathfrak r_*)
-    (\mathsf{X}_\omega U_{-\omega}-\mathsf{Y}_\xi U_\xi),\\
- \mathfrak n_{-\tau_*}(\xi)-\mathfrak n_{-\tau_*}(-\omega_L)
-  &=(1-\mathfrak r_*)
-    (\mathsf{X}_\omega U_{-\omega}+\mathsf{Y}_\xi U_\xi).
-\end{aligned}
-\]
-Their product is positive by \eqref{eq:central-target}, because
-\[
- U_{-\omega}^2=\frac1{1-\omega_L^2},\qquad
- \mathsf{X}_\omega^2U_{-\omega}^2
- =\frac{\tau_*^2\mathfrak D_L(\rho+\omega_L)}{1+\omega_L}
- >\mathsf{Y}_\xi^2U_\xi^2.
-\]
-Thus
+and \(U_{L-1}(-\omega_L)^2=(1-\omega_L^2)^{-1}\).  Simplification yields
 \begin{equation}\label{eq:q-product-central}
- q_{2L-1}(x_*,\tau_*)q_{2L-1}(x_*,-\tau_*)>0.
+\begin{aligned}
+ &q_{2L-1}(x_*,\tau_*)q_{2L-1}(x_*,-\tau_*)\\
+ &\quad=\frac{a^{2L-2}\tau_*^2}{(\xi+\omega_L)^2}
+ \left(1-\frac{1-\omega_L}{\mathfrak D_L(\rho+\omega_L)}\right)
+ \left[\frac{\mathfrak D_L(\rho+\omega_L)}{1+\omega_L}
+       -(1+\xi)^2U_{L-1}(\xi)^2\right]>0.
+\end{aligned}
 \end{equation}
+Indeed, \(\mathfrak D_L=S_b/Q_b>1\),
+\(\rho+\omega_L>2\omega_L>1>1-\omega_L\), and the last bracket is
+positive by \eqref{eq:central-target}.
 
 At \(x=0\), the second-smallest singular value of \(A_{2L-1}\) is
 \[
@@ -2259,19 +2053,7 @@ Unit normal vectors to the two hyperplane ranges are
  \qquad
  \boldsymbol u_D=\mathcal S_N^{-1/2}(1,q_\theta,\ldots,q_\theta^n)^T.
 \]
-In the polar decompositions
-\[
- \mathsf{C}_\theta=Q_C(\mathsf{C}_\theta^*\mathsf{C}_\theta)^{1/2},
- \qquad
- \mathsf{D}_\theta=Q_D(\mathsf{D}_\theta^*\mathsf{D}_\theta)^{1/2},
-\]
-the matrices \(Q_C,Q_D\) are isometries onto these ranges.  Two
-hyperplanes in \(\C^{n+1}\) intersect in dimension at least \(n-1\), so
-the cross-Gram matrix \(Q_D^*Q_C\) has \(n-1\) singular values equal to
-\(1\); its final singular value is
-\(|\langle\boldsymbol u_D,\boldsymbol u_C\rangle|\), the cosine of the
-nontrivial principal angle.  The
-geometric sum gives
+The geometric sum gives
 \begin{align}
  |\langle\boldsymbol u_D,\boldsymbol u_C\rangle|
  &=\frac{r^n}{\mathcal S_N}
@@ -2282,15 +2064,27 @@ geometric sum gives
  =:\chi_N(\theta).
 \label{eq:chi}
 \end{align}
-Finally,
+Let \(P_D\) be the orthogonal projection onto the range of
+\(\mathsf D_\theta\).  If \(\boldsymbol w\perp\boldsymbol u_C\),
+Cauchy--Schwarz applied to the component of \(\boldsymbol u_D\)
+orthogonal to \(\boldsymbol u_C\) gives
 \[
- xI_n-A_n=(\mathsf{D}_\theta^*\mathsf{D}_\theta)^{1/2}
- Q_D^*Q_C(\mathsf{C}_\theta^*\mathsf{C}_\theta)^{1/2}.
+ |\langle\boldsymbol u_D,\boldsymbol w\rangle|^2
+ \leq(1-\chi_N(\theta)^2)\lVert\boldsymbol w\rVert_2^2,
+ \qquad
+ \lVert P_D\boldsymbol w\rVert_2\geq
+ \chi_N(\theta)\lVert\boldsymbol w\rVert_2.
 \]
-Using \(s_{\min}(XYZ)\geq
-s_{\min}(X)s_{\min}(Y)s_{\min}(Z)\) and
-\eqref{eq:rectangular-min}, with \(\chi_N\) as defined in
-\eqref{eq:chi}, gives
+Put \(\kappa_N=1+r^2-2r\cos(\pi/N)\).
+By \eqref{eq:rectangular-min}, the restriction of
+\(\mathsf D_\theta^*\) to the range of \(\mathsf D_\theta\) has least
+singular value at least \(\sqrt{\kappa_N}\).  Hence
+\[
+ \lVert\mathsf D_\theta^*\mathsf C_\theta\boldsymbol u\rVert_2
+ \geq\sqrt{\kappa_N}\lVert P_D\mathsf C_\theta\boldsymbol u\rVert_2
+ \geq\kappa_N\chi_N(\theta)\lVert\boldsymbol u\rVert_2.
+\]
+Together with \eqref{eq:rectangular-factorization}, this gives
 \[
  g_n(2r\cos\theta)\geq
  \left(1+r^2-2r\cos\frac{\pi}{N}\right)\chi_N(\theta).
@@ -2340,69 +2134,30 @@ is disconnected.  If \(\mathcal U_n(a)<\varepsilon\), then
 \(\gamma_n<\varepsilon\), so it is connected.  Strict decrease of
 \(\gamma_n\) now gives \eqref{eq:N-two-sided-main}.
 
-For \(t>0\), define
+Put \(N=N_c(a,\varepsilon)\), \(\Lambda=\log(1/\varepsilon)\), and
+\(\beta=-\log r=\tfrac12\log(1/a)>0\).
+For fixed \(a\), positivity of every \(\gamma_n\) implies
+\(N\to\infty\) as \(\varepsilon\downarrow0\).  Thus \(N\geq3\) for
+all sufficiently small \(\varepsilon\), and minimality of \(N\) gives
 \[
- \mathfrak e_n=(n+1)r^n,\qquad
- \mathcal T_r(t)=\min\{N_0\geq2:\mathfrak e_m<t
- \text{ for every }m\geq N_0\}.
+ C_{\rm lb}(a)(N+1)e^{-\beta N}
+ \leq\gamma_N<\varepsilon\leq\gamma_{N-1}
+ \leq\tfrac12Ne^{-\beta(N-1)}.
 \]
-This minimum exists because \(\mathfrak e_m\to0\).
-Because persistence gives
-\[
- N_c(a,\varepsilon)=
- \min\{N\geq2:\gamma_m<\varepsilon\text{ for every }m\geq N\},
-\]
-the bounds \(C_{\rm lb}(a)\mathfrak e_m\leq\gamma_m\leq\mathfrak e_m/2\)
-give
-\begin{equation}\label{eq:tail-threshold-bounds}
- \mathcal T_r(\varepsilon/C_{\rm lb}(a))\leq N_c(a,\varepsilon)
- \leq\mathcal T_r(2\varepsilon).
+Taking logarithms yields
+\begin{equation}\label{eq:critical-log-sandwich}
+ \Lambda+\log(N+1)+\log C_{\rm lb}(a)
+ <\beta N\leq\Lambda+\log N+\beta-\log2.
 \end{equation}
-\proofstage{Elementary inversion of the envelope threshold}
-Let
-\[
- \beta=-\log r=\frac12\log(1/a),\qquad
- L(t)=\log(1/t),\qquad
- S_r(t)=\frac{L(t)+\log L(t)}{\beta}.
-\]
-For every fixed \(D\in\mathbb R\), direct substitution gives
-\[
- \beta(S_r(t)+D)-\log(S_r(t)+D+1)-L(t)
- =\beta D+\log\beta+o(1)
- \qquad(t\downarrow0).
-\]
-Indeed, \(\beta S_r=L+\log L\) and
-\(\log(S_r+D+1)=\log L-\log\beta+o(1)\).
-Choose constants \(D_-<-(\log\beta)/\beta<D_+\).  For all sufficiently
-small \(t\), the preceding residual is negative at \(S_r(t)+D_-\) and
-positive at \(S_r(t)+D_+\).  Since \(S_r(t)\to\infty\) and
-\[
- \frac{d}{dx}\bigl((x+1)e^{-\beta x}\bigr)
- =e^{-\beta x}(1-\beta(x+1)),
-\]
-this function is decreasing on
-\([\lfloor S_r(t)+D_-\rfloor,\infty)\) for all sufficiently small \(t\).
-The strict integer tail condition therefore gives
-\[
- \lfloor S_r(t)+D_-\rfloor<\mathcal T_r(t)
- \leq\lceil S_r(t)+D_+\rceil.
-\]
-Thus \(\mathcal T_r(t)=S_r(t)+O_r(1)\).  Replacing \(t\) by a fixed
-positive multiple changes \(S_r(t)\) by only \(O_r(1)\); applying this to
-the two sides of \eqref{eq:tail-threshold-bounds} proves
-\eqref{eq:N-asymptotic-main}.
+The lower inequality bounds \(N\) below by a positive multiple of
+\(\Lambda\) for large \(\Lambda\).  In the upper inequality,
+\(\log N\leq\beta N/2\) for large \(N\), which gives the corresponding
+upper bound.  Hence \(\log N=\log\Lambda+O_a(1)\), and substitution into
+\eqref{eq:critical-log-sandwich} proves \eqref{eq:N-asymptotic-main}.
 
-\proofstage{The threshold at order two}
-For \(|x|\leq r\),
-\[
- \det\bigl((xI_2-A_2)^*(xI_2-A_2)-a^2I_2\bigr)
- =x^2(x^2-2a-2a^2)\leq0.
-\]
-The matrix inside the determinant is Hermitian, and the nonpositive
-product of its two eigenvalues forces its least eigenvalue to be
-nonpositive.  Thus \(s_{\min}(xI_2-A_2)\leq a\).  At \(x=0\), the singular
-values of \(-A_2\) are \(1\) and \(a\), so equality is attained and
-\(\gamma_2=a\).  Hence \eqref{eq:connected-iff-gamma} gives
+The sole gap at order two is central, so the central-height formula gives
+\(\gamma_2=\mathfrak h_1^{\mathrm e}=s_{\min}([a])=a\).
+Equation~\eqref{eq:connected-iff-gamma} therefore gives
 \(N_c(a,\varepsilon)=2\) if and only if \(\varepsilon>a\).
 This proves all assertions.
 \end{proof}

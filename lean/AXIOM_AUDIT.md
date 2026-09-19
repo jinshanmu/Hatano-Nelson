@@ -6,7 +6,7 @@ Run from `lean/` in the pinned environment:
 lake env lean AxiomAudit.lean
 ```
 
-`AxiomAudit.lean` contains 290 selected `#print axioms` commands.  The
+`AxiomAudit.lean` contains 293 selected `#print axioms` commands.  The
 selection includes both the canonical `ConnectedPseudospectrum.main_theorem`
 and the full-family `ConnectedPseudospectrum.complexToeplitz_main_theorem`,
 as well as the

@@ -488,7 +488,7 @@ theorem foldEvenChebyshev_numerator_signed_outerChord
 /-- Complete even folded-sequence factorization in coordinate-free outer
 variables. -/
 theorem foldEvenSequence_signed_outerChord_factorization
-    (m : ℕ) {a θ z varsigma : ℝ} (ha0 : 0 < a) (ha1 : a ≠ 1)
+    (m : ℕ) {a θ z varsigma : ℝ} (ha0 : 0 < a)
     (hz : |z| ≤ Real.cosh (pathLogParameter a))
     (horder : Real.cos θ ^ 2 < z ^ 2)
     (hsign : varsigma ^ 2 = 1) :
@@ -512,7 +512,7 @@ theorem foldEvenSequence_signed_outerChord_factorization
     (x := outerChordX a θ z)
     (s := varsigma * outerChordS a θ z) ha0.ne' hdisc
   rw [foldEvenSequence_eq_chebyshevDividedDifference
-    ha0.ne' ha1 hxi hsum hprod]
+    ha0.ne' hxi hsum hprod]
   rw [foldEvenChebyshev_numerator_signed_outerChord m ha0 hz horder hsign,
     foldXiPlus_signed_outerChord ha0 hz horder hsign,
     foldXiMinus_signed_outerChord ha0 hz horder hsign]
@@ -520,7 +520,7 @@ theorem foldEvenSequence_signed_outerChord_factorization
 /-- The even folded determinant vanishes exactly when the signed
 coordinate-free chord equation holds. -/
 theorem foldEvenSequence_signed_outerChord_eq_zero_iff
-    (m : ℕ) {a θ z varsigma : ℝ} (ha0 : 0 < a) (ha1 : a ≠ 1)
+    (m : ℕ) {a θ z varsigma : ℝ} (ha0 : 0 < a)
     (hz : |z| ≤ Real.cosh (pathLogParameter a))
     (horder : Real.cos θ ^ 2 < z ^ 2)
     (hsign : varsigma ^ 2 = 1) :
@@ -528,7 +528,7 @@ theorem foldEvenSequence_signed_outerChord_eq_zero_iff
         (varsigma * outerChordS a θ z) m = 0 ↔
       halfTrigRadical a θ * chebyshevU (2 * m) (Real.cos θ) =
         varsigma * outerChordRadical a z * chebyshevU (2 * m) z := by
-  rw [foldEvenSequence_signed_outerChord_factorization m ha0 ha1
+  rw [foldEvenSequence_signed_outerChord_factorization m ha0
     hz horder hsign]
   have haPow : a ^ m ≠ 0 := pow_ne_zero _ ha0.ne'
   have hpref := outerChord_even_prefactor_ne_zero hz hsign horder
@@ -688,7 +688,7 @@ theorem foldOddChebyshev_numerator_signed_outerChord
 /-- Complete odd folded-sequence factorization in coordinate-free outer
 variables. -/
 theorem foldOddSequence_signed_outerChord_factorization
-    (m : ℕ) {a θ z varsigma : ℝ} (ha0 : 0 < a) (ha1 : a ≠ 1)
+    (m : ℕ) {a θ z varsigma : ℝ} (ha0 : 0 < a)
     (hz : |z| ≤ Real.cosh (pathLogParameter a))
     (horder : Real.cos θ ^ 2 < z ^ 2)
     (hsign : varsigma ^ 2 = 1) (hy : Real.cos θ ≠ 0) :
@@ -714,7 +714,7 @@ theorem foldOddSequence_signed_outerChord_factorization
     (x := outerChordX a θ z)
     (s := varsigma * outerChordS a θ z) ha0.ne' hdisc
   rw [foldOddSequence_eq_chebyshevDividedDifference
-    ha0.ne' ha1 hxi hsum hprod m]
+    ha0.ne' hxi hsum hprod m]
   rw [foldOddChebyshev_numerator_signed_outerChord m ha0 hz horder hsign hy,
     foldXiPlus_signed_outerChord ha0 hz horder hsign,
     foldXiMinus_signed_outerChord ha0 hz horder hsign]
@@ -722,7 +722,7 @@ theorem foldOddSequence_signed_outerChord_factorization
 /-- The odd folded determinant vanishes exactly when the signed
 coordinate-free chord equation holds. -/
 theorem foldOddSequence_signed_outerChord_eq_zero_iff
-    (m : ℕ) {a θ z varsigma : ℝ} (ha0 : 0 < a) (ha1 : a ≠ 1)
+    (m : ℕ) {a θ z varsigma : ℝ} (ha0 : 0 < a)
     (hz : |z| ≤ Real.cosh (pathLogParameter a))
     (horder : Real.cos θ ^ 2 < z ^ 2)
     (hsign : varsigma ^ 2 = 1) (hy : Real.cos θ ≠ 0) :
@@ -730,7 +730,7 @@ theorem foldOddSequence_signed_outerChord_eq_zero_iff
         (varsigma * outerChordS a θ z) m = 0 ↔
       halfTrigRadical a θ * chebyshevU (2 * m + 1) (Real.cos θ) =
         varsigma * outerChordRadical a z * chebyshevU (2 * m + 1) z := by
-  rw [foldOddSequence_signed_outerChord_factorization m ha0 ha1
+  rw [foldOddSequence_signed_outerChord_factorization m ha0
     hz horder hsign hy]
   have haPow : a ^ m ≠ 0 := pow_ne_zero _ ha0.ne'
   have hsigma : varsigma ≠ 0 := by

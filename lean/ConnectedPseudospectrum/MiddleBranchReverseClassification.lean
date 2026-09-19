@@ -307,7 +307,7 @@ theorem chordLobeWeight_selectedMiddleZ_eq_selectedMiddleY
     have hDim : d.K - 1 = 2 * m := by omega
     have hfold :
         foldEvenSequence d.a x (selectedMiddleRoot d x) m = 0 := by
-      rw [← signedPencilDet_even_eq_foldEvenSequence d.ha1.ne m]
+      rw [← signedPencilDet_even_eq_foldEvenSequence m]
       simpa only [hDim] using hdet
     have hfoldRec :
         foldEvenSequence d.a
@@ -320,7 +320,7 @@ theorem chordLobeWeight_selectedMiddleZ_eq_selectedMiddleY
       exact hfold
     have hchord :=
       (foldEvenSequence_signed_outerChord_eq_zero_iff m d.ha0
-        d.ha1.ne hzAbs horder hsign).1 hfoldRec
+        hzAbs horder hsign).1 hfoldRec
     have habs := abs_signedChordEquation hchord
     simpa [chordLobeWeight, outerChordRadical, halfTrigRadical,
       hDim, hcos] using habs
@@ -328,7 +328,7 @@ theorem chordLobeWeight_selectedMiddleZ_eq_selectedMiddleY
     have hDim : d.K - 1 = 2 * m + 1 := by omega
     have hfold :
         foldOddSequence d.a x (selectedMiddleRoot d x) m = 0 := by
-      rw [← signedPencilDet_odd_eq_foldOddSequence d.ha1.ne m]
+      rw [← signedPencilDet_odd_eq_foldOddSequence m]
       simpa only [hDim] using hdet
     have hfoldRec :
         foldOddSequence d.a
@@ -344,7 +344,7 @@ theorem chordLobeWeight_selectedMiddleZ_eq_selectedMiddleY
       exact hyPos.ne'
     have hchord :=
       (foldOddSequence_signed_outerChord_eq_zero_iff m d.ha0
-        d.ha1.ne hzAbs horder hsign hcosNe).1 hfoldRec
+        hzAbs horder hsign hcosNe).1 hfoldRec
     have habs := abs_signedChordEquation hchord
     simpa [chordLobeWeight, outerChordRadical, halfTrigRadical,
       hDim, hcos] using habs

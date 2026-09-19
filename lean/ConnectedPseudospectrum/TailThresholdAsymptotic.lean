@@ -141,191 +141,62 @@ def tailInversionScale (r t : ℝ) : ℝ :=
   1 / (-Real.log r) *
     (Real.log (1 / t) + Real.log (Real.log (1 / t)))
 
-/-- The same scale written as a function of `y=log(1/t)` and
-`lam=-log r`. -/
-private def logTailScale (lam y : ℝ) : ℝ :=
-  (y + Real.log y) / lam
-
-/-- Elementary residual estimate underlying the inversion.  For fixed
-`lam>0`, adding a fixed displacement `D` to `(y+log y)/lam` leaves the
-logarithmic crossing residual convergent to `lam*D+log lam`. -/
-private theorem tendsto_logTail_residual (lam : ℝ) (hlam : 0 < lam) (D k : ℝ) :
-    Tendsto
-      (fun y : ℝ =>
-        lam * (logTailScale lam y + D) -
-          Real.log (logTailScale lam y + D + k) - y)
-      atTop (nhds (lam * D + Real.log lam)) := by
-  let R : ℝ → ℝ := fun y =>
-    (1 + Real.log y / y) / lam + (D + k) / y
-  have hlogDiv :
-      Tendsto (fun y : ℝ => Real.log y / y) atTop (nhds 0) :=
-    Real.isLittleO_log_id_atTop.tendsto_div_nhds_zero
-  have hinv : Tendsto (fun y : ℝ => y⁻¹) atTop (nhds 0) :=
-    tendsto_inv_atTop_zero
-  have hfirst :
-      Tendsto (fun y : ℝ => (1 + Real.log y / y) / lam)
-        atTop (nhds (1 / lam)) := by
-    have hone : Tendsto (fun _ : ℝ => (1 : ℝ)) atTop (nhds 1) :=
-      tendsto_const_nhds
-    simpa [one_div] using (hone.add hlogDiv).div_const lam
-  have hsecond :
-      Tendsto (fun y : ℝ => (D + k) / y) atTop (nhds 0) := by
-    simpa [div_eq_mul_inv] using tendsto_const_nhds.mul hinv
-  have hR : Tendsto R atTop (nhds (1 / lam)) := by
-    simpa [R] using hfirst.add hsecond
-  have hRpos : ∀ᶠ y : ℝ in atTop, 0 < R y :=
-    (tendsto_order.1 hR).1 0 (one_div_pos.mpr hlam)
-  have hlogR :
-      Tendsto (fun y : ℝ => Real.log (R y)) atTop
-        (nhds (Real.log (1 / lam))) := by
-    exact (Real.continuousAt_log (one_div_ne_zero hlam.ne')).tendsto.comp hR
-  have hsimple :
-      Tendsto (fun y : ℝ => lam * D - Real.log (R y)) atTop
-        (nhds (lam * D + Real.log lam)) := by
-    convert tendsto_const_nhds.sub hlogR using 1
-    rw [Real.log_div one_ne_zero hlam.ne', Real.log_one]
-    ring_nf
-  apply hsimple.congr'
-  filter_upwards [eventually_gt_atTop 0, hRpos] with y hy hRy
-  have hfactor : logTailScale lam y + D + k = y * R y := by
-    dsimp only [logTailScale, R]
-    field_simp [hlam.ne', hy.ne']
-    ring
-  rw [hfactor, Real.log_mul hy.ne' hRy.ne']
-  dsimp only [logTailScale]
-  field_simp [hlam.ne', hy.ne']
-  ring
-
-private theorem tendsto_logTailScale_atTop (lam : ℝ) (hlam : 0 < lam) :
-    Tendsto (logTailScale lam) atTop atTop := by
-  have hlinear : Tendsto (fun y : ℝ => y / lam) atTop atTop := by
-    simpa [div_eq_mul_inv] using
-      tendsto_id.atTop_mul_const (inv_pos.mpr hlam)
-  apply tendsto_atTop_mono' atTop _ hlinear
-  filter_upwards [eventually_ge_atTop (1 : ℝ)] with y hy
-  unfold logTailScale
-  exact (div_le_div_iff_of_pos_right hlam).2
-    (le_add_of_nonneg_right (Real.log_nonneg hy))
-
-/-- Uniform two-sided logarithmic inversion estimate. -/
+/-- Uniform two-sided logarithmic inversion estimate, obtained from the
+crossing at the threshold and the failed crossing at its predecessor. -/
 theorem tailThreshold_logarithmic_bounds {r : ℝ} (hr : 0 < r) (hr1 : r < 1) :
     ∃ C : ℝ, 0 ≤ C ∧ ∃ Y : ℝ, ∀ t : ℝ,
       0 < t → Y ≤ Real.log (1 / t) →
         |(tailThreshold r t : ℝ) - tailInversionScale r t| ≤ C := by
-  let lam : ℝ := -Real.log r
-  have hlam : 0 < lam := neg_pos.mpr (Real.log_neg hr hr1)
-  let C₀ : ℝ := (|Real.log lam| + 2) / lam
-  have hC₀ : 0 ≤ C₀ := div_nonneg (by positivity) hlam.le
-  have hlamC₀ : lam * C₀ = |Real.log lam| + 2 := by
-    dsimp only [C₀]
-    field_simp [hlam.ne']
-  have hupperLimit : 0 < lam * C₀ + Real.log lam := by
-    rw [hlamC₀]
-    linarith [neg_abs_le (Real.log lam)]
-  have hlowerLimit : lam * (-C₀) + Real.log lam < 0 := by
-    rw [mul_neg, hlamC₀]
-    linarith [le_abs_self (Real.log lam)]
-  have hupperEventually : ∀ᶠ y : ℝ in atTop,
-      0 < lam * (logTailScale lam y + C₀) -
-        Real.log (logTailScale lam y + C₀ + 2) - y :=
-    (tendsto_order.1
-      (tendsto_logTail_residual lam hlam C₀ 2)).1 0 hupperLimit
-  have hlowerEventually : ∀ᶠ y : ℝ in atTop,
-      lam * (logTailScale lam y - C₀) -
-        Real.log (logTailScale lam y - C₀) - y < 0 := by
-    have h := (tendsto_order.1
-      (tendsto_logTail_residual lam hlam (-C₀) 0)).2 0 hlowerLimit
-    simpa [sub_eq_add_neg] using h
-  have hscale := tendsto_logTailScale_atTop lam hlam
-  have hlargeLower : ∀ᶠ y : ℝ in atTop,
-      C₀ + 2 ≤ logTailScale lam y :=
-    hscale.eventually_ge_atTop (C₀ + 2)
-  have hlargeCutoff : ∀ᶠ y : ℝ in atTop,
-      r / (1 - r) - C₀ ≤ logTailScale lam y :=
-    hscale.eventually_ge_atTop (r / (1 - r) - C₀)
-  have hall : ∀ᶠ y : ℝ in atTop,
-      (0 < lam * (logTailScale lam y + C₀) -
-          Real.log (logTailScale lam y + C₀ + 2) - y) ∧
-      (lam * (logTailScale lam y - C₀) -
-          Real.log (logTailScale lam y - C₀) - y < 0) ∧
-      (C₀ + 2 ≤ logTailScale lam y) ∧
-      (r / (1 - r) - C₀ ≤ logTailScale lam y) := by
-    filter_upwards [hupperEventually, hlowerEventually, hlargeLower,
-      hlargeCutoff] with y hu hl hlow hcut
-    exact ⟨hu, hl, hlow, hcut⟩
-  obtain ⟨Y, hY⟩ := eventually_atTop.1 hall
-  refine ⟨C₀ + 1, by positivity, Y, ?_⟩
+  let β := -Real.log r
+  have hβ : 0 < β := neg_pos.mpr (Real.log_neg hr hr1)
+  obtain ⟨C, hC, Y, hbound⟩ := logarithmic_sandwich_bounded_error hβ 0 β
+  refine ⟨C, hC, max Y (2 * β), ?_⟩
   intro t ht hy
-  let y := Real.log (1 / t)
-  let S := logTailScale lam y
-  have hdata := hY y hy
-  have hu := hdata.1
-  have hl := hdata.2.1
-  have hSlow : C₀ + 2 ≤ S := hdata.2.2.1
-  have hScut : r / (1 - r) - C₀ ≤ S := hdata.2.2.2
-  let N : ℕ := ⌈S + C₀⌉₊
-  have hzUpper : 0 ≤ S + C₀ := by linarith
-  have hzUpperN : S + C₀ ≤ (N : ℝ) := Nat.le_ceil _
-  have hNUpper : (N : ℝ) < S + C₀ + 1 :=
-    Nat.ceil_lt_add_one hzUpper
-  have hN2 : 2 ≤ N := by
-    exact_mod_cast (show (2 : ℝ) ≤ (N : ℝ) by linarith)
-  have hNcut : r / (1 - r) ≤ (N + 1 : ℝ) := by
-    linarith
-  have hNpos : (0 : ℝ) < ((N + 1 : ℕ) : ℝ) := by positivity
-  have hlogUpper :
-      Real.log ((N + 1 : ℕ) : ℝ) < Real.log (S + C₀ + 2) := by
-    apply Real.log_lt_log hNpos
-    push_cast at hNUpper ⊢
-    linarith
-  have hgapUpper : y <
-      lam * (N : ℝ) - Real.log ((N + 1 : ℕ) : ℝ) := by
-    nlinarith
-  have hlamEq : lam = -Real.log r := rfl
-  have hmodelN : tailModel r N < t := by
-    apply (tailModel_lt_iff_log_gap hr ht N).2
-    simpa only [y, hlamEq] using hgapUpper
-  have hTUpper : tailThreshold r t ≤ N :=
-    tailThreshold_le_of_admissible
-      (tailAdmissible_of_cutoff_of_model_lt hr.le hr1 hN2 hNcut hmodelN)
-  let z := S - C₀
-  let K : ℕ := ⌊z⌋₊
-  have hzTwo : (2 : ℝ) ≤ z := by dsimp only [z]; linarith
-  have hzNonneg : 0 ≤ z := hzTwo.trans' (by norm_num)
-  have hKLower : (K : ℝ) ≤ z := Nat.floor_le hzNonneg
-  have hzK : z < (K : ℝ) + 1 := Nat.lt_floor_add_one z
-  have hKpos : (0 : ℝ) < ((K + 1 : ℕ) : ℝ) := by positivity
-  have hlogLower : Real.log z < Real.log ((K + 1 : ℕ) : ℝ) := by
-    apply Real.log_lt_log (by linarith)
-    push_cast
-    exact hzK
-  have hgapLower :
-      lam * (K : ℝ) - Real.log ((K + 1 : ℕ) : ℝ) < y := by
-    dsimp only [z] at hKLower hlogLower
-    nlinarith
-  have hmodelK : t ≤ tailModel r K := by
+  let N := tailThreshold r t
+  let L := Real.log (1 / t)
+  have hLY : Y ≤ L := (le_max_left _ _).trans hy
+  have hLβ : 2 * β ≤ L := (le_max_right _ _).trans hy
+  have hT : TailAdmissible r t N := tailThreshold_admissible hr.le hr1 ht
+  have htwo : t ≤ tailModel r 2 := by
     apply le_of_not_gt
-    intro hlt
-    have hgap := (tailModel_lt_iff_log_gap hr ht K).1 hlt
-    rw [← hlamEq] at hgap
-    change y < lam * (K : ℝ) - Real.log ((K + 1 : ℕ) : ℝ) at hgap
+    intro h
+    have hgap := (tailModel_lt_iff_log_gap hr ht 2).1 h
+    have hlog : 0 ≤ Real.log (3 : ℝ) := Real.log_nonneg (by norm_num)
+    change L < β * (2 : ℕ) - Real.log ((2 + 1 : ℕ) : ℝ) at hgap
+    norm_num only [Nat.cast_ofNat] at hgap
     linarith
-  have hKThreshold : K < tailThreshold r t :=
-    lt_tailThreshold_of_model_ge hr.le hr1 ht hmodelK
-  have hUpperReal : (tailThreshold r t : ℝ) < S + C₀ + 1 := by
-    exact (Nat.cast_le.mpr hTUpper).trans_lt hNUpper
-  have hLowerReal : S - C₀ < (tailThreshold r t : ℝ) := by
-    have hsucc : K + 1 ≤ tailThreshold r t := hKThreshold
-    have hsuccReal : (K : ℝ) + 1 ≤ (tailThreshold r t : ℝ) := by
-      exact_mod_cast hsucc
-    exact (show S - C₀ < (K : ℝ) + 1 by simpa only [z] using hzK).trans_le
-      hsuccReal
-  have hscaleEq : tailInversionScale r t = S := by
-    dsimp only [tailInversionScale, S, y, logTailScale, lam]
-    field_simp [hlam.ne']
-  rw [hscaleEq]
-  rw [abs_le]
-  constructor <;> linarith
+  have hN3 : 3 ≤ N := lt_tailThreshold_of_model_ge hr.le hr1 ht htwo
+  have hprev : t ≤ tailModel r (N - 1) := by
+    apply le_of_not_gt
+    intro h
+    have hA : TailAdmissible r t (N - 1) := by
+      refine ⟨by omega, ?_⟩
+      intro m hm
+      by_cases heq : m = N - 1
+      · simpa only [heq] using h
+      · exact hT.2 m (by omega)
+    have hle : N ≤ N - 1 := tailThreshold_le_of_admissible hA
+    omega
+  have hNpos : (0 : ℝ) < N := by exact_mod_cast (show 0 < N by omega)
+  have hl : L + Real.log (N : ℝ) + 0 ≤ β * N := by
+    have hgap := (tailModel_lt_iff_log_gap hr ht N).1 (hT.2 N le_rfl)
+    have hlog := Real.log_le_log hNpos
+      (show (N : ℝ) ≤ ((N + 1 : ℕ) : ℝ) by exact_mod_cast Nat.le_succ N)
+    change L < β * N - Real.log ((N + 1 : ℕ) : ℝ) at hgap
+    linarith
+  have hu : β * N ≤ L + Real.log (N : ℝ) + β := by
+    have hgap : β * (N - 1 : ℕ) - Real.log ((N - 1 + 1 : ℕ) : ℝ) ≤ L := by
+      apply le_of_not_gt
+      intro h
+      exact (not_lt_of_ge hprev) ((tailModel_lt_iff_log_gap hr ht (N - 1)).2 h)
+    have hprevid : N - 1 + 1 = N := by omega
+    rw [hprevid, Nat.cast_sub (show 1 ≤ N by omega), Nat.cast_one] at hgap
+    nlinarith
+  have herror := hbound N L (by exact_mod_cast (show 1 ≤ N by omega)) hLY hl hu
+  have hscale : (L + Real.log L) / β = tailInversionScale r t := by
+    dsimp [tailInversionScale, L, β]
+    ring
+  rwa [hscale] at herror
 
 /-- Bounded-error inversion of the permanent geometric tail threshold as the
 level tends to zero. -/

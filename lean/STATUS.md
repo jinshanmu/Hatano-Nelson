@@ -1,10 +1,11 @@
 # Current validation status
 
-Last updated: 2026-08-12 (Asia/Shanghai).
+Last updated: 2026-09-19 (Asia/Shanghai).
 
 ## Acceptance result
 
-The ELA formalization passed the complete umbrella build:
+The complete formalization, including the simplified preprint proofs, passed
+the umbrella build:
 
 ```sh
 LEAN_NUM_THREADS=2 lake build
@@ -23,19 +24,19 @@ import ConnectedPseudospectrum
 #lint only unusedArguments in ConnectedPseudospectrum
 ```
 
-It found zero errors in 2,522 declarations, plus 2,299 automatically
+It found zero errors in 2,478 declarations, plus 2,287 automatically
 generated declarations, and ended with `All linting checks passed!`.  The
 temporary driver was deleted after the check.
 
-The kernel-axiom audit was then run with:
+The kernel-axiom audit was run with:
 
 ```sh
-LEAN_NUM_THREADS=2 lake env lean AxiomAudit.lean
+LEAN_NUM_THREADS=1 lake env lean AxiomAudit.lean
 ```
 
-It exited `0` for all 290 selected `#print axioms` commands.  Every record
-reported exactly `propext`, `Classical.choice`, and `Quot.sound`; no record
-contained a project axiom, `sorryAx`, or compiler-trust escape.
+It exited `0` for all 293 selected `#print axioms` commands. All reported
+dependencies are among `propext`, `Classical.choice`, and `Quot.sound`; no
+record contained a project axiom, `sorryAx`, or compiler-trust escape.
 
 ## Mathematical scope
 
@@ -87,14 +88,22 @@ and the stronger uniform bound `|N-pi*c/epsilon|<2`, hence the normal
 - Mathlib commit: `8f9d9cff6bd728b17a24e163c9402775d9e6a365`.
 - The umbrella module imports all 114 source modules under
   `ConnectedPseudospectrum/`; there are no detached proof modules.
-- Canonical library closure: 115 files, 44,761 lines, 1,847,549 bytes.
+- Canonical library closure: 115 files, 43,778 lines, 1,809,940 bytes.
 - `AxiomAudit.lean` SHA-256:
-  `194ce93f99f90482efcac069ad21cfe1325213ce0c782689bfb3b618c64474b9`.
+  `917a8a4848fdb25c7cecd6b6c02c7cdb4b713de75ad042354c332a2cb4529632`.
 
 Static scans of the canonical library found no `sorry`, `admit`,
 `native_decide`, project axiom, unsafe declaration, compiler-trust escape,
 linter suppression, or Lean option override.  `CheckComplex.lean` and the
 temporary lint driver are absent.
+
+## Preprint manuscript alignment
+
+- Current source: `../preprint/connectedness_thresholds.tex`.
+- `FORMALIZATION_MAP.md` records the simplified proof routes and their
+  corresponding Lean modules.
+- The canonical and full-family assembly theorem statements are unchanged.
+  Redundant helper premises were removed along their call chains.
 
 ## ELA manuscript alignment
 
@@ -105,6 +114,6 @@ temporary lint driver are absent.
 - `LATEX_AUDIT.md` records the statement-level correspondence and proof-scope
   simplifications.
 
-This file records executable Lean validation.  LaTeX, bibliography, figures,
-and submission-bundle checks are maintained with the ELA manuscript rather
-than duplicated here.
+This file records executable Lean validation. LaTeX, bibliography, figures,
+and submission-bundle checks are maintained alongside the corresponding
+manuscripts.

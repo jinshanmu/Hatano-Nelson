@@ -172,7 +172,7 @@ theorem foldEvenSequence_outerChordFamily_eq_zero
     foldEvenSequence d.a (outerChordFamilyX d θ)
         (outerChordFamilySignedRoot d θ) m = 0 := by
   have hiff := foldEvenSequence_signed_outerChord_eq_zero_iff m d.ha0
-    d.ha1.ne (outerChordFamilyZ_abs_le_cosh d θ)
+    (outerChordFamilyZ_abs_le_cosh d θ)
     (outerChordFamily_cos_sq_lt_z_sq d θ hleft hright)
     (negOnePow_sq d.j)
   change foldEvenSequence d.a
@@ -203,7 +203,7 @@ theorem foldOddSequence_outerChordFamily_eq_zero
     foldOddSequence d.a (outerChordFamilyX d θ)
         (outerChordFamilySignedRoot d θ) m = 0 := by
   have hiff := foldOddSequence_signed_outerChord_eq_zero_iff m d.ha0
-    d.ha1.ne (outerChordFamilyZ_abs_le_cosh d θ)
+    (outerChordFamilyZ_abs_le_cosh d θ)
     (outerChordFamily_cos_sq_lt_z_sq d θ hleft hright)
     (negOnePow_sq d.j) (cos_pos_on_positiveHalfGap d θ hright).ne'
   change foldOddSequence d.a

@@ -113,7 +113,7 @@ theorem main_theorem {a ε : ℝ} (ha0 : 0 < a) (ha1 : a < 1) (hε : 0 < ε) :
     · exact lowerObstructionMaximum_eq_one_of_empty
   · constructor
     · exact criticalThreshold_hasCriticalSizeAsymptotic
-        ha0 ha1 hcriterionAll hstrict hlower
+        ha0 ha1 hcriterionAll hlower
     · exact criticalThreshold_eq_two_iff ha0 ha1 hε hcriterion
 
 end

@@ -44,26 +44,6 @@ def lowerCentralNumerator
   -(x * (d.transformedZeta - t) + s * (1 + t)) *
     chebyshevU d.m t
 
-/-- `X_xi=x_*(zeta-xi)`. -/
-def lowerCentralXXi (d : OddCentralChordData) : Real :=
-  d.lowerCentralXStar * (d.transformedZeta - d.lowerCentralXi)
-
-/-- `Y_xi=c(1+xi)`. -/
-def lowerCentralYXi (d : OddCentralChordData) : Real :=
-  d.lowerCentralC * (1 + d.lowerCentralXi)
-
-/-- `X_omega=x_*(zeta+omega_L)`. -/
-def lowerCentralXOmega (d : OddCentralChordData) : Real :=
-  d.lowerCentralXStar * (d.transformedZeta + d.lowerCentralOmega)
-
-/-- `Y_omega=c Delta_omega`. -/
-def lowerCentralYOmega (d : OddCentralChordData) : Real :=
-  d.lowerCentralC * d.lowerCentralOmegaDelta
-
-/-- The common ratio `r_*=Y_omega/X_omega=X_xi/Y_xi`. -/
-def lowerCentralRStar (d : OddCentralChordData) : Real :=
-  d.lowerCentralYOmega / d.lowerCentralXOmega
-
 /-- The common nonzero divided-difference factor
 `a^(L-1)/(xi+omega_L)`. -/
 def lowerCentralFoldFactor (d : OddCentralChordData) : Real :=
@@ -297,120 +277,65 @@ theorem lowerCentralFoldFactor_pos (d : OddCentralChordData) :
   exact div_pos (pow_pos d.ha0 d.m)
     (add_pos (lowerCentralXi_pos d) (lowerCentralOmega_pos d))
 
-/-! ## The four positive `X/Y` quantities and their common ratio -/
+/-! ## Cancellation of the mixed terms in the determinant product -/
 
-theorem lowerCentralXXi_pos (d : OddCentralChordData) :
-    0 < d.lowerCentralXXi := by
-  exact mul_pos (lowerCentralXStar_pos d)
-    (lowerCentralZeta_sub_Xi_pos d)
-
-theorem lowerCentralYXi_pos (d : OddCentralChordData) :
-    0 < d.lowerCentralYXi := by
-  exact mul_pos (lowerCentralC_pos d) (by
-    linarith [lowerCentralXi_pos d])
-
-theorem lowerCentralXOmega_pos (d : OddCentralChordData) :
-    0 < d.lowerCentralXOmega := by
-  exact mul_pos (lowerCentralXStar_pos d)
-    (lowerCentralZeta_add_Omega_pos d)
-
-theorem lowerCentralYOmega_pos (d : OddCentralChordData) :
-    0 < d.lowerCentralYOmega := by
-  exact mul_pos (lowerCentralC_pos d)
-    (lowerCentralOmegaDelta_pos d)
-
-theorem lowerCentralYOmega_mul_YXi_eq_XOmega_mul_XXi
-    (d : OddCentralChordData) :
-    d.lowerCentralYOmega * d.lowerCentralYXi =
-      d.lowerCentralXOmega * d.lowerCentralXXi := by
-  have hc := lowerCentralC_sq_eq_inv_UPlus_sq d
-  have hx := lowerCentralXStar_sq d
-  have hD := lowerCentralD_eq_two_a_zeta_UPlus_sq d
+theorem lowerCentral_cross_identity (d : OddCentralChordData) :
+    d.lowerCentralXStar ^ 2 *
+        (d.transformedZeta - d.lowerCentralXi) *
+        (d.transformedZeta + d.lowerCentralOmega) =
+      d.lowerCentralC ^ 2 * (1 + d.lowerCentralXi) *
+        d.lowerCentralOmegaDelta := by
   have haffine := lowerCentralD_affine_identity d
-  have hu := lowerCentralUPlus_pos d
+  rw [lowerCentralD_eq_two_a_zeta_UPlus_sq] at haffine
   have hz := lowerCentralZeta_add_Omega_pos d
-  rw [hD] at haffine
-  have hfactored :
-      (d.transformedZeta + d.lowerCentralOmega) *
-          (2 * d.a * d.lowerCentralUPlus ^ 2 *
-            (d.lowerCentralRho + d.lowerCentralOmega) *
-              (d.transformedZeta - d.lowerCentralXi)) =
-        (d.transformedZeta + d.lowerCentralOmega) *
-          (1 + d.lowerCentralXi) := by
-    convert haffine using 1
-    ring
+  have hu := lowerCentralUPlus_pos d
   have hcore :
       2 * d.a * d.lowerCentralUPlus ^ 2 *
           (d.lowerCentralRho + d.lowerCentralOmega) *
             (d.transformedZeta - d.lowerCentralXi) =
         1 + d.lowerCentralXi := by
-    exact mul_left_cancel₀ hz.ne' hfactored
-  unfold lowerCentralYOmega lowerCentralYXi lowerCentralXOmega
-    lowerCentralXXi
-  calc
-    d.lowerCentralC * d.lowerCentralOmegaDelta *
-          (d.lowerCentralC * (1 + d.lowerCentralXi)) =
-        d.lowerCentralC ^ 2 * d.lowerCentralOmegaDelta *
-          (1 + d.lowerCentralXi) := by ring
-    _ = (1 / d.lowerCentralUPlus ^ 2) *
-          d.lowerCentralOmegaDelta * (1 + d.lowerCentralXi) := by
-      rw [hc]
-    _ = 2 * d.a * d.lowerCentralOmegaDelta *
-          (d.lowerCentralRho + d.lowerCentralOmega) *
-            (d.transformedZeta - d.lowerCentralXi) := by
-      rw [← hcore]
-      field_simp [hu.ne']
-    _ = d.lowerCentralXStar ^ 2 *
-          (d.transformedZeta + d.lowerCentralOmega) *
-            (d.transformedZeta - d.lowerCentralXi) := by
-      rw [hx]
-      unfold lowerCentralXStarSq
-      field_simp [hz.ne']
-    _ = d.lowerCentralXStar *
-          (d.transformedZeta + d.lowerCentralOmega) *
-          (d.lowerCentralXStar *
-            (d.transformedZeta - d.lowerCentralXi)) := by ring
+    apply mul_left_cancel₀ hz.ne'
+    convert haffine using 1
+    ring
+  rw [lowerCentralXStar_sq, lowerCentralC_sq_eq_inv_UPlus_sq]
+  unfold lowerCentralXStarSq
+  field_simp [hz.ne', hu.ne']
+  linear_combination d.lowerCentralOmegaDelta * hcore
 
-theorem lowerCentralRStar_eq_XXi_div_YXi
-    (d : OddCentralChordData) :
-    d.lowerCentralRStar = d.lowerCentralXXi / d.lowerCentralYXi := by
-  unfold lowerCentralRStar
-  apply (div_eq_div_iff
-    (lowerCentralXOmega_pos d).ne'
-    (lowerCentralYXi_pos d).ne').2
-  simpa only [mul_comm] using
-    lowerCentralYOmega_mul_YXi_eq_XOmega_mul_XXi d
+theorem lowerCentral_XOmega_sq (d : OddCentralChordData) :
+    d.lowerCentralXStar ^ 2 *
+        (d.transformedZeta + d.lowerCentralOmega) ^ 2 =
+      d.lowerCentralC ^ 2 * d.lowerCentralOmegaDelta *
+        (d.lowerCentralD * (d.lowerCentralRho + d.lowerCentralOmega)) := by
+  rw [lowerCentralXStar_sq, lowerCentralC_sq_eq_inv_UPlus_sq,
+    lowerCentralD_eq_two_a_zeta_UPlus_sq]
+  unfold lowerCentralXStarSq
+  field_simp [(lowerCentralZeta_add_Omega_pos d).ne',
+    (lowerCentralUPlus_pos d).ne']
 
-theorem lowerCentralRStar_mul_XOmega (d : OddCentralChordData) :
-    d.lowerCentralRStar * d.lowerCentralXOmega =
-      d.lowerCentralYOmega := by
-  unfold lowerCentralRStar
-  field_simp [(lowerCentralXOmega_pos d).ne']
-
-theorem lowerCentralRStar_mul_YXi (d : OddCentralChordData) :
-    d.lowerCentralRStar * d.lowerCentralYXi =
-      d.lowerCentralXXi := by
-  rw [lowerCentralRStar_eq_XXi_div_YXi]
-  field_simp [(lowerCentralYXi_pos d).ne']
+theorem lowerCentral_XXi_sq (d : OddCentralChordData) :
+    d.lowerCentralXStar ^ 2 *
+        (d.transformedZeta - d.lowerCentralXi) ^ 2 =
+      d.lowerCentralC ^ 2 * (1 + d.lowerCentralXi) ^ 2 *
+        d.lowerCentralOmegaDelta /
+        (d.lowerCentralD * (d.lowerCentralRho + d.lowerCentralOmega)) := by
+  have hT : 0 < d.lowerCentralD *
+      (d.lowerCentralRho + d.lowerCentralOmega) :=
+    mul_pos (lowerCentralD_pos d)
+      (add_pos (lowerCentralRho_pos d) (lowerCentralOmega_pos d))
+  apply (eq_div_iff hT.ne').2
+  have hcross := lowerCentral_cross_identity d
+  have haffine := lowerCentralD_affine_identity d
+  linear_combination
+    d.lowerCentralXStar ^ 2 *
+      (d.transformedZeta - d.lowerCentralXi) * haffine +
+      (1 + d.lowerCentralXi) * hcross
 
 theorem one_half_lt_lowerCentralOmega (d : OddCentralChordData) :
     (1 : Real) / 2 < d.lowerCentralOmega := by
-  have hangleNonneg :
-      0 ≤ Real.pi / (2 * d.lowerCentralLength) := by
-    exact div_nonneg Real.pi_pos.le
-      (mul_nonneg (by norm_num) (lowerCentralLength_pos d).le)
-  have hthirdLePi : Real.pi / 3 ≤ Real.pi := by
-    nlinarith [Real.pi_pos]
-  have hangleLtThird :
-      Real.pi / (2 * d.lowerCentralLength) < Real.pi / 3 := by
-    rw [div_lt_div_iff_of_pos_left Real.pi_pos
-      (mul_pos (by norm_num) (lowerCentralLength_pos d))
-      (by norm_num : (0 : Real) < 3)]
-    nlinarith [lowerCentralLength_ge_two d]
-  have hcos := Real.cos_lt_cos_of_nonneg_of_le_pi
-    hangleNonneg hthirdLePi hangleLtThird
-  rw [Real.cos_pi_div_three] at hcos
-  exact hcos
+  have hdelta := lowerCentralOmegaDelta_lt_five_sixteenths d
+  unfold lowerCentralOmegaDelta at hdelta
+  linarith
 
 theorem lowerCentralRho_add_Omega_gt_one (d : OddCentralChordData) :
     1 < d.lowerCentralRho + d.lowerCentralOmega := by
@@ -418,57 +343,6 @@ theorem lowerCentralRho_add_Omega_gt_one (d : OddCentralChordData) :
     (lowerCentralReferenceRho_gt_Omega d).trans
       (lowerCentralReferenceRho_lt_Rho d)
   nlinarith [one_half_lt_lowerCentralOmega d]
-
-theorem lowerCentralXOmega_sq_div_YOmega_sq
-    (d : OddCentralChordData) :
-    d.lowerCentralXOmega ^ 2 / d.lowerCentralYOmega ^ 2 =
-      d.lowerCentralD *
-        (d.lowerCentralRho + d.lowerCentralOmega) /
-          d.lowerCentralOmegaDelta := by
-  have hx := lowerCentralXStar_sq d
-  have hc := lowerCentralC_sq_eq_inv_UPlus_sq d
-  have hD := lowerCentralD_eq_two_a_zeta_UPlus_sq d
-  have hz := lowerCentralZeta_add_Omega_pos d
-  have hd := lowerCentralOmegaDelta_pos d
-  have hu := lowerCentralUPlus_pos d
-  unfold lowerCentralXOmega lowerCentralYOmega
-  rw [mul_pow, mul_pow, hx, hc, hD]
-  unfold lowerCentralXStarSq
-  field_simp [hz.ne', hd.ne', hu.ne']
-
-theorem lowerCentralXOmega_sq_div_YOmega_sq_gt_one
-    (d : OddCentralChordData) :
-    1 < d.lowerCentralXOmega ^ 2 / d.lowerCentralYOmega ^ 2 := by
-  rw [lowerCentralXOmega_sq_div_YOmega_sq]
-  have hdeltaLtOne : d.lowerCentralOmegaDelta < 1 := by
-    unfold lowerCentralOmegaDelta
-    linarith [lowerCentralOmega_pos d]
-  have hnum :
-      d.lowerCentralOmegaDelta <
-        d.lowerCentralD *
-          (d.lowerCentralRho + d.lowerCentralOmega) := by
-    have hD := lowerCentralD_gt_one d
-    have hrw := lowerCentralRho_add_Omega_gt_one d
-    exact hdeltaLtOne.trans
-      (one_lt_mul_of_lt_of_le hD hrw.le)
-  exact (lt_div_iff₀ (lowerCentralOmegaDelta_pos d)).2
-    (by simpa only [one_mul] using hnum)
-
-theorem lowerCentralYOmega_lt_XOmega (d : OddCentralChordData) :
-    d.lowerCentralYOmega < d.lowerCentralXOmega := by
-  have hsquares := lowerCentralXOmega_sq_div_YOmega_sq_gt_one d
-  have hy := lowerCentralYOmega_pos d
-  have hx := lowerCentralXOmega_pos d
-  rw [one_lt_div (sq_pos_of_pos hy)] at hsquares
-  exact (sq_lt_sq₀ hy.le hx.le).1 hsquares
-
-theorem lowerCentralRStar_mem_Ioo (d : OddCentralChordData) :
-    d.lowerCentralRStar ∈ Set.Ioo 0 1 := by
-  unfold lowerCentralRStar
-  exact ⟨div_pos (lowerCentralYOmega_pos d)
-      (lowerCentralXOmega_pos d),
-    (div_lt_one (lowerCentralXOmega_pos d)).2
-      (lowerCentralYOmega_lt_XOmega d)⟩
 
 /-! ## The Chebyshev value at the folded nodal argument -/
 
@@ -530,53 +404,7 @@ theorem lowerCentralU_neg_Omega_sq (d : OddCentralChordData) :
     simp
   rw [hnegSq, hpositiveSq]
 
-/-! ## Strict product comparison from `eq:central-target` -/
-
-theorem lowerCentralXOmega_U_sq_identity
-    (d : OddCentralChordData) :
-    (d.lowerCentralXOmega *
-        chebyshevU d.m (-d.lowerCentralOmega)) ^ 2 =
-      d.lowerCentralC ^ 2 * d.lowerCentralD *
-        (d.lowerCentralRho + d.lowerCentralOmega) /
-          (1 + d.lowerCentralOmega) := by
-  have hu := lowerCentralU_neg_Omega_sq d
-  have hx := lowerCentralXStar_sq d
-  have hc := lowerCentralC_sq_eq_inv_UPlus_sq d
-  have hD := lowerCentralD_eq_two_a_zeta_UPlus_sq d
-  have hz := lowerCentralZeta_add_Omega_pos d
-  have hdelta := lowerCentralOmegaDelta_pos d
-  have honew : 0 < 1 + d.lowerCentralOmega := by
-    linarith [lowerCentralOmega_pos d]
-  have honeSubSq : 0 < 1 - d.lowerCentralOmega ^ 2 := by
-    have hprod := mul_pos
-      (sub_pos.mpr (lowerCentralOmega_lt_one d)) honew
-    nlinarith
-  have huPlus := lowerCentralUPlus_pos d
-  unfold lowerCentralXOmega
-  simp only [mul_pow]
-  rw [hx, hu, hc, hD]
-  unfold lowerCentralXStarSq lowerCentralOmegaDelta
-  field_simp [hz.ne', hdelta.ne', honew.ne', honeSubSq.ne', huPlus.ne']
-  ring
-
-theorem lowerCentralYXi_U_sq_lt_XOmega_U_sq
-    (d : OddCentralChordData) :
-    (d.lowerCentralYXi * chebyshevU d.m d.lowerCentralXi) ^ 2 <
-      (d.lowerCentralXOmega *
-        chebyshevU d.m (-d.lowerCentralOmega)) ^ 2 := by
-  have hscalar := lowerCentral_scalar_target d
-  have hcPos := lowerCentralC_pos d
-  have hwOne : 0 < 1 + d.lowerCentralOmega := by
-    linarith [lowerCentralOmega_pos d]
-  rw [lowerCentralXOmega_U_sq_identity]
-  unfold lowerCentralYXi
-  rw [mul_pow]
-  have hscaled := mul_lt_mul_of_pos_left hscalar
-    (sq_pos_of_pos hcPos)
-  apply (lt_div_iff₀ hwOne).2
-  convert hscaled using 1 <;> ring
-
-/-! ## The two source numerator factorizations -/
+/-! ## The folded numerator and its product -/
 
 theorem foldOddBeta_lowerCentral
     (d : OddCentralChordData) (s : Real) :
@@ -595,60 +423,57 @@ theorem foldOddChebyshevFunction_eq_lowerCentralNumerator
   unfold foldOddChebyshevFunction lowerCentralNumerator
   ring
 
-theorem lowerCentralNumerator_C_difference
+theorem lowerCentralNumerator_difference_product
     (d : OddCentralChordData) :
-    d.lowerCentralNumerator d.lowerCentralXStar d.lowerCentralC
+    (d.lowerCentralNumerator d.lowerCentralXStar d.lowerCentralC
           d.lowerCentralXi -
-        d.lowerCentralNumerator d.lowerCentralXStar d.lowerCentralC
-          (-d.lowerCentralOmega) =
-      (1 + d.lowerCentralRStar) *
-        (d.lowerCentralXOmega *
-            chebyshevU d.m (-d.lowerCentralOmega) -
-          d.lowerCentralYXi * chebyshevU d.m d.lowerCentralXi) := by
-  have hrX := lowerCentralRStar_mul_XOmega d
-  have hrY := lowerCentralRStar_mul_YXi d
-  have hleft :
       d.lowerCentralNumerator d.lowerCentralXStar d.lowerCentralC
-            d.lowerCentralXi -
-          d.lowerCentralNumerator d.lowerCentralXStar d.lowerCentralC
-            (-d.lowerCentralOmega) =
-        -(d.lowerCentralXXi + d.lowerCentralYXi) *
-            chebyshevU d.m d.lowerCentralXi -
-          (-(d.lowerCentralXOmega + d.lowerCentralYOmega) *
-            chebyshevU d.m (-d.lowerCentralOmega)) := by
-    unfold lowerCentralNumerator lowerCentralXXi lowerCentralYXi
-      lowerCentralXOmega lowerCentralYOmega lowerCentralOmegaDelta
-    ring
-  rw [hleft]
-  rw [← hrX, ← hrY]
-  ring
-
-theorem lowerCentralNumerator_neg_C_difference
-    (d : OddCentralChordData) :
-    d.lowerCentralNumerator d.lowerCentralXStar (-d.lowerCentralC)
+          (-d.lowerCentralOmega)) *
+    (d.lowerCentralNumerator d.lowerCentralXStar (-d.lowerCentralC)
           d.lowerCentralXi -
-        d.lowerCentralNumerator d.lowerCentralXStar (-d.lowerCentralC)
-          (-d.lowerCentralOmega) =
-      (1 - d.lowerCentralRStar) *
-        (d.lowerCentralXOmega *
-            chebyshevU d.m (-d.lowerCentralOmega) +
-          d.lowerCentralYXi * chebyshevU d.m d.lowerCentralXi) := by
-  have hrX := lowerCentralRStar_mul_XOmega d
-  have hrY := lowerCentralRStar_mul_YXi d
-  have hleft :
       d.lowerCentralNumerator d.lowerCentralXStar (-d.lowerCentralC)
+          (-d.lowerCentralOmega)) =
+      d.lowerCentralC ^ 2 *
+        (1 - d.lowerCentralOmegaDelta /
+          (d.lowerCentralD * (d.lowerCentralRho + d.lowerCentralOmega))) *
+        (d.lowerCentralD * (d.lowerCentralRho + d.lowerCentralOmega) /
+          (1 + d.lowerCentralOmega) -
+          (1 + d.lowerCentralXi) ^ 2 * chebyshevU d.m d.lowerCentralXi ^ 2) := by
+  have hcross := lowerCentral_cross_identity d
+  have hproduct :
+      (d.lowerCentralNumerator d.lowerCentralXStar d.lowerCentralC
             d.lowerCentralXi -
-          d.lowerCentralNumerator d.lowerCentralXStar (-d.lowerCentralC)
-            (-d.lowerCentralOmega) =
-        -(d.lowerCentralXXi - d.lowerCentralYXi) *
-            chebyshevU d.m d.lowerCentralXi -
-          (-(d.lowerCentralXOmega - d.lowerCentralYOmega) *
-            chebyshevU d.m (-d.lowerCentralOmega)) := by
-    unfold lowerCentralNumerator lowerCentralXXi lowerCentralYXi
-      lowerCentralXOmega lowerCentralYOmega lowerCentralOmegaDelta
-    ring
-  rw [hleft]
-  rw [← hrX, ← hrY]
+        d.lowerCentralNumerator d.lowerCentralXStar d.lowerCentralC
+            (-d.lowerCentralOmega)) *
+      (d.lowerCentralNumerator d.lowerCentralXStar (-d.lowerCentralC)
+            d.lowerCentralXi -
+        d.lowerCentralNumerator d.lowerCentralXStar (-d.lowerCentralC)
+            (-d.lowerCentralOmega)) =
+      (d.lowerCentralXStar ^ 2 *
+          (d.transformedZeta + d.lowerCentralOmega) ^ 2 -
+        d.lowerCentralC ^ 2 * d.lowerCentralOmegaDelta ^ 2) *
+          chebyshevU d.m (-d.lowerCentralOmega) ^ 2 -
+      (d.lowerCentralC ^ 2 * (1 + d.lowerCentralXi) ^ 2 -
+        d.lowerCentralXStar ^ 2 *
+          (d.transformedZeta - d.lowerCentralXi) ^ 2) *
+          chebyshevU d.m d.lowerCentralXi ^ 2 := by
+    unfold lowerCentralNumerator lowerCentralOmegaDelta at *
+    linear_combination -2 * chebyshevU d.m (-d.lowerCentralOmega) *
+      chebyshevU d.m d.lowerCentralXi * hcross
+  rw [hproduct, lowerCentral_XOmega_sq, lowerCentral_XXi_sq,
+    lowerCentralU_neg_Omega_sq]
+  have hT : 0 < d.lowerCentralD *
+      (d.lowerCentralRho + d.lowerCentralOmega) :=
+    mul_pos (lowerCentralD_pos d)
+      (add_pos (lowerCentralRho_pos d) (lowerCentralOmega_pos d))
+  generalize hTdef :
+    d.lowerCentralD * (d.lowerCentralRho + d.lowerCentralOmega) = T at hT ⊢
+  have hone : 0 < 1 + d.lowerCentralOmega := by
+    linarith [lowerCentralOmega_pos d]
+  have hden : 0 < 1 - d.lowerCentralOmega ^ 2 := by
+    nlinarith [lowerCentralOmega_pos d, lowerCentralOmega_lt_one d]
+  unfold lowerCentralOmegaDelta
+  field_simp [hT.ne', hone.ne', hden.ne']
   ring
 
 theorem lowerCentralNumerator_difference_product_pos
@@ -662,23 +487,27 @@ theorem lowerCentralNumerator_difference_product_pos
             d.lowerCentralXi -
         d.lowerCentralNumerator d.lowerCentralXStar (-d.lowerCentralC)
             (-d.lowerCentralOmega)) := by
-  rw [lowerCentralNumerator_C_difference,
-    lowerCentralNumerator_neg_C_difference]
-  let A := d.lowerCentralXOmega *
-    chebyshevU d.m (-d.lowerCentralOmega)
-  let B := d.lowerCentralYXi * chebyshevU d.m d.lowerCentralXi
-  have hr := lowerCentralRStar_mem_Ioo d
-  have hsquares := lowerCentralYXi_U_sq_lt_XOmega_U_sq d
-  have hratio : 0 < (1 + d.lowerCentralRStar) *
-      (1 - d.lowerCentralRStar) :=
-    mul_pos (by linarith [hr.1]) (by linarith [hr.2])
-  have hdiff : 0 < (A - B) * (A + B) := by
-    dsimp only [A, B]
-    nlinarith
-  dsimp only [A, B] at hdiff ⊢
-  have hfactor := mul_pos hratio hdiff
-  convert hfactor using 1
-  ring
+  rw [lowerCentralNumerator_difference_product]
+  have hT : 1 < d.lowerCentralD *
+      (d.lowerCentralRho + d.lowerCentralOmega) :=
+    one_lt_mul_of_lt_of_le (lowerCentralD_gt_one d)
+      (lowerCentralRho_add_Omega_gt_one d).le
+  have hdelta : d.lowerCentralOmegaDelta < 1 := by
+    unfold lowerCentralOmegaDelta
+    linarith [lowerCentralOmega_pos d]
+  have hfactor : 0 < 1 - d.lowerCentralOmegaDelta /
+      (d.lowerCentralD * (d.lowerCentralRho + d.lowerCentralOmega)) := by
+    apply sub_pos.mpr
+    apply (div_lt_one (by linarith)).2
+    exact hdelta.trans hT
+  have htarget : 0 <
+      d.lowerCentralD * (d.lowerCentralRho + d.lowerCentralOmega) /
+          (1 + d.lowerCentralOmega) -
+        (1 + d.lowerCentralXi) ^ 2 * chebyshevU d.m d.lowerCentralXi ^ 2 := by
+    apply sub_pos.mpr
+    apply (lt_div_iff₀ (by linarith [lowerCentralOmega_pos d])).2
+    nlinarith [lowerCentral_scalar_target d]
+  exact mul_pos (mul_pos (sq_pos_of_pos (lowerCentralC_pos d)) hfactor) htarget
 
 /-! ## Generic divided difference and the literal signed-pencil product -/
 
@@ -695,7 +524,7 @@ theorem foldOddSequence_lowerCentral
   have h := foldOddSequence_eq_chebyshevDividedDifference
     (a := d.a) (x := d.lowerCentralXStar) (s := s)
     (u := d.lowerCentralXi) (v := -d.lowerCentralOmega)
-    d.ha0.ne' d.ha1.ne
+    d.ha0.ne'
     (lowerCentralXi_ne_neg_Omega d)
     (lowerCentral_folded_sum d hs)
     (lowerCentral_folded_product d hs) d.m
@@ -713,7 +542,7 @@ theorem signedPencilDet_lowerCentral
             d.lowerCentralNumerator d.lowerCentralXStar s
               (-d.lowerCentralOmega)) /
           (d.lowerCentralXi + d.lowerCentralOmega)) := by
-  rw [signedPencilDet_odd_eq_foldOddSequence d.ha1.ne]
+  rw [signedPencilDet_odd_eq_foldOddSequence]
   exact foldOddSequence_lowerCentral d s hs
 
 theorem signedPencilDet_lowerCentral_factorized
@@ -760,27 +589,10 @@ theorem signedPencilDet_lowerCentral_product_pos
           d.lowerCentralC *
         signedPencilDet (2 * d.m + 1) d.a d.lowerCentralXStar
           (-d.lowerCentralC) := by
-  rw [signedPencilDet_lowerCentral_C,
-    signedPencilDet_lowerCentral_neg_C]
-  have hnum := lowerCentralNumerator_difference_product_pos d
-  have haPow : 0 < d.a ^ d.m := pow_pos d.ha0 d.m
-  have hden : 0 < d.lowerCentralXi + d.lowerCentralOmega :=
-    add_pos (lowerCentralXi_pos d) (lowerCentralOmega_pos d)
-  have hdiv :
-      0 <
-        ((d.lowerCentralNumerator d.lowerCentralXStar d.lowerCentralC
-              d.lowerCentralXi -
-            d.lowerCentralNumerator d.lowerCentralXStar d.lowerCentralC
-              (-d.lowerCentralOmega)) /
-          (d.lowerCentralXi + d.lowerCentralOmega)) *
-        ((d.lowerCentralNumerator d.lowerCentralXStar (-d.lowerCentralC)
-              d.lowerCentralXi -
-            d.lowerCentralNumerator d.lowerCentralXStar (-d.lowerCentralC)
-              (-d.lowerCentralOmega)) /
-          (d.lowerCentralXi + d.lowerCentralOmega)) := by
-    rw [div_mul_div_comm]
-    exact div_pos hnum (mul_pos hden hden)
-  have hprod := mul_pos (mul_pos haPow haPow) hdiv
+  rw [signedPencilDet_lowerCentral_factorized d d.lowerCentralC rfl,
+    signedPencilDet_lowerCentral_factorized d (-d.lowerCentralC) (by ring)]
+  have hprod := mul_pos (sq_pos_of_pos (lowerCentralFoldFactor_pos d))
+    (lowerCentralNumerator_difference_product_pos d)
   convert hprod using 1
   ring
 

@@ -6,7 +6,7 @@ import Mathlib.Tactic
 /-!
 # Actual folded signed-pencil matrices and exposed minors
 
-This module connects the algebraic folded transfer to the determinants of the
+This module connects the five-minor iteration to the determinants of the
 actual signed pencils.  The coordinate equivalences below implement the order
 `(1,n),(2,n-1),...` used in the proof of `lem:mesh`.
 -/
@@ -277,14 +277,6 @@ def exposedFoldMinorState (n : ℕ)
     (1 : Fin (n + 2)).succAbove).det
   r := (K.submatrix (fun i : Fin n ↦ i.succ.succ)
     (fun i : Fin n ↦ i.succ.succ)).det
-
-/-- Fieldwise extensionality for the algebraic five-minor state. -/
-theorem foldMinorState_ext {u v : FoldMinorState}
-    (hd : u.d = v.d) (hp : u.p = v.p) (hq : u.q = v.q)
-    (hc : u.c = v.c) (hr : u.r = v.r) : u = v := by
-  cases u
-  cases v
-  simp_all
 
 /-- Reindex `K_{m+1}^e` so it has the literal size `(2m)+2` expected by
 `exposedFoldMinorState`. -/
@@ -1731,82 +1723,32 @@ theorem foldedOddCoupling_linear (m : ℕ) (a : ℝ) (b : Fin 2)
         · simp [oddBlockTailEmbedding, foldedOddCoupling]
         · simp [oddBlockTailEmbedding, foldedOddCoupling]
 
-/-- Every actual even minor state lies on the invariant hyperplane. -/
-theorem foldedEvenActualState_invariant (m : ℕ) (a x s : ℝ) :
-    foldMinorInvariant a x s (foldedEvenActualState m a x s) = 0 := by
+/-- The signed five-minor iteration is the actual even minor state. -/
+theorem foldedEvenActualState_signed_orbit (m : ℕ) (a x s : ℝ) :
+    foldSignedOrbit a x s (foldEvenSeed a) (m + 1) =
+      foldMinorScale ((-1 : ℝ) ^ (m + 1)) (foldedEvenActualState m a x s) := by
   induction m with
   | zero =>
-      rw [foldedEvenActualState_zero]
-      exact foldMinorInvariant_evenTerminal a x s
+      simpa [foldSignedOrbit, foldedEvenActualState_zero] using
+        foldSignedStep_evenSeed a x s
   | succ m ih =>
-      rw [foldedEvenActualState_succ, foldMinorInvariant_step, ih, mul_zero]
+      rw [foldSignedOrbit, ih, foldSignedStep_scale, foldedEvenActualState_succ]
+      congr 1
+      rw [pow_succ]
+      ring
 
-/-- The signed projection of the actual even terminal minors is the first
-transfer iterate. -/
-theorem neg_foldFourProjection_evenActual_zero
-    {a x s : ℝ} (ha1 : a ≠ 1) :
-    -foldFourProjection (foldedEvenActualState 0 a x s) =
-      foldTransfer a x s *ᵥ foldEvenInitial a := by
-  rw [foldedEvenActualState_zero, foldTransfer_mulVec_evenInitial ha1]
-  funext i
-  fin_cases i
-  all_goals simp [foldFourProjection, foldEvenTerminalState]
-  all_goals ring
-
-/-- Signed actual even minors are exactly the transfer orbit. -/
-theorem foldedEvenActualProjection_orbit
-    {a x s : ℝ} (ha1 : a ≠ 1) (m : ℕ) :
-    ((-1 : ℝ) ^ (m + 1)) •
-        foldFourProjection (foldedEvenActualState m a x s) =
-      foldTransfer a x s ^ (m + 1) *ᵥ foldEvenInitial a := by
-  induction m with
-  | zero =>
-      simpa using neg_foldFourProjection_evenActual_zero ha1
-  | succ m ih =>
-      rw [foldedEvenActualState_succ]
-      have hstep := neg_foldFourProjection_step_eq_foldTransfer_mulVec ha1
-        (foldedEvenActualState m a x s)
-        (foldedEvenActualState_invariant m a x s)
-      calc
-        ((-1 : ℝ) ^ (m.succ + 1)) •
-            foldFourProjection
-              (foldMinorStep a x s (foldedEvenActualState m a x s)) =
-            ((-1 : ℝ) ^ (m + 1)) •
-              (-foldFourProjection
-                (foldMinorStep a x s (foldedEvenActualState m a x s))) := by
-          funext i
-          simp only [Pi.smul_apply, Pi.neg_apply, pow_succ, smul_eq_mul]
-          rcases neg_one_pow_eq_or ℝ m with hm | hm <;>
-            rw [hm] <;> ring
-        _ = ((-1 : ℝ) ^ (m + 1)) •
-            (foldTransfer a x s *ᵥ
-              foldFourProjection (foldedEvenActualState m a x s)) := by
-          rw [hstep]
-        _ = foldTransfer a x s *ᵥ
-            (((-1 : ℝ) ^ (m + 1)) •
-              foldFourProjection (foldedEvenActualState m a x s)) := by
-          rw [Matrix.mulVec_smul]
-        _ = foldTransfer a x s *ᵥ
-            (foldTransfer a x s ^ (m + 1) *ᵥ foldEvenInitial a) := by
-          rw [ih]
-        _ = foldTransfer a x s ^ (m.succ + 1) *ᵥ foldEvenInitial a := by
-          rw [Matrix.mulVec_mulVec, ← pow_succ']
-
-/-- The first coordinate of the signed actual even state is the even folded
-transfer sequence. -/
+/-- The actual even determinant is the first coordinate of its minor orbit. -/
 theorem foldedEvenActualState_signed_d_eq_sequence
-    {a x s : ℝ} (ha1 : a ≠ 1) (m : ℕ) :
+    {a x s : ℝ} (m : ℕ) :
     (-1 : ℝ) ^ (m + 1) * (foldedEvenActualState m a x s).d =
       foldEvenSequence a x s (m + 1) := by
-  have h := congrFun
-    (foldedEvenActualProjection_orbit (a := a) (x := x) (s := s) ha1 m)
-    (0 : Fin 4)
-  simpa [foldFourProjection, foldEvenSequence, foldTransferCoordinate] using h
+  rw [foldEvenSequence, foldedEvenActualState_signed_orbit]
+  rfl
 
 /-- For every even order, the actual signed-pencil determinant is the first
-coordinate of the even folded transfer orbit. -/
+coordinate of the even folded minor orbit. -/
 theorem signedPencilDet_even_eq_foldEvenSequence
-    {a x s : ℝ} (ha1 : a ≠ 1) (m : ℕ) :
+    {a x s : ℝ} (m : ℕ) :
     signedPencilDet (2 * m) a x s = foldEvenSequence a x s m := by
   cases m with
   | zero =>
@@ -1816,7 +1758,7 @@ theorem signedPencilDet_even_eq_foldEvenSequence
   | succ m =>
       rw [signedPencilDet_even_eq_signed_folded_det]
       rw [← foldedEvenActualState_d]
-      exact foldedEvenActualState_signed_d_eq_sequence ha1 m
+      exact foldedEvenActualState_signed_d_eq_sequence m
 
 /-- Split a linear odd folded matrix into its new exposed pair and its old
 linear odd tail. -/
@@ -1933,83 +1875,32 @@ theorem foldedOddActualState_succ (m : ℕ) (a x s : ℝ) :
       (foldedOddExposedMatrix m a x s)
       (foldedOddExposedMatrix_isSymm m a x s)
 
-/-- Every actual odd minor state lies on the invariant hyperplane. -/
-theorem foldedOddActualState_invariant (m : ℕ) (a x s : ℝ) :
-    foldMinorInvariant a x s (foldedOddActualState m a x s) = 0 := by
+/-- The signed five-minor iteration is the actual odd minor state. -/
+theorem foldedOddActualState_signed_orbit (m : ℕ) (a x s : ℝ) :
+    foldSignedOrbit a x s (foldOddSeed x s) (m + 1) =
+      foldMinorScale ((-1 : ℝ) ^ (m + 1)) (foldedOddActualState m a x s) := by
   induction m with
   | zero =>
-      rw [foldedOddActualState_zero]
-      exact foldMinorInvariant_oddTerminal a x s
+      simpa [foldSignedOrbit, foldedOddActualState_zero] using
+        foldSignedStep_oddSeed a x s
   | succ m ih =>
-      rw [foldedOddActualState_succ, foldMinorInvariant_step, ih, mul_zero]
+      rw [foldSignedOrbit, ih, foldSignedStep_scale, foldedOddActualState_succ]
+      congr 1
+      rw [pow_succ]
+      ring
 
-/-- The signed projection of the actual odd terminal minors is the first
-transfer iterate. -/
-theorem neg_foldFourProjection_oddActual_zero
-    {a x s : ℝ} (ha1 : a ≠ 1) :
-    -foldFourProjection (foldedOddActualState 0 a x s) =
-      foldTransfer a x s *ᵥ foldOddInitial x s := by
-  rw [foldedOddActualState_zero, foldTransfer_mulVec_oddInitial ha1]
-  funext i
-  fin_cases i
-  all_goals simp [foldFourProjection, foldOddTerminalState]
-  all_goals ring
-
-/-- Signed actual odd minors are exactly the transfer orbit. -/
-theorem foldedOddActualProjection_orbit
-    {a x s : ℝ} (ha1 : a ≠ 1) (m : ℕ) :
-    ((-1 : ℝ) ^ (m + 1)) •
-        foldFourProjection (foldedOddActualState m a x s) =
-      foldTransfer a x s ^ (m + 1) *ᵥ foldOddInitial x s := by
-  induction m with
-  | zero =>
-      simpa using neg_foldFourProjection_oddActual_zero ha1
-  | succ m ih =>
-      rw [foldedOddActualState_succ]
-      have hstep := neg_foldFourProjection_step_eq_foldTransfer_mulVec ha1
-        (foldedOddActualState m a x s)
-        (foldedOddActualState_invariant m a x s)
-      calc
-        ((-1 : ℝ) ^ (m.succ + 1)) •
-            foldFourProjection
-              (foldMinorStep a x s (foldedOddActualState m a x s)) =
-            ((-1 : ℝ) ^ (m + 1)) •
-              (-foldFourProjection
-                (foldMinorStep a x s (foldedOddActualState m a x s))) := by
-          funext i
-          simp only [Pi.smul_apply, Pi.neg_apply, pow_succ, smul_eq_mul]
-          rcases neg_one_pow_eq_or ℝ m with hm | hm <;>
-            rw [hm] <;> ring
-        _ = ((-1 : ℝ) ^ (m + 1)) •
-            (foldTransfer a x s *ᵥ
-              foldFourProjection (foldedOddActualState m a x s)) := by
-          rw [hstep]
-        _ = foldTransfer a x s *ᵥ
-            (((-1 : ℝ) ^ (m + 1)) •
-              foldFourProjection (foldedOddActualState m a x s)) := by
-          rw [Matrix.mulVec_smul]
-        _ = foldTransfer a x s *ᵥ
-            (foldTransfer a x s ^ (m + 1) *ᵥ foldOddInitial x s) := by
-          rw [ih]
-        _ = foldTransfer a x s ^ (m.succ + 1) *ᵥ
-            foldOddInitial x s := by
-          rw [Matrix.mulVec_mulVec, ← pow_succ']
-
-/-- The first coordinate of the signed actual odd state is the odd folded
-transfer sequence. -/
+/-- The actual odd determinant is the first coordinate of its minor orbit. -/
 theorem foldedOddActualState_signed_d_eq_sequence
-    {a x s : ℝ} (ha1 : a ≠ 1) (m : ℕ) :
+    {a x s : ℝ} (m : ℕ) :
     (-1 : ℝ) ^ (m + 1) * (foldedOddActualState m a x s).d =
       foldOddSequence a x s (m + 1) := by
-  have h := congrFun
-    (foldedOddActualProjection_orbit (a := a) (x := x) (s := s) ha1 m)
-    (0 : Fin 4)
-  simpa [foldFourProjection, foldOddSequence, foldTransferCoordinate] using h
+  rw [foldOddSequence, foldedOddActualState_signed_orbit]
+  rfl
 
 /-- For every odd order, the actual signed-pencil determinant is the first
-coordinate of the odd folded transfer orbit. -/
+coordinate of the odd folded minor orbit. -/
 theorem signedPencilDet_odd_eq_foldOddSequence
-    {a x s : ℝ} (ha1 : a ≠ 1) (m : ℕ) :
+    {a x s : ℝ} (m : ℕ) :
     signedPencilDet (2 * m + 1) a x s = foldOddSequence a x s m := by
   cases m with
   | zero =>
@@ -2019,7 +1910,7 @@ theorem signedPencilDet_odd_eq_foldOddSequence
   | succ m =>
       rw [signedPencilDet_odd_eq_signed_folded_det]
       rw [← foldedOddActualState_d]
-      exact foldedOddActualState_signed_d_eq_sequence ha1 m
+      exact foldedOddActualState_signed_d_eq_sequence m
 
 end
 

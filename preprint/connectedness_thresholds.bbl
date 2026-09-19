@@ -1,0 +1,70 @@
+\begin{thebibliography}{999}
+
+\bibitem[Trefethen(1997)]{Trefethen1997}
+Trefethen, L.N.
+\newblock Pseudospectra of Linear Operators.
+\newblock {\em SIAM Review} {\bf 1997}, {\em 39},~383--406.
+\newblock {\url{https://doi.org/10.1137/S0036144595295284}}.
+
+\bibitem[Reichel and Trefethen(1992)]{ReichelTrefethen1992}
+Reichel, L.; Trefethen, L.N.
+\newblock Eigenvalues and pseudo-eigenvalues of {Toeplitz} matrices.
+\newblock {\em Linear Algebra and its Applications} {\bf 1992}, {\em
+  162--164},~153--185.
+\newblock {\url{https://doi.org/10.1016/0024-3795(92)90374-J}}.
+
+\bibitem[B{\"o}ttcher(1994)]{Bottcher1994}
+B{\"o}ttcher, A.
+\newblock Pseudospectra and singular values of large convolution operators.
+\newblock {\em Journal of Integral Equations and Applications} {\bf 1994}, {\em
+  6},~267--301.
+\newblock {\url{https://doi.org/10.1216/jiea/1181075815}}.
+
+\bibitem[Noschese et~al.(2013)Noschese, Pasquini, and
+  Reichel]{NoschesePasquiniReichel2013}
+Noschese, S.; Pasquini, L.; Reichel, L.
+\newblock Tridiagonal {Toeplitz} matrices: properties and novel applications.
+\newblock {\em Numerical Linear Algebra with Applications} {\bf 2013}, {\em
+  20},~302--326.
+\newblock {\url{https://doi.org/10.1002/nla.1811}}.
+
+\bibitem[Butt{\`a} et~al.(2012)Butt{\`a}, Guglielmi, and
+  Noschese]{ButtaGuglielmiNoschese2012}
+Butt{\`a}, P.; Guglielmi, N.; Noschese, S.
+\newblock Computing the structured pseudospectrum of a {Toeplitz} matrix and
+  its extreme points.
+\newblock {\em SIAM Journal on Matrix Analysis and Applications} {\bf 2012},
+  {\em 33},~1300--1319.
+\newblock {\url{https://doi.org/10.1137/120864349}}.
+
+\bibitem[Chandler-Wilde et~al.(2024)Chandler-Wilde, Chonchaiya, and
+  Lindner]{ChandlerWildeEtAl2024}
+Chandler-Wilde, S.; Chonchaiya, R.; Lindner, M.
+\newblock On spectral inclusion sets and computing the spectra and
+  pseudospectra of bounded linear operators.
+\newblock {\em Journal of Spectral Theory} {\bf 2024}, {\em 14},~719--804.
+\newblock {\url{https://doi.org/10.4171/JST/514}}.
+
+\bibitem[Burke et~al.(2003)Burke, Lewis, and Overton]{BurkeLewisOverton2003}
+Burke, J.V.; Lewis, A.S.; Overton, M.L.
+\newblock Optimization and pseudospectra, with applications to robust
+  stability.
+\newblock {\em SIAM Journal on Matrix Analysis and Applications} {\bf 2003},
+  {\em 25},~80--104.
+\newblock {\url{https://doi.org/10.1137/S0895479802402818}}.
+
+\bibitem[Burke et~al.(2007)Burke, Lewis, and Overton]{BurkeLewisOverton2007}
+Burke, J.V.; Lewis, A.S.; Overton, M.L.
+\newblock Spectral conditioning and pseudospectral growth.
+\newblock {\em Numerische Mathematik} {\bf 2007}, {\em 107},~27--37.
+\newblock {\url{https://doi.org/10.1007/s00211-007-0080-3}}.
+
+\bibitem[Alam et~al.(2011)Alam, Bora, Byers, and Overton]{AlamEtAl2011}
+Alam, R.; Bora, S.; Byers, R.; Overton, M.L.
+\newblock Characterization and construction of the nearest defective matrix via
+  coalescence of pseudospectral components.
+\newblock {\em Linear Algebra and its Applications} {\bf 2011}, {\em
+  435},~494--513.
+\newblock {\url{https://doi.org/10.1016/j.laa.2010.09.022}}.
+
+\end{thebibliography}

@@ -71,3 +71,7 @@ SIMAX_submission_bundle/SIAM_template/
 tmp/
 build.stdout
 *.spl
+
+# Preprint build cache and portable bibliography
+/preprint/.build/
+!/preprint/connectedness_thresholds.bbl
